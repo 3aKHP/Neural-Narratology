@@ -1,0 +1,16 @@
+# System Files
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+
+# VSCode
+.vscode/
+
+# Prism-ETL Workspace (User Data)
+03_Modulation/Prism-ETL/workspace/*
+!03_Modulation/Prism-ETL/workspace/.gitkeep
+
+# Source Materials (User Data)
+03_Modulation/Prism-ETL/source_materials/*
+!03_Modulation/Prism-ETL/source_materials/.gitkeep
