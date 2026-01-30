@@ -7,11 +7,11 @@
 
 **Phase III: Modulation** 是 "Neural Narratology" 计划的工程化终章。
 
-面对 v6.0 协议 (Omni-Foundry) 极高的复杂度，手工编写 XML 已不再现实。本项目引入了 **Prism-ETL Engine** —— 一个运行在 VSCode 环境中的虚拟智能体。它利用 RooCode 插件的能力，将 LLM 从“聊天机器人”重塑为“文件系统操作员”，实现了从原始素材到最终资产的 **Zero-Copy** 自动化生产。
+面对 v6.0 协议 (Omni-Foundry) 极高的复杂度，手工编写 XML 已不再现实。本项目引入了 **Prism-ETL Engine** —— 一个运行在 VSCode 环境中的虚拟智能体。它利用 RooCode 插件的能力，将 LLM 从“聊天机器人”重塑为“文件系统操作员”，实现了从原始素材到最终资产的 **Zero-Copy** 自动化生产。同时针对不同厂商的模型特质，本项目特别开发了面向不同模型的系统提示词，体现在`Prism-ETL-[ModelName]`中。
 
 ## 📦 目录结构 (Directory Structure)
 
-*   **`Prism-ETL/`**: 核心工程文件夹。请将此文件夹作为 VSCode 的工作区根目录打开。
+*   **`Prism-ETL-[ModelName]/`**: 核心工程文件夹。请将此文件夹作为 VSCode 的工作区根目录打开。
     *   `.roo/`: 包含系统级提示词 (System Prompt)。
     *   `specs/`: v6.0 协议的 Schema 定义 (XML/Markdown)。
     *   `templates/`: 标准化样板代码。
@@ -24,6 +24,7 @@
 ### 前置要求
 *   [VSCode](https://code.visualstudio.com/)
 *   [RooCode Extension](https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline) (原 Cline)
+*   LLM API-Key 和可能的中转服务器地址     *最好保证所使用的模型厂商与选用的`Prism-ETL-[ModelName]`一致。*
 
 ### 引导流程 (The MBR Boot Sequence)
 
@@ -41,7 +42,7 @@
 ## 🚀 工作流 (Workflow)
 
 ### 1. 准备素材
-将角色的原始设定（文本文件、PDF 或图片）放入 `Prism-ETL/source_materials/` 目录。
+将角色的原始设定（文本文件、PDF 或图片）放入 `Prism-ETL-[ModelName]/source_materials/` 目录。
 
 ### 2. 启动铸造 (Workflow A: Character)
 在 RooCode 中输入指令：
