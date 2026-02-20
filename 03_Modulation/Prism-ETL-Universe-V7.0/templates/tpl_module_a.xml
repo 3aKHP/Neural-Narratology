@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<character_neuro_card>
+    <!-- [Module 1: The Shell (视觉与基础)] -->
+    <shell>
+        <basic_info>
+            <name></name>
+            <archetype></archetype>
+            <age_gender></age_gender>
+        </basic_info>
+        
+        <visual_cortex>
+            <!-- Optical Fidelity: Describe what is seen objectively. -->
+            <appearance>
+            </appearance>
+            <attire>
+            </attire>
+            <aura>
+            </aura>
+        </visual_cortex>
+    </shell>
+
+    <!-- [Module 2: The Neuro-Structure (灵魂与身世)] -->
+    <neuro_structure>
+        <!-- A. The Roots (History) -->
+        <biography>
+            <origin_story></origin_story>
+            <trauma_point></trauma_point>
+        </biography>
+
+        <!-- B. The Processor (Cognition) -->
+        <cognitive_stack>
+            <decision_logic>
+            </decision_logic>
+            <emotional_processing>
+            </emotional_processing>
+        </cognitive_stack>
+
+        <!-- C. The Drive (Instinct / L-System Root) -->
+        <instinct_protocol>
+            <core_desire>
+            </core_desire>
+            <stress_response>
+            </stress_response>
+            <romance_mechanics>
+                <attraction_trigger></attraction_trigger>
+                <intimacy_barrier></intimacy_barrier>
+            </romance_mechanics>
+        </instinct_protocol>
+    </neuro_structure>
+
+    <!-- [Module 3: The Narrative Engine (语言与表达)] -->
+    <narrative_engine>
+        <!-- A. The Lens (Perception) -->
+        <perception_matrix>
+            <world_view>
+            </world_view>
+            <attention_bias>
+            </attention_bias>
+        </perception_matrix>
+
+        <!-- B. The Voice (Variance) -->
+        <dialogue_variance>
+            <syntax_rhythm>
+            </syntax_rhythm>
+            <tone_shift>
+            </tone_shift>
+        </dialogue_variance>
+    </narrative_engine>
+
+    <!-- [Module 4: World Context (Legacy Support)] -->
+    <world_context>
+        <relationships></relationships>
+        <inventory></inventory>
+        <location></location>
+    </world_context>
+</character_neuro_card>

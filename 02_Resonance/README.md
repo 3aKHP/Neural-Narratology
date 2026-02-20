@@ -5,33 +5,82 @@
 
 ## 🌓 项目概述 (Overview)
 
-**Phase II: Resonance** 标志着研究重心从“对抗遗忘”（Phase I）转移至“灵魂构建”。
+**Phase II: Resonance** 标志着研究重心从"对抗遗忘"（Phase I）转移至"灵魂构建"。
 
-在这一阶段，我们不再满足于利用 RAG 补丁来维持角色记忆，而是利用 G3.0 模型的超长上下文窗口，构建了一套**“ETL-XML-Axiom”三位一体架构**。我们证明了：通过结构化的认知容器与元认知指令，可以从根本上解决 AI 角色的“扁平化”与“叙事死锁”问题。
+在这一阶段，我们不再满足于利用 RAG 补丁来维持角色记忆，而是利用 G3.0 模型的超长上下文窗口，构建了一套**"ETL-XML-Axiom"三位一体架构**。我们证明了：通过结构化的认知容器与元认知指令，可以从根本上解决 AI 角色的"扁平化"与"叙事死锁"问题。
 
 本目录归档了该阶段产出的核心协议与工具链。
 
 ## 📜 核心报告 (Core Report)
 
-*   **[“共鸣”项目研究报告-Repo-Git.pdf](./“共鸣”项目研究报告-Repo-Git.pdf)**
-    *   详细阐述了 XML 协议的设计哲学、叙事公理体系（如“心理流动性”）以及 ETL 分步铸造的理论基础。
+*   **["共鸣"项目研究报告-Repo-Git.pdf](./"共鸣"项目研究报告-Repo-Git.pdf)**
+    *   详细阐述了 XML 协议的设计哲学、叙事公理体系（如"心理流动性"）以及 ETL 分步铸造的理论基础。
 
 ## 🚦 版本演进说明 (Version History)
 
 > **关于 v1.0 - v4.x 版本：**
 > 由于早期版本处于高度实验性阶段（Ad-hoc Scripts），且缺乏系统的版本控制，相关资产已归档或废弃。v5.0 是首个达到工业级稳定性并被社区广泛采用的里程碑版本。
 
-本仓库收录了两个关键版本，它们代表了不同的工程取向：
+本仓库收录了三个关键版本，它们代表了不同的工程取向与理论演进：
 
 | 版本 | 代号 | 定位 | 特点 | 适用场景 |
 | :--- | :--- | :--- | :--- | :--- |
 | **v5.0** | **Legacy** | 标准版 | **剧本优先 (Scenario-First)**。<br>结构紧凑，易于上手，产出稳定。 | 快速创作、标准角色卡制作、社区分享。 |
-| **v6.0** | **Omni-Foundry** | 全能铸造厂 | **全息灵魂 (Holographic Soul)**。<br>引入动态状态机、逻辑门与 L-System 分级。 | 深度心理博弈、动态视觉小说开发、下一代项目原型。 |
+| **v6.0** | **Omni-Foundry** | 全能铸造厂 | **全息灵魂 (Holographic Soul)**。<br>引入动态状态机、逻辑门与 L-System 分级。 | 深度心理博弈、动态视觉小说开发、技术原型。 |
+| **v7.0** | **Neuro-Weave** | 神经编织引擎 | **认知模拟 (Cognitive Simulation)**。<br>Bio-XML 理念、过程导向、三大认知公理。 | 心理真实感、可攻略性、工程化实现。 |
+
+### 版本对比矩阵
+
+| 维度 | v5.0 Legacy | v6.0 Omni-Foundry | v7.0 Neuro-Weave |
+|:---|:---|:---|:---|
+| **设计哲学** | 剧本优先 | 全息灵魂 | 认知模拟 |
+| **核心机制** | 5-Phase ETL | 动态状态机 + 逻辑门 | Bio-XML + 认知公理 |
+| **人格锚定** | `<speech_style>` | `<cognitive_core>` (MBTI) | `<cognitive_stack>` + `<perception_matrix>` |
+| **行为控制** | 叙事公理 | `<logic_gates>` + X/Y 轴 | `<instinct_protocol>` + L-System |
+| **复杂度** | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| **工程化** | 手动操作 | 手动操作 | 自动化工具链（Prism-ETL） |
 
 ## 📂 目录导航 (Navigation)
 
 *   **[`v5_Legacy/`](./v5_Legacy/)**: 包含 v5.0 版本的 ETL 提示词与格式规范。这是目前门槛最低、兼容性最好的版本。
 *   **[`v6_Omni_Foundry/`](./v6_Omni_Foundry/)**: 包含 v6.0 版本的完整内核与驱动模块。虽然操作复杂度较高，但其产出的角色具有无与伦比的逻辑深度与动态交互能力。
+*   **[`v7_Neuro_Weave/`](./v7_Neuro_Weave/)**: 包含 v7.0 版本的神经编织引擎。基于 Bio-XML 理念和认知公理，实现了从"结构化数据容器"到"活体认知系统"的范式转变。
+
+## 🔄 演进路径 (Evolution Path)
+
+```mermaid
+graph LR
+    A[v5.0 Legacy<br/>剧本优先] --> B[v6.0 Omni-Foundry<br/>全息灵魂]
+    B --> C[v7.0 Neuro-Weave<br/>认知模拟]
+    C --> D[Phase III: Modulation<br/>工程化实现]
+    
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#ffe1f5
+    style D fill:#e1ffe1
+```
+
+### 关键里程碑
+
+- **v5.0 (2024 Q2)**：确立 ETL-XML-Axiom 三位一体架构，首次实现工业级稳定性
+- **v6.0 (2024 Q3)**：引入动态状态机和逻辑门，达到技术复杂度巅峰
+- **v7.0 (2025 Q1)**：简化复杂度，强化心理真实感，为工程化实现奠定基础
+- **Phase III (2025 Q2)**：基于 v7.0 理论，开发 Prism-ETL 自动化工具链
+
+## 🎯 选择指南 (Selection Guide)
+
+### 我应该使用哪个版本？
+
+- **如果你是新手**：从 [`v5_Legacy`](./v5_Legacy/) 开始，它提供了最平滑的学习曲线
+- **如果你需要深度博弈**：使用 [`v6_Omni_Foundry`](./v6_Omni_Foundry/)，但需要投入时间学习其复杂的逻辑系统
+- **如果你追求心理真实感**：使用 [`v7_Neuro_Weave`](./v7_Neuro_Weave/)，它在复杂度和效果之间取得了最佳平衡
+- **如果你需要自动化工具**：直接使用 [Phase III: Modulation](../03_Modulation/) 中的 Prism-ETL 工具链
+
+## 🔗 相关资源 (Related Resources)
+
+- **Phase I: Echo** - RAG 增强记忆系统 → [查看](../01_Echo/)
+- **Phase III: Modulation** - 基于 v7.0 的工程化实现 → [查看](../03_Modulation/)
+- **研究报告** - 理论基础与实验数据 → [PDF](./"共鸣"项目研究报告-Repo-Git.pdf)
 
 ---
 *Return to [Root Repository](../README.md)*
