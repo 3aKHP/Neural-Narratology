@@ -49,9 +49,10 @@
 
 *   **核心任务**：基于 IDE 原生环境的智能体辅助生产 (VibeCoding)。
 *   **关键成果**：
-    *   **Prism Engine 三位一体架构**：ETL（构建）、Runtime（模拟）、Evaluate（审计）形成完整闭环。
+    *   **Prism Engine 矩阵架构**：从初期的三位一体，扩展为包含 ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（衍生小说）和 Dyad（衍生数据）的五大引擎生态。
     *   基于 VSCode + RooCode 的自动化角色铸造流水线。
     *   实现了 **Zero-Copy** 工作流：利用智能体操作文件系统，实现从自然语言意图到结构化 XML/Markdown 的无缝转换。
+    *   突破长上下文窗口限制的 **Chunked Writing Loop**（分块写入循环）技术。
     *   完整实现 v7.0 Neuro-Weave 理论框架。
 *   **🛠️ [获取工具链](./03_Modulation/)**
 
@@ -105,20 +106,26 @@ graph LR
     B --> D[Scenario<br/>Markdown]
     C --> E[Prism-Runtime<br/>模拟引擎]
     D --> E
+    C -.衍生.-> W[Prism-Weaver/Dyad<br/>衍生引擎]
+    D -.衍生.-> W
     E --> F[Session Log]
+    W --> F
     F --> G[Prism-Evaluate<br/>审计引擎]
     G --> H[质量报告]
     H -.反馈优化.-> B
     
     style B fill:#e1f5ff
     style E fill:#ffe1f5
+    style W fill:#e1ffe1
     style G fill:#fff4e1
 ```
 
-**三引擎职责**：
-- **ETL Engine**: 从原始素材构建角色（Module A）和场景（Module B）
-- **Runtime Engine**: 执行基于文件的游戏循环，生成交互日志
-- **Evaluate Engine**: 审计日志质量，生成神经完整性报告
+**五大引擎矩阵**：
+- **ETL Engine**: 从原始素材逆向重构为角色 XML 和场景 MD。
+- **Runtime Engine**: 执行基于文件的双向交互循环。
+- **Evaluate Engine**: 提供日志质量审计与除虫指南。
+- **Weaver Engine**: 突破上下文限制，将设定自动扩写为连载长篇小说。
+- **Dyad Engine**: 分饰两角，全自动演绎并生成高质量的大规模交互数据集。
 
 ## 🚀 快速开始 (Quick Start)
 
@@ -200,9 +207,9 @@ graph LR
 - L5（极端）：边界探索（需谨慎使用）
 
 ### Agentic Workflow
-- 基于 RooCode 的文件系统操作
-- STOP & WAIT 机制确保人机协作
-- 三引擎闭环（构建→模拟→审计）
+- 基于 RooCode 的文件系统操作 (Zero-Copy)
+- STOP & WAIT 机制确保人机协同
+- 五大引擎闭环（构建 → 模拟/衍生 → 审计）
 
 ## 📊 项目统计 (Statistics)
 

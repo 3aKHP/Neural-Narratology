@@ -24,24 +24,34 @@ graph TB
     B --> C[Module A<br/>Neuro-Card XML]
     B --> D[Module B<br/>Tension Scenario MD]
     C --> E[Prism-Runtime Engine<br/>模拟引擎]
+    C --> W[Prism-Weaver Engine<br/>小说编织引擎]
     D --> E
+    D --> W
+    C --> Y[Prism-Dyad Engine<br/>双轨衍生引擎]
+    D --> Y
     E --> F[Session Log<br/>交互日志]
+    Y --> F
     F --> G[Prism-Evaluate Engine<br/>审计引擎]
     G --> H[Neuro-Integrity Report<br/>质量报告]
     H -.反馈优化.-> B
+    W --> N[Long-form Novel<br/>长篇小说]
     
     style B fill:#e1f5ff
     style E fill:#ffe1f5
+    style W fill:#e1ffe1
+    style Y fill:#f5e1ff
     style G fill:#fff4e1
 ```
 
-### 三引擎职责
+### 五大引擎职责
 
 | 引擎 | 模式 | 职责 | 输入 | 输出 |
 |:---|:---|:---|:---|:---|
 | **ETL Engine** | `prism-etl` | 构建角色与场景 | 原始素材 | Module A (XML) + Module B (MD) |
-| **Runtime Engine** | `prism-runtime` | 执行角色模拟 | Module A + Module B | Session Log (MD) |
+| **Runtime Engine** | `prism-runtime` | 执行角色单向模拟 | Module A + Module B | Session Log (MD) |
 | **Evaluate Engine** | `prism-evaluate` | 质量审计 | Source + XML + Log | Neuro-Integrity Report (MD) |
+| **Weaver Engine** | `prism-weaver` | 扩写生成长篇小说 | Module A + Module B | Long-form Novel (MD) |
+| **Dyad Engine** | `prism-dyad` | 双角色自动博弈生成数据 | Module A + Module B | Session Log (MD) |
 
 ## 📦 目录结构 (Directory Structure)
 
@@ -67,7 +77,9 @@ Prism-ETL-[Version]/
 ├── .roo/                           # 系统级提示词
 │   ├── system-prompt-prism-etl     # ETL 引擎核心
 │   ├── system-prompt-prism-runtime # Runtime 引擎核心
-│   └── system-prompt-prism-evaluate# Evaluate 引擎核心
+│   ├── system-prompt-prism-evaluate# Evaluate 引擎核心
+│   ├── system-prompt-prism-weaver  # Weaver 小说引擎核心
+│   └── system-prompt-prism-dyad    # Dyad 自动对弈引擎核心
 ├── specs/                          # Schema 定义
 │   ├── schema_character.md         # Module A 规范
 │   └── schema_scenario.md          # Module B 规范
@@ -85,6 +97,8 @@ Prism-ETL-[Version]/
 - **[`prism-etl_preset.yaml`](./prism-etl_preset.yaml)**: ETL 引擎模式配置
 - **[`prism-runtime_preset.yaml`](./prism-runtime_preset.yaml)**: Runtime 引擎模式配置
 - **[`prism-evaluate_preset.yaml`](./prism-evaluate_preset.yaml)**: Evaluate 引擎模式配置
+- **[`prism-weaver_preset.yaml`](./prism-weaver_preset.yaml)**: Weaver 引擎模式配置
+- **[`prism-dyad_preset.yaml`](./prism-dyad_preset.yaml)**: Dyad 引擎模式配置
 
 ## 🛠️ 安装与配置 (Setup)
 
@@ -100,21 +114,25 @@ Prism-ETL-[Version]/
 
 1. **加载配置文件**:
    - 打开 RooCode 设置 → `Custom Modes`
-   - 将以下三个配置文件内容追加到配置中：
+   - 将以下所有的配置文件内容追加到配置中：
      - [`prism-etl_preset.yaml`](./prism-etl_preset.yaml:1)
      - [`prism-runtime_preset.yaml`](./prism-runtime_preset.yaml:1)
      - [`prism-evaluate_preset.yaml`](./prism-evaluate_preset.yaml:1)
-   - *或者*：在 RooCode 聊天框中上传文件并指示："Load this custom mode configuration."
+     - [`prism-weaver_preset.yaml`](./prism-weaver_preset.yaml:1)
+     - [`prism-dyad_preset.yaml`](./prism-dyad_preset.yaml:1)
+   - *或者*：在 RooCode 聊天框中批量上传文件并指示："Load these custom mode configurations."
 
 2. **选择工作目录**:
    - 在 VSCode 中打开 [`Prism-ETL-Universe-V7.0/`](./Prism-ETL-Universe-V7.0/) 作为工作区根目录
    - 确保 RooCode 能够访问 [`.roo/`](./Prism-ETL-Universe-V7.0/.roo/) 目录
 
 3. **验证安装**:
-   - 在 RooCode 模式切换器中应该能看到三个新模式：
+   - 在 RooCode 模式切换器中应该能看到以下新模式：
      - **Prism ETL Engine**
      - **Prism Runtime Engine**
      - **Prism Evaluation Unit**
+     - **Prism Weaver Engine**
+     - **Prism Dyad Engine**
 
 ## 🚀 完整工作流 (Complete Workflow)
 
@@ -209,6 +227,33 @@ Evaluate session: [char_name]_log.md
 3. 生成结构化报告
 
 **输出位置**: [`reports/`](./Prism-ETL-Universe-V7.0/reports/)
+
+---
+
+### Phase 4: 衍生输出（Weaver Engine & Dyad Engine）
+
+除了常规的游玩（Runtime），您还可以将角色和场景用于更高级的衍生内容生成。
+
+#### 衍生 A：生成长篇小说 (Weaver Engine)
+**切换模式**: `Prism Weaver Engine`
+
+输入指令：`Generate a novel based on [char_name].xml and [scenario_name].md`
+
+引擎将：
+1. 询问使用 **[Mode A] Auto-Pilot**（自动连载）还是 **[Mode B] Co-Pilot**（分幕确认）模式。
+2. 生成包含大纲的 `outline.md`。
+3. 执行 **分块写入循环 (Chunked Writing Loop)**，在防止大模型崩溃（Token 超载）的前提下，通过 `Scene` 为单位的累加，在 `/novels/` 目录下为您完成整篇小说的创作。
+
+#### 衍生 B：全自动生成训练/评估日志 (Dyad Engine)
+**切换模式**: `Prism Dyad Engine`
+
+当您不想亲自作为 User 打字，又需要生成大量日志用于测试或基准数据收集时：
+输入指令：`Simulate a dyad session for [char_name].xml and [scenario_name].md`
+
+引擎将：
+1. **一人分饰两角 (Dual-Acting)**，同时扮演主动推进剧情的 User 和遵循 XML 逻辑的 Character。
+2. 支持 Auto-Pilot 批量生成或 Co-Pilot 逐轮审计。
+3. 严格遵循 `<action_guide>` 的叙事阶段推进剧本张力。
 
 ---
 
