@@ -1,4 +1,4 @@
-# Protocol v7.0: Neuro-Weave (Bio-XML Cognitive Engine)
+﻿# Protocol v7.0: Neuro-Weave (Bio-XML Cognitive Engine)
 
 > **基于认知模拟与过程导向的神经编织引擎**
 > *Neural Weaving Engine based on Cognitive Simulation & Process-Oriented Design*
@@ -131,7 +131,7 @@ graph TD
 
 v7.0 的理论框架已在 **Phase III: Modulation** 中实现为自动化工具链：
 
-- **[`03_Modulation/Prism-ETL-Universe-V7.0/`](../../03_Modulation/Prism-ETL-Universe-V7.0/)**
+- **[`03_Modulation/Prism-Engine-Universe-V7.0/`](../../03_Modulation/Prism-Engine-Universe-V7.0/)**
   - 三引擎架构：ETL Engine（构建）、Runtime Engine（模拟）、Evaluate Engine（审计）
   - RooCode 自定义模式集成
   - 跨模型兼容（Claude/Deepseek/Gemini）
@@ -147,7 +147,8 @@ v7.0 的设计哲学源自以下研究领域：
 - **叙事学**：角色弧光、张力曲线、可攻略性设计
 - **计算语言学**：语法节奏、语调转换、修辞规则
 
-详细理论阐述请参阅 [**"共鸣"项目研究报告**](../"共鸣"项目研究报告-Repo-Git.pdf)。
+详细理论阐述请参阅 [**"共鸣"项目研究报告**](../“共鸣”项目研究报告-Repo-Git.pdf)。
 
 ---
 *Return to [Parent Directory](../README.md)*
+

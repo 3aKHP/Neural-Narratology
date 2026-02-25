@@ -1,4 +1,4 @@
-# Neural Narratology (神经叙事学)
+﻿# Neural Narratology (神经叙事学)
 
 > **从逆向工程到自动化铸造：大型语言模型(LLM)交互式叙事与角色工程学研究**
 > *From Reverse Engineering to Automated Foundry: A Study on LLM Interactive Narrative and Character Engineering*
@@ -31,7 +31,7 @@
     *   揭示了 **"Single World-Simulator"** (单一世界模拟器) 架构。
     *   解构了 **Dynamic Persona Injection** (动态人设注入) 与轻量级 RAG 机制。
     *   提取了高级用户的"三层指令系统" (Jailbreak/Constitution/Knowledge)。
-*   **📄 [阅读研究报告](./01_Echo/"回响"项目研究报告-Repo-Git.pdf)**
+*   **📄 [阅读研究报告](./01_Echo/“回响”项目研究报告-Repo-Git.pdf)**
 
 ### [🌓 Phase II: Resonance (共鸣)](./02_Resonance/)
 > **"Construct the Soul with Logic."**
@@ -42,7 +42,7 @@
     *   发布了 **Protocol v5.0 (Legacy)**：综合性价比最高的剧本优先协议。
     *   发布了 **Protocol v6.0 (Omni-Foundry)**：引入动态状态机、逻辑门与 L-System 叙事分级的下一代协议。
     *   发布了 **Protocol v7.0 (Neuro-Weave)**：基于 Bio-XML 理念和认知公理的神经编织引擎，实现从"结构化数据容器"到"活体认知系统"的范式转变。
-*   **📄 [阅读研究报告](./02_Resonance/"共鸣"项目研究报告-Repo-Git.pdf)**
+*   **📄 [阅读研究报告](./02_Resonance/“共鸣”项目研究报告-Repo-Git.pdf)**
 
 ### [🌔 Phase III: Modulation (调制)](./03_Modulation/)
 > **"Control the Signal via Agents."**
@@ -63,26 +63,33 @@
 ```text
 Neural-Narratology/
 ├── 01_Echo/                        # Phase I: 逆向分析报告与脱敏数据样本
+│   ├── README.md
 │   ├── backend_request_structure.yaml
 │   ├── preset_meta_commands.txt
 │   ├── RAG_inject.xml
-│   └── "回响"项目研究报告-Repo-Git.pdf
+│   ├── "回响"项目研究报告-Repo-Git.md
+│   └── “回响”项目研究报告-Repo-Git.pdf
 │
 ├── 02_Resonance/                   # Phase II: 核心协议与理论框架
+│   ├── README.md
 │   ├── v5_Legacy/                  # 社区标准版协议（剧本优先）
 │   ├── v6_Omni_Foundry/            # 全息灵魂协议（动态状态机）
 │   ├── v7_Neuro_Weave/             # 神经编织引擎（认知模拟）⭐ 最新
-│   └── "共鸣"项目研究报告-Repo-Git.pdf
+│   ├── "共鸣"项目研究报告-Repo-Git.md
+│   └── “共鸣”项目研究报告-Repo-Git.pdf
 │
 ├── 03_Modulation/                  # Phase III: 自动化工具链
-│   ├── Prism-ETL-Universe-V7.0/    # 通用版本（推荐）⭐
-│   ├── Prism-ETL-Claude/           # Claude 优化版本
-│   ├── Prism-ETL-Deepseek/         # Deepseek 优化版本
-│   ├── Prism-ETL-Gemini/           # Gemini 优化版本
+│   ├── Prism-Engine-Universe-V7.0/ # 通用版本（完整五引擎）⭐
+│   ├── Prism-ETL-Claude/           # Claude 优化版本（ETL 专项）
+│   ├── Prism-ETL-Deepseek/         # Deepseek 优化版本（ETL 专项）
+│   ├── Prism-ETL-Gemini/           # Gemini 优化版本（ETL 专项）
+│   ├── README.md
 │   ├── prism-etl_preset.yaml       # ETL 引擎配置
 │   ├── prism-runtime_preset.yaml   # Runtime 引擎配置
 │   ├── prism-evaluate_preset.yaml  # Evaluate 引擎配置
-│   └── "调制"项目研究报告-Draft.md
+│   ├── prism-weaver_preset.yaml    # Weaver 引擎配置
+│   ├── prism-dyad_preset.yaml      # Dyad 引擎配置
+│   └── "调制"项目研究报告-Repo-Git.md
 │
 └── README.md                       # 项目总览
 ```
@@ -145,7 +152,7 @@ graph LR
     - 准备 LLM API-Key
 
 3.  **加载工具链**：
-    - 打开 [`03_Modulation/Prism-ETL-Universe-V7.0/`](./03_Modulation/Prism-ETL-Universe-V7.0/) 作为工作区
+    - 打开 [`03_Modulation/Prism-Engine-Universe-V7.0/`](./03_Modulation/Prism-Engine-Universe-V7.0/) 作为工作区
     - 在 RooCode 设置中加载三个配置文件：
       - [`prism-etl_preset.yaml`](./03_Modulation/prism-etl_preset.yaml)
       - [`prism-runtime_preset.yaml`](./03_Modulation/prism-runtime_preset.yaml)
@@ -175,19 +182,19 @@ graph LR
 ## 📚 学习路径 (Learning Path)
 
 ### 🎓 初学者路径
-1. 阅读 [Phase I 研究报告](./01_Echo/"回响"项目研究报告-Repo-Git.pdf) 了解背景
+1. 阅读 [Phase I 研究报告](./01_Echo/“回响”项目研究报告-Repo-Git.pdf) 了解背景
 2. 使用 [Phase III 工具链](./03_Modulation/) 快速上手
 3. 体验 [v5.0 Legacy](./02_Resonance/v5_Legacy/) 理解基础概念
 
 ### 🔬 研究者路径
-1. 深入研究 [Phase II 报告](./02_Resonance/"共鸣"项目研究报告-Repo-Git.pdf)
+1. 深入研究 [Phase II 报告](./02_Resonance/“共鸣”项目研究报告-Repo-Git.pdf)
 2. 对比 [v5.0](./02_Resonance/v5_Legacy/) / [v6.0](./02_Resonance/v6_Omni_Foundry/) / [v7.0](./02_Resonance/v7_Neuro_Weave/) 的设计差异
-3. 分析 [Phase III 源码](./03_Modulation/Prism-ETL-Universe-V7.0/.roo/) 的工程实现
+3. 分析 [Phase III 源码](./03_Modulation/Prism-Engine-Universe-V7.0/.roo/) 的工程实现
 
 ### 🛠️ 开发者路径
 1. Fork 本仓库
-2. 基于 [v7.0 Schema](./03_Modulation/Prism-ETL-Universe-V7.0/specs/) 自定义扩展
-3. 修改 [System Prompts](./03_Modulation/Prism-ETL-Universe-V7.0/.roo/) 适配特定模型
+2. 基于 [v7.0 Schema](./03_Modulation/Prism-Engine-Universe-V7.0/specs/) 自定义扩展
+3. 修改 [System Prompts](./03_Modulation/Prism-Engine-Universe-V7.0/.roo/) 适配特定模型
 
 ## 🔬 技术亮点 (Technical Highlights)
 
@@ -213,11 +220,15 @@ graph LR
 
 ## 📊 项目统计 (Statistics)
 
+> **统计口径（更新于 2026-02-25）**：仅统计仓库内可追踪资产；不含 `.git/` 与本地 `dev/` 工作目录。
+
+- **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
 - **协议版本**: 3 个主要版本（v5.0, v6.0, v7.0）
-- **工具链**: 4 个模型优化版本 + 1 个通用版本
-- **文档**: 2 份完整研究报告 + 多份技术文档
-- **代码**: 6 个 Step 文件 + 3 个引擎系统提示词
-- **Schema**: 2 个标准化规范（Character + Scenario）
+- **Prism 工具链分支**: 4 个（`Prism-Engine-Universe-V7.0` + 3 个 ETL 专项分支）
+- **引擎预设配置**: 5 个（ETL / Runtime / Evaluate / Weaver / Dyad）
+- **`.roo` 系统提示词**: 8 份
+- **Schema 与模板**: `schema_*.md` 8 份，`tpl_module_*` 8 份
+- **研究报告**: Repo-Git 版本 Markdown 3 份，PDF 2 份
 
 ## ⚠️ 免责声明 (Disclaimer)
 
@@ -243,3 +254,4 @@ graph LR
 
 ---
 *Copyright © 2025 3aKHP. All rights reserved.*
+

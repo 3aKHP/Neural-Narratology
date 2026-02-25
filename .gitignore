@@ -7,10 +7,8 @@ Thumbs.db
 # VSCode
 .vscode/
 
-# Prism-ETL Workspace (User Data)
-03_Modulation/Prism-ETL/workspace/*
-!03_Modulation/Prism-ETL/workspace/.gitkeep
+# Local dev notes
+dev/
 
-# Source Materials (User Data)
-03_Modulation/Prism-ETL/source_materials/*
-!03_Modulation/Prism-ETL/source_materials/.gitkeep
+#directory scan results
+dir_scan_result.txt

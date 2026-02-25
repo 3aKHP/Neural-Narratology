@@ -1,4 +1,4 @@
-# Phase III: Modulation (调制)
+﻿# Phase III: Modulation (调制)
 
 > **基于 VSCode + RooCode 的自动化角色铸造流水线**
 > *IDE-Native Automated Character Foundry based on VSCode & RooCode*
@@ -59,21 +59,42 @@ graph TB
 
 本项目包含多个针对不同模型优化的实现：
 
-- **[`Prism-ETL-Universe-V7.0/`](./Prism-ETL-Universe-V7.0/)**: **通用版本**（推荐）
+- **[`Prism-Engine-Universe-V7.0/`](./Prism-Engine-Universe-V7.0/)**: **通用版本**（推荐）
   - 基于 v7.0 Neuro-Weave 理论
-  - 包含完整的三引擎系统提示词
+  - 包含完整的五引擎系统提示词（ETL/Runtime/Evaluate/Weaver/Dyad）
   - 跨模型兼容设计
   
-- **[`Prism-ETL-Claude/`](./Prism-ETL-Claude/)**: Claude 优化版本
-- **[`Prism-ETL-Deepseek/`](./Prism-ETL-Deepseek/)**: Deepseek 优化版本
-- **[`Prism-ETL-Gemini/`](./Prism-ETL-Gemini/)**: Gemini 优化版本
+- **[`Prism-ETL-Claude/`](./Prism-ETL-Claude/)**: Claude 优化版本（当前为 ETL 专项）
+- **[`Prism-ETL-Deepseek/`](./Prism-ETL-Deepseek/)**: Deepseek 优化版本（当前为 ETL 专项）
+- **[`Prism-ETL-Gemini/`](./Prism-ETL-Gemini/)**: Gemini 优化版本（当前为 ETL 专项）
+
+### 版本能力矩阵
+
+| 版本目录 | 协议代际侧重 | 已提供 .roo 引擎 |
+|:---|:---|:---|
+| `Prism-Engine-Universe-V7.0` | v7.0 Neuro-Weave | `etl` + `runtime` + `evaluate` + `weaver` + `dyad` |
+| `Prism-ETL-Claude` | v6.x Holographic / ETL 专项 | `etl` |
+| `Prism-ETL-Deepseek` | v6.x Holographic / ETL 专项 | `etl` |
+| `Prism-ETL-Gemini` | v6.x Holographic / ETL 专项 | `etl` |
+
+### 协议代际路线图 (Roadmap)
+
+- **当前状态**：
+  - `Prism-Engine-Universe-V7.0` 为 v7.0 完整实现（五引擎）。
+  - `Prism-ETL-Claude` / `Prism-ETL-Deepseek` / `Prism-ETL-Gemini` 为 v6.x 语义的 ETL 专项分支。
+- **升级目标**：
+  1. 先将三模型分支的 `specs/` 与 `templates/` 对齐至 v7.0 Neuro-Card / Tension Scenario 结构。
+  2. 再补齐 `runtime` 与 `evaluate` 引擎提示词，形成可测试闭环。
+  3. 最后扩展 `weaver` 与 `dyad`，完成与 Universe 分支的能力并轨。
+- **发布原则**：
+  - 以“文档、模板、提示词三者一致”为准，未达一致前不标注为 v7 完整分支。
 
 ### 标准工程结构
 
-每个 Prism-ETL 目录包含：
+以下为 **Universe 完整版** 的标准工程结构（其余模型目录当前为 ETL 精简形态）：
 
 ```
-Prism-ETL-[Version]/
+Prism-Engine-[Version]/
 ├── .roo/                           # 系统级提示词
 │   ├── system-prompt-prism-etl     # ETL 引擎核心
 │   ├── system-prompt-prism-runtime # Runtime 引擎核心
@@ -90,6 +111,18 @@ Prism-ETL-[Version]/
 ├── workspace/                      # 工作区（生成的 XML/MD）
 ├── test_runs/                      # 模拟日志目录
 └── reports/                        # 评估报告目录
+```
+
+Claude/Deepseek/Gemini 目录当前最小结构为：
+
+```
+Prism-ETL-[Model]/
+├── .roo/
+│   └── system-prompt-prism-etl
+├── specs/
+├── templates/
+├── source_materials/
+└── workspace/
 ```
 
 ### 配置文件
@@ -123,8 +156,8 @@ Prism-ETL-[Version]/
    - *或者*：在 RooCode 聊天框中批量上传文件并指示："Load these custom mode configurations."
 
 2. **选择工作目录**:
-   - 在 VSCode 中打开 [`Prism-ETL-Universe-V7.0/`](./Prism-ETL-Universe-V7.0/) 作为工作区根目录
-   - 确保 RooCode 能够访问 [`.roo/`](./Prism-ETL-Universe-V7.0/.roo/) 目录
+   - 在 VSCode 中打开 [`Prism-Engine-Universe-V7.0/`](./Prism-Engine-Universe-V7.0/) 作为工作区根目录
+   - 确保 RooCode 能够访问 [`.roo/`](./Prism-Engine-Universe-V7.0/.roo/) 目录
 
 3. **验证安装**:
    - 在 RooCode 模式切换器中应该能看到以下新模式：
@@ -141,7 +174,7 @@ Prism-ETL-[Version]/
 **切换模式**: `Prism ETL Engine`
 
 #### 1.1 准备素材
-将角色的原始设定（文本、PDF 或图片）放入 [`source_materials/`](./Prism-ETL-Universe-V7.0/source_materials/) 目录。
+将角色的原始设定（文本、PDF 或图片）放入 [`source_materials/`](./Prism-Engine-Universe-V7.0/source_materials/) 目录。
 
 #### 1.2 构建角色（Workflow A）
 在 RooCode 中输入指令：
@@ -151,9 +184,9 @@ Initialize Workflow A for [Character Name]. Source material is in source_materia
 
 引擎将自动执行 4-Phase 工作流：
 1. **Phase 0: Blueprint** - 分析素材并给出设计蓝图
-2. **Phase 1: Visual Shell** - 生成 [`<shell>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:12)（基础信息 + 视觉皮层）
-3. **Phase 2: Neuro-Structure** - 注入 [`<neuro_structure>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:26)（历史 + 认知栈 + 本能协议）
-4. **Phase 3: Narrative Engine** - 补全 [`<narrative_engine>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:44)（感知矩阵 + 对话变化）
+2. **Phase 1: Visual Shell** - 生成 [`<shell>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:12)（基础信息 + 视觉皮层）
+3. **Phase 2: Neuro-Structure** - 注入 [`<neuro_structure>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:26)（历史 + 认知栈 + 本能协议）
+4. **Phase 3: Narrative Engine** - 补全 [`<narrative_engine>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:44)（感知矩阵 + 对话变化）
 
 *注意：每一步引擎都会暂停（STOP & WAIT），等待你的确认或修改意见。*
 
@@ -165,11 +198,11 @@ Initialize Workflow B. I want a [L3-B] scenario where I play as [Rival].
 
 引擎将：
 1. 读取刚才生成的 XML
-2. 分析 [`<instinct_protocol>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:37) 和 L-System 需求
+2. 分析 [`<instinct_protocol>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:37) 和 L-System 需求
 3. 提供 3 个剧情钩子供选择
-4. 生成完整的 Tension Scenario（参考 [`schema_scenario.md`](./Prism-ETL-Universe-V7.0/specs/schema_scenario.md:1)）
+4. 生成完整的 Tension Scenario（参考 [`schema_scenario.md`](./Prism-Engine-Universe-V7.0/specs/schema_scenario.md:1)）
 
-**输出位置**: [`workspace/`](./Prism-ETL-Universe-V7.0/workspace/)
+**输出位置**: [`workspace/`](./Prism-Engine-Universe-V7.0/workspace/)
 
 ---
 
@@ -185,7 +218,7 @@ Start Session: [char_name].xml + [scenario_name].md
 
 引擎将：
 1. 读取 Module A（Neuro-Card）和 Module B（Scenario）
-2. 创建 [`test_runs/[char]_log.md`](./Prism-ETL-Universe-V7.0/test_runs/)
+2. 创建 [`test_runs/[char]_log.md`](./Prism-Engine-Universe-V7.0/test_runs/)
 3. 写入场景引入和开场白
 4. 追加用户输入占位符（Turn 1）
 
@@ -200,7 +233,7 @@ Start Session: [char_name].xml + [scenario_name].md
 - **Dynamic HUD**（状态面板）：时间/位置、感官/身体、神经状态、印象
 - **Main Content**（故事正文）：200-800 字高密度中文叙事
 
-**输出位置**: [`test_runs/`](./Prism-ETL-Universe-V7.0/test_runs/)
+**输出位置**: [`test_runs/`](./Prism-Engine-Universe-V7.0/test_runs/)
 
 ---
 
@@ -216,17 +249,17 @@ Evaluate session: [char_name]_log.md
 
 引擎将：
 1. 读取三个数据源：
-   - Ground Truth: [`source_materials/`](./Prism-ETL-Universe-V7.0/source_materials/)（原始素材）
-   - Blueprint: [`workspace/*.xml`](./Prism-ETL-Universe-V7.0/workspace/)（角色定义）
-   - Reality: [`test_runs/*.md`](./Prism-ETL-Universe-V7.0/test_runs/)（实际行为）
+   - Ground Truth: [`source_materials/`](./Prism-Engine-Universe-V7.0/source_materials/)（原始素材）
+   - Blueprint: [`workspace/*.xml`](./Prism-Engine-Universe-V7.0/workspace/)（角色定义）
+   - Reality: [`test_runs/*.md`](./Prism-Engine-Universe-V7.0/test_runs/)（实际行为）
 2. 基于 4 个维度分析：
-   - **Voice Fidelity**（声纹一致性）：对话是否匹配 [`<dialogue_variance>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:51)
-   - **Neuro-Logic**（逻辑自洽性）：行为是否遵循 [`<cognitive_stack>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:33)
+   - **Voice Fidelity**（声纹一致性）：对话是否匹配 [`<dialogue_variance>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:51)
+   - **Neuro-Logic**（逻辑自洽性）：行为是否遵循 [`<cognitive_stack>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:33)
    - **L-System Adherence**（张力曲线）：场景是否符合 L-Level 定义
    - **Hallucination Check**（幻觉检测）：是否捏造事实或 OOC
 3. 生成结构化报告
 
-**输出位置**: [`reports/`](./Prism-ETL-Universe-V7.0/reports/)
+**输出位置**: [`reports/`](./Prism-Engine-Universe-V7.0/reports/)
 
 ---
 
@@ -264,17 +297,17 @@ Evaluate session: [char_name]_log.md
 ### Bio-XML 协议
 - XML 标签作为"功能器官"而非文本容器
 - 强制"过程导向"描述（如何运作 vs. 是什么）
-- 参考：[`system-prompt-prism-etl`](./Prism-ETL-Universe-V7.0/.roo/system-prompt-prism-etl:9)
+- 参考：[`system-prompt-prism-etl`](./Prism-Engine-Universe-V7.0/.roo/system-prompt-prism-etl:9)
 
 ### 三大认知公理
-1. **感知滤镜**：通过 [`<perception_matrix>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:47) 定义角色如何过滤现实
-2. **情感液压**：通过 [`<stress_response>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:39) 定义压力点和释放阀
-3. **攻略性**：通过 [`<romance_mechanics>`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:40) 定义连接路径
+1. **感知滤镜**：通过 [`<perception_matrix>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:47) 定义角色如何过滤现实
+2. **情感液压**：通过 [`<stress_response>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:39) 定义压力点和释放阀
+3. **攻略性**：通过 [`<romance_mechanics>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:40) 定义连接路径
 
 ### L-System 本能协议
 - L1-L2（社交/浪漫）：情感共鸣、张力构建
 - L3-L4（亲密/癖好）：感官沉浸、欲望释放
-- 参考：[`schema_scenario.md`](./Prism-ETL-Universe-V7.0/specs/schema_scenario.md:93)
+- 参考：[`schema_scenario.md`](./Prism-Engine-Universe-V7.0/specs/schema_scenario.md:93)
 
 ## ⚠️ 稳定性说明 (Stability)
 
@@ -286,7 +319,7 @@ Evaluate session: [char_name]_log.md
 1. **MBR 机制依赖**：如果 Agent 出现"幻觉"或变回通用模式，请：
    - 重启 VSCode
    - 重新选择自定义模式
-   - 确认 [`.roo/`](./Prism-ETL-Universe-V7.0/.roo/) 目录可访问
+   - 确认 [`.roo/`](./Prism-Engine-Universe-V7.0/.roo/) 目录可访问
 
 2. **模型兼容性**：
    - **推荐**: Claude Sonnet 3.5+, Deepseek V3, Gemini 2.0+
@@ -301,7 +334,7 @@ Evaluate session: [char_name]_log.md
   - **解决**: 在聊天中明确指示："ALWAYS check for `.roo/system-prompt-prism-[mode]`"
   
 - **问题**: 生成的 XML 格式错误
-  - **解决**: 检查 [`templates/tpl_module_a.xml`](./Prism-ETL-Universe-V7.0/templates/tpl_module_a.xml:1) 是否完整
+  - **解决**: 检查 [`templates/tpl_module_a.xml`](./Prism-Engine-Universe-V7.0/templates/tpl_module_a.xml:1) 是否完整
 
 - **问题**: Runtime Engine 无限循环
   - **解决**: 检查 session log 最后一行是否为占位符，手动编辑后点击"确认/继续"
@@ -310,24 +343,25 @@ Evaluate session: [char_name]_log.md
 
 - **Phase II: Resonance** - 理论基础与协议定义 → [查看](../02_Resonance/)
   - [v7.0 Neuro-Weave](../02_Resonance/v7_Neuro_Weave/) - 本工具链的理论来源
-- **研究报告** - 设计哲学与实验数据 → [PDF](../"调制"项目研究报告-Draft.md)
+- **研究报告** - 设计哲学与实验数据 → [Markdown](./“调制”项目研究报告-Repo-Git.md)
 
 ## 📚 进阶阅读 (Advanced Topics)
 
 ### 自定义 Schema
 如需修改角色或场景结构，编辑：
-- [`specs/schema_character.md`](./Prism-ETL-Universe-V7.0/specs/schema_character.md:1)
-- [`specs/schema_scenario.md`](./Prism-ETL-Universe-V7.0/specs/schema_scenario.md:1)
+- [`specs/schema_character.md`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:1)
+- [`specs/schema_scenario.md`](./Prism-Engine-Universe-V7.0/specs/schema_scenario.md:1)
 
 ### 扩展 L-System
 当前支持 L1-L5，如需添加新层级：
-1. 更新 [`schema_scenario.md`](./Prism-ETL-Universe-V7.0/specs/schema_scenario.md:93) 的 L-System 定义
-2. 修改 [`system-prompt-prism-etl`](./Prism-ETL-Universe-V7.0/.roo/system-prompt-prism-etl:1) 的 Workflow B 逻辑
+1. 更新 [`schema_scenario.md`](./Prism-Engine-Universe-V7.0/specs/schema_scenario.md:93) 的 L-System 定义
+2. 修改 [`system-prompt-prism-etl`](./Prism-Engine-Universe-V7.0/.roo/system-prompt-prism-etl:1) 的 Workflow B 逻辑
 
 ### 多语言支持
 当前所有创意内容强制使用简体中文，如需其他语言：
-1. 修改 [`.roo/system-prompt-prism-etl`](./Prism-ETL-Universe-V7.0/.roo/system-prompt-prism-etl:32) 的 Language Lock
-2. 更新 [`templates/`](./Prism-ETL-Universe-V7.0/templates/) 中的示例内容
+1. 修改 [`.roo/system-prompt-prism-etl`](./Prism-Engine-Universe-V7.0/.roo/system-prompt-prism-etl:32) 的 Language Lock
+2. 更新 [`templates/`](./Prism-Engine-Universe-V7.0/templates/) 中的示例内容
 
 ---
 *Return to [Root Repository](../README.md)*
+

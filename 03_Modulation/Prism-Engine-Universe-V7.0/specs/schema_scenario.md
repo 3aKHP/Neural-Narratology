@@ -41,7 +41,7 @@ L4-B 践踏的艺术 (The Art of Trample) #足控 #女王 #R-18
 - A single Markdown code block tagged as `xml`.
 - Inside the code block:
     1.  **Opening Lines:** The character's first spoken lines or narration. **Zero Indentation**.
-    2.  **Engine Logic:** Wrapped inside `/* <scenario_engine> ... </scenario_engine> */` (C-Style Comments).
+    2.  **Engine Logic:** Wrapped inside `<!-- <scenario_engine> ... </scenario_engine> -->` (XML comment wrapper). Use `/* ... */` only for inline notes within the block.
 
 **XML Schema inside Payload:**
 ```xml
