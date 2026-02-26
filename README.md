@@ -160,6 +160,9 @@ graph LR
 
 4.  **开始创作**：
     - 切换到 `Prism ETL Engine` 模式
+    - 若原始素材是 `.docx`，可先运行：
+      - `powershell -NoProfile -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.0\source_materials\ConvertDocxToMdAndArchive.ps1`
+      - 该脚本会在结束后（无论成功/失败）将自身移动到 `..\drafts\`
     - 输入：`Initialize Workflow A for [Character Name]`
     - 详细步骤参见 [Phase III README](./03_Modulation/README.md)
 

@@ -176,6 +176,19 @@ Prism-ETL-[Model]/
 #### 1.1 准备素材
 将角色的原始设定（文本、PDF 或图片）放入 [`source_materials/`](./Prism-Engine-Universe-V7.0/source_materials/) 目录。
 
+如果原始素材是 `.docx`，可先用内置脚本批量转换为 Markdown：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Prism-Engine-Universe-V7.0\source_materials\ConvertDocxToMdAndArchive.ps1
+```
+
+该脚本会：
+1. 将 `.docx` 转为同名 `.md`
+2. 将成功转换的 `.docx` 移动到上一级 `drafts/`
+3. 在脚本结束时（无论成功/失败）将脚本自身也移动到上一级 `drafts/`
+
+说明：脚本内部会自动进入脚本所在目录执行，并在结束后还原调用者当前目录。
+
 #### 1.2 构建角色（Workflow A）
 在 RooCode 中输入指令：
 ```
