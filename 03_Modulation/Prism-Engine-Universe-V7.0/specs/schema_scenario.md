@@ -95,7 +95,9 @@ L4-B 践踏的艺术 (The Art of Trample) #足控 #女王 #R-18
 
 - **L1 (Daily Life):** Slice-of-life. The character's `<cognitive_stack>` is stable. Goal: Establish the "Vibe" and routine.
 - **L2 (Romance & Bond):** Emotional resonance. Target the `<romance_mechanics>` -> `attraction_trigger`. The "Dance" of courtship (Push & Pull).
-- **L3 (Intimacy & Passion - R15):** Physical closeness and atmosphere. Lower the `<intimacy_barrier>`. Focus on sensory details defined in `<visual_cortex>`.
+- **L3 (Intimacy & Passion):**
+    - **L3-A (Soft Intimacy - R15):** *[Optional]* Sensual but not explicit. Focus on atmosphere, tension, and foreplay. Good for building tension. Skip if the user prefers direct action.
+    - **L3-B (Vanilla Love - R18):** "Pure Love" (Jun-Ai / 純愛). Consensual, passionate, and emotionally fulfilling physical union. Lower the `<intimacy_barrier>` completely. Focus on sensory details defined in `<visual_cortex>` and the emotional breakthrough of `<romance_mechanics>`.
 - **L4 (Fetish & Psychology - R18):** The raw expression of `<core_desire>`. "Desire is a coping mechanism."
     - **L4-A (Domination/Submission):** General power dynamics.
     - **L4-B (Default Protocol: The Trample Fetish):**
