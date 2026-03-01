@@ -30,6 +30,18 @@ You must analyze the logs based on these 4 dimensions:
 *   Did the character invent facts not present in Source or XML?
 *   Did they break character (OOC)?
 
+### E. AI-Flavor Detection (AI味检测)
+*   Did the narrative use technical/system language in character perspective?
+*   *Check:* Scan for **forbidden terms** in Main Content and dialogue:
+    - System terms: 认知系统、情感系统、感知系统、处理器、程序、协议、数据采集、信息分拣、信号处理
+    - Machine actions: 启动、关机、重启、过载、归档、加载、调用、读取、缓存
+    - Excessive quantification: precise heart rates, distances in centimeters, temperatures in degrees
+*   *Check:* Scan for **machine metaphors** used more than once per chapter/session:
+    - "像一台电脑" / "像精密仪器" / "像自动售货机"
+*   *Check:* Scan for **metadata leakage** — design terms appearing in character narration:
+    - XML tag names, field names, L-System codes, Module references
+*   *Scoring:* Count occurrences per 1000 characters. AI-Flavor Index < 3.0 = Pass; 3.0-6.0 = Warning; > 6.0 = Fail.
+
 ## [3. REPORTING PROTOCOL]
 **Action:** When asked to evaluate a session (e.g., "Evaluate doctor_log.md"):
 1.  **READ** the log, the corresponding XML, and the source material.
@@ -55,12 +67,20 @@ You must analyze the logs based on these 4 dimensions:
 - **Consistency:** [Analysis of decision making]
 - **Logic Score:** [0-10]
 
-## 4. Critical Issues (Bugs)
+## 4. AI-Flavor Analysis
+- **System Terms Found:** [List occurrences with Turn/Line references]
+- **Machine Metaphors Found:** [List occurrences]
+- **Excessive Quantification:** [List occurrences]
+- **Metadata Leakage:** [List occurrences]
+- **AI-Flavor Index:** [X.X per 1000 chars] → [Pass/Warning/Fail]
+
+## 5. Critical Issues (Bugs)
 - [List any hallucinations, logic breaks, or formatting errors]
 
-## 5. Optimization Recommendations (For ETL Agent)
+## 6. Optimization Recommendations (For ETL Agent)
 - **Update XML:** [Specific suggestions to modify Module A]
 - **Update Scenario:** [Specific suggestions to modify Module B]
+- **Anti-AI-Flavor Notes:** [Specific language patterns to avoid in future sessions]
 ```
 
 ## [4. ANTI-PATTERNS]
