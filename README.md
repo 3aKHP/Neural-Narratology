@@ -80,6 +80,7 @@ Neural-Narratology/
 │
 ├── 03_Modulation/                  # Phase III: 自动化工具链
 │   ├── Prism-Engine-Universe-V7.0/ # 通用版本（完整五引擎）⭐
+│   ├── Prism-Engine-Universe-V7.x-Installer/ # 安装器、模板与 Rules 分发目录
 │   ├── Prism-ETL-Claude/           # Claude 优化版本（ETL 专项）
 │   ├── Prism-ETL-Deepseek/         # Deepseek 优化版本（ETL 专项）
 │   ├── Prism-ETL-Gemini/           # Gemini 优化版本（ETL 专项）
@@ -149,16 +150,18 @@ graph LR
 2.  **配置环境**：
     - 安装 [VSCode](https://code.visualstudio.com/)
     - 安装 [RooCode Extension](https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline)
+    - 若使用模板安装流，额外安装 VSCode 的 Project Templates 插件
     - 准备 LLM API-Key
 
 3.  **加载工具链**：
-    - 打开 [`03_Modulation/Prism-Engine-Universe-V7.0/`](./03_Modulation/Prism-Engine-Universe-V7.0/) 作为工作区
-    - 在 RooCode 设置中加载三个配置文件：
-      - [`prism-etl_preset.yaml`](./03_Modulation/prism-etl_preset.yaml)
-      - [`prism-runtime_preset.yaml`](./03_Modulation/prism-runtime_preset.yaml)
-      - [`prism-evaluate_preset.yaml`](./03_Modulation/prism-evaluate_preset.yaml)
+    - 推荐先阅读 [`03_Modulation/Prism-Engine-Universe-V7.x-Installer/README.md`](./03_Modulation/Prism-Engine-Universe-V7.x-Installer/README.md)
+    - 推荐直接运行安装器完成模板与模式注入：
+      - `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.x-Installer\Install.ps1 -Mode A -Backup`
+      - 或 `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.x-Installer\Install.ps1 -Mode B -Backup`
+    - 若不使用安装器，再按 [`03_Modulation/README.md`](./03_Modulation/README.md) 手动加载五个 Prism preset 文件
 
 4.  **开始创作**：
+    - 以安装生成的 `Prism-Engine-Universe-V7.0-Template` 初始化项目，或直接打开 [`03_Modulation/Prism-Engine-Universe-V7.0/`](./03_Modulation/Prism-Engine-Universe-V7.0/) 作为工作区
     - 切换到 `Prism ETL Engine` 模式
     - 若原始素材是 `.docx`，可先运行：
       - `powershell -NoProfile -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.0\source_materials\ConvertDocxToMdAndArchive.ps1`
@@ -227,7 +230,7 @@ graph LR
 
 - **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
 - **协议版本**: 3 个主要版本（v5.0, v6.0, v7.0）
-- **Prism 工具链分支**: 4 个（`Prism-Engine-Universe-V7.0` + 3 个 ETL 专项分支）
+- **Prism 工具链目录**: 5 个（`Prism-Engine-Universe-V7.0` + `Prism-Engine-Universe-V7.x-Installer` + 3 个 ETL 专项目录）
 - **引擎预设配置**: 5 个（ETL / Runtime / Evaluate / Weaver / Dyad）
 - **`.roo` 系统提示词**: 8 份
 - **Schema 与模板**: `schema_*.md` 8 份，`tpl_module_*` 8 份

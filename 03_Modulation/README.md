@@ -63,6 +63,10 @@ graph TB
   - 基于 v7.0 Neuro-Weave 理论
   - 包含完整的五引擎系统提示词（ETL/Runtime/Evaluate/Weaver/Dyad）
   - 跨模型兼容设计
+- **[`Prism-Engine-Universe-V7.x-Installer/`](./Prism-Engine-Universe-V7.x-Installer/)**: **安装器与模板分发目录**
+  - 提供 `Install.ps1` 一键安装脚本
+  - 支持 **Mode A（模板内置 `.roo` 提示词）** 与 **Mode B（用户目录 Rules Pack）**
+  - 内含 Project Template、预设 YAML、Rules XML 与补丁文件
   
 - **[`Prism-ETL-Claude/`](./Prism-ETL-Claude/)**: Claude 优化版本（当前为 ETL 专项）
 - **[`Prism-ETL-Deepseek/`](./Prism-ETL-Deepseek/)**: Deepseek 优化版本（当前为 ETL 专项）
@@ -132,6 +136,7 @@ Prism-ETL-[Model]/
 - **[`prism-evaluate_preset.yaml`](./prism-evaluate_preset.yaml)**: Evaluate 引擎模式配置
 - **[`prism-weaver_preset.yaml`](./prism-weaver_preset.yaml)**: Weaver 引擎模式配置
 - **[`prism-dyad_preset.yaml`](./prism-dyad_preset.yaml)**: Dyad 引擎模式配置
+- **[`Prism-Engine-Universe-V7.x-Installer/custom_modes_patch.yaml`](./Prism-Engine-Universe-V7.x-Installer/custom_modes_patch.yaml)**: Rules 模式下可整体并入 `custom_modes.yaml` 的补丁集合
 
 ## 🛠️ 安装与配置 (Setup)
 
@@ -139,11 +144,42 @@ Prism-ETL-[Model]/
 
 - [VSCode](https://code.visualstudio.com/)
 - [RooCode Extension](https://marketplace.visualstudio.com/items?itemName=RooVeterinaryInc.roo-cline) (原 Cline)
+- 若要使用 Project Template 安装方式，请额外安装 VSCode 的 Project Templates 插件
 - LLM API-Key（推荐使用与选定版本匹配的模型）
 
 ### 引导流程 (The MBR Boot Sequence)
 
-为了让 RooCode 正确识别 Prism 引擎，需要注入自定义模式：
+为了让 RooCode 正确识别 Prism 引擎，推荐优先使用安装器；手动注入方式仍然保留为兜底路径。
+
+#### 推荐方式：运行 V7.x 安装器
+
+1. **进入安装器目录**:
+   - 打开 [`Prism-Engine-Universe-V7.x-Installer/`](./Prism-Engine-Universe-V7.x-Installer/)
+   - 参考 [`Prism-Engine-Universe-V7.x-Installer/README.md`](./Prism-Engine-Universe-V7.x-Installer/README.md:1)
+
+2. **运行安装脚本**:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.x-Installer\Install.ps1 -Mode A -Backup
+```
+
+或安装 **Mode B / Rules 模式**：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.x-Installer\Install.ps1 -Mode B -Backup
+```
+
+3. **模式区别**:
+   - **Mode A**：把模板连同 `.roo/system-prompt-*` 一起复制到 VSCode Project Templates 目录，适合传统工作区内置提示词流。
+   - **Mode B**：把 `rules-prism-*` 安装到 `%USERPROFILE%\.roo\`，并复制一份不带模板提示词的 Project Template，适合基于全局 Rules Pack 的工作流。
+
+4. **验证安装**:
+   - VSCode 的 Project Templates 中应出现 `Prism-Engine-Universe-V7.0-Template`
+   - RooCode 模式切换器中应出现五个 Prism 模式
+
+#### 手动方式：追加自定义模式 YAML
+
+如果你不想运行脚本，也可以手动注入自定义模式：
 
 1. **加载配置文件**:
    - 打开 RooCode 设置 → `Custom Modes`
@@ -154,10 +190,12 @@ Prism-ETL-[Model]/
      - [`prism-weaver_preset.yaml`](./prism-weaver_preset.yaml:1)
      - [`prism-dyad_preset.yaml`](./prism-dyad_preset.yaml:1)
    - *或者*：在 RooCode 聊天框中批量上传文件并指示："Load these custom mode configurations."
+   - 若采用 Rules 模式，也可直接并入 [`Prism-Engine-Universe-V7.x-Installer/custom_modes_patch.yaml`](./Prism-Engine-Universe-V7.x-Installer/custom_modes_patch.yaml:1)
 
 2. **选择工作目录**:
    - 在 VSCode 中打开 [`Prism-Engine-Universe-V7.0/`](./Prism-Engine-Universe-V7.0/) 作为工作区根目录
-   - 确保 RooCode 能够访问 [`.roo/`](./Prism-Engine-Universe-V7.0/.roo/) 目录
+   - Mode A 需确保 RooCode 能够访问 [`.roo/`](./Prism-Engine-Universe-V7.0/.roo/) 目录
+   - Mode B 需确保 `%USERPROFILE%\.roo\rules-prism-*` 已安装完成
 
 3. **验证安装**:
    - 在 RooCode 模式切换器中应该能看到以下新模式：
