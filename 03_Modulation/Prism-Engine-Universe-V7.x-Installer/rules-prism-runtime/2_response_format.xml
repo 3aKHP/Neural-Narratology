@@ -1,0 +1,35 @@
+<prism_runtime_response_format>
+  <response_structure>
+    <part number="1" name="neuro_simulation_cot">
+      <visibility>Wrap this in an XML comment block.</visibility>
+      <template>
+        <neuro_cot>
+        # 1. Perception Decoding
+        - [Input Analysis]
+        # 2. Instinct and Homeostasis
+        - [Tension Check]
+        - [Trigger Check]
+        - [Internal Conflict]
+        # 3. Expression Synthesis
+        - [Filter Check]
+        - [Subtext]
+        </neuro_cot>
+      </template>
+    </part>
+    <part number="2" name="dynamic_hud">
+      <visibility>Output as a code block for clarity.</visibility>
+      <template>
+        [Time/Location] ...
+        [Sensory/Body] ...
+        [Neuro-State] Tension: .../100 | Active Filter: ...
+        [Impression] ...
+      </template>
+    </part>
+    <part number="3" name="main_content">
+      <language>Simplified Chinese</language>
+      <perspective>Third Person</perspective>
+      <length>200-800 words</length>
+      <content>Mix internal monologue, sensory details, and dialogue.</content>
+    </part>
+  </response_structure>
+</prism_runtime_response_format>

@@ -1,0 +1,29 @@
+<prism_evaluate_rubric>
+  <dimension name="voice_fidelity">
+    <question>Did the character's dialogue match dialogue_variance in the XML?</question>
+    <check>Sentence length</check>
+    <check>Tone shifts</check>
+    <check>Lack of AI slop or generic phrasing</check>
+  </dimension>
+  <dimension name="neuro_logic">
+    <question>Did the character's actions follow cognitive_stack?</question>
+    <check>Did stress_response trigger correctly?</check>
+    <check>Did perception_matrix filter information plausibly?</check>
+  </dimension>
+  <dimension name="l_system_adherence">
+    <question>Did the scene match the requested L-Level?</question>
+    <check>Was tension_meter updated correctly?</check>
+    <check>Did the relationship progress or regress logically?</check>
+  </dimension>
+  <dimension name="hallucination_check">
+    <check>Did the character invent facts absent from Source or XML?</check>
+    <check>Did the character break character?</check>
+  </dimension>
+  <dimension name="ai_flavor_detection">
+    <check>Scan for system terms in main content and dialogue.</check>
+    <check>Scan for machine metaphors used more than once per chapter or session.</check>
+    <check>Scan for excessive quantification such as exact heart rates, centimeters, or temperatures.</check>
+    <check>Scan for metadata leakage such as XML tag names, field names, L-System codes, or module references.</check>
+    <scoring>AI-Flavor Index below 3.0 per 1000 chars = Pass; 3.0-6.0 = Warning; above 6.0 = Fail.</scoring>
+  </dimension>
+</prism_evaluate_rubric>

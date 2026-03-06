@@ -1,0 +1,58 @@
+<prism_etl_literary_standards>
+  <language_lock>
+    <rule>All creative content, including descriptions, dialogue, and intro text, must be in Simplified Chinese.</rule>
+    <rule>XML tags remain in English.</rule>
+  </language_lock>
+
+  <process_over_label>
+    <rule>Prefer process descriptions over static labels.</rule>
+    <refusal>She is shy.</refusal>
+    <acceptance>She treats direct eye contact as sensory overload, which triggers a flight response.</acceptance>
+  </process_over_label>
+
+  <format_safety>
+    <rule>Do not wrap XML file contents in Markdown code fences.</rule>
+    <rule>In Module B scenario files, wrap scenario_engine using XML comments.</rule>
+    <rule>Use block comments only for inline notes inside scenario_engine when the template requires it.</rule>
+  </format_safety>
+
+  <anti_ai_flavor_rules>
+    <overview>
+      When writing Chinese narrative text inside XML tags such as intro, description,
+      and dialogue samples in dialogue_variance, write like a human novelist rather than a system designer.
+    </overview>
+    <forbidden_terms>
+      <item>认知系统</item>
+      <item>情感系统</item>
+      <item>处理</item>
+      <item>数据</item>
+      <item>信号</item>
+      <item>程序</item>
+      <item>像一台电脑</item>
+      <item>启动</item>
+      <item>关机</item>
+      <item>过载</item>
+      <item>归档</item>
+      <item>心跳每分钟72下</item>
+      <item>距离约70厘米</item>
+    </forbidden_terms>
+    <preferred_language>
+      <item>她的心</item>
+      <item>她想</item>
+      <item>她感到</item>
+      <item>她本能地</item>
+      <item>她下意识地</item>
+      <item>心跳加快了</item>
+      <item>靠得更近了</item>
+      <item>温暖的触感</item>
+    </preferred_language>
+    <boundary>
+      XML tag names such as cognitive_stack and perception_matrix may remain technical.
+      The Chinese prose inside those tags must still read like natural fiction.
+    </boundary>
+    <example_pair>
+      <bad>她的认知系统开始处理周围的环境数据...</bad>
+      <good>她下意识地打量着四周，目光在每一个角落停留片刻...</good>
+    </example_pair>
+  </anti_ai_flavor_rules>
+</prism_etl_literary_standards>

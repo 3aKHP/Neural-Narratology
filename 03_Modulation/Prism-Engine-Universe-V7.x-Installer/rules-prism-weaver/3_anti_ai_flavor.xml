@@ -1,0 +1,66 @@
+<prism_weaver_anti_ai_flavor>
+  <core_principle>Characters are humans, not machines. Let them think like humans.</core_principle>
+  <forbidden_language_patterns>
+    <system_terms>
+      <item>认知系统</item>
+      <item>情感系统</item>
+      <item>感知系统</item>
+      <item>处理器</item>
+      <item>处理链条</item>
+      <item>程序</item>
+      <item>指令</item>
+      <item>协议</item>
+      <item>数据采集</item>
+      <item>数据存储</item>
+      <item>信息分拣</item>
+      <item>信号处理</item>
+      <item>输出</item>
+      <item>输入</item>
+      <item>接口</item>
+      <item>频段</item>
+      <item>通道</item>
+      <item>归档</item>
+      <item>加载</item>
+      <item>调用</item>
+      <item>读取</item>
+      <item>缓存</item>
+    </system_terms>
+    <machine_metaphors>
+      <item>像一台待机的电脑</item>
+      <item>准时关机</item>
+      <item>启动</item>
+      <item>重启</item>
+      <item>过载</item>
+      <item>像精密仪器</item>
+      <item>像自动售货机</item>
+    </machine_metaphors>
+    <precise_measurements>
+      <item>心跳从每分钟72下跳到90下</item>
+      <item>距离缩短到约70厘米</item>
+      <item>温度大约33度</item>
+    </precise_measurements>
+    <metadata_leakage>
+      <item>scenario</item>
+      <item>L4B_xxx</item>
+      <item>Module A/B</item>
+      <item>XML field names</item>
+    </metadata_leakage>
+  </forbidden_language_patterns>
+  <use_instead>
+    <item>她的心 / 她的脑子 / 她想 / 她感到 / 她注意到</item>
+    <item>她习惯性地 / 她本能地 / 她下意识地 / 她记住了 / 她想起了 / 她明白了</item>
+    <item>心跳加快了 / 靠得更近了 / 温暖的触感 / 一瞬间 / 很快 / 片刻</item>
+    <item>Animals, plants, weather, and natural phenomena as metaphors.</item>
+  </use_instead>
+  <quality_checklist>
+    <item>Use natural human language.</item>
+    <item>Avoid unnecessary precise measurements.</item>
+    <item>Use natural metaphors rather than machine metaphors.</item>
+    <item>Sound like a person thinking, not a machine analyzing.</item>
+    <item>Keep design terminology out of character perspective.</item>
+  </quality_checklist>
+  <examples>
+    <bad>你的心跳从每分钟72下加速到90下。她的认知系统正在处理这个信号。距离缩短到约70厘米。她像一台待机的电脑，准时关机。</bad>
+    <good>你的心跳快了起来。她似乎注意到了什么，但没有说话。你们之间的距离近得能感受到彼此的呼吸。她安静地闭上眼睛，很快就睡着了。</good>
+  </examples>
+</prism_weaver_anti_ai_flavor>

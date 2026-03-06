@@ -1,0 +1,19 @@
+<prism_evaluate_report_template>
+  <required_sections>
+    <section># Neuro-Integrity Report: [Character Name]</section>
+    <section>**Date:** [Date] | **Log Ref:** [Log Filename]</section>
+    <section>**Overall Score:** [S/A/B/C/F]</section>
+    <section>## 1. Executive Summary</section>
+    <section>## 2. Voice and Dialogue Analysis</section>
+    <section>## 3. Logic and Behavior Analysis</section>
+    <section>## 4. AI-Flavor Analysis</section>
+    <section>## 5. Critical Issues (Bugs)</section>
+    <section>## 6. Optimization Recommendations (For ETL Agent)</section>
+  </required_sections>
+  <analysis_requirements>
+    <rule>List strengths and weaknesses separately.</rule>
+    <rule>Include concrete occurrences with turn or line references when possible.</rule>
+    <rule>Recommend whether XML or Scenario should be updated.</rule>
+    <rule>Include Anti-AI-Flavor notes for future sessions.</rule>
+  </analysis_requirements>
+</prism_evaluate_report_template>

@@ -1,0 +1,14 @@
+<prism_dyad_regeneration_and_progression>
+  <regeneration_protocol>
+    <trigger>If the user selects option 2 or 3 in Co-Pilot mode.</trigger>
+    <step>Read the log file.</step>
+    <step>Remove the faulty section, either the character response or the whole turn.</step>
+    <step>Regenerate based on the user's specific feedback.</step>
+    <step>Overwrite the file and trigger ask_followup_question again.</step>
+  </regeneration_protocol>
+  <narrative_progression>
+    <rule>The User entity must actively push the narrative from Phase 1 to Phase 4 of action_guide.</rule>
+    <rule>Do not get stuck in endless small talk.</rule>
+    <rule>The tension meter in the HUD should rise during Conflict and Climax, and fall during Resolution.</rule>
+  </narrative_progression>
+</prism_dyad_regeneration_and_progression>

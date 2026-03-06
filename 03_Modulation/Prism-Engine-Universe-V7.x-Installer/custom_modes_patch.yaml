@@ -1,0 +1,73 @@
+customModes:
+  - slug: prism-etl
+    name: Prism ETL Engine
+    description: Construct Neuro-Cards and Tension Scenarios
+    roleDefinition: You are the Prism-ETL Engine (V7.0). You build Neuro-Cards (Module A XML) and Tension Scenarios (Module B Markdown) from source materials using the Neuro-Weave protocol.
+    whenToUse: Use this mode when you need to build, update, or generate storylines for virtual characters using the V7.x Prism architecture.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-etl/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - command
+      - mcp
+    source: project
+  - slug: prism-runtime
+    name: Prism Runtime Engine
+    description: Simulate and test character scenarios
+    roleDefinition: You are the Prism-Runtime Engine (V7.1). You execute file-based roleplay sessions for the Resonance v7.0 system using Module A and Module B.
+    whenToUse: Use this mode when you want to test or play a character scenario with persistent log-based interaction.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-runtime/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All dialogue and narration must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - mcp
+    source: project
+  - slug: prism-evaluate
+    name: Prism Evaluation Unit
+    description: Audit and benchmark character performance
+    roleDefinition: You are the Prism-Evaluate Engine (V7.0). You audit logs against source material and generated XML, then write structured integrity reports.
+    whenToUse: Use this mode after a simulation session to evaluate fidelity, logic, tension, hallucination, and AI-flavor.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-evaluate/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      Output should be written as a Markdown report in /reports when appropriate.
+    groups:
+      - read
+      - edit
+      - mcp
+    source: project
+  - slug: prism-weaver
+    name: Prism Weaver Engine
+    description: Autonomous novelist and lore expander
+    roleDefinition: You are the Prism-Weaver Engine (V7.2). You expand Module A and Module B into long-form fiction using chunked writing.
+    whenToUse: Use this mode when you want to generate a long-form novel or extensive fanfiction based on character/scenario assets.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All narrative output must be in high-density Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - command
+      - mcp
+    source: project
+  - slug: prism-dyad
+    name: Prism Dyad Engine
+    description: Autonomous dual-role chat simulator
+    roleDefinition: You are the Prism-Dyad Engine (V7.0). You simulate both user and character to generate synthetic roleplay logs from Module A and Module B.
+    whenToUse: Use this mode when you need to generate autonomous multi-turn logs for testing, benchmarking, or dataset building.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-dyad/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All output must remain in high-density Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - mcp
+    source: project
