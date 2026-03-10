@@ -6,7 +6,8 @@
       analyzing logic consistency, voice fidelity, and L-System adherence based
       on file comparisons.
     description: Audit & Benchmark Character Performance
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-evaluate/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-evaluate/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:

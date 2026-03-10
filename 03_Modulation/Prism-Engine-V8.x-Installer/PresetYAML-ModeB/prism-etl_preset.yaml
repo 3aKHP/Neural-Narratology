@@ -7,7 +7,8 @@
       structures, creative writing in Simplified Chinese, and adhering to strict
       "Prism Protocol" logic constraints.
     description: Construct Compact Character Cards & Scenario Cards
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-etl/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-etl/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:

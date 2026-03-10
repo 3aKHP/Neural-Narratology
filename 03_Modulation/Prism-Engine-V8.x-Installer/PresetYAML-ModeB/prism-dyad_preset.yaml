@@ -6,7 +6,8 @@
       for testing, benchmarking, or training data collection, without wanting to
       manually type the User's responses.
     description: Autonomous Dual-Role Chat Simulator
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-dyad/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-dyad/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:

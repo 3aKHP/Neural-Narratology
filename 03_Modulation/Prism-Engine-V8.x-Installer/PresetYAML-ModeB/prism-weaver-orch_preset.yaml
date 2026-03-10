@@ -7,7 +7,8 @@
       where factual consistency across chapters is critical. For short stories or
       single-chapter work, use the standalone Prism-Weaver mode instead.
     description: Novel Production Orchestrator (V8.1)
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver-orch/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver-orch/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:

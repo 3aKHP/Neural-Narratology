@@ -6,7 +6,8 @@
       is optimized for deep roleplay, maintaining character consistency based on
       YAML+Markdown logic, and logging interaction history to files.
     description: Simulate & Test Character Scenarios (Roleplay)
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-runtime/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-runtime/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:

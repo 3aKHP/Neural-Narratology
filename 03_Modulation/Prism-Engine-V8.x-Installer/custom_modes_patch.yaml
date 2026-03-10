@@ -6,7 +6,8 @@ customModes:
       for testing, benchmarking, or training data collection, without wanting to
       manually type the User's responses.
     description: Autonomous Dual-Role Chat Simulator
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-dyad/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-dyad/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:
@@ -22,7 +23,8 @@ customModes:
       structures, creative writing in Simplified Chinese, and adhering to strict
       "Prism Protocol" logic constraints.
     description: Construct Compact Character Cards & Scenario Cards
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-etl/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-etl/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:
@@ -38,7 +40,8 @@ customModes:
       analyzing logic consistency, voice fidelity, and L-System adherence based
       on file comparisons.
     description: Audit & Benchmark Character Performance
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-evaluate/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-evaluate/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:
@@ -53,7 +56,8 @@ customModes:
       is optimized for deep roleplay, maintaining character consistency based on
       YAML+Markdown logic, and logging interaction history to files.
     description: Simulate & Test Character Scenarios (Roleplay)
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-runtime/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-runtime/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:
@@ -69,7 +73,8 @@ customModes:
       Optimized for iterative writing, deep psychological rendering, and strict
       file system management.
     description: Autonomous Novelist & Lore Expander
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:
@@ -86,7 +91,8 @@ customModes:
       where factual consistency across chapters is critical. For short stories or
       single-chapter work, use the standalone Prism-Weaver mode instead.
     description: Novel Production Orchestrator (V8.1)
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver-orch/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver-orch/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:

@@ -7,7 +7,8 @@
       Optimized for iterative writing, deep psychological rendering, and strict
       file system management.
     description: Autonomous Novelist & Lore Expander
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver/*.xml.
+    customInstructions: |-
+      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver/*.xml.
       These XML rule packs replace workspace-root .roo system prompts.
       All creative output must be in Simplified Chinese.
     groups:
