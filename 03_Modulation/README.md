@@ -59,33 +59,35 @@ graph TB
 
 本项目包含多个针对不同模型优化的实现：
 
-- **[`Prism-Engine-Universe-V7.0/`](./Prism-Engine-Universe-V7.0/)**: **通用版本**（推荐）
+- **[`Prism-Engine-V7.x/`](./Prism-Engine-V7.x/)**: **V7.x 通用版本**（推荐）
   - 基于 v7.0 Neuro-Weave 理论
   - 包含完整的五引擎系统提示词（ETL/Runtime/Evaluate/Weaver/Dyad）
   - 跨模型兼容设计
-- **[`Prism-Engine-Universe-V7.x-Installer/`](./Prism-Engine-Universe-V7.x-Installer/)**: **安装器与模板分发目录**
+  - 内含 `presets/` 子目录，存放五引擎预设 YAML 配置
+- **[`Prism-Engine-V7.x-Installer/`](./Prism-Engine-V7.x-Installer/)**: **安装器与模板分发目录**
   - 提供 `Install.ps1` 一键安装脚本
   - 支持 **Mode A（模板内置 `.roo` 提示词）** 与 **Mode B（用户目录 Rules Pack）**
   - 内含 Project Template、预设 YAML、Rules XML 与补丁文件
   
-- **[`Prism-ETL-Claude/`](./Prism-ETL-Claude/)**: Claude 优化版本（当前为 ETL 专项）
-- **[`Prism-ETL-Deepseek/`](./Prism-ETL-Deepseek/)**: Deepseek 优化版本（当前为 ETL 专项）
-- **[`Prism-ETL-Gemini/`](./Prism-ETL-Gemini/)**: Gemini 优化版本（当前为 ETL 专项）
+- **[`Prism-Engine-V6.x/`](./Prism-Engine-V6.x/)**: **V6.x 多模型 ETL 专项目录**
+  - **[`Prism-ETL-Claude/`](./Prism-Engine-V6.x/Prism-ETL-Claude/)**: Claude 优化版本（当前为 ETL 专项）
+  - **[`Prism-ETL-Deepseek/`](./Prism-Engine-V6.x/Prism-ETL-Deepseek/)**: Deepseek 优化版本（当前为 ETL 专项）
+  - **[`Prism-ETL-Gemini/`](./Prism-Engine-V6.x/Prism-ETL-Gemini/)**: Gemini 优化版本（当前为 ETL 专项）
 
 ### 版本能力矩阵
 
 | 版本目录 | 协议代际侧重 | 已提供 .roo 引擎 |
 |:---|:---|:---|
-| `Prism-Engine-Universe-V7.0` | v7.0 Neuro-Weave | `etl` + `runtime` + `evaluate` + `weaver` + `dyad` |
-| `Prism-ETL-Claude` | v6.x Holographic / ETL 专项 | `etl` |
-| `Prism-ETL-Deepseek` | v6.x Holographic / ETL 专项 | `etl` |
-| `Prism-ETL-Gemini` | v6.x Holographic / ETL 专项 | `etl` |
+| `Prism-Engine-V7.x` | v7.0 Neuro-Weave | `etl` + `runtime` + `evaluate` + `weaver` + `dyad` |
+| `Prism-Engine-V6.x/Prism-ETL-Claude` | v6.x Holographic / ETL 专项 | `etl` |
+| `Prism-Engine-V6.x/Prism-ETL-Deepseek` | v6.x Holographic / ETL 专项 | `etl` |
+| `Prism-Engine-V6.x/Prism-ETL-Gemini` | v6.x Holographic / ETL 专项 | `etl` |
 
 ### 协议代际路线图 (Roadmap)
 
 - **当前状态**：
-  - `Prism-Engine-Universe-V7.0` 为 v7.0 完整实现（五引擎）。
-  - `Prism-ETL-Claude` / `Prism-ETL-Deepseek` / `Prism-ETL-Gemini` 为 v6.x 语义的 ETL 专项分支。
+  - `Prism-Engine-V7.x` 为 v7.0 完整实现（五引擎）。
+  - `Prism-Engine-V6.x/Prism-ETL-Claude` / `Prism-Engine-V6.x/Prism-ETL-Deepseek` / `Prism-Engine-V6.x/Prism-ETL-Gemini` 为 v6.x 语义的 ETL 专项分支。
 - **升级目标**：
   1. 先将三模型分支的 `specs/` 与 `templates/` 对齐至 v7.0 Neuro-Card / Tension Scenario 结构。
   2. 再补齐 `runtime` 与 `evaluate` 引擎提示词，形成可测试闭环。
@@ -98,13 +100,19 @@ graph TB
 以下为 **Universe 完整版** 的标准工程结构（其余模型目录当前为 ETL 精简形态）：
 
 ```
-Prism-Engine-[Version]/
+Prism-Engine-V7.x/
 ├── .roo/                           # 系统级提示词
 │   ├── system-prompt-prism-etl     # ETL 引擎核心
 │   ├── system-prompt-prism-runtime # Runtime 引擎核心
 │   ├── system-prompt-prism-evaluate# Evaluate 引擎核心
 │   ├── system-prompt-prism-weaver  # Weaver 小说引擎核心
 │   └── system-prompt-prism-dyad    # Dyad 自动对弈引擎核心
+├── presets/                        # 引擎预设 YAML 配置
+│   ├── prism-etl_preset.yaml
+│   ├── prism-runtime_preset.yaml
+│   ├── prism-evaluate_preset.yaml
+│   ├── prism-weaver_preset.yaml
+│   └── prism-dyad_preset.yaml
 ├── specs/                          # Schema 定义
 │   ├── schema_character.md         # Module A 规范
 │   └── schema_scenario.md          # Module B 规范
@@ -114,29 +122,33 @@ Prism-Engine-[Version]/
 ├── source_materials/               # 原始素材目录
 ├── workspace/                      # 工作区（生成的 XML/MD）
 ├── test_runs/                      # 模拟日志目录
+├── novels/                         # 长篇小说目录
 └── reports/                        # 评估报告目录
 ```
 
 Claude/Deepseek/Gemini 目录当前最小结构为：
 
 ```
-Prism-ETL-[Model]/
-├── .roo/
-│   └── system-prompt-prism-etl
-├── specs/
-├── templates/
-├── source_materials/
-└── workspace/
+Prism-Engine-V6.x/
+├── Prism-ETL-Claude/
+├── Prism-ETL-Deepseek/
+└── Prism-ETL-Gemini/
+    ├── .roo/
+    │   └── system-prompt-prism-etl
+    ├── specs/
+    ├── templates/
+    ├── source_materials/
+    └── workspace/
 ```
 
 ### 配置文件
 
-- **[`prism-etl_preset.yaml`](./prism-etl_preset.yaml)**: ETL 引擎模式配置
-- **[`prism-runtime_preset.yaml`](./prism-runtime_preset.yaml)**: Runtime 引擎模式配置
-- **[`prism-evaluate_preset.yaml`](./prism-evaluate_preset.yaml)**: Evaluate 引擎模式配置
-- **[`prism-weaver_preset.yaml`](./prism-weaver_preset.yaml)**: Weaver 引擎模式配置
-- **[`prism-dyad_preset.yaml`](./prism-dyad_preset.yaml)**: Dyad 引擎模式配置
-- **[`Prism-Engine-Universe-V7.x-Installer/custom_modes_patch.yaml`](./Prism-Engine-Universe-V7.x-Installer/custom_modes_patch.yaml)**: Rules 模式下可整体并入 `custom_modes.yaml` 的补丁集合
+- **[`Prism-Engine-V7.x/presets/prism-etl_preset.yaml`](./Prism-Engine-V7.x/presets/prism-etl_preset.yaml)**: ETL 引擎模式配置
+- **[`Prism-Engine-V7.x/presets/prism-runtime_preset.yaml`](./Prism-Engine-V7.x/presets/prism-runtime_preset.yaml)**: Runtime 引擎模式配置
+- **[`Prism-Engine-V7.x/presets/prism-evaluate_preset.yaml`](./Prism-Engine-V7.x/presets/prism-evaluate_preset.yaml)**: Evaluate 引擎模式配置
+- **[`Prism-Engine-V7.x/presets/prism-weaver_preset.yaml`](./Prism-Engine-V7.x/presets/prism-weaver_preset.yaml)**: Weaver 引擎模式配置
+- **[`Prism-Engine-V7.x/presets/prism-dyad_preset.yaml`](./Prism-Engine-V7.x/presets/prism-dyad_preset.yaml)**: Dyad 引擎模式配置
+- **[`Prism-Engine-V7.x-Installer/custom_modes_patch.yaml`](./Prism-Engine-V7.x-Installer/custom_modes_patch.yaml)**: Rules 模式下可整体并入 `custom_modes.yaml` 的补丁集合
 
 ## 🛠️ 安装与配置 (Setup)
 
@@ -154,19 +166,19 @@ Prism-ETL-[Model]/
 #### 推荐方式：运行 V7.x 安装器
 
 1. **进入安装器目录**:
-   - 打开 [`Prism-Engine-Universe-V7.x-Installer/`](./Prism-Engine-Universe-V7.x-Installer/)
-   - 参考 [`Prism-Engine-Universe-V7.x-Installer/README.md`](./Prism-Engine-Universe-V7.x-Installer/README.md:1)
+   - 打开 [`Prism-Engine-V7.x-Installer/`](./Prism-Engine-V7.x-Installer/)
+   - 参考 [`Prism-Engine-V7.x-Installer/README.md`](./Prism-Engine-V7.x-Installer/README.md:1)
 
 2. **运行安装脚本**:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.x-Installer\Install.ps1 -Mode A -Backup
+powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x-Installer\Install.ps1 -Mode A -Backup
 ```
 
 或安装 **Mode B / Rules 模式**：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.x-Installer\Install.ps1 -Mode B -Backup
+powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x-Installer\Install.ps1 -Mode B -Backup
 ```
 
 3. **模式区别**:
@@ -184,17 +196,17 @@ powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V
 1. **加载配置文件**:
    - 打开 RooCode 设置 → `Custom Modes`
    - 将以下所有的配置文件内容追加到配置中：
-     - [`prism-etl_preset.yaml`](./prism-etl_preset.yaml:1)
-     - [`prism-runtime_preset.yaml`](./prism-runtime_preset.yaml:1)
-     - [`prism-evaluate_preset.yaml`](./prism-evaluate_preset.yaml:1)
-     - [`prism-weaver_preset.yaml`](./prism-weaver_preset.yaml:1)
-     - [`prism-dyad_preset.yaml`](./prism-dyad_preset.yaml:1)
+     - [`prism-etl_preset.yaml`](./Prism-Engine-V7.x/presets/prism-etl_preset.yaml:1)
+     - [`prism-runtime_preset.yaml`](./Prism-Engine-V7.x/presets/prism-runtime_preset.yaml:1)
+     - [`prism-evaluate_preset.yaml`](./Prism-Engine-V7.x/presets/prism-evaluate_preset.yaml:1)
+     - [`prism-weaver_preset.yaml`](./Prism-Engine-V7.x/presets/prism-weaver_preset.yaml:1)
+     - [`prism-dyad_preset.yaml`](./Prism-Engine-V7.x/presets/prism-dyad_preset.yaml:1)
    - *或者*：在 RooCode 聊天框中批量上传文件并指示："Load these custom mode configurations."
-   - 若采用 Rules 模式，也可直接并入 [`Prism-Engine-Universe-V7.x-Installer/custom_modes_patch.yaml`](./Prism-Engine-Universe-V7.x-Installer/custom_modes_patch.yaml:1)
+   - 若采用 Rules 模式，也可直接并入 [`Prism-Engine-V7.x-Installer/custom_modes_patch.yaml`](./Prism-Engine-V7.x-Installer/custom_modes_patch.yaml:1)
 
 2. **选择工作目录**:
-   - 在 VSCode 中打开 [`Prism-Engine-Universe-V7.0/`](./Prism-Engine-Universe-V7.0/) 作为工作区根目录
-   - Mode A 需确保 RooCode 能够访问 [`.roo/`](./Prism-Engine-Universe-V7.0/.roo/) 目录
+   - 在 VSCode 中打开 [`Prism-Engine-V7.x/`](./Prism-Engine-V7.x/) 作为工作区根目录
+   - Mode A 需确保 RooCode 能够访问 [`.roo/`](./Prism-Engine-V7.x/.roo/) 目录
    - Mode B 需确保 `%USERPROFILE%\.roo\rules-prism-*` 已安装完成
 
 3. **验证安装**:
@@ -212,12 +224,12 @@ powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V
 **切换模式**: `Prism ETL Engine`
 
 #### 1.1 准备素材
-将角色的原始设定（文本、PDF 或图片）放入 [`source_materials/`](./Prism-Engine-Universe-V7.0/source_materials/) 目录。
+将角色的原始设定（文本、PDF 或图片）放入 [`source_materials/`](./Prism-Engine-V7.x/source_materials/) 目录。
 
 如果原始素材是 `.docx`，可先用内置脚本批量转换为 Markdown：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Prism-Engine-Universe-V7.0\source_materials\ConvertDocxToMdAndArchive.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Prism-Engine-V7.x\source_materials\ConvertDocxToMdAndArchive.ps1
 ```
 
 该脚本会：
@@ -235,9 +247,9 @@ Initialize Workflow A for [Character Name]. Source material is in source_materia
 
 引擎将自动执行 4-Phase 工作流：
 1. **Phase 0: Blueprint** - 分析素材并给出设计蓝图
-2. **Phase 1: Visual Shell** - 生成 [`<shell>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:12)（基础信息 + 视觉皮层）
-3. **Phase 2: Neuro-Structure** - 注入 [`<neuro_structure>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:26)（历史 + 认知栈 + 本能协议）
-4. **Phase 3: Narrative Engine** - 补全 [`<narrative_engine>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:44)（感知矩阵 + 对话变化）
+2. **Phase 1: Visual Shell** - 生成 [`<shell>`](./Prism-Engine-V7.x/specs/schema_character.md:12)（基础信息 + 视觉皮层）
+3. **Phase 2: Neuro-Structure** - 注入 [`<neuro_structure>`](./Prism-Engine-V7.x/specs/schema_character.md:26)（历史 + 认知栈 + 本能协议）
+4. **Phase 3: Narrative Engine** - 补全 [`<narrative_engine>`](./Prism-Engine-V7.x/specs/schema_character.md:44)（感知矩阵 + 对话变化）
 
 *注意：每一步引擎都会暂停（STOP & WAIT），等待你的确认或修改意见。*
 
@@ -249,11 +261,11 @@ Initialize Workflow B. I want a [L3-B] scenario where I play as [Rival].
 
 引擎将：
 1. 读取刚才生成的 XML
-2. 分析 [`<instinct_protocol>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:37) 和 L-System 需求
+2. 分析 [`<instinct_protocol>`](./Prism-Engine-V7.x/specs/schema_character.md:37) 和 L-System 需求
 3. 提供 3 个剧情钩子供选择
-4. 生成完整的 Tension Scenario（参考 [`schema_scenario.md`](./Prism-Engine-Universe-V7.0/specs/schema_scenario.md:1)）
+4. 生成完整的 Tension Scenario（参考 [`schema_scenario.md`](./Prism-Engine-V7.x/specs/schema_scenario.md:1)）
 
-**输出位置**: [`workspace/`](./Prism-Engine-Universe-V7.0/workspace/)
+**输出位置**: [`workspace/`](./Prism-Engine-V7.x/workspace/)
 
 ---
 
@@ -269,7 +281,7 @@ Start Session: [char_name].xml + [scenario_name].md
 
 引擎将：
 1. 读取 Module A（Neuro-Card）和 Module B（Scenario）
-2. 创建 [`test_runs/[char]_log.md`](./Prism-Engine-Universe-V7.0/test_runs/)
+2. 创建 [`test_runs/[char]_log.md`](./Prism-Engine-V7.x/test_runs/)
 3. 写入场景引入和开场白
 4. 追加用户输入占位符（Turn 1）
 
@@ -284,7 +296,7 @@ Start Session: [char_name].xml + [scenario_name].md
 - **Dynamic HUD**（状态面板）：时间/位置、感官/身体、神经状态、印象
 - **Main Content**（故事正文）：200-800 字高密度中文叙事
 
-**输出位置**: [`test_runs/`](./Prism-Engine-Universe-V7.0/test_runs/)
+**输出位置**: [`test_runs/`](./Prism-Engine-V7.x/test_runs/)
 
 ---
 
@@ -300,17 +312,17 @@ Evaluate session: [char_name]_log.md
 
 引擎将：
 1. 读取三个数据源：
-   - Ground Truth: [`source_materials/`](./Prism-Engine-Universe-V7.0/source_materials/)（原始素材）
-   - Blueprint: [`workspace/*.xml`](./Prism-Engine-Universe-V7.0/workspace/)（角色定义）
-   - Reality: [`test_runs/*.md`](./Prism-Engine-Universe-V7.0/test_runs/)（实际行为）
+   - Ground Truth: [`source_materials/`](./Prism-Engine-V7.x/source_materials/)（原始素材）
+   - Blueprint: [`workspace/*.xml`](./Prism-Engine-V7.x/workspace/)（角色定义）
+   - Reality: [`test_runs/*.md`](./Prism-Engine-V7.x/test_runs/)（实际行为）
 2. 基于 4 个维度分析：
-   - **Voice Fidelity**（声纹一致性）：对话是否匹配 [`<dialogue_variance>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:51)
-   - **Neuro-Logic**（逻辑自洽性）：行为是否遵循 [`<cognitive_stack>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:33)
+   - **Voice Fidelity**（声纹一致性）：对话是否匹配 [`<dialogue_variance>`](./Prism-Engine-V7.x/specs/schema_character.md:51)
+   - **Neuro-Logic**（逻辑自洽性）：行为是否遵循 [`<cognitive_stack>`](./Prism-Engine-V7.x/specs/schema_character.md:33)
    - **L-System Adherence**（张力曲线）：场景是否符合 L-Level 定义
    - **Hallucination Check**（幻觉检测）：是否捏造事实或 OOC
 3. 生成结构化报告
 
-**输出位置**: [`reports/`](./Prism-Engine-Universe-V7.0/reports/)
+**输出位置**: [`reports/`](./Prism-Engine-V7.x/reports/)
 
 ---
 
@@ -348,17 +360,17 @@ Evaluate session: [char_name]_log.md
 ### Bio-XML 协议
 - XML 标签作为"功能器官"而非文本容器
 - 强制"过程导向"描述（如何运作 vs. 是什么）
-- 参考：[`system-prompt-prism-etl`](./Prism-Engine-Universe-V7.0/.roo/system-prompt-prism-etl:9)
+- 参考：[`system-prompt-prism-etl`](./Prism-Engine-V7.x/.roo/system-prompt-prism-etl:9)
 
 ### 三大认知公理
-1. **感知滤镜**：通过 [`<perception_matrix>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:47) 定义角色如何过滤现实
-2. **情感液压**：通过 [`<stress_response>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:39) 定义压力点和释放阀
-3. **攻略性**：通过 [`<romance_mechanics>`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:40) 定义连接路径
+1. **感知滤镜**：通过 [`<perception_matrix>`](./Prism-Engine-V7.x/specs/schema_character.md:47) 定义角色如何过滤现实
+2. **情感液压**：通过 [`<stress_response>`](./Prism-Engine-V7.x/specs/schema_character.md:39) 定义压力点和释放阀
+3. **攻略性**：通过 [`<romance_mechanics>`](./Prism-Engine-V7.x/specs/schema_character.md:40) 定义连接路径
 
 ### L-System 本能协议
 - L1-L2（社交/浪漫）：情感共鸣、张力构建
 - L3-L4（亲密/癖好）：感官沉浸、欲望释放
-- 参考：[`schema_scenario.md`](./Prism-Engine-Universe-V7.0/specs/schema_scenario.md:93)
+- 参考：[`schema_scenario.md`](./Prism-Engine-V7.x/specs/schema_scenario.md:93)
 
 ## ⚠️ 稳定性说明 (Stability)
 
@@ -370,7 +382,7 @@ Evaluate session: [char_name]_log.md
 1. **MBR 机制依赖**：如果 Agent 出现"幻觉"或变回通用模式，请：
    - 重启 VSCode
    - 重新选择自定义模式
-   - 确认 [`.roo/`](./Prism-Engine-Universe-V7.0/.roo/) 目录可访问
+   - 确认 [`.roo/`](./Prism-Engine-V7.x/.roo/) 目录可访问
 
 2. **模型兼容性**：
    - **推荐**: Claude Sonnet 3.5+, Deepseek V3, Gemini 2.0+
@@ -385,7 +397,7 @@ Evaluate session: [char_name]_log.md
   - **解决**: 在聊天中明确指示："ALWAYS check for `.roo/system-prompt-prism-[mode]`"
   
 - **问题**: 生成的 XML 格式错误
-  - **解决**: 检查 [`templates/tpl_module_a.xml`](./Prism-Engine-Universe-V7.0/templates/tpl_module_a.xml:1) 是否完整
+  - **解决**: 检查 [`templates/tpl_module_a.xml`](./Prism-Engine-V7.x/templates/tpl_module_a.xml:1) 是否完整
 
 - **问题**: Runtime Engine 无限循环
   - **解决**: 检查 session log 最后一行是否为占位符，手动编辑后点击"确认/继续"
@@ -400,18 +412,18 @@ Evaluate session: [char_name]_log.md
 
 ### 自定义 Schema
 如需修改角色或场景结构，编辑：
-- [`specs/schema_character.md`](./Prism-Engine-Universe-V7.0/specs/schema_character.md:1)
-- [`specs/schema_scenario.md`](./Prism-Engine-Universe-V7.0/specs/schema_scenario.md:1)
+- [`specs/schema_character.md`](./Prism-Engine-V7.x/specs/schema_character.md:1)
+- [`specs/schema_scenario.md`](./Prism-Engine-V7.x/specs/schema_scenario.md:1)
 
 ### 扩展 L-System
 当前支持 L1-L5，如需添加新层级：
-1. 更新 [`schema_scenario.md`](./Prism-Engine-Universe-V7.0/specs/schema_scenario.md:93) 的 L-System 定义
-2. 修改 [`system-prompt-prism-etl`](./Prism-Engine-Universe-V7.0/.roo/system-prompt-prism-etl:1) 的 Workflow B 逻辑
+1. 更新 [`schema_scenario.md`](./Prism-Engine-V7.x/specs/schema_scenario.md:93) 的 L-System 定义
+2. 修改 [`system-prompt-prism-etl`](./Prism-Engine-V7.x/.roo/system-prompt-prism-etl:1) 的 Workflow B 逻辑
 
 ### 多语言支持
 当前所有创意内容强制使用简体中文，如需其他语言：
-1. 修改 [`.roo/system-prompt-prism-etl`](./Prism-Engine-Universe-V7.0/.roo/system-prompt-prism-etl:32) 的 Language Lock
-2. 更新 [`templates/`](./Prism-Engine-Universe-V7.0/templates/) 中的示例内容
+1. 修改 [`.roo/system-prompt-prism-etl`](./Prism-Engine-V7.x/.roo/system-prompt-prism-etl:32) 的 Language Lock
+2. 更新 [`templates/`](./Prism-Engine-V7.x/templates/) 中的示例内容
 
 ---
 *Return to [Root Repository](../README.md)*

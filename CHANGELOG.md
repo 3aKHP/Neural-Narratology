@@ -19,6 +19,23 @@
 
 ---
 
+## 2026-03-10 — 03_Modulation 目录重构
+
+> Git: (pending) · Prism Engine 版本不变（v7.3）
+
+### Changed — `[Modulation]`
+- **重构 `03_Modulation/` 目录结构**（纯目录重组，文件内容未变更）：
+  - `Prism-ETL-Claude/`、`Prism-ETL-Deepseek/`、`Prism-ETL-Gemini/` 三个 v6.x ETL 专项目录统一归入 **`Prism-Engine-V6.x/`** 子目录。
+  - `Prism-Engine-Universe-V7.0/` 重命名为 **`Prism-Engine-V7.x/`**。
+  - `Prism-Engine-Universe-V7.x-Installer/` 重命名为 **`Prism-Engine-V7.x-Installer/`**。
+  - 根目录下的五个 `prism-*_preset.yaml` 配置文件迁移至 **`Prism-Engine-V7.x/presets/`** 子目录。
+
+### Changed — `[Repo]`
+- 更新根目录 `README.md` 和 `03_Modulation/README.md`，对齐新的目录结构与路径引用。
+- 更新 `CHANGELOG.md`，记录本次重构。
+
+---
+
 ## 2026-03-10 — Resonance Protocol v8.0 "Compact-State"
 
 > Git: `253f183` · 对应 Prism Engine 仍为 v7.3（尚未配套更新）

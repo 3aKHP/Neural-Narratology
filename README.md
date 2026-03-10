@@ -81,17 +81,14 @@ Neural-Narratology/
 │   └── “共鸣”项目研究报告-Repo-Git.pdf
 │
 ├── 03_Modulation/                  # Phase III: 自动化工具链
-│   ├── Prism-Engine-Universe-V7.0/ # 通用版本（完整五引擎）⭐
-│   ├── Prism-Engine-Universe-V7.x-Installer/ # 安装器、模板与 Rules 分发目录
-│   ├── Prism-ETL-Claude/           # Claude 优化版本（ETL 专项）
-│   ├── Prism-ETL-Deepseek/         # Deepseek 优化版本（ETL 专项）
-│   ├── Prism-ETL-Gemini/           # Gemini 优化版本（ETL 专项）
+│   ├── Prism-Engine-V7.x/          # V7.x 通用版本（完整五引擎）⭐
+│   │   └── presets/                # 五引擎预设 YAML 配置
+│   ├── Prism-Engine-V7.x-Installer/ # 安装器、模板与 Rules 分发目录
+│   ├── Prism-Engine-V6.x/          # V6.x 多模型 ETL 专项
+│   │   ├── Prism-ETL-Claude/       # Claude 优化版本
+│   │   ├── Prism-ETL-Deepseek/     # Deepseek 优化版本
+│   │   └── Prism-ETL-Gemini/       # Gemini 优化版本
 │   ├── README.md
-│   ├── prism-etl_preset.yaml       # ETL 引擎配置
-│   ├── prism-runtime_preset.yaml   # Runtime 引擎配置
-│   ├── prism-evaluate_preset.yaml  # Evaluate 引擎配置
-│   ├── prism-weaver_preset.yaml    # Weaver 引擎配置
-│   ├── prism-dyad_preset.yaml      # Dyad 引擎配置
 │   └── "调制"项目研究报告-Repo-Git.md
 │
 └── README.md                       # 项目总览
@@ -157,17 +154,17 @@ graph LR
     - 准备 LLM API-Key
 
 3.  **加载工具链**：
-    - 推荐先阅读 [`03_Modulation/Prism-Engine-Universe-V7.x-Installer/README.md`](./03_Modulation/Prism-Engine-Universe-V7.x-Installer/README.md)
+    - 推荐先阅读 [`03_Modulation/Prism-Engine-V7.x-Installer/README.md`](./03_Modulation/Prism-Engine-V7.x-Installer/README.md)
     - 推荐直接运行安装器完成模板与模式注入：
-      - `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.x-Installer\Install.ps1 -Mode A -Backup`
-      - 或 `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.x-Installer\Install.ps1 -Mode B -Backup`
+      - `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x-Installer\Install.ps1 -Mode A -Backup`
+      - 或 `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x-Installer\Install.ps1 -Mode B -Backup`
     - 若不使用安装器，再按 [`03_Modulation/README.md`](./03_Modulation/README.md) 手动加载五个 Prism preset 文件
 
 4.  **开始创作**：
-    - 以安装生成的 `Prism-Engine-Universe-V7.0-Template` 初始化项目，或直接打开 [`03_Modulation/Prism-Engine-Universe-V7.0/`](./03_Modulation/Prism-Engine-Universe-V7.0/) 作为工作区
+    - 以安装生成的 `Prism-Engine-Universe-V7.0-Template` 初始化项目，或直接打开 [`03_Modulation/Prism-Engine-V7.x/`](./03_Modulation/Prism-Engine-V7.x/) 作为工作区
     - 切换到 `Prism ETL Engine` 模式
     - 若原始素材是 `.docx`，可先运行：
-      - `powershell -NoProfile -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-Universe-V7.0\source_materials\ConvertDocxToMdAndArchive.ps1`
+      - `powershell -NoProfile -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x\source_materials\ConvertDocxToMdAndArchive.ps1`
       - 该脚本会在结束后（无论成功/失败）将自身移动到 `..\drafts\`
     - 输入：`Initialize Workflow A for [Character Name]`
     - 详细步骤参见 [Phase III README](./03_Modulation/README.md)
@@ -199,12 +196,12 @@ graph LR
 ### 🔬 研究者路径
 1. 深入研究 [Phase II 报告](./02_Resonance/“共鸣”项目研究报告-Repo-Git.pdf)
 2. 对比 [v5.0](./02_Resonance/v5_Legacy/) / [v6.0](./02_Resonance/v6_Omni_Foundry/) / [v7.0](./02_Resonance/v7_Neuro_Weave/) 的设计差异
-3. 分析 [Phase III 源码](./03_Modulation/Prism-Engine-Universe-V7.0/.roo/) 的工程实现
+3. 分析 [Phase III 源码](./03_Modulation/Prism-Engine-V7.x/.roo/) 的工程实现
 
 ### 🛠️ 开发者路径
 1. Fork 本仓库
-2. 基于 [v7.0 Schema](./03_Modulation/Prism-Engine-Universe-V7.0/specs/) 自定义扩展
-3. 修改 [System Prompts](./03_Modulation/Prism-Engine-Universe-V7.0/.roo/) 适配特定模型
+2. 基于 [v7.0 Schema](./03_Modulation/Prism-Engine-V7.x/specs/) 自定义扩展
+3. 修改 [System Prompts](./03_Modulation/Prism-Engine-V7.x/.roo/) 适配特定模型
 
 ## 🔬 技术亮点 (Technical Highlights)
 
@@ -234,7 +231,7 @@ graph LR
 
 - **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
 - **协议版本**: 4 个主要版本（v5.0, v6.0, v7.0, v8.0）
-- **Prism 工具链目录**: 5 个（`Prism-Engine-Universe-V7.0` + `Prism-Engine-Universe-V7.x-Installer` + 3 个 ETL 专项目录）
+- **Prism 工具链目录**: 5 个（`Prism-Engine-V7.x` + `Prism-Engine-V7.x-Installer` + `Prism-Engine-V6.x/` 下 3 个 ETL 专项目录）
 - **引擎预设配置**: 5 个（ETL / Runtime / Evaluate / Weaver / Dyad）
 - **`.roo` 系统提示词**: 8 份
 - **Schema 与模板**: `schema_*.md` 8 份，`tpl_module_*` 8 份
