@@ -31,7 +31,7 @@
     *   揭示了 **"Single World-Simulator"** (单一世界模拟器) 架构。
     *   解构了 **Dynamic Persona Injection** (动态人设注入) 与轻量级 RAG 机制。
     *   提取了高级用户的"三层指令系统" (Jailbreak/Constitution/Knowledge)。
-*   **📄 [阅读研究报告](./01_Echo/“回响”项目研究报告-Repo-Git.pdf)**
+*   **📄 [阅读研究报告](./01_Echo/"回响"项目研究报告-Repo-Git.pdf)**
 
 ### [🌓 Phase II: Resonance (共鸣)](./02_Resonance/)
 > **"Construct the Soul with Logic."**
@@ -43,18 +43,20 @@
     *   发布了 **Protocol v6.0 (Omni-Foundry)**：引入动态状态机、逻辑门与 L-System 叙事分级的下一代协议。
     *   发布了 **Protocol v7.0 (Neuro-Weave)**：基于 Bio-XML 理念和认知公理的神经编织引擎，实现从"结构化数据容器"到"活体认知系统"的范式转变。
     *   发布了 **Protocol v8.0 (Compact-State Update)**：作为 FurryBar Engine 的 v8 主题更新，通过 YAML+Markdown 轻骨架压缩格式性文本开销，保护正文空间与注意力密度。
-*   **📄 [阅读研究报告](./02_Resonance/“共鸣”项目研究报告-Repo-Git.pdf)**
+*   **📄 [阅读研究报告](./02_Resonance/"共鸣"项目研究报告-Repo-Git.pdf)**
 
 ### [🌔 Phase III: Modulation (调制)](./03_Modulation/)
 > **"Control the Signal via Agents."**
 
 *   **核心任务**：基于 IDE 原生环境的智能体辅助生产 (VibeCoding)。
 *   **关键成果**：
-    *   **Prism Engine 矩阵架构**：从初期的三位一体，扩展为包含 ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（衍生小说）和 Dyad（衍生数据）的五大引擎生态。
+    *   **Prism Engine 矩阵架构**：从初期的三位一体，扩展为包含 ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（衍生小说）、Dyad（衍生数据）和 **Weaver-Orch**（长篇编排器）的**六大引擎**生态。
     *   基于 VSCode + RooCode 的自动化角色铸造流水线。
     *   实现了 **Zero-Copy** 工作流：利用智能体操作文件系统，实现从自然语言意图到结构化 XML/Markdown 的无缝转换。
     *   突破长上下文窗口限制的 **Chunked Writing Loop**（分块写入循环）技术。
-    *   完整实现 v7.0 Neuro-Weave 理论框架。
+    *   完整实现 v7.0 Neuro-Weave 理论框架（Prism-Engine-V7.x）。
+    *   完整实现 v8.0 Compact-State 协议（Prism-Engine-V8.x），从 Bio-XML 转向 **YAML+Markdown 轻骨架**架构，新增 **Story Bible 世界状态层**与**结构化 Outline**。
+    *   发布 **Prism Engine v8.1**：新增 **Weaver-Orch** 第六引擎（基于 Orchestrator 的长篇编排器）。
 *   **🛠️ [获取工具链](./03_Modulation/)**
 
 ---
@@ -69,21 +71,24 @@ Neural-Narratology/
 │   ├── preset_meta_commands.txt
 │   ├── RAG_inject.xml
 │   ├── "回响"项目研究报告-Repo-Git.md
-│   └── “回响”项目研究报告-Repo-Git.pdf
+│   └── "回响"项目研究报告-Repo-Git.pdf
 │
 ├── 02_Resonance/                   # Phase II: 核心协议与理论框架
 │   ├── README.md
 │   ├── v5_Legacy/                  # 社区标准版协议（剧本优先）
 │   ├── v6_Omni_Foundry/            # 全息灵魂协议（动态状态机）
 │   ├── v7_Neuro_Weave/             # 神经编织引擎（认知模拟）
-│   ├── v8_Dual_State/              # Compact-State 主题更新（轻结构协议）⭐ 最新
+│   ├── v8_Compact-State/           # Compact-State 主题更新（轻结构协议）⭐ 最新
 │   ├── "共鸣"项目研究报告-Repo-Git.md
-│   └── “共鸣”项目研究报告-Repo-Git.pdf
+│   └── "共鸣"项目研究报告-Repo-Git.pdf
 │
 ├── 03_Modulation/                  # Phase III: 自动化工具链
-│   ├── Prism-Engine-V7.x/          # V7.x 通用版本（完整五引擎）⭐
+│   ├── Prism-Engine-V8.x/          # V8.x 通用版本（六引擎 Compact-State）⭐ 最新
+│   │   └── presets/                # 六引擎预设 YAML 配置
+│   ├── Prism-Engine-V8.x-Installer/ # V8.x 安装器、模板与 Rules 分发目录
+│   ├── Prism-Engine-V7.x/          # V7.x 通用版本（完整五引擎）
 │   │   └── presets/                # 五引擎预设 YAML 配置
-│   ├── Prism-Engine-V7.x-Installer/ # 安装器、模板与 Rules 分发目录
+│   ├── Prism-Engine-V7.x-Installer/ # V7.x 安装器、模板与 Rules 分发目录
 │   ├── Prism-Engine-V6.x/          # V6.x 多模型 ETL 专项
 │   │   ├── Prism-ETL-Claude/       # Claude 优化版本
 │   │   ├── Prism-ETL-Deepseek/     # Deepseek 优化版本
@@ -110,14 +115,16 @@ Neural-Narratology/
 ```mermaid
 graph LR
     A[原始素材] --> B[Prism-ETL<br/>构建引擎]
-    B --> C[Neuro-Card<br/>XML]
+    B --> C[Neuro-Card<br/>XML/MD]
     B --> D[Scenario<br/>Markdown]
     C --> E[Prism-Runtime<br/>模拟引擎]
     D --> E
     C -.衍生.-> W[Prism-Weaver/Dyad<br/>衍生引擎]
     D -.衍生.-> W
+    W -.长篇编排.-> O[Prism-Weaver-Orch<br/>编排引擎]
     E --> F[Session Log]
     W --> F
+    O --> N[Long-form Novel]
     F --> G[Prism-Evaluate<br/>审计引擎]
     G --> H[质量报告]
     H -.反馈优化.-> B
@@ -125,14 +132,16 @@ graph LR
     style B fill:#e1f5ff
     style E fill:#ffe1f5
     style W fill:#e1ffe1
+    style O fill:#d4f5d4
     style G fill:#fff4e1
 ```
 
-**五大引擎矩阵**：
-- **ETL Engine**: 从原始素材逆向重构为角色 XML 和场景 MD。
+**六大引擎矩阵**：
+- **ETL Engine**: 从原始素材逆向重构为角色 XML/MD 和场景 MD。
 - **Runtime Engine**: 执行基于文件的双向交互循环。
 - **Evaluate Engine**: 提供日志质量审计与除虫指南。
 - **Weaver Engine**: 突破上下文限制，将设定自动扩写为连载长篇小说。
+- **Weaver-Orch Engine**: 基于 Orchestrator 的长篇编排器，通过 Write → Sync → Audit → Decision Gate 四阶段章节生命周期管理多章连载。
 - **Dyad Engine**: 分饰两角，全自动演绎并生成高质量的大规模交互数据集。
 
 ## 🚀 快速开始 (Quick Start)
@@ -153,18 +162,27 @@ graph LR
     - 若使用模板安装流，额外安装 VSCode 的 Project Templates 插件
     - 准备 LLM API-Key
 
-3.  **加载工具链**：
-    - 推荐先阅读 [`03_Modulation/Prism-Engine-V7.x-Installer/README.md`](./03_Modulation/Prism-Engine-V7.x-Installer/README.md)
-    - 推荐直接运行安装器完成模板与模式注入：
+3.  **加载工具链**（选择 V8.x 或 V7.x）：
+
+    **推荐：V8.x Compact-State（最新）**
+    - 先阅读 [`03_Modulation/Prism-Engine-V8.x-Installer/README.md`](./03_Modulation/Prism-Engine-V8.x-Installer/README.md)
+    - 运行安装器：
+      - `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V8.x-Installer\Install.ps1 -Mode A -Backup`
+      - 或 `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V8.x-Installer\Install.ps1 -Mode B -Backup`
+
+    **V7.x Neuro-Weave（经典）**
+    - 先阅读 [`03_Modulation/Prism-Engine-V7.x-Installer/README.md`](./03_Modulation/Prism-Engine-V7.x-Installer/README.md)
+    - 运行安装器：
       - `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x-Installer\Install.ps1 -Mode A -Backup`
       - 或 `powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x-Installer\Install.ps1 -Mode B -Backup`
-    - 若不使用安装器，再按 [`03_Modulation/README.md`](./03_Modulation/README.md) 手动加载五个 Prism preset 文件
+
+    若不使用安装器，可按 [`03_Modulation/README.md`](./03_Modulation/README.md) 手动加载引擎 preset 文件。
 
 4.  **开始创作**：
-    - 以安装生成的 `Prism-Engine-Universe-V7.0-Template` 初始化项目，或直接打开 [`03_Modulation/Prism-Engine-V7.x/`](./03_Modulation/Prism-Engine-V7.x/) 作为工作区
+    - 以安装生成的 `Prism-Engine-Universe-V8.0-Template`（或 V7.0）初始化项目，或直接打开 [`03_Modulation/Prism-Engine-V8.x/`](./03_Modulation/Prism-Engine-V8.x/) 作为工作区
     - 切换到 `Prism ETL Engine` 模式
     - 若原始素材是 `.docx`，可先运行：
-      - `powershell -NoProfile -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x\source_materials\ConvertDocxToMdAndArchive.ps1`
+      - `powershell -NoProfile -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V8.x\source_materials\ConvertDocxToMdAndArchive.ps1`
       - 该脚本会在结束后（无论成功/失败）将自身移动到 `..\drafts\`
     - 输入：`Initialize Workflow A for [Character Name]`
     - 详细步骤参见 [Phase III README](./03_Modulation/README.md)
@@ -177,7 +195,7 @@ graph LR
     - 新手推荐：[v5.0 Legacy](./02_Resonance/v5_Legacy/)
     - 深度博弈：[v6.0 Omni-Foundry](./02_Resonance/v6_Omni_Foundry/)
     - 心理真实感：[v7.0 Neuro-Weave](./02_Resonance/v7_Neuro_Weave/)
-    - 轻结构工业化：[v8.0 Compact-State](./02_Resonance/v8_Dual_State/) ⭐
+    - 轻结构工业化：[v8.0 Compact-State](./02_Resonance/v8_Compact-State/) ⭐
 
 2.  **阅读协议文档**：
     - 每个版本目录下都有完整的 README 和 Step-by-Step 指南
@@ -189,26 +207,33 @@ graph LR
 ## 📚 学习路径 (Learning Path)
 
 ### 🎓 初学者路径
-1. 阅读 [Phase I 研究报告](./01_Echo/“回响”项目研究报告-Repo-Git.pdf) 了解背景
+1. 阅读 [Phase I 研究报告](./01_Echo/"回响"项目研究报告-Repo-Git.pdf) 了解背景
 2. 使用 [Phase III 工具链](./03_Modulation/) 快速上手
 3. 体验 [v5.0 Legacy](./02_Resonance/v5_Legacy/) 理解基础概念
 
 ### 🔬 研究者路径
-1. 深入研究 [Phase II 报告](./02_Resonance/“共鸣”项目研究报告-Repo-Git.pdf)
-2. 对比 [v5.0](./02_Resonance/v5_Legacy/) / [v6.0](./02_Resonance/v6_Omni_Foundry/) / [v7.0](./02_Resonance/v7_Neuro_Weave/) 的设计差异
-3. 分析 [Phase III 源码](./03_Modulation/Prism-Engine-V7.x/.roo/) 的工程实现
+1. 深入研究 [Phase II 报告](./02_Resonance/"共鸣"项目研究报告-Repo-Git.pdf)
+2. 对比 [v5.0](./02_Resonance/v5_Legacy/) / [v6.0](./02_Resonance/v6_Omni_Foundry/) / [v7.0](./02_Resonance/v7_Neuro_Weave/) / [v8.0](./02_Resonance/v8_Compact-State/) 的设计差异
+3. 分析 [Phase III 源码](./03_Modulation/Prism-Engine-V8.x/.roo/) 的工程实现
 
 ### 🛠️ 开发者路径
 1. Fork 本仓库
-2. 基于 [v7.0 Schema](./03_Modulation/Prism-Engine-V7.x/specs/) 自定义扩展
-3. 修改 [System Prompts](./03_Modulation/Prism-Engine-V7.x/.roo/) 适配特定模型
+2. 基于 [V8.x Schema](./03_Modulation/Prism-Engine-V8.x/specs/) 或 [V7.x Schema](./03_Modulation/Prism-Engine-V7.x/specs/) 自定义扩展
+3. 修改 [System Prompts](./03_Modulation/Prism-Engine-V8.x/.roo/) 适配特定模型
 
 ## 🔬 技术亮点 (Technical Highlights)
 
-### Bio-XML 协议
+### Bio-XML 协议 (v7.0)
 - XML 标签作为"功能器官"而非文本容器
 - 强制"过程导向"描述（如何运作 vs. 是什么）
 - 参考：[`Step1B - MainStdlib.md`](./02_Resonance/v7_Neuro_Weave/Step1B%20-%20MainStdlib.md)
+
+### Compact-State 轻骨架 (v8.0)
+- 从 Bio-XML 转向 **YAML Frontmatter + Markdown Body** 轻骨架架构
+- Module A 从 XML Neuro-Card 变为 Compact Character Card (`.md`)
+- HUD 压缩为 4 行中文紧凑格式
+- 叙事公理扩展为 10 条（Anti-AI-Flavor 提升为独立公理）
+- 新增 Story Bible 世界状态层与结构化 Outline
 
 ### 三大认知公理
 1. **感知滤镜**：定义角色如何过滤现实
@@ -223,18 +248,18 @@ graph LR
 ### Agentic Workflow
 - 基于 RooCode 的文件系统操作 (Zero-Copy)
 - STOP & WAIT 机制确保人机协同
-- 五大引擎闭环（构建 → 模拟/衍生 → 审计）
+- 六大引擎闭环（构建 → 模拟/衍生/编排 → 审计）
 
 ## 📊 项目统计 (Statistics)
 
-> **统计口径（更新于 2026-02-25）**：仅统计仓库内可追踪资产；不含 `.git/` 与本地 `dev/` 工作目录。
+> **统计口径（更新于 2026-03-10）**：仅统计仓库内可追踪资产；不含 `.git/` 与本地 `dev/` 工作目录。
 
 - **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
 - **协议版本**: 4 个主要版本（v5.0, v6.0, v7.0, v8.0）
-- **Prism 工具链目录**: 5 个（`Prism-Engine-V7.x` + `Prism-Engine-V7.x-Installer` + `Prism-Engine-V6.x/` 下 3 个 ETL 专项目录）
-- **引擎预设配置**: 5 个（ETL / Runtime / Evaluate / Weaver / Dyad）
-- **`.roo` 系统提示词**: 8 份
-- **Schema 与模板**: `schema_*.md` 8 份，`tpl_module_*` 8 份
+- **Prism 工具链目录**: 7 个（`Prism-Engine-V8.x` + `Prism-Engine-V8.x-Installer` + `Prism-Engine-V7.x` + `Prism-Engine-V7.x-Installer` + `Prism-Engine-V6.x/` 下 3 个 ETL 专项目录）
+- **引擎预设配置**: 6 个（ETL / Runtime / Evaluate / Weaver / Weaver-Orch / Dyad）
+- **`.roo` 系统提示词**: 17 份（V8.x 6 份 + V8.x-Installer/Template 6 份 + V7.x 5 份）
+- **Schema 与模板**: `schema_*.md` 12 份，`tpl_*` 12 份
 - **研究报告**: Repo-Git 版本 Markdown 3 份，PDF 2 份
 
 ## ⚠️ 免责声明 (Disclaimer)
@@ -261,4 +286,3 @@ graph LR
 
 ---
 *Copyright © 2025 3aKHP. All rights reserved.*
-

@@ -7,12 +7,13 @@
 
 **Phase III: Modulation** 是 "Neural Narratology" 计划的工程化终章。
 
-面对 Phase II 协议的复杂度，手工编写 XML 已不再现实。本项目引入了 **Prism Engine 三位一体架构** —— 一套运行在 VSCode 环境中的虚拟智能体系统。它利用 RooCode 插件的能力，将 LLM 从"聊天机器人"重塑为"文件系统操作员"，实现了从原始素材到最终资产的 **Zero-Copy** 自动化生产。
+面对 Phase II 协议的复杂度，手工编写 XML 已不再现实。本项目引入了 **Prism Engine 矩阵架构** —— 一套运行在 VSCode 环境中的虚拟智能体系统。它利用 RooCode 插件的能力，将 LLM 从"聊天机器人"重塑为"文件系统操作员"，实现了从原始素材到最终资产的 **Zero-Copy** 自动化生产。
 
 ### 核心突破
 
-- **三引擎架构**：ETL（构建）、Runtime（模拟）、Evaluate（审计）形成完整闭环
-- **v7.0 Neuro-Weave 实现**：将 Phase II 的理论框架转化为可执行的工程工具
+- **六引擎矩阵架构**：ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（小说）、Dyad（数据）、Weaver-Orch（编排器）形成完整生态
+- **v7.0 Neuro-Weave 实现**：将 Phase II 的理论框架转化为可执行的工程工具（Prism-Engine-V7.x）
+- **v8.0 Compact-State 实现**：从 Bio-XML 转向 YAML+Markdown 轻骨架架构，新增 Story Bible 世界状态层（Prism-Engine-V8.x）
 - **跨模型兼容**：针对 Claude/Deepseek/Gemini 的特性优化
 - **RooCode 原生集成**：通过自定义模式实现无缝工作流
 
@@ -21,7 +22,7 @@
 ```mermaid
 graph TB
     A[原始素材<br/>Source Materials] --> B[Prism-ETL Engine<br/>构建引擎]
-    B --> C[Module A<br/>Neuro-Card XML]
+    B --> C[Module A<br/>Character Card]
     B --> D[Module B<br/>Tension Scenario MD]
     C --> E[Prism-Runtime Engine<br/>模拟引擎]
     C --> W[Prism-Weaver Engine<br/>小说编织引擎]
@@ -31,43 +32,57 @@ graph TB
     D --> Y
     E --> F[Session Log<br/>交互日志]
     Y --> F
+    W --> O[Prism-Weaver-Orch<br/>长篇编排引擎]
+    O --> N[Long-form Novel<br/>连载小说]
     F --> G[Prism-Evaluate Engine<br/>审计引擎]
     G --> H[Neuro-Integrity Report<br/>质量报告]
     H -.反馈优化.-> B
-    W --> N[Long-form Novel<br/>长篇小说]
     
     style B fill:#e1f5ff
     style E fill:#ffe1f5
     style W fill:#e1ffe1
+    style O fill:#d4f5d4
     style Y fill:#f5e1ff
     style G fill:#fff4e1
 ```
 
-### 五大引擎职责
+### 六大引擎职责
 
 | 引擎 | 模式 | 职责 | 输入 | 输出 |
 |:---|:---|:---|:---|:---|
-| **ETL Engine** | `prism-etl` | 构建角色与场景 | 原始素材 | Module A (XML) + Module B (MD) |
+| **ETL Engine** | `prism-etl` | 构建角色与场景 | 原始素材 | Module A (.xml/.md) + Module B (.md) |
 | **Runtime Engine** | `prism-runtime` | 执行角色单向模拟 | Module A + Module B | Session Log (MD) |
-| **Evaluate Engine** | `prism-evaluate` | 质量审计 | Source + XML + Log | Neuro-Integrity Report (MD) |
+| **Evaluate Engine** | `prism-evaluate` | 质量审计 | Source + Card + Log | Neuro-Integrity Report (MD) |
 | **Weaver Engine** | `prism-weaver` | 扩写生成长篇小说 | Module A + Module B | Long-form Novel (MD) |
+| **Weaver-Orch Engine** | `prism-weaver-orch` | 长篇编排器（Orchestrator） | Module A + Module B + Story Bible | Multi-Chapter Novel (MD) |
 | **Dyad Engine** | `prism-dyad` | 双角色自动博弈生成数据 | Module A + Module B | Session Log (MD) |
 
 ## 📦 目录结构 (Directory Structure)
 
 ### 核心工程目录
 
-本项目包含多个针对不同模型优化的实现：
+本项目包含多个针对不同协议版本和模型优化的实现：
 
-- **[`Prism-Engine-V7.x/`](./Prism-Engine-V7.x/)**: **V7.x 通用版本**（推荐）
+- **[`Prism-Engine-V8.x/`](./Prism-Engine-V8.x/)**: **V8.x 通用版本**（⭐ 最新推荐）
+  - 基于 v8.0 Compact-State 协议
+  - 包含完整的**六引擎**系统提示词（ETL/Runtime/Evaluate/Weaver/Weaver-Orch/Dyad）
+  - 从 Bio-XML 转向 **YAML+Markdown 轻骨架**架构
+  - 新增 **Story Bible 世界状态层**与**结构化 Outline**
+  - 内含 `presets/` 子目录，存放六引擎预设 YAML 配置
+- **[`Prism-Engine-V8.x-Installer/`](./Prism-Engine-V8.x-Installer/)**: **V8.x 安装器与模板分发目录**
+  - 提供 `Install.ps1` 一键安装脚本
+  - 支持 **Mode A（模板内置 `.roo` 提示词）** 与 **Mode B（用户目录 Rules Pack）**
+  - 内含 V8.0 Project Template、六引擎预设 YAML、Rules XML 与补丁文件
+
+- **[`Prism-Engine-V7.x/`](./Prism-Engine-V7.x/)**: **V7.x 通用版本**
   - 基于 v7.0 Neuro-Weave 理论
   - 包含完整的五引擎系统提示词（ETL/Runtime/Evaluate/Weaver/Dyad）
   - 跨模型兼容设计
   - 内含 `presets/` 子目录，存放五引擎预设 YAML 配置
-- **[`Prism-Engine-V7.x-Installer/`](./Prism-Engine-V7.x-Installer/)**: **安装器与模板分发目录**
+- **[`Prism-Engine-V7.x-Installer/`](./Prism-Engine-V7.x-Installer/)**: **V7.x 安装器与模板分发目录**
   - 提供 `Install.ps1` 一键安装脚本
   - 支持 **Mode A（模板内置 `.roo` 提示词）** 与 **Mode B（用户目录 Rules Pack）**
-  - 内含 Project Template、预设 YAML、Rules XML 与补丁文件
+  - 内含 V7.0 Project Template、预设 YAML、Rules XML 与补丁文件
   
 - **[`Prism-Engine-V6.x/`](./Prism-Engine-V6.x/)**: **V6.x 多模型 ETL 专项目录**
   - **[`Prism-ETL-Claude/`](./Prism-Engine-V6.x/Prism-ETL-Claude/)**: Claude 优化版本（当前为 ETL 专项）
@@ -97,26 +112,61 @@ graph TB
 
 ### 标准工程结构
 
-以下为 **Universe 完整版** 的标准工程结构（其余模型目录当前为 ETL 精简形态）：
+#### V8.x 结构（最新）
+
+```
+Prism-Engine-V8.x/
+├── .roo/                           # 系统级提示词（六引擎）
+│   ├── system-prompt-prism-etl
+│   ├── system-prompt-prism-runtime
+│   ├── system-prompt-prism-evaluate
+│   ├── system-prompt-prism-weaver
+│   ├── system-prompt-prism-weaver-orch  # V8.1 新增
+│   └── system-prompt-prism-dyad
+├── presets/                        # 六引擎预设 YAML 配置
+│   ├── prism-etl_preset.yaml
+│   ├── prism-runtime_preset.yaml
+│   ├── prism-evaluate_preset.yaml
+│   ├── prism-weaver_preset.yaml
+│   ├── prism-weaver-orch_preset.yaml    # V8.1 新增
+│   └── prism-dyad_preset.yaml
+├── specs/                          # Schema 定义（4 个）
+│   ├── schema_character.md         # Module A (Compact Character Card)
+│   ├── schema_scenario.md          # Module B (Scenario)
+│   ├── schema_story_bible.md       # Story Bible 世界状态层（V8.1 新增）
+│   └── schema_outline.md           # 结构化大纲（V8.1 新增）
+├── templates/                      # 样板代码（4 个，YAML+MD 格式）
+│   ├── tpl_module_a.md             # 角色模板
+│   ├── tpl_module_b.md             # 场景模板
+│   ├── tpl_story_bible.md          # Story Bible 模板（V8.1 新增）
+│   └── tpl_outline.md              # 大纲模板（V8.1 新增）
+├── source_materials/               # 原始素材目录
+├── workspace/                      # 工作区（生成的 MD）
+├── test_runs/                      # 模拟日志目录
+├── novels/                         # 长篇小说目录
+└── reports/                        # 评估报告目录
+```
+
+#### V7.x 结构
 
 ```
 Prism-Engine-V7.x/
-├── .roo/                           # 系统级提示词
-│   ├── system-prompt-prism-etl     # ETL 引擎核心
-│   ├── system-prompt-prism-runtime # Runtime 引擎核心
-│   ├── system-prompt-prism-evaluate# Evaluate 引擎核心
-│   ├── system-prompt-prism-weaver  # Weaver 小说引擎核心
-│   └── system-prompt-prism-dyad    # Dyad 自动对弈引擎核心
-├── presets/                        # 引擎预设 YAML 配置
+├── .roo/                           # 系统级提示词（五引擎）
+│   ├── system-prompt-prism-etl
+│   ├── system-prompt-prism-runtime
+│   ├── system-prompt-prism-evaluate
+│   ├── system-prompt-prism-weaver
+│   └── system-prompt-prism-dyad
+├── presets/                        # 五引擎预设 YAML 配置
 │   ├── prism-etl_preset.yaml
 │   ├── prism-runtime_preset.yaml
 │   ├── prism-evaluate_preset.yaml
 │   ├── prism-weaver_preset.yaml
 │   └── prism-dyad_preset.yaml
-├── specs/                          # Schema 定义
-│   ├── schema_character.md         # Module A 规范
-│   └── schema_scenario.md          # Module B 规范
-├── templates/                      # 样板代码
+├── specs/                          # Schema 定义（2 个）
+│   ├── schema_character.md         # Module A (Neuro-Card XML)
+│   └── schema_scenario.md          # Module B (Scenario)
+├── templates/                      # 样板代码（2 个，XML 格式）
 │   ├── tpl_module_a.xml            # 角色模板
 │   └── tpl_module_b.md             # 场景模板
 ├── source_materials/               # 原始素材目录
@@ -143,12 +193,17 @@ Prism-Engine-V6.x/
 
 ### 配置文件
 
-- **[`Prism-Engine-V7.x/presets/prism-etl_preset.yaml`](./Prism-Engine-V7.x/presets/prism-etl_preset.yaml)**: ETL 引擎模式配置
-- **[`Prism-Engine-V7.x/presets/prism-runtime_preset.yaml`](./Prism-Engine-V7.x/presets/prism-runtime_preset.yaml)**: Runtime 引擎模式配置
-- **[`Prism-Engine-V7.x/presets/prism-evaluate_preset.yaml`](./Prism-Engine-V7.x/presets/prism-evaluate_preset.yaml)**: Evaluate 引擎模式配置
-- **[`Prism-Engine-V7.x/presets/prism-weaver_preset.yaml`](./Prism-Engine-V7.x/presets/prism-weaver_preset.yaml)**: Weaver 引擎模式配置
-- **[`Prism-Engine-V7.x/presets/prism-dyad_preset.yaml`](./Prism-Engine-V7.x/presets/prism-dyad_preset.yaml)**: Dyad 引擎模式配置
-- **[`Prism-Engine-V7.x-Installer/custom_modes_patch.yaml`](./Prism-Engine-V7.x-Installer/custom_modes_patch.yaml)**: Rules 模式下可整体并入 `custom_modes.yaml` 的补丁集合
+**V8.x 配置（六引擎）**：
+- **[`Prism-Engine-V8.x/presets/prism-etl_preset.yaml`](./Prism-Engine-V8.x/presets/prism-etl_preset.yaml)**: ETL 引擎模式配置
+- **[`Prism-Engine-V8.x/presets/prism-runtime_preset.yaml`](./Prism-Engine-V8.x/presets/prism-runtime_preset.yaml)**: Runtime 引擎模式配置
+- **[`Prism-Engine-V8.x/presets/prism-evaluate_preset.yaml`](./Prism-Engine-V8.x/presets/prism-evaluate_preset.yaml)**: Evaluate 引擎模式配置
+- **[`Prism-Engine-V8.x/presets/prism-weaver_preset.yaml`](./Prism-Engine-V8.x/presets/prism-weaver_preset.yaml)**: Weaver 引擎模式配置
+- **[`Prism-Engine-V8.x/presets/prism-weaver-orch_preset.yaml`](./Prism-Engine-V8.x/presets/prism-weaver-orch_preset.yaml)**: Weaver-Orch 引擎模式配置（V8.1 新增）
+- **[`Prism-Engine-V8.x/presets/prism-dyad_preset.yaml`](./Prism-Engine-V8.x/presets/prism-dyad_preset.yaml)**: Dyad 引擎模式配置
+- **[`Prism-Engine-V8.x-Installer/custom_modes_patch.yaml`](./Prism-Engine-V8.x-Installer/custom_modes_patch.yaml)**: Rules 模式下可整体并入 `custom_modes.yaml` 的补丁集合
+
+**V7.x 配置（五引擎）**：
+- 参见 [`Prism-Engine-V7.x/presets/`](./Prism-Engine-V7.x/presets/) 和 [`Prism-Engine-V7.x-Installer/`](./Prism-Engine-V7.x-Installer/)
 
 ## 🛠️ 安装与配置 (Setup)
 
@@ -188,6 +243,28 @@ powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V7.x-Insta
 4. **验证安装**:
    - VSCode 的 Project Templates 中应出现 `Prism-Engine-Universe-V7.0-Template`
    - RooCode 模式切换器中应出现五个 Prism 模式
+
+#### 推荐方式 C：运行 V8.x 安装器（最新）
+
+1. **进入安装器目录**:
+   - 打开 [`Prism-Engine-V8.x-Installer/`](./Prism-Engine-V8.x-Installer/)
+   - 参考 [`Prism-Engine-V8.x-Installer/README.md`](./Prism-Engine-V8.x-Installer/README.md:1)
+
+2. **运行安装脚本**:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V8.x-Installer\Install.ps1 -Mode A -Backup
+```
+
+或安装 **Mode B / Rules 模式**：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\03_Modulation\Prism-Engine-V8.x-Installer\Install.ps1 -Mode B -Backup
+```
+
+3. **验证安装**:
+   - VSCode 的 Project Templates 中应出现 `Prism-Engine-Universe-V8.0-Template`
+   - RooCode 模式切换器中应出现**六个** Prism 模式（etl/runtime/evaluate/weaver/weaver-orch/dyad）
 
 #### 手动方式：追加自定义模式 YAML
 
@@ -375,7 +452,8 @@ Evaluate session: [char_name]_log.md
 ## ⚠️ 稳定性说明 (Stability)
 
 ### 当前状态
-- **版本**: v7.0 Beta
+- **V8.x 版本**: v8.1 (Weaver-Orch)
+- **V7.x 版本**: v7.3 Stable
 - **状态**: 功能完整，持续优化中
 
 ### 已知限制
@@ -405,8 +483,9 @@ Evaluate session: [char_name]_log.md
 ## 🔗 相关资源 (Related Resources)
 
 - **Phase II: Resonance** - 理论基础与协议定义 → [查看](../02_Resonance/)
-  - [v7.0 Neuro-Weave](../02_Resonance/v7_Neuro_Weave/) - 本工具链的理论来源
-- **研究报告** - 设计哲学与实验数据 → [Markdown](./“调制”项目研究报告-Repo-Git.md)
+  - [v8.0 Compact-State](../02_Resonance/v8_Compact-State/) - V8.x 工具链的理论来源
+  - [v7.0 Neuro-Weave](../02_Resonance/v7_Neuro_Weave/) - V7.x 工具链的理论来源
+- **研究报告** - 设计哲学与实验数据 → [Markdown](./"调制"项目研究报告-Repo-Git.md)
 
 ## 📚 进阶阅读 (Advanced Topics)
 

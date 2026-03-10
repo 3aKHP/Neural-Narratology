@@ -15,7 +15,7 @@
 
 ## 2026-03-10 — Prism Engine V8.x Installer
 
-> Git: (Pending) · 对应 Prism Engine v8.1
+> Git: `2067d54` · 对应 Prism Engine v8.1
 
 ### Added — `[Modulation]`
 - 新增 **`Prism-Engine-V8.x-Installer/`** 目录：效仿 V7.x-Installer 架构，为 Compact-State 协议提供完整安装器。
