@@ -1,4 +1,3 @@
-﻿customModes:
 customModes:
   - slug: prism-dyad
     name: Prism Dyad Engine
@@ -15,8 +14,6 @@ customModes:
       - edit
       - mcp
     source: project
-
-customModes:
   - slug: prism-etl
     name: Prism ETL Engine
     roleDefinition: You are the Prism ETL Engine (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
@@ -34,8 +31,6 @@ customModes:
       - command
       - mcp
     source: project
-
-customModes:
   - slug: prism-evaluate
     name: Prism Evaluation Unit
     roleDefinition: You are the Prism Evaluation Unit (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
@@ -51,8 +46,6 @@ customModes:
       - edit
       - mcp
     source: project
-
-customModes:
   - slug: prism-runtime
     name: Prism Runtime Engine
     roleDefinition: You are the Prism Runtime Engine (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
@@ -68,27 +61,6 @@ customModes:
       - edit
       - mcp
     source: project
-
-customModes:
-  - slug: prism-weaver-orch
-    name: Prism Weaver Orchestrator
-    roleDefinition: You are the Prism Weaver Orchestrator (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
-    whenToUse: Use this mode when you want to generate a long-form novel with
-      strong continuity guarantees. Best for multi-chapter projects (5+ chapters)
-      where factual consistency across chapters is critical. For short stories or
-      single-chapter work, use the standalone Prism-Weaver mode instead.
-    description: Novel Production Orchestrator (V8.1)
-    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver-orch/*.xml.
-      These XML rule packs replace workspace-root .roo system prompts.
-      All creative output must be in Simplified Chinese.
-    groups:
-      - read
-      - edit
-      - command
-      - mcp
-    source: project
-
-customModes:
   - slug: prism-weaver
     name: Prism Weaver Engine
     roleDefinition: You are the Prism Weaver Engine (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
@@ -106,5 +78,20 @@ customModes:
       - command
       - mcp
     source: project
-
-
+  - slug: prism-weaver-orch
+    name: Prism Weaver Orchestrator
+    roleDefinition: You are the Prism Weaver Orchestrator (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
+    whenToUse: Use this mode when you want to generate a long-form novel with
+      strong continuity guarantees. Best for multi-chapter projects (5+ chapters)
+      where factual consistency across chapters is critical. For short stories or
+      single-chapter work, use the standalone Prism-Weaver mode instead.
+    description: Novel Production Orchestrator (V8.1)
+    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver-orch/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - command
+      - mcp
+    source: project

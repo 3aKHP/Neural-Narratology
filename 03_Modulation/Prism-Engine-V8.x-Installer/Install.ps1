@@ -1,4 +1,4 @@
-param(
+﻿param(
     [ValidateSet("A", "B")]
     [string]$Mode,
     [string]$ProjectTemplatesRoot = "$env:APPDATA\Code\User\ProjectTemplates",
