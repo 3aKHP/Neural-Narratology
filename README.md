@@ -42,6 +42,7 @@
     *   发布了 **Protocol v5.0 (Legacy)**：综合性价比最高的剧本优先协议。
     *   发布了 **Protocol v6.0 (Omni-Foundry)**：引入动态状态机、逻辑门与 L-System 叙事分级的下一代协议。
     *   发布了 **Protocol v7.0 (Neuro-Weave)**：基于 Bio-XML 理念和认知公理的神经编织引擎，实现从"结构化数据容器"到"活体认知系统"的范式转变。
+    *   发布了 **Protocol v8.0 (Compact-State Update)**：作为 FurryBar Engine 的 v8 主题更新，通过 YAML+Markdown 轻骨架压缩格式性文本开销，保护正文空间与注意力密度。
 *   **📄 [阅读研究报告](./02_Resonance/“共鸣”项目研究报告-Repo-Git.pdf)**
 
 ### [🌔 Phase III: Modulation (调制)](./03_Modulation/)
@@ -74,7 +75,8 @@ Neural-Narratology/
 │   ├── README.md
 │   ├── v5_Legacy/                  # 社区标准版协议（剧本优先）
 │   ├── v6_Omni_Foundry/            # 全息灵魂协议（动态状态机）
-│   ├── v7_Neuro_Weave/             # 神经编织引擎（认知模拟）⭐ 最新
+│   ├── v7_Neuro_Weave/             # 神经编织引擎（认知模拟）
+│   ├── v8_Dual_State/              # Compact-State 主题更新（轻结构协议）⭐ 最新
 │   ├── "共鸣"项目研究报告-Repo-Git.md
 │   └── “共鸣”项目研究报告-Repo-Git.pdf
 │
@@ -103,7 +105,8 @@ Neural-Narratology/
 |:---|:---|:---|:---|
 | **v5.0** | Legacy | 剧本优先 | 快速创作、社区分享 |
 | **v6.0** | Omni-Foundry | 全息灵魂 | 深度博弈、技术原型 |
-| **v7.0** | Neuro-Weave | 认知模拟 | 心理真实感、可攻略性 ⭐ |
+| **v7.0** | Neuro-Weave | 认知模拟 | 心理真实感、可攻略性 |
+| **v8.0** | Compact-State | 结构降维 | 工业化生产、上下文节流 ⭐ |
 
 ### Phase III: 工程实现
 
@@ -176,7 +179,8 @@ graph LR
 1.  **选择协议版本**：
     - 新手推荐：[v5.0 Legacy](./02_Resonance/v5_Legacy/)
     - 深度博弈：[v6.0 Omni-Foundry](./02_Resonance/v6_Omni_Foundry/)
-    - 心理真实感：[v7.0 Neuro-Weave](./02_Resonance/v7_Neuro_Weave/) ⭐
+    - 心理真实感：[v7.0 Neuro-Weave](./02_Resonance/v7_Neuro_Weave/)
+    - 轻结构工业化：[v8.0 Compact-State](./02_Resonance/v8_Dual_State/) ⭐
 
 2.  **阅读协议文档**：
     - 每个版本目录下都有完整的 README 和 Step-by-Step 指南
@@ -229,7 +233,7 @@ graph LR
 > **统计口径（更新于 2026-02-25）**：仅统计仓库内可追踪资产；不含 `.git/` 与本地 `dev/` 工作目录。
 
 - **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
-- **协议版本**: 3 个主要版本（v5.0, v6.0, v7.0）
+- **协议版本**: 4 个主要版本（v5.0, v6.0, v7.0, v8.0）
 - **Prism 工具链目录**: 5 个（`Prism-Engine-Universe-V7.0` + `Prism-Engine-Universe-V7.x-Installer` + 3 个 ETL 专项目录）
 - **引擎预设配置**: 5 个（ETL / Runtime / Evaluate / Weaver / Dyad）
 - **`.roo` 系统提示词**: 8 份
