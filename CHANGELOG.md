@@ -5,7 +5,7 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v8.0 Compact-State |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v7.3 |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v8.0 |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
@@ -13,15 +13,25 @@
 
 ---
 
-## [Unreleased]
+## 2026-03-10 — Prism Engine V8.0 "Compact-State Engine"
 
-> 计划中的工作项，参见 [`dev/plans/`](./dev/plans/) 目录。
+> Git: (pending) · 对应 Resonance Protocol v8.0 Compact-State
+
+### Added — `[Modulation]`
+- 新增 **`Prism-Engine-V8.x/`** 目录：基于 v8.0 Compact-State 协议的完整五引擎实现。
+  - 从 Bio-XML (`.xml`) 转向 **YAML Frontmatter + Markdown Body** (`.md`) 轻骨架架构。
+  - Module A 从 XML Neuro-Card 变为 **Compact Character Card** (`.md`)。
+  - Module B 保持 Markdown 但移除 XML Payload。
+  - Runtime CoT 从 XML 注释改为 `> [!Neuro-CoT]` Quote Block。
+  - HUD 压缩为 4 行中文紧凑格式。
+  - 叙事公理扩展为 10 条（Anti-AI-Flavor 提升为独立公理）。
+- 包含完整的五引擎系统提示词（`.roo/`）、V8.0 specs/templates、presets 及工程目录骨架。
 
 ---
 
 ## 2026-03-10 — 03_Modulation 目录重构
 
-> Git: (pending) · Prism Engine 版本不变（v7.3）
+> Git: `a40aa43` · Prism Engine 版本不变（v7.3）
 
 ### Changed — `[Modulation]`
 - **重构 `03_Modulation/` 目录结构**（纯目录重组，文件内容未变更）：
@@ -198,4 +208,4 @@
 | 2026-02-26 | v7.0 patch | v7.1 | 文档对齐 + 工具增强 |
 | 2026-03-02 | v7.2 (L3 Split) | v7.2 (Anti-AI) | L3 分级 + Anti-AI 约束 |
 | 2026-03-06 | — | **v7.3 (Installer)** | 安装器发布 |
-| 2026-03-10 | **v8.0 Compact-State** | v7.3 (unchanged) | 协议轻量化更新 |
+| 2026-03-10 | **v8.0 Compact-State** | **v8.0 (Compact Engine)** | 协议 + 引擎同步升级 |
