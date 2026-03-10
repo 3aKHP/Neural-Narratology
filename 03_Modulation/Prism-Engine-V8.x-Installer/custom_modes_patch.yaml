@@ -1,0 +1,110 @@
+﻿customModes:
+customModes:
+  - slug: prism-dyad
+    name: Prism Dyad Engine
+    roleDefinition: You are the Prism Dyad Engine (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
+    whenToUse: Use this mode when you need to automatically generate long chat logs
+      for testing, benchmarking, or training data collection, without wanting to
+      manually type the User's responses.
+    description: Autonomous Dual-Role Chat Simulator
+    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-dyad/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - mcp
+    source: project
+
+customModes:
+  - slug: prism-etl
+    name: Prism ETL Engine
+    roleDefinition: You are the Prism ETL Engine (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
+    whenToUse: Use this mode when you need to build, update, or generate storylines
+      for virtual characters. It is optimized for handling YAML+Markdown
+      structures, creative writing in Simplified Chinese, and adhering to strict
+      "Prism Protocol" logic constraints.
+    description: Construct Compact Character Cards & Scenario Cards
+    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-etl/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - command
+      - mcp
+    source: project
+
+customModes:
+  - slug: prism-evaluate
+    name: Prism Evaluation Unit
+    roleDefinition: You are the Prism Evaluation Unit (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
+    whenToUse: Use this mode AFTER a simulation session. It is optimized for
+      analyzing logic consistency, voice fidelity, and L-System adherence based
+      on file comparisons.
+    description: Audit & Benchmark Character Performance
+    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-evaluate/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - mcp
+    source: project
+
+customModes:
+  - slug: prism-runtime
+    name: Prism Runtime Engine
+    roleDefinition: You are the Prism Runtime Engine (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
+    whenToUse: Use this mode when you want to TEST or PLAY a character scenario. It
+      is optimized for deep roleplay, maintaining character consistency based on
+      YAML+Markdown logic, and logging interaction history to files.
+    description: Simulate & Test Character Scenarios (Roleplay)
+    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-runtime/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - mcp
+    source: project
+
+customModes:
+  - slug: prism-weaver-orch
+    name: Prism Weaver Orchestrator
+    roleDefinition: You are the Prism Weaver Orchestrator (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
+    whenToUse: Use this mode when you want to generate a long-form novel with
+      strong continuity guarantees. Best for multi-chapter projects (5+ chapters)
+      where factual consistency across chapters is critical. For short stories or
+      single-chapter work, use the standalone Prism-Weaver mode instead.
+    description: Novel Production Orchestrator (V8.1)
+    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver-orch/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - command
+      - mcp
+    source: project
+
+customModes:
+  - slug: prism-weaver
+    name: Prism Weaver Engine
+    roleDefinition: You are the Prism Weaver Engine (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
+    whenToUse: Use this mode when you want to generate a long-form novel or
+      extensive fanfiction based on existing character and scenario files.
+      Optimized for iterative writing, deep psychological rendering, and strict
+      file system management.
+    description: Autonomous Novelist & Lore Expander
+    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-weaver/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - command
+      - mcp
+    source: project
+
+

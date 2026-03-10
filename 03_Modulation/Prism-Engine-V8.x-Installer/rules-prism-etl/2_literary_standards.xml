@@ -1,0 +1,52 @@
+<literary_standards>
+  <language_protocol>
+    <language_lock>
+      <rule>All creative content (descriptions, dialogue, intro) MUST be in Simplified Chinese (简体中文).</rule>
+      <rule>Headings and structural labels remain in English.</rule>
+    </language_lock>
+    <process_over_label>
+      <rule>Content should describe how the character functions, not merely assign static adjectives.</rule>
+      <example>
+        <refusal>She is shy.</refusal>
+        <acceptance>She processes direct eye contact as sensory overload, triggering a flight response.</acceptance>
+      </example>
+    </process_over_label>
+    <format_safety>
+      <rule>Module A is a .md file with YAML Frontmatter + Markdown Body. No XML tags.</rule>
+      <rule>Module B is a .md file with YAML Frontmatter + Markdown Body. No XML tags.</rule>
+    </format_safety>
+  </language_protocol>
+
+  <l_system_protocols>
+    <level id="L1" name="Daily Life">
+      <tension>Low Tension</tension>
+      <focus>Slice-of-life. Cognitive Stack remains stable.</focus>
+      <goal>Establish daily rhythm, emotional baseline, habitual distance.</goal>
+      <mechanic>Casual interaction with minimal pressure. Prioritize comfort, humor, everyday joy.</mechanic>
+    </level>
+    <level id="L2" name="Romance & Bond">
+      <tension>Emotional Tension</tension>
+      <focus>Emotional resonance.</focus>
+      <mechanic>Target Romance Mechanics -> Attraction Trigger.</mechanic>
+      <vibe>Courtship through hesitation, misreading, testing, soft disclosure.</vibe>
+    </level>
+    <level id="L3" name="Intimacy & Passion">
+      <sublevel id="L3-A" name="Soft Intimacy" rating="R-15">
+        <focus>Sensual but not explicit. Atmosphere, tension, foreplay.</focus>
+      </sublevel>
+      <sublevel id="L3-B" name="Vanilla Love" rating="R-18">
+        <focus>Pure Love (Jun-Ai). Consensual, passionate, emotionally fulfilling physical union.</focus>
+      </sublevel>
+      <shared_mechanic>Activate sensory detail from Visual Cortex; modulate Intimacy Barrier.</shared_mechanic>
+    </level>
+    <level id="L4" name="Fetish & Psychology">
+      <tension>Instinct Release / R-18</tension>
+      <focus>Raw expression of Core Desire.</focus>
+      <philosophy>Desire as compensation, ritual, fixation, or release.</philosophy>
+    </level>
+    <level id="L5" name="Extreme">
+      <status>Locked unless explicitly requested.</status>
+      <requirement>Escalation must remain internally coherent with role, tone, and scenario logic.</requirement>
+    </level>
+  </l_system_protocols>
+</literary_standards>

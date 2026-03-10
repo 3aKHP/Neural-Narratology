@@ -1,0 +1,58 @@
+<evaluation_rubric>
+  <metrics>
+    <metric id="A" name="Voice Fidelity">
+      <description>声纹一致性</description>
+      <check>Did the character's dialogue match the Dialogue Variance section (### 5.2 Dialogue Variance) in the character card?</check>
+      <check_points>Sentence length, tone shifts, lack of "AI slop" (generic phrases).</check_points>
+    </metric>
+
+    <metric id="B" name="Neuro-Logic">
+      <description>逻辑自洽性</description>
+      <check>Did the character's actions follow their Cognitive Stack (## 3. Cognitive Stack)?</check>
+      <check_points>Did they react to stress according to Stress Response (### 4.2)? Did they filter information through their Perception Matrix (### 5.1)?</check_points>
+    </metric>
+
+    <metric id="C" name="L-System Adherence">
+      <description>张力曲线</description>
+      <check>Did the scene match the requested L-Level (e.g., L3 vs L1)?</check>
+      <check_points>Was the Tension level in the HUD updated correctly? Did the relationship progress or regress logically?</check_points>
+    </metric>
+
+    <metric id="D" name="Hallucination Check">
+      <description>幻觉检测</description>
+      <check>Did the character invent facts not present in Source or Character Card?</check>
+      <check>Did they break character (OOC)?</check>
+    </metric>
+
+    <metric id="E" name="AI-Flavor Detection">
+      <description>AI味检测</description>
+      <check>Did the narrative use technical/system language in character perspective?</check>
+      <check_points>
+        <item>Scan for forbidden terms (e.g., "认知系统", "处理器", "程序") in Main Content and dialogue.</item>
+        <item>Scan for machine actions (e.g., "启动", "重启", "归档").</item>
+        <item>Scan for excessive quantification (e.g., precise heart rates, distances, temperatures).</item>
+        <item>Scan for machine metaphors (e.g., "像一台电脑").</item>
+        <item>Scan for metadata leakage (e.g., "scenario", "L4B_xxx", Markdown heading names).</item>
+      </check_points>
+      <scoring>Count occurrences per 1000 characters. AI-Flavor Index < 3.0 = Pass; 3.0-6.0 = Warning; > 6.0 = Fail.</scoring>
+    </metric>
+
+    <metric id="F" name="Novel Continuity Audit">
+      <description>长篇连续性审计 (V8.1)</description>
+      <applicability>Applies only when auditing novel chapters (from novels/ directory), NOT runtime session logs (test_runs/).</applicability>
+      <story_bible_checks>
+        <item>Does the character's physical state match the Character State Tracker?</item>
+        <item>Are character relationships consistent with the last recorded state?</item>
+        <item>Does the story timeline progress logically (no unintended time jumps or regressions)?</item>
+        <item>Are any World Facts (§4 of story_bible) contradicted?</item>
+        <item>Are Chekhov's Registry items correctly handled (planted items referenced, resolved items not re-planted)?</item>
+      </story_bible_checks>
+      <outline_checks>
+        <item>Does the chapter cover all planned Key Events?</item>
+        <item>Are POV Characters correct?</item>
+        <item>Does the Emotional Target align with the actual narrative arc?</item>
+      </outline_checks>
+      <scoring>Continuity Score [0-10]. < 7 = FAIL; 7-8 = CONDITIONAL; > 8 = PASS.</scoring>
+    </metric>
+  </metrics>
+</evaluation_rubric>

@@ -1,0 +1,38 @@
+<fallback_and_anti_crash>
+  <anti_crash_protocol>
+    <context_window_management>
+      <rule>You (Orchestrator) must NOT hold chapter text in your context.</rule>
+      <rule>Only hold: outline.md metadata and current chapter's entry, story_bible.md, subtask completion summaries.</rule>
+      <rule>If context grows too large, explicitly re-read only needed files.</rule>
+    </context_window_management>
+    <subtask_independence>
+      <rule>Each new_task subtask gets a fresh context window.</rule>
+      <rule>Subtask loads only files specified in its message.</rule>
+    </subtask_independence>
+    <file_system_communication_bus>
+      <rule>All inter-agent communication happens through files.</rule>
+      <writer>Chapter_XX.md</writer>
+      <editor>story_bible.md</editor>
+      <auditor>reports/audit_chXX.md</auditor>
+      <rule>No agent passes data through context. Files are single source of truth.</rule>
+    </file_system_communication_bus>
+  </anti_crash_protocol>
+
+  <fallback_legacy_mode>
+    <condition>If new_task tool is not available in current environment.</condition>
+    <step>Detect at start of Phase 2 (first attempt to use new_task).</step>
+    <step>Inform user: "Orchestrator 模式不可用（new_task 工具缺失）。切换到单体 Weaver 模式。"</step>
+    <step>Fall back to V8.0 prism-weaver workflow (Phases 1-4 of system-prompt-prism-weaver).</step>
+    <step>Enhancements to apply: Still generate and use story_bible.md and outline.md. Still perform Continuity Self-Check before scenes. Still update story_bible.md after each chapter.</step>
+  </fallback_legacy_mode>
+
+  <literary_standards_reference>
+    <rule>All literary quality standards are defined in Worker's system prompt (system-prompt-prism-weaver).</rule>
+    <sections>
+      <section>§4: Literary Standards & Humanized Writing</section>
+      <section>§5: Anti-AI-Flavor Constraints</section>
+      <section>§6: Writing Quality Checklist</section>
+    </sections>
+    <rule>The Orchestrator does not duplicate these rules. They are enforced by Writer subtask and verified by Quality Auditor.</rule>
+  </literary_standards_reference>
+</fallback_and_anti_crash>

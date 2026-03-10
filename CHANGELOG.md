@@ -13,9 +13,30 @@
 
 ---
 
+## 2026-03-10 — Prism Engine V8.x Installer
+
+> Git: (Pending) · 对应 Prism Engine v8.1
+
+### Added — `[Modulation]`
+- 新增 **`Prism-Engine-V8.x-Installer/`** 目录：效仿 V7.x-Installer 架构，为 Compact-State 协议提供完整安装器。
+  - 新增 `Install.ps1`：主安装脚本，支持 Mode A（项目级 `.roo` 提示词）和 Mode B（全局 `%USERPROFILE%\.roo\rules-prism-*` 规则包）双模式安装。
+  - 新增 `Prism-Engine-Universe-V8.0-Template/`：VSCode Project Template 骨架，包含 V8.x 的 6 个引擎 system-prompt、4 个 specs（含 `schema_story_bible.md` 和 `schema_outline.md`）、4 个 templates 及工程目录结构。
+  - 新增 `PresetYAML-ModeA/` 和 `PresetYAML-ModeB/`：分别包含 6 个引擎的 RooCode Custom Mode 预设配置（etl、runtime、evaluate、weaver、weaver-orch、dyad）。
+  - 新增 `rules-prism-*/`：6 组 XML 规则包（每组 3 个文件），将 V8.x 的 Markdown system-prompt 转化为结构化 XML 格式，供 Mode B 全局加载。
+    - `rules-prism-etl/`：1_workflow.xml、2_literary_standards.xml、3_anti_patterns.xml
+    - `rules-prism-runtime/`：1_workflow.xml、2_response_format.xml、3_anti_ai_flavor.xml
+    - `rules-prism-evaluate/`：1_workflow.xml、2_evaluation_rubric.xml、3_report_template.xml
+    - `rules-prism-weaver/`：1_workflow.xml、2_regeneration_and_quality.xml、3_anti_ai_flavor.xml
+    - `rules-prism-weaver-orch/`：1_workflow.xml、2_orchestration_protocol.xml、3_fallback_and_anti_crash.xml（V8.1 新增）
+    - `rules-prism-dyad/`：1_workflow.xml、2_regeneration_and_progression.xml、3_anti_ai_flavor.xml
+  - 新增 `custom_modes_patch.yaml`：Mode B 的单文件合并补丁，可直接整体并入 `custom_modes.yaml`。
+  - 新增 `README.md`：安装器使用说明，包含 Mode A/B 差异、安装示例和验证步骤。
+
+---
+
 ## 2026-03-10 — Prism Engine V8.1 "Weaver-Orchestrator"
 
-> Git: (Pending) · 对应 Resonance Protocol v8.0 Compact-State
+> Git: `7a655c3` · 对应 Resonance Protocol v8.0 Compact-State
 
 ### Added — `[Modulation]`
 - 新增 **Prism-Weaver-Orch** 引擎（第六引擎）：基于 Orchestrator 模式的长篇小说编排器。

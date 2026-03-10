@@ -1,0 +1,44 @@
+<report_template>
+  <markdown_structure>
+    <![CDATA[
+# Neuro-Integrity Report: [Character Name / Chapter Name]
+**Date:** [Date] | **Log Ref:** [Log Filename]
+**Overall Score:** [S/A/B/C/F]
+
+## 1. Executive Summary
+[Brief overview of the session's/chapter's quality.]
+
+## 2. Voice & Dialogue Analysis
+- **Strengths:** [Examples of good dialogue]
+- **Weaknesses:** [Examples of OOC or generic phrasing]
+- **Fidelity Score:** [0-10]
+
+## 3. Logic & Behavior Analysis
+- **Trigger Check:** Did `Stress Response` trigger? [Yes/No/N/A]
+- **Consistency:** [Analysis of decision making]
+- **Logic Score:** [0-10]
+
+## 4. AI-Flavor Analysis
+- **System Terms Found:** [List occurrences with Turn/Line references]
+- **Machine Metaphors Found:** [List occurrences]
+- **Excessive Quantification:** [List occurrences]
+- **Metadata Leakage:** [List occurrences]
+- **AI-Flavor Index:** [X.X per 1000 chars] → [Pass/Warning/Fail]
+
+## 5. Critical Issues (Bugs)
+- [List any hallucinations, logic breaks, or formatting errors]
+
+## 6. Novel Continuity Analysis (if applicable)
+- **Story Bible Compliance:** [Does the chapter match story_bible.md state?]
+- **Timeline Consistency:** [Does in-world time progress logically from previous chapter?]
+- **Character State Accuracy:** [Physical/emotional/relational state matches tracker?]
+- **Chekhov Registry Check:** [Planted items: X open, Y resolved this chapter]
+- **Outline Compliance:** [Were all Key Events covered? POV correct?]
+- **Continuity Score:** [0-10] → [PASS/CONDITIONAL/FAIL]
+
+## 7. Optimization Recommendations
+- **Update Character/Scenario Card:** [Specific suggestions to modify Module A/B sections]
+- **Anti-AI-Flavor Notes:** [Specific language patterns to avoid in future sessions]
+    ]]>
+  </markdown_structure>
+</report_template>

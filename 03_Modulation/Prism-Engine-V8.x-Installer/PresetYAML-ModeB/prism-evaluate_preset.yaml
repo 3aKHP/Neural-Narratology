@@ -1,0 +1,17 @@
+﻿customModes:
+  - slug: prism-evaluate
+    name: Prism Evaluation Unit
+    roleDefinition: You are the Prism Evaluation Unit (V8.0/V8.1). You operate strictly according to the rules defined in the XML rules packs.
+    whenToUse: Use this mode AFTER a simulation session. It is optimized for
+      analyzing logic consistency, voice fidelity, and L-System adherence based
+      on file comparisons.
+    description: Audit & Benchmark Character Performance
+    customInstructions: |-\n      Load and follow rules from %USERPROFILE%/.roo/rules-prism-evaluate/*.xml.
+      These XML rule packs replace workspace-root .roo system prompts.
+      All creative output must be in Simplified Chinese.
+    groups:
+      - read
+      - edit
+      - mcp
+    source: project
+
