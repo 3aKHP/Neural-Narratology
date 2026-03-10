@@ -1,10 +1,10 @@
 # Prism-Engine-V8.x
 
 ## 定位
-- 协议代际：v8.0 Compact-State（完整实现）。
+- 协议代际：v8.1 Compact-State（完整实现）。
 - 架构：YAML Frontmatter + Markdown Body（轻骨架，重正文）。
-- 能力范围：ETL / Runtime / Evaluate / Weaver / Dyad 五引擎。
-- 用途：Phase III 的主线引擎，基于 v7.0 Neuro-Weave 升级。
+- 能力范围：ETL / Runtime / Evaluate / Weaver / Weaver-Orch / Dyad 六引擎。
+- 用途：Phase III 的主线引擎，基于 v7.0 Neuro-Weave 升级；v8.1 新增 Orchestrator 编排层。
 
 ## 与 V7.x 的关键差异
 | 维度 | V7.x (Neuro-Weave) | V8.x (Compact-State) |
@@ -19,19 +19,25 @@
 | **核心目标** | 心理真实感 | 结构降维 + 正文保护 |
 
 ## 目录说明
-- `.roo/`：五引擎系统提示词（V8.0 Compact-State 适配）。
-- `specs/`：V8.0 角色卡与场景卡 Schema 定义（YAML+Markdown 格式）。
-- `templates/`：V8.0 模板文件。
+- `.roo/`：六引擎系统提示词（V8.1 Compact-State 适配）。
+- `specs/`：Schema 定义（YAML+Markdown 格式）。
+  - `schema_character.md`：V8.0 角色卡 Schema。
+  - `schema_scenario.md`：V8.0 场景卡 Schema。
+  - `schema_story_bible.md`：V8.1 Story Bible Schema（世界状态层）。
+  - `schema_outline.md`：V8.1 结构化大纲 Schema。
+- `templates/`：模板文件。
   - `tpl_module_a.md`：紧凑态角色卡模板。
   - `tpl_module_b.md`：紧凑态场景卡模板。
-- `presets/`：五引擎 RooCode Custom Mode 预设。
+  - `tpl_story_bible.md`：Story Bible 空模板（V8.1）。
+  - `tpl_outline.md`：结构化大纲空模板（V8.1）。
+- `presets/`：六引擎 RooCode Custom Mode 预设。
 - `source_materials/`：原始素材目录。
 - `workspace/`：ETL 工作区（角色卡/场景卡输出）。
 - `test_runs/`：Runtime / Dyad 会话日志。
-- `reports/`：Evaluate 审计报告。
-- `novels/`：Weaver 长篇小说输出。
+- `reports/`：Evaluate 审计报告（含 Weaver-Orch 章节审计）。
+- `novels/`：Weaver / Weaver-Orch 长篇小说输出（含 story_bible.md）。
 
-## 五引擎概览
+## 六引擎概览
 
 ### 1. Prism-ETL (Compact Engine)
 - **角色**：Character Architect + Tension Director
@@ -55,8 +61,16 @@
 
 ### 5. Prism-Evaluate
 - **角色**：QA Lead + Forensic Narratologist
-- **功能**：审计会话质量，评估声纹一致性、逻辑自洽性、AI味浓度
-- **输出**：结构化审计报告
+- **功能**：审计会话质量，评估声纹一致性、逻辑自洽性、AI味浓度；V8.1 新增长篇连续性审计维度
+- **输出**：结构化审计报告（含 Novel Continuity Audit）
+
+### 6. Prism-Weaver-Orch (V8.1 新增)
+- **角色**：Executive Producer & Story Architect
+- **功能**：编排长篇小说生产流程，通过 `new_task` 协调 Weaver（写作）和 Evaluate（审计）
+- **核心机制**：`story_bible.md` 作为持久化世界状态层，防止长篇后期的事实性漂移
+- **工作流**：Write → Continuity Sync → Quality Audit → Decision Gate（每章循环）
+- **输出**：协调产出的多章节小说 + story_bible + audit reports
+- **适用场景**：多章节长篇项目（5+ 章），需要强事实一致性保证时使用
 
 ## 素材预处理工具（DOCX -> Markdown）
 - 位置：`source_materials/ConvertDocxToMdAndArchive.ps1`

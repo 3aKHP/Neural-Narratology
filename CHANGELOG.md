@@ -5,7 +5,7 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v8.0 Compact-State |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v8.0 |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v8.1 |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
@@ -13,9 +13,38 @@
 
 ---
 
+## 2026-03-10 — Prism Engine V8.1 "Weaver-Orchestrator"
+
+> Git: (Pending) · 对应 Resonance Protocol v8.0 Compact-State
+
+### Added — `[Modulation]`
+- 新增 **Prism-Weaver-Orch** 引擎（第六引擎）：基于 Orchestrator 模式的长篇小说编排器。
+  - 新增 `.roo/system-prompt-prism-weaver-orch`：Orchestrator 系统提示词，定义 Write → Sync → Audit → Decision Gate 四阶段章节生命周期。
+  - 新增 `presets/prism-weaver-orch_preset.yaml`：Orchestrator 预设配置。
+  - 通过 `new_task` 机制委派子任务给 `prism-weaver`（Writer / Continuity Editor）和 `prism-evaluate`（Quality Auditor）。
+  - 内置 Fallback：当 `new_task` 不可用时退化为增强版单体模式。
+- 新增 **Story Bible** 世界状态层：
+  - 新增 `specs/schema_story_bible.md`：Story Bible Schema 定义（Timeline、Character State Tracker、Chekhov's Registry、World Facts、Continuity Warnings 五大模块）。
+  - 新增 `templates/tpl_story_bible.md`：Story Bible 空模板。
+- 新增 **结构化 Outline**：
+  - 新增 `specs/schema_outline.md`：结构化大纲 Schema（含 Story Time、POV Characters、Key Events、Foreshadowing、Emotional Target）。
+  - 新增 `templates/tpl_outline.md`：结构化大纲空模板。
+
+### Changed — `[Modulation]`
+- 更新 `system-prompt-prism-evaluate` (V8.0 → V8.1)：
+  - 新增 §F **Novel Continuity Audit** 评估维度（长篇连续性审计），验证章节与 `story_bible.md` 的一致性。
+  - Report Template 新增 §6 Novel Continuity Analysis 章节。
+- 更新 `README.md`：五引擎 → 六引擎描述，补充新增 Schema/Template 说明。
+
+### Unchanged — `[Modulation]`
+- `system-prompt-prism-weaver`（保持原样，作为 Worker / 独立单体模式）。
+- `system-prompt-prism-etl`、`system-prompt-prism-runtime`、`system-prompt-prism-dyad`（不受影响）。
+
+---
+
 ## 2026-03-10 — Prism Engine V8.0 "Compact-State Engine"
 
-> Git: (pending) · 对应 Resonance Protocol v8.0 Compact-State
+> Git: `ce01fbf` · 对应 Resonance Protocol v8.0 Compact-State
 
 ### Added — `[Modulation]`
 - 新增 **`Prism-Engine-V8.x/`** 目录：基于 v8.0 Compact-State 协议的完整五引擎实现。
