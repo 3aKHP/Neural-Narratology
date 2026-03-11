@@ -1,4 +1,4 @@
-﻿# Protocol v7.0: Neuro-Weave (Bio-XML Cognitive Engine)
+# Protocol v7.0: Neuro-Weave (Bio-XML Cognitive Engine)
 
 > **基于认知模拟与过程导向的神经编织引擎**
 > *Neural Weaving Engine based on Cognitive Simulation & Process-Oriented Design*

@@ -1,4 +1,4 @@
-﻿# Phase III: Modulation (调制)
+# Phase III: Modulation (调制)
 
 > **基于 VSCode + RooCode 的自动化角色铸造流水线**
 > *IDE-Native Automated Character Foundry based on VSCode & RooCode*
@@ -69,6 +69,12 @@ graph TB
   - 从 Bio-XML 转向 **YAML+Markdown 轻骨架**架构
   - 新增 **Story Bible 世界状态层**与**结构化 Outline**
   - 内含 `presets/` 子目录，存放六引擎预设 YAML 配置
+- **[`Prism-Engine-Codex/`](./Prism-Engine-Codex/)**: **Codex 宿主适配目录**（实验性迁移中）
+  - 面向 **WSL + Codex CLI** 的宿主层落地
+  - 以局部 `AGENTS.md` 组织六引擎作用域
+  - 共享 `specs/` 与 `templates/` 资产
+  - 通过 `scripts/` 提供长篇项目初始化、章节编译与 Story Bible 快照入口
+  - 长篇正文采用 `Scene Shards` 协议写入 `novels/{project}/chapters/`
 - **[`Prism-Engine-V8.x-Installer/`](./Prism-Engine-V8.x-Installer/)**: **V8.x 安装器与模板分发目录**
   - 提供 `Install.ps1` 一键安装脚本
   - 支持 **Mode A（模板内置 `.roo` 提示词）** 与 **Mode B（用户目录 Rules Pack）**

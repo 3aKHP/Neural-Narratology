@@ -1,4 +1,4 @@
-﻿# Neural Narratology (神经叙事学)
+# Neural Narratology (神经叙事学)
 
 > **从逆向工程到自动化铸造：大型语言模型(LLM)交互式叙事与角色工程学研究**
 > *From Reverse Engineering to Automated Foundry: A Study on LLM Interactive Narrative and Character Engineering*
