@@ -97,8 +97,10 @@ graph TB
 
 ### 版本能力矩阵
 
-| 版本目录 | 协议代际侧重 | 已提供 .roo 引擎 |
+| 版本目录 | 协议代际侧重 | 已提供引擎 |
 |:---|:---|:---|
+| `Prism-Engine-V8.x` | v8.0 Compact-State | `etl` + `runtime` + `evaluate` + `weaver` + `weaver-orch` + `dyad` |
+| `Prism-Engine-Codex` | v8.1 Compact-State / Codex 宿主适配 | 六引擎目录作用域（AGENTS.md + shared/prompts） |
 | `Prism-Engine-V7.x` | v7.0 Neuro-Weave | `etl` + `runtime` + `evaluate` + `weaver` + `dyad` |
 | `Prism-Engine-V6.x/Prism-ETL-Claude` | v6.x Holographic / ETL 专项 | `etl` |
 | `Prism-Engine-V6.x/Prism-ETL-Deepseek` | v6.x Holographic / ETL 专项 | `etl` |

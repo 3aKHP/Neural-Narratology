@@ -13,6 +13,27 @@
 
 ---
 
+## 2026-03-12 — Prism-Engine-Codex (Codex CLI Host Adaptation)
+
+> Git: (Pending) · 对应 Prism Engine v8.1
+
+### Added — `[Modulation]`
+- 新增 **`Prism-Engine-Codex/`** 目录：Prism Engine v8.1 Compact-State 面向 **Codex CLI（WSL / PowerShell）** 的宿主适配层。
+  - 新增 `AGENTS.md`：全局行为规范（文件系统即单一事实来源、UTF-8+LF、小步写入优先）。
+  - 新增 `README.md`：完整的宿主层文档，含六引擎工作流说明、Scene Shards 长文本协议、脚本入口参考、示例演练骨架和项目模板介绍。
+  - 新增六引擎目录作用域，每个引擎含局部 `AGENTS.md` 与 `START_PROMPT.md`：
+    - `dyad/`：双实体自动博弈数据生成。
+    - `weaver-orch/`：长篇编排器（调度、同步与门控）。
+  - 新增 `specs/`：4 个协议约束文件（`schema_character.md`、`schema_scenario.md`、`schema_outline.md`、`schema_story_bible.md`），与 V8.x 共享 Schema 定义。
+  - 新增 `workspace/` 和 `reports/` 目录骨架（`.gitkeep`）。
+  - **设计说明**：通过目录作用域组织引擎边界（进入哪个目录启动 Codex 就让哪个引擎接管会话），通过 `shared/prompts/` 共享宿主无关的引擎手册，通过 `scripts/` 提供 Shell + PowerShell 双平台脚本入口。
+
+### Changed — `[Repo]`
+- 更新 `03_Modulation/README.md`：版本能力矩阵新增 `Prism-Engine-V8.x` 和 `Prism-Engine-Codex` 行。
+- 更新根目录 `README.md`：目录结构新增 `Prism-Engine-Codex/` 条目，项目统计中工具链目录数从 7 更新为 8。
+
+---
+
 ## 2026-03-10 — Prism Engine V8.x Installer
 
 > Git: `2067d54` · 对应 Prism Engine v8.1
@@ -259,3 +280,4 @@
 | 2026-03-02 | v7.2 (L3 Split) | v7.2 (Anti-AI) | L3 分级 + Anti-AI 约束 |
 | 2026-03-06 | — | **v7.3 (Installer)** | 安装器发布 |
 | 2026-03-10 | **v8.0 Compact-State** | **v8.0 (Compact Engine)** | 协议 + 引擎同步升级 |
+| 2026-03-12 | — | **v8.1 (Codex Host Adaptation)** | Codex CLI 宿主适配 |
