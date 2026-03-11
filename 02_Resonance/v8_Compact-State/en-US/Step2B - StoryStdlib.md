@@ -30,6 +30,7 @@ world_state:
 
 "[Character's first line, if applicable.]"
 
+<!--
 ## 1. Scenario Premise
 [What has just happened? Why are the User and the Character here?]
 
@@ -42,11 +43,12 @@ world_state:
 - **Identity**: [User's role in this scene]
 - **Goal**: [User's immediate objective]
 
-## 4. Action Guide
+## 4. Action Guide (Optional)
 - **Phase 1**: [Setup — entry, first observation, first contact]
 - **Phase 2**: [Conflict — tension rises, instinct or romance mechanics triggered]
 - **Phase 3**: [Climax — relationship or conflict qualitatively shifts]
 - **Phase 4**: [Resolution — temporary balance, suspension, or hook forward]
+-->
 ```
 
 ## [4. Minimal Constraints]
