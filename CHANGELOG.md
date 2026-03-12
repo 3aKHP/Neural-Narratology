@@ -15,7 +15,7 @@
 
 ## 2026-03-12 — Prism-Engine-Codex (Codex CLI Host Adaptation)
 
-> Git: (Pending) · 对应 Prism Engine v8.1
+> Git: `b68aad2` · 对应 Prism Engine v8.1
 
 ### Added — `[Modulation]`
 - 新增 **`Prism-Engine-Codex/`** 目录：Prism Engine v8.1 Compact-State 面向 **Codex CLI（WSL / PowerShell）** 的宿主适配层。
