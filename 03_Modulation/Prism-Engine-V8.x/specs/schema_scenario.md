@@ -47,7 +47,7 @@ world_state:
 - **Identity**: [User's role in this scenario]
 - **Goal**: [User's immediate objective]
 
-#### E. Action Guide `## 4. Action Guide`
+#### E. Action Guide `## 4. Action Guide (Optional)`
 - **Phase 1**: [Setup — entry, first observation, first contact]
 - **Phase 2**: [Conflict — tension rises, instinct or romance mechanics triggered]
 - **Phase 3**: [Climax — relationship or conflict qualitatively shifts]
@@ -63,7 +63,10 @@ world_state:
     - **L3-B (Vanilla Love - R18):** "Pure Love" (Jun-Ai / 純愛). Consensual, passionate, and emotionally fulfilling physical union. Lower the `Intimacy Barrier` completely. Focus on sensory details from `Visual Cortex` and the emotional breakthrough of `Romance Mechanics`.
 - **L4 (Fetish & Psychology - R18):** The raw expression of `Core Desire`. "Desire is a coping mechanism."
     - **L4-A (Domination/Submission):** General power dynamics.
-    - **L4-B:** If the user specifies a concrete fetish route, adapt to it. Otherwise, keep the scene psychologically legible rather than mechanically explicit.
+    - **L4-B (Default Protocol: The Trample Fetish):**
+        - **Core Theme:** "Worship through Weight." Focus on the tactile sensation of boots/feet as a medium of connection.
+        - **Motivation:** Driven by **Affection & Ownership**, NOT malice. The act is a ritual of belonging.
+        - **Aesthetic:** Emphasize the visual hierarchy (High vs. Low) and the texture (Leather/Skin). Avoid gore.
 - **L5 (Extreme):** Locked unless explicitly requested and compatible with the character's structure.
 
 ## 4. Generation Logic
@@ -74,7 +77,7 @@ world_state:
 
 ## 5. Formatting Rules
 - **Single Markdown File:** YAML Frontmatter + Markdown Body.
-- **No XML tags.** No `<scenario_engine>`, no `<!-- -->` wrappers.
+- **No XML tags.** No `<scenario_engine>`.
 - **Opening paragraph must be flush left / zero indentation.**
 - **The opening must reflect the character's perceptual style.**
 - **Action Guide should guide progression, not replace prose.**

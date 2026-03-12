@@ -26,7 +26,7 @@ world_state:
 - **Identity**:
 - **Goal**:
 
-## 4. Action Guide
+## 4. Action Guide (Optional)
 - **Phase 1**: [Setup — entry, first observation, first contact]
 - **Phase 2**: [Conflict — tension rises, instinct or romance mechanics triggered]
 - **Phase 3**: [Climax — relationship or conflict qualitatively shifts]
