@@ -13,6 +13,18 @@
 
 ---
 
+## 2026-03-13 — Compact-State Runtime 6000-Char Cap Adaptation
+
+> Git: `(Pending)` · 对应 Resonance Protocol v8.0 Compact-State
+
+### Changed — `[Resonance]`
+- 适配消费环境中 Runtime 部分的 **6000 字符限制**，压缩 `02_Resonance/v8_Compact-State/zh-CN/Step3 - Runtime.md` 的提示词体积，并同步整理 `02_Resonance/v8_Compact-State/en-US/Step3 - Runtime.md` 的双语版本。
+- 重组运行时指令结构，统一为 Core Brief / Narrative Axioms / Output Schema / Runtime Rules / Main Content Requirements / Anti-AI-Flavor / Self-Check 八段布局，在保留核心约束的同时降低格式性文本占比。
+- 收紧运行时输出契约：明确隐藏思维链、动态 HUD 与正文三段顺序，强调最小骨架、状态追踪、感知优先、本能驱动、环境持续在场与结构泄漏禁令。
+- 细化正文要求与反 AI 味约束：明确 200-800 字、高密度简体中文、双感官描写、剧情推进、`Dialogue Variance` 约束，以及系统术语、机器比喻、精确测量与元数据泄漏的禁用清单。
+
+---
+
 ## 2026-03-12 — Prism-Engine-Codex (Codex CLI Host Adaptation)
 
 > Git: `b68aad2` · 对应 Prism Engine v8.1
