@@ -57,6 +57,7 @@
     *   完整实现 v7.0 Neuro-Weave 理论框架（Prism-Engine-V7.x）。
     *   完整实现 v8.0 Compact-State 协议（Prism-Engine-V8.x），从 Bio-XML 转向 **YAML+Markdown 轻骨架**架构，新增 **Story Bible 世界状态层**与**结构化 Outline**。
     *   发布 **Prism Engine v8.1**：新增 **Weaver-Orch** 第六引擎（基于 Orchestrator 的长篇编排器）。
+    *   **多宿主适配**：六引擎矩阵已扩展至 RooCode、Codex CLI 和 Claude Code CLI 三个宿主环境。
 *   **🛠️ [获取工具链](./03_Modulation/)**
 
 ---
@@ -87,6 +88,10 @@ Neural-Narratology/
 │   │   └── presets/                # 六引擎预设 YAML 配置
 │   ├── Prism-Engine-V8.x-Installer/ # V8.x 安装器、模板与 Rules 分发目录
 │   ├── Prism-Engine-Codex/         # Codex CLI 宿主适配（六引擎目录作用域）
+│   │   ├── {etl,runtime,evaluate,weaver,weaver-orch,dyad}/
+│   │   ├── shared/prompts/         # 宿主无关的引擎手册
+│   │   └── scripts/                # Shell + PowerShell 脚本入口
+│   ├── Prism-Engine-Claude-Code/   # Claude Code CLI 宿主适配（CLAUDE.md + Agent 子代理）
 │   │   ├── {etl,runtime,evaluate,weaver,weaver-orch,dyad}/
 │   │   ├── shared/prompts/         # 宿主无关的引擎手册
 │   │   └── scripts/                # Shell + PowerShell 脚本入口
@@ -260,7 +265,7 @@ graph LR
 
 - **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
 - **协议版本**: 4 个主要版本（v5.0, v6.0, v7.0, v8.0）
-- **Prism 工具链目录**: 8 个（`Prism-Engine-V8.x` + `Prism-Engine-V8.x-Installer` + `Prism-Engine-Codex` + `Prism-Engine-V7.x` + `Prism-Engine-V7.x-Installer` + `Prism-Engine-V6.x/` 下 3 个 ETL 专项目录）
+- **Prism 工具链目录**: 9 个（`Prism-Engine-V8.x` + `Prism-Engine-V8.x-Installer` + `Prism-Engine-Codex` + `Prism-Engine-Claude-Code` + `Prism-Engine-V7.x` + `Prism-Engine-V7.x-Installer` + `Prism-Engine-V6.x/` 下 3 个 ETL 专项目录）
 - **引擎预设配置**: 6 个（ETL / Runtime / Evaluate / Weaver / Weaver-Orch / Dyad）
 - **`.roo` 系统提示词**: 17 份（V8.x 6 份 + V8.x-Installer/Template 6 份 + V7.x 5 份）
 - **Schema 与模板**: `schema_*.md` 12 份，`tpl_*` 12 份

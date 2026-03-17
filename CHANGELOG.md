@@ -13,9 +13,39 @@
 
 ---
 
+## 2026-03-18 — Prism-Engine-Claude-Code (Claude Code CLI Host Adaptation)
+
+> Git: `(Pending)` · 对应 Prism Engine v8.1
+
+### Added — `[Modulation]`
+- 新增 **`Prism-Engine-Claude-Code/`** 目录：Prism Engine v8.1 Compact-State 面向 **Claude Code CLI** 的宿主适配层。
+  - 新增 `CLAUDE.md`：全局行为规范 + 引擎调度表 + 工具映射表 + Stop & Wait 协议 + 子代理委派模板。
+  - 新增 `README.md`：完整的宿主层文档，含宿主能力映射、六引擎工作流、脚本入口、示例演练骨架。
+  - 新增 `START_HERE.md`：最短启动路径。
+  - 新增六引擎目录作用域，每个引擎含局部 `CLAUDE.md`：
+    - `etl/`：四阶段停顿流，AskUserQuestion 实现 Blueprint 确认。
+    - `runtime/`：File-Based Game Loop，Edit 追加日志，AskUserQuestion 实现 Turn 停顿。
+    - `evaluate/`：三角验证审计。
+    - `weaver/`：Scene Shards 协议，单场景写入 + Pause Gate。
+    - `weaver-orch/`：Agent 工具子代理委派模板 + 单会话回退模式。
+    - `dyad/`：Chunked 批次写入，Edit 追加日志。
+  - 新增 `shared/prompts/`：6 个引擎手册（从 Codex 适配，工具名替换为 Claude Code 等效工具）。
+  - 新增 `guides/`：3 个快速指南（etl、runtime、novel）。
+  - 复制 `specs/`（4 个 Schema）、`templates/`（4 个模板）、`scripts/`（12 个脚本）从 Codex 原样继承。
+  - 新增 `project_template/`：可复制的最小工作区骨架（含 `CLAUDE.md` + `README.md` + 5 个 `.gitkeep` 目录）。
+  - **设计说明**：通过 `CLAUDE.md` 目录作用域 + 自然语言触发关键词双轨切换引擎；通过 Agent 工具实现 Weaver-Orch 到 Weaver/Evaluate 的子代理委派；通过 AskUserQuestion 实现 Stop & Wait 协议；通过 Edit 工具实现文件追加避免大文件覆盖。
+
+### Changed — `[Modulation]`
+- 更新 `03_Modulation/README.md`：核心工程目录新增 Claude Code 条目，版本能力矩阵新增 Claude Code 行，路线图当前状态补全 V8.x / Codex / Claude Code 三个宿主层。
+
+### Changed — `[Repo]`
+- 更新根目录 `README.md`：Phase III 关键成果新增多宿主适配描述，目录结构新增 `Prism-Engine-Claude-Code/` 条目，项目统计工具链目录数从 8 更新为 9。
+
+---
+
 ## 2026-03-13 — Compact-State Runtime 6000-Char Cap Adaptation
 
-> Git: `(Pending)` · 对应 Resonance Protocol v8.0 Compact-State
+> Git: `ff59829` · 对应 Resonance Protocol v8.0 Compact-State
 
 ### Changed — `[Resonance]`
 - 适配消费环境中 Runtime 部分的 **6000 字符限制**，压缩 `02_Resonance/v8_Compact-State/zh-CN/Step3 - Runtime.md` 的提示词体积，并同步整理 `02_Resonance/v8_Compact-State/en-US/Step3 - Runtime.md` 的双语版本。
@@ -293,3 +323,4 @@
 | 2026-03-06 | — | **v7.3 (Installer)** | 安装器发布 |
 | 2026-03-10 | **v8.0 Compact-State** | **v8.0 (Compact Engine)** | 协议 + 引擎同步升级 |
 | 2026-03-12 | — | **v8.1 (Codex Host Adaptation)** | Codex CLI 宿主适配 |
+| 2026-03-18 | — | **v8.1 (Claude Code Host Adaptation)** | Claude Code CLI 宿主适配 |

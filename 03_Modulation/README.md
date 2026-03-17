@@ -75,6 +75,13 @@ graph TB
   - 共享 `specs/` 与 `templates/` 资产
   - 通过 `scripts/` 提供长篇项目初始化、章节编译与 Story Bible 快照入口
   - 长篇正文采用 `Scene Shards` 协议写入 `novels/{project}/chapters/`
+- **[`Prism-Engine-Claude-Code/`](./Prism-Engine-Claude-Code/)**: **Claude Code 宿主适配目录**
+  - 面向 **Claude Code CLI** 的宿主层落地
+  - 以目录作用域 `CLAUDE.md` 组织六引擎行为边界
+  - 自然语言触发 + 目录作用域双轨引擎切换
+  - Agent 工具子代理委派（Weaver-Orch → Weaver/Evaluate）
+  - AskUserQuestion 实现 Stop & Wait 协议
+  - 共享 `specs/`、`templates/`、`scripts/` 资产
 - **[`Prism-Engine-V8.x-Installer/`](./Prism-Engine-V8.x-Installer/)**: **V8.x 安装器与模板分发目录**
   - 提供 `Install.ps1` 一键安装脚本
   - 支持 **Mode A（模板内置 `.roo` 提示词）** 与 **Mode B（用户目录 Rules Pack）**
@@ -101,6 +108,7 @@ graph TB
 |:---|:---|:---|
 | `Prism-Engine-V8.x` | v8.0 Compact-State | `etl` + `runtime` + `evaluate` + `weaver` + `weaver-orch` + `dyad` |
 | `Prism-Engine-Codex` | v8.1 Compact-State / Codex 宿主适配 | 六引擎目录作用域（AGENTS.md + shared/prompts） |
+| `Prism-Engine-Claude-Code` | v8.1 Compact-State / Claude Code 宿主适配 | 六引擎目录作用域（CLAUDE.md + shared/prompts + Agent 子代理） |
 | `Prism-Engine-V7.x` | v7.0 Neuro-Weave | `etl` + `runtime` + `evaluate` + `weaver` + `dyad` |
 | `Prism-Engine-V6.x/Prism-ETL-Claude` | v6.x Holographic / ETL 专项 | `etl` |
 | `Prism-Engine-V6.x/Prism-ETL-Deepseek` | v6.x Holographic / ETL 专项 | `etl` |
@@ -109,6 +117,9 @@ graph TB
 ### 协议代际路线图 (Roadmap)
 
 - **当前状态**：
+  - `Prism-Engine-V8.x` 为 v8.1 完整实现（六引擎），RooCode 宿主。
+  - `Prism-Engine-Codex` 为 v8.1 Codex CLI 宿主适配（六引擎目录作用域）。
+  - `Prism-Engine-Claude-Code` 为 v8.1 Claude Code CLI 宿主适配（六引擎目录作用域 + Agent 子代理委派）。
   - `Prism-Engine-V7.x` 为 v7.0 完整实现（五引擎）。
   - `Prism-Engine-V6.x/Prism-ETL-Claude` / `Prism-Engine-V6.x/Prism-ETL-Deepseek` / `Prism-Engine-V6.x/Prism-ETL-Gemini` 为 v6.x 语义的 ETL 专项分支。
 - **升级目标**：
