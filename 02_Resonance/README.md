@@ -11,6 +11,8 @@
 
 本目录归档了该阶段产出的核心协议与工具链。
 
+当前在 `v8.0 Compact-State` 主线之外，还补充了一组面向**单一 System Prompt 聊天宿主**的 Lite 生产层协议，用于角色主提示词的轻量锻造。
+
 ## 📜 核心报告 (Core Report)
 
 *   **["共鸣"项目研究报告-Repo-Git.pdf](./“共鸣”项目研究报告-Repo-Git.pdf)**
@@ -50,6 +52,7 @@
 *   **[`v6_Omni_Foundry/`](./v6_Omni_Foundry/)**: 包含 v6.0 版本的完整内核与驱动模块。虽然操作复杂度较高，但其产出的角色具有无与伦比的逻辑深度与动态交互能力。
 *   **[`v7_Neuro_Weave/`](./v7_Neuro_Weave/)**: 包含 v7.0 版本的神经编织引擎。基于 Bio-XML 理念和认知公理，实现了从"结构化数据容器"到"活体认知系统"的范式转变。
 *   **[`v8_Compact-State/`](./v8_Compact-State/)**: 包含 v8.0 的 Compact-State 主题更新。通过 YAML+Markdown 轻骨架压缩格式性文本开销，减少对正文空间与注意力的挤占。
+*   **[`v8_Compact-State_Lite/`](./v8_Compact-State_Lite/)**: 包含 v8.0 的 Lite 生产层协议。面向 Chatbox、QuickQuip 一类单一 System Prompt 宿主，聚焦角色主提示词锻造。
 
 ## 🔄 演进路径 (Evolution Path)
 
@@ -83,6 +86,7 @@ graph LR
 - **如果你需要深度博弈**：使用 [`v6_Omni_Foundry`](./v6_Omni_Foundry/)，但需要投入时间学习其复杂的逻辑系统
 - **如果你追求心理真实感**：使用 [`v7_Neuro_Weave`](./v7_Neuro_Weave/)，它在复杂度和效果之间取得了最佳平衡
 - **如果你需要轻结构的工业化协议**：使用 [`v8_Compact-State`](./v8_Compact-State/)，它通过 Compact-State 更新显著降低了格式负担与注意力污染
+- **如果你需要单一 System Prompt 角色主提示词**：使用 [`v8_Compact-State_Lite`](./v8_Compact-State_Lite/)，它聚焦聊天宿主中的人格压缩与可部署性
 - **如果你需要自动化工具**：直接使用 [Phase III: Modulation](../03_Modulation/) 中的 Prism-ETL 工具链
 
 ## 🔗 相关资源 (Related Resources)

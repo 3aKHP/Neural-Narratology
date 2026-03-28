@@ -43,6 +43,7 @@
     *   发布了 **Protocol v6.0 (Omni-Foundry)**：引入动态状态机、逻辑门与 L-System 叙事分级的下一代协议。
     *   发布了 **Protocol v7.0 (Neuro-Weave)**：基于 Bio-XML 理念和认知公理的神经编织引擎，实现从"结构化数据容器"到"活体认知系统"的范式转变。
     *   发布了 **Protocol v8.0 (Compact-State Update)**：作为 FurryBar Engine 的 v8 主题更新，通过 YAML+Markdown 轻骨架压缩格式性文本开销，保护正文空间与注意力密度。
+    *   发布 **Compact-State Lite**：面向单一 System Prompt 聊天宿主的角色主提示词生产层协议。
 *   **📄 [阅读研究报告](./02_Resonance/"共鸣"项目研究报告-Repo-Git.pdf)**
 
 ### [🌔 Phase III: Modulation (调制)](./03_Modulation/)
@@ -55,7 +56,7 @@
     *   实现了 **Zero-Copy** 工作流：利用智能体操作文件系统，实现从自然语言意图到结构化 XML/Markdown 的无缝转换。
     *   突破长上下文窗口限制的 **Chunked Writing Loop**（分块写入循环）技术。
     *   完整实现 v7.0 Neuro-Weave 理论框架（Prism-Engine-V7.x）。
-    *   完整实现 v8.0 Compact-State 协议（Prism-Engine-V8.x），从 Bio-XML 转向 **YAML+Markdown 轻骨架**架构，新增 **Story Bible 世界状态层**与**结构化 Outline**。
+    *   完整实现 v8.0 Compact-State 协议（Prism-Engine-V8.x），从 Bio-XML 转向 **YAML+Markdown 轻骨架**架构，新增 **Story Bible 世界状态层**、**结构化 Outline** 与 **Lite Persona Prompt** 输出。
     *   发布 **Prism Engine v8.1**：新增 **Weaver-Orch** 第六引擎（基于 Orchestrator 的长篇编排器）。
     *   **多宿主适配**：六引擎矩阵已扩展至 RooCode、Codex CLI 和 Claude Code CLI 三个宿主环境。
 *   **🛠️ [获取工具链](./03_Modulation/)**
@@ -80,6 +81,7 @@ Neural-Narratology/
 │   ├── v6_Omni_Foundry/            # 全息灵魂协议（动态状态机）
 │   ├── v7_Neuro_Weave/             # 神经编织引擎（认知模拟）
 │   ├── v8_Compact-State/           # Compact-State 主题更新（轻结构协议）⭐ 最新
+│   ├── v8_Compact-State_Lite/      # Compact-State Lite（单提示词人格协议）
 │   ├── "共鸣"项目研究报告-Repo-Git.md
 │   └── "共鸣"项目研究报告-Repo-Git.pdf
 │
@@ -205,6 +207,7 @@ graph LR
     - 深度博弈：[v6.0 Omni-Foundry](./02_Resonance/v6_Omni_Foundry/)
     - 心理真实感：[v7.0 Neuro-Weave](./02_Resonance/v7_Neuro_Weave/)
     - 轻结构工业化：[v8.0 Compact-State](./02_Resonance/v8_Compact-State/) ⭐
+    - 单提示词聊天宿主：[v8.0 Compact-State Lite](./02_Resonance/v8_Compact-State_Lite/)
 
 2.  **阅读协议文档**：
     - 每个版本目录下都有完整的 README 和 Step-by-Step 指南
@@ -223,7 +226,8 @@ graph LR
 ### 🔬 研究者路径
 1. 深入研究 [Phase II 报告](./02_Resonance/"共鸣"项目研究报告-Repo-Git.pdf)
 2. 对比 [v5.0](./02_Resonance/v5_Legacy/) / [v6.0](./02_Resonance/v6_Omni_Foundry/) / [v7.0](./02_Resonance/v7_Neuro_Weave/) / [v8.0](./02_Resonance/v8_Compact-State/) 的设计差异
-3. 分析 [Phase III 源码](./03_Modulation/Prism-Engine-V8.x/.roo/) 的工程实现
+3. 阅读 [v8.0 Compact-State Lite](./02_Resonance/v8_Compact-State_Lite/) 理解单提示词人格压缩路径
+4. 分析 [Phase III 源码](./03_Modulation/Prism-Engine-V8.x/.roo/) 的工程实现
 
 ### 🛠️ 开发者路径
 1. Fork 本仓库
@@ -243,6 +247,11 @@ graph LR
 - HUD 压缩为 4 行中文紧凑格式
 - 叙事公理扩展为 10 条（Anti-AI-Flavor 提升为独立公理）
 - 新增 Story Bible 世界状态层与结构化 Outline
+
+### Compact-State Lite
+- 面向单一 System Prompt 聊天宿主的轻量人格锻造协议
+- 聚焦角色主提示词的部署可用性与人格持续性
+- 对应 Phase III 中的 `workspace/lite/` 输出路径
 
 ### 三大认知公理
 1. **感知滤镜**：定义角色如何过滤现实
@@ -264,7 +273,7 @@ graph LR
 > **统计口径（更新于 2026-03-10）**：仅统计仓库内可追踪资产；不含 `.git/` 与本地 `dev/` 工作目录。
 
 - **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
-- **协议版本**: 4 个主要版本（v5.0, v6.0, v7.0, v8.0）
+- **协议版本**: 4 个主要版本（v5.0, v6.0, v7.0, v8.0）+ 1 个 Lite Profile（Compact-State Lite）
 - **Prism 工具链目录**: 9 个（`Prism-Engine-V8.x` + `Prism-Engine-V8.x-Installer` + `Prism-Engine-Codex` + `Prism-Engine-Claude-Code` + `Prism-Engine-V7.x` + `Prism-Engine-V7.x-Installer` + `Prism-Engine-V6.x/` 下 3 个 ETL 专项目录）
 - **引擎预设配置**: 6 个（ETL / Runtime / Evaluate / Weaver / Weaver-Orch / Dyad）
 - **`.roo` 系统提示词**: 17 份（V8.x 6 份 + V8.x-Installer/Template 6 份 + V7.x 5 份）

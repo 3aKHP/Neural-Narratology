@@ -22,17 +22,22 @@
 - `.roo/`：六引擎系统提示词（V8.1 Compact-State 适配）。
 - `specs/`：Schema 定义（YAML+Markdown 格式）。
   - `schema_character.md`：V8.0 角色卡 Schema。
+  - `schema_persona_prompt_immersive.md`：Lite 第一人称角色主提示词 Schema。
+  - `schema_persona_prompt_compatible.md`：Lite 第三人称角色主提示词 Schema。
   - `schema_scenario.md`：V8.0 场景卡 Schema。
   - `schema_story_bible.md`：V8.1 Story Bible Schema（世界状态层）。
   - `schema_outline.md`：V8.1 结构化大纲 Schema。
 - `templates/`：模板文件。
   - `tpl_module_a.md`：紧凑态角色卡模板。
+  - `tpl_persona_prompt_immersive.md`：Lite 第一人称角色主提示词模板。
+  - `tpl_persona_prompt_compatible.md`：Lite 第三人称角色主提示词模板。
   - `tpl_module_b.md`：紧凑态场景卡模板。
   - `tpl_story_bible.md`：Story Bible 空模板（V8.1）。
   - `tpl_outline.md`：结构化大纲空模板（V8.1）。
 - `presets/`：六引擎 RooCode Custom Mode 预设。
 - `source_materials/`：原始素材目录。
 - `workspace/`：ETL 工作区（角色卡/场景卡输出）。
+  - `workspace/lite/`：Lite 单一 System Prompt 输出。
 - `test_runs/`：Runtime / Dyad 会话日志。
 - `reports/`：Evaluate 审计报告（含 Weaver-Orch 章节审计）。
 - `novels/`：Weaver / Weaver-Orch 长篇小说输出（含 story_bible.md）。
@@ -41,8 +46,8 @@
 
 ### 1. Prism-ETL (Compact Engine)
 - **角色**：Character Architect + Tension Director
-- **功能**：从原始素材构建紧凑态角色卡 (Module A) 和场景卡 (Module B)
-- **输出**：YAML Frontmatter + Markdown Body 的 `.md` 文件
+- **功能**：从原始素材构建紧凑态角色卡 (Module A)、场景卡 (Module B) 与 Lite 角色主提示词
+- **输出**：YAML Frontmatter + Markdown Body 的 `.md` 文件，以及适用于单一 System Prompt 聊天宿主的 Lite 提示词 `.md`
 
 ### 2. Prism-Runtime
 - **角色**：Simulation Kernel + File-based Gamemaster
@@ -92,3 +97,24 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\source_materials\ConvertDo
 - 本分支是 Compact-State (v8.0) 协议的完整 Universe 实现。
 - `Prism-Engine-V7.x` 是 Neuro-Weave (v7.0) 协议的完整实现，作为对照基线。
 - `Prism-Engine-V6.x/*` 当前为 ETL 专项分支，后续按路线图逐步并轨。
+
+## Lite 输出 Profile
+
+V8.x 的 ETL 现已支持一组面向单一聊天宿主的 Lite 输出 Profile，用于生成可直接部署到 `Chatbox`、`QuickQuip` 一类环境中的角色主提示词。
+
+### 目标产物
+
+- `Lite Immersive`：第一人称角色主提示词
+- `Lite Compatible`：第三人称角色主提示词
+
+### 相关资产
+
+- `specs/schema_persona_prompt_immersive.md`
+- `specs/schema_persona_prompt_compatible.md`
+- `templates/tpl_persona_prompt_immersive.md`
+- `templates/tpl_persona_prompt_compatible.md`
+
+### 输出位置
+
+- `workspace/lite/{char_name}_prompt_immersive.md`
+- `workspace/lite/{char_name}_prompt_compatible.md`

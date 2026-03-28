@@ -7,6 +7,7 @@
 - `AGENTS.md`：项目级协作边界
 - `source_materials/`：原始素材输入
 - `workspace/`：角色卡与场景卡输出
+- `workspace/lite/`：Lite persona prompt 输出
 - `novels/`：长篇项目目录
 - `reports/`：审计报告
 - `test_runs/`：运行日志

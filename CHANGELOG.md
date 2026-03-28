@@ -13,9 +13,40 @@
 
 ---
 
+## 2026-03-28 — Compact-State Lite Persona Prompt Profile
+
+> Git: `(Pending)` · 对应 Resonance Protocol v8.0 / Prism Engine v8.1
+
+### Added — `[Resonance]`
+- 新增 **`02_Resonance/v8_Compact-State_Lite/`** 目录：面向单一 System Prompt 聊天宿主的 Compact-State Lite 生产层协议。
+  - 新增 `README.md`：定义协议定位、双产线结构、执行方式与产物形态。
+  - 新增 `Immersive Driver.md` / `Immersive Template.md`：第一人称角色主提示词的驱动层与模板层。
+  - 新增 `Compatible Driver.md` / `Compatible Template.md`：第三人称角色主提示词的驱动层与模板层。
+
+### Added — `[Modulation]`
+- 为 **`Prism-Engine-V8.x/`** 新增 Lite Persona Prompt 资产：
+  - 新增 `specs/schema_persona_prompt_immersive.md` 与 `specs/schema_persona_prompt_compatible.md`。
+  - 新增 `templates/tpl_persona_prompt_immersive.md` 与 `templates/tpl_persona_prompt_compatible.md`。
+  - 新增 `workspace/lite/` 输出目录。
+- 将 Lite Persona Prompt 工作流同步到三个 V8.x 落地层：
+  - `Prism-Engine-Codex/`
+  - `Prism-Engine-Claude-Code/`
+  - `Prism-Engine-V8.x-Installer/Prism-Engine-Universe-V8.0-Template/`
+
+### Changed — `[Modulation]`
+- 更新 `Prism-Engine-V8.x/.roo/system-prompt-prism-etl`：ETL 从双产物扩展为三产物，新增 Lite Persona Blueprint / Compression Pass / Prompt Forging 流程。
+- 更新 `Prism-Engine-Codex/` 与 `Prism-Engine-Claude-Code/` 的 ETL 手册、作用域规则、快速启动说明、项目模板说明与目录校验脚本，使宿主层同步识别 `workspace/lite/` 与 Lite Persona Prompt 资产。
+- 更新 `Prism-Engine-V8.x-Installer/` 的模板文档、Mode A ETL 提示词与 `rules-prism-etl/*`，使 Mode A / Mode B 对齐 Lite Persona Prompt 流程。
+- 修正 `Prism-Engine-Claude-Code/scripts/validate_codex_tree.*` 的 Claude 宿主校验目标，使其按 `CLAUDE.md` 结构执行目录校验。
+
+### Changed — `[Repo]`
+- 更新根目录 `README.md`、`02_Resonance/README.md` 与 `03_Modulation/README.md`，补充 Compact-State Lite 目录索引、Lite Persona Prompt 能力说明与理论来源路径。
+
+---
+
 ## 2026-03-18 — Prism-Engine-Claude-Code (Claude Code CLI Host Adaptation)
 
-> Git: `(Pending)` · 对应 Prism Engine v8.1
+> Git: `8f9a53b` · 对应 Prism Engine v8.1
 
 ### Added — `[Modulation]`
 - 新增 **`Prism-Engine-Claude-Code/`** 目录：Prism Engine v8.1 Compact-State 面向 **Claude Code CLI** 的宿主适配层。

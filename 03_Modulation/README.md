@@ -14,6 +14,7 @@
 - **六引擎矩阵架构**：ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（小说）、Dyad（数据）、Weaver-Orch（编排器）形成完整生态
 - **v7.0 Neuro-Weave 实现**：将 Phase II 的理论框架转化为可执行的工程工具（Prism-Engine-V7.x）
 - **v8.0 Compact-State 实现**：从 Bio-XML 转向 YAML+Markdown 轻骨架架构，新增 Story Bible 世界状态层（Prism-Engine-V8.x）
+- **Lite Persona Prompt 输出**：ETL 现可直接锻造面向单一 System Prompt 聊天宿主的角色主提示词
 - **跨模型兼容**：针对 Claude/Deepseek/Gemini 的特性优化
 - **RooCode 原生集成**：通过自定义模式实现无缝工作流
 
@@ -50,7 +51,7 @@ graph TB
 
 | 引擎 | 模式 | 职责 | 输入 | 输出 |
 |:---|:---|:---|:---|:---|
-| **ETL Engine** | `prism-etl` | 构建角色与场景 | 原始素材 | Module A (.xml/.md) + Module B (.md) |
+| **ETL Engine** | `prism-etl` | 构建角色、场景与 Lite 主提示词 | 原始素材 | Module A (.xml/.md) + Module B (.md) + Lite Persona Prompt (.md) |
 | **Runtime Engine** | `prism-runtime` | 执行角色单向模拟 | Module A + Module B | Session Log (MD) |
 | **Evaluate Engine** | `prism-evaluate` | 质量审计 | Source + Card + Log | Neuro-Integrity Report (MD) |
 | **Weaver Engine** | `prism-weaver` | 扩写生成长篇小说 | Module A + Module B | Long-form Novel (MD) |
@@ -67,12 +68,13 @@ graph TB
   - 基于 v8.0 Compact-State 协议
   - 包含完整的**六引擎**系统提示词（ETL/Runtime/Evaluate/Weaver/Weaver-Orch/Dyad）
   - 从 Bio-XML 转向 **YAML+Markdown 轻骨架**架构
+  - ETL 新增 **Lite Persona Prompt** 输出 Profile
   - 新增 **Story Bible 世界状态层**与**结构化 Outline**
   - 内含 `presets/` 子目录，存放六引擎预设 YAML 配置
 - **[`Prism-Engine-Codex/`](./Prism-Engine-Codex/)**: **Codex 宿主适配目录**（实验性迁移中）
   - 面向 **WSL + Codex CLI** 的宿主层落地
   - 以局部 `AGENTS.md` 组织六引擎作用域
-  - 共享 `specs/` 与 `templates/` 资产
+  - 共享 `specs/` 与 `templates/` 资产，含 Lite Persona Prompt
   - 通过 `scripts/` 提供长篇项目初始化、章节编译与 Story Bible 快照入口
   - 长篇正文采用 `Scene Shards` 协议写入 `novels/{project}/chapters/`
 - **[`Prism-Engine-Claude-Code/`](./Prism-Engine-Claude-Code/)**: **Claude Code 宿主适配目录**
@@ -81,7 +83,7 @@ graph TB
   - 自然语言触发 + 目录作用域双轨引擎切换
   - Agent 工具子代理委派（Weaver-Orch → Weaver/Evaluate）
   - AskUserQuestion 实现 Stop & Wait 协议
-  - 共享 `specs/`、`templates/`、`scripts/` 资产
+  - 共享 `specs/`、`templates/`、`scripts/` 资产，含 Lite Persona Prompt
 - **[`Prism-Engine-V8.x-Installer/`](./Prism-Engine-V8.x-Installer/)**: **V8.x 安装器与模板分发目录**
   - 提供 `Install.ps1` 一键安装脚本
   - 支持 **Mode A（模板内置 `.roo` 提示词）** 与 **Mode B（用户目录 Rules Pack）**
@@ -149,18 +151,23 @@ Prism-Engine-V8.x/
 │   ├── prism-weaver_preset.yaml
 │   ├── prism-weaver-orch_preset.yaml    # V8.1 新增
 │   └── prism-dyad_preset.yaml
-├── specs/                          # Schema 定义（4 个）
+├── specs/                          # Schema 定义（6 个）
 │   ├── schema_character.md         # Module A (Compact Character Card)
+│   ├── schema_persona_prompt_immersive.md  # Lite 第一人称主提示词
+│   ├── schema_persona_prompt_compatible.md # Lite 第三人称主提示词
 │   ├── schema_scenario.md          # Module B (Scenario)
 │   ├── schema_story_bible.md       # Story Bible 世界状态层（V8.1 新增）
 │   └── schema_outline.md           # 结构化大纲（V8.1 新增）
-├── templates/                      # 样板代码（4 个，YAML+MD 格式）
+├── templates/                      # 样板代码（6 个，YAML+MD 格式）
 │   ├── tpl_module_a.md             # 角色模板
+│   ├── tpl_persona_prompt_immersive.md     # Lite 第一人称模板
+│   ├── tpl_persona_prompt_compatible.md    # Lite 第三人称模板
 │   ├── tpl_module_b.md             # 场景模板
 │   ├── tpl_story_bible.md          # Story Bible 模板（V8.1 新增）
 │   └── tpl_outline.md              # 大纲模板（V8.1 新增）
 ├── source_materials/               # 原始素材目录
 ├── workspace/                      # 工作区（生成的 MD）
+│   └── lite/                       # Lite 单一 System Prompt 输出
 ├── test_runs/                      # 模拟日志目录
 ├── novels/                         # 长篇小说目录
 └── reports/                        # 评估报告目录
@@ -503,6 +510,7 @@ Evaluate session: [char_name]_log.md
 
 - **Phase II: Resonance** - 理论基础与协议定义 → [查看](../02_Resonance/)
   - [v8.0 Compact-State](../02_Resonance/v8_Compact-State/) - V8.x 工具链的理论来源
+  - [v8.0 Compact-State Lite](../02_Resonance/v8_Compact-State_Lite/) - Lite Persona Prompt 的理论来源
   - [v7.0 Neuro-Weave](../02_Resonance/v7_Neuro_Weave/) - V7.x 工具链的理论来源
 - **研究报告** - 设计哲学与实验数据 → [Markdown](./"调制"项目研究报告-Repo-Git.md)
 
@@ -525,4 +533,3 @@ Evaluate session: [char_name]_log.md
 
 ---
 *Return to [Root Repository](../README.md)*
-

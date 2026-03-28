@@ -20,6 +20,7 @@
 |:---|:---|
 | 原始素材 | [`source_materials/`](./source_materials/) |
 | 角色卡与场景卡 | [`workspace/`](./workspace/) |
+| Lite Persona Prompt | [`workspace/lite/`](./workspace/lite/) |
 | 会话日志 | [`test_runs/`](./test_runs/) |
 | 长篇项目 | [`novels/`](./novels/) |
 | 审计报告 | [`reports/`](./reports/) |
@@ -97,12 +98,16 @@ Prism-Engine-Codex/
 │
 ├── specs/                            # 协议约束与结构标准
 │   ├── schema_character.md
+│   ├── schema_persona_prompt_immersive.md
+│   ├── schema_persona_prompt_compatible.md
 │   ├── schema_scenario.md
 │   ├── schema_outline.md
 │   └── schema_story_bible.md
 │
 ├── templates/                        # 生成目标的初始模板
 │   ├── tpl_module_a.md
+│   ├── tpl_persona_prompt_immersive.md
+│   ├── tpl_persona_prompt_compatible.md
 │   ├── tpl_module_b.md
 │   ├── tpl_outline.md
 │   └── tpl_story_bible.md
@@ -128,7 +133,7 @@ Prism-Engine-Codex/
 
 ### ETL
 
-将原始素材转化为角色卡 (Module A) 和场景卡 (Module B)。
+将原始素材转化为角色卡 (Module A)、场景卡 (Module B) 与 Lite persona prompt。
 
 **推荐步骤：**
 
@@ -136,6 +141,7 @@ Prism-Engine-Codex/
 2. 进入 [`etl/`](./etl/)，阅读 [`START_PROMPT.md`](./etl/START_PROMPT.md)
 3. 先输出 Character Blueprint，确认后写入角色卡
 4. 根据角色卡生成场景卡
+5. 若目标是单一 System Prompt 聊天宿主，改走 Lite workflow 并写入 [`workspace/lite/`](./workspace/lite/)
 
 **参考：** [`guides/etl_quickstart.md`](./guides/etl_quickstart.md)
 

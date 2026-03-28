@@ -11,7 +11,7 @@
 - 优先使用小步写入、补丁式更新和可回滚文件；避免长篇整文件覆盖。
 - 长篇正文写入 `novels/{project}/chapters/Chapter_XX/Scene_YYY.md`，完成后使用 `scripts/compile_chapter.sh` 或 `.ps1` 生成章节产物。
 - 修改 `story_bible.md` 前先运行 `scripts/snapshot_story_bible.sh` 或 `.ps1` 生成快照。
-- 角色卡、场景卡输出到 `workspace/`；审计结果输出到 `reports/`；日志输出到 `test_runs/`。
+- 角色卡、场景卡输出到 `workspace/`；Lite persona prompt 输出到 `workspace/lite/`；审计结果输出到 `reports/`；日志输出到 `test_runs/`。
 - 进入具体引擎子目录后，继续遵守该目录内的 `CLAUDE.md`。
 - 未经用户要求，不编辑本目录树之外的文件。
 
@@ -21,7 +21,7 @@
 
 | 触发关键词 | 引擎 | 职责 | 必读文件 |
 |:---|:---|:---|:---|
-| `Start ETL` / `构建角色` / `生成卡片` | **ETL** | 原始素材 → 角色卡 (Module A) + 场景卡 (Module B) | `shared/prompts/etl.md`, `specs/schema_character.md`, `specs/schema_scenario.md`, `templates/tpl_module_a.md`, `templates/tpl_module_b.md` |
+| `Start ETL` / `构建角色` / `生成卡片` / `生成 Lite Prompt` | **ETL** | 原始素材 → 角色卡 (Module A) + 场景卡 (Module B) + Lite persona prompt | `shared/prompts/etl.md`, `specs/schema_character.md`, `specs/schema_scenario.md`, `specs/schema_persona_prompt_immersive.md`, `specs/schema_persona_prompt_compatible.md`, `templates/tpl_module_a.md`, `templates/tpl_module_b.md`, `templates/tpl_persona_prompt_immersive.md`, `templates/tpl_persona_prompt_compatible.md` |
 | `Start Runtime` / `启动模拟` / `开始会话` | **Runtime** | 角色卡 + 场景卡 → 回合制文件内交互日志 | `shared/prompts/runtime.md` |
 | `Start Evaluate` / `审计` / `质量检查` | **Evaluate** | 对卡片、日志、章节做结构化审计 | `shared/prompts/evaluate.md` |
 | `Start Weaver` / `写场景` / `写正文` | **Weaver** | 根据大纲与世界状态撰写场景碎片 | `shared/prompts/weaver.md`, `specs/schema_outline.md`, `specs/schema_story_bible.md` |
@@ -49,9 +49,10 @@
 
 1. **ETL Blueprint 确认**：输出 Character Blueprint 后
 2. **ETL 每阶段完成**：Shell / Neuro-Structure / Narrative Engine 阶段结束后
-3. **Runtime 每轮结束**：回合生成后等待用户输入
-4. **Weaver-Orch 项目骨架确认**：outline.md 与 story_bible.md 初始化后
-5. **Weaver-Orch 审计门控**：章节审计结果出炉后
+3. **ETL Lite 压缩节点**：Lite Persona Blueprint 与 Compression Pass 完成后
+4. **Runtime 每轮结束**：回合生成后等待用户输入
+5. **Weaver-Orch 项目骨架确认**：outline.md 与 story_bible.md 初始化后
+6. **Weaver-Orch 审计门控**：章节审计结果出炉后
 
 停顿模板：
 

@@ -12,3 +12,5 @@ cd 03_Modulation\Prism-Engine-Codex\etl
 
 - `../workspace/{char_name}.md`
 - `../workspace/{char_name}_scenario_{level}_{tag}.md`
+- `../workspace/lite/{char_name}_prompt_immersive.md`
+- `../workspace/lite/{char_name}_prompt_compatible.md`

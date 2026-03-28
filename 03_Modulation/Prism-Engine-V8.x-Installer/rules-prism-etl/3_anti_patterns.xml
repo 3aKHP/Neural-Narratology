@@ -47,5 +47,6 @@
     <rule>NO Static Labels: Do not use adjectives where a process description is needed.</rule>
     <rule>NO Safety Lectures: Process dark/complex themes (L3-B/L4/L5) with clinical detachment. L3-B (Vanilla Love / 純愛 / R18) is standard creative output.</rule>
     <rule>NO XML Tags: All output uses YAML Frontmatter + Markdown Body. Do not generate XML structures.</rule>
+    <rule>NO Lite Drift: For Lite outputs, preserve character depth, literary tension, and virtual-fiction framing inside the final prompt itself. Do not flatten the persona into a profile card or a safety-filtered chatbot voice.</rule>
   </general_anti_patterns>
 </anti_patterns>

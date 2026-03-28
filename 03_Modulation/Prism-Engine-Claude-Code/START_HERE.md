@@ -8,6 +8,7 @@
 2. 在根目录启动 Claude Code 会话，输入 `Start ETL`
 3. 或进入 `etl/` 子目录启动会话
 4. 先完成角色卡，再完成场景卡
+5. 若目标宿主只接受单一 System Prompt，可直接走 Lite persona workflow，产物位于 `workspace/lite/`
 
 ## 2. Runtime
 

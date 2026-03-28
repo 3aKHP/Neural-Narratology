@@ -13,6 +13,7 @@
 - `PresetYAML-ModeB/`：Mode B 使用的分拆式 RooCode 自定义模式 YAML。
 - `custom_modes_patch.yaml`：Mode B 可直接整体并入 `custom_modes.yaml` 的单文件补丁。
 - `rules-prism-*/`：Mode B 安装到 `%USERPROFILE%\.roo\` 的 XML 规则包。
+- 模板内 `specs/`、`templates/` 已同步包含 Lite persona prompt、Story Bible 与 Outline 资产。
 
 ## 安装模式
 - `Mode A`：复制完整模板（包含 `.roo/` 下的系统提示词）到 VSCode Project Templates，并把 `PresetYAML-ModeA` 合并进 RooCode 的 `custom_modes.yaml`。适合独立项目使用。
@@ -68,6 +69,7 @@ powershell -ExecutionPolicy Bypass -File .\Install.ps1 -Mode B -Backup -Force
   - `Prism Weaver Orchestrator`
   - `Prism Dyad Engine`
 - 若使用 `Mode B`，`%USERPROFILE%\.roo\` 下应出现上述 6 个引擎对应的 `rules-prism-*` 目录。
+- 模板的 `workspace/lite/` 下应可直接容纳 Lite persona prompt 输出。
 
 ## 相关文件
 - 总说明：`03_Modulation/README.md:1`

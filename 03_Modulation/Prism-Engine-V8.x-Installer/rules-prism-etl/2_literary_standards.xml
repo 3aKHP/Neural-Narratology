@@ -14,6 +14,7 @@
     <format_safety>
       <rule>Module A is a .md file with YAML Frontmatter + Markdown Body. No XML tags.</rule>
       <rule>Module B is a .md file with YAML Frontmatter + Markdown Body. No XML tags.</rule>
+      <rule>Lite persona outputs are .md files and must remain directly deployable as single System Prompts.</rule>
     </format_safety>
   </language_protocol>
 

@@ -7,10 +7,11 @@
 
 ## 目录说明
 - `.roo/`：Mode A 下随模板复制的系统提示词；Mode B 安装后该目录会保留，但不包含 `system-prompt-prism-*` 文件。
-- `specs/`：角色卡、场景卡、Story Bible 与结构大纲的规范文档。
-- `templates/`：紧凑态角色卡、场景卡、Story Bible 与结构大纲的模板文件。
+- `specs/`：角色卡、场景卡、Lite persona prompt、Story Bible 与结构大纲的规范文档。
+- `templates/`：紧凑态角色卡、场景卡、Lite persona prompt、Story Bible 与结构大纲的模板文件。
 - `source_materials/`：原始角色素材入口，内含 DOCX 到 Markdown 的批量转换脚本。
 - `workspace/`：ETL 生成的 Markdown (.md) 工作产物（角色卡与场景卡）。
+- `workspace/lite/`：Lite persona prompt 输出目录。
 - `test_runs/`：Runtime 或 Dyad 生成的会话日志。
 - `reports/`：Evaluate 输出的审计报告（含长篇一致性审计）。
 - `novels/`：Weaver 或 Weaver-Orch 输出的长篇小说目录（包含 `story_bible.md` 和 `outline.md`）。
@@ -21,7 +22,7 @@
 
 ## 建议工作流
 - 第一步：把人物设定、世界观、对话样本等原始素材放入 `source_materials/`，可用内置脚本转换格式。
-- 第二步：使用 `prism-etl` 构建 `workspace/` 内的 Module A 与 Module B。
+- 第二步：使用 `prism-etl` 构建 `workspace/` 内的 Module A、Module B，或输出 `workspace/lite/` 下的 Lite persona prompt。
 - 第三步：使用 `prism-runtime` 或 `prism-dyad` 生成 `test_runs/` 日志。
 - 第四步：使用 `prism-evaluate` 输出 `reports/` 质量审计。
 - 第五步：需要扩写时使用 `prism-weaver-orch` (长篇编排) 或 `prism-weaver` 输出到 `novels/`。

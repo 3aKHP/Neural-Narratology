@@ -8,6 +8,7 @@
 2. 阅读 `etl/START_PROMPT.md`
 3. 进入 `etl/` 目录启动 Codex
 4. 先完成角色卡，再完成场景卡
+5. 若目标宿主只接受单一 System Prompt，可直接走 Lite persona workflow，产物位于 `workspace/lite/`
 
 ## 2. Runtime
 

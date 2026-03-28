@@ -19,6 +19,8 @@ REQUIRED_DIRS=(
   "project_template"
   "source_materials"
   "workspace"
+  "workspace/lite"
+  "project_template/workspace/lite"
   "novels"
   "reports"
   "test_runs"
@@ -46,6 +48,10 @@ REQUIRED_FILES=(
   "shared/prompts/weaver.md"
   "shared/prompts/weaver-orch.md"
   "shared/prompts/dyad.md"
+  "specs/schema_persona_prompt_immersive.md"
+  "specs/schema_persona_prompt_compatible.md"
+  "templates/tpl_persona_prompt_immersive.md"
+  "templates/tpl_persona_prompt_compatible.md"
   "guides/etl_quickstart.md"
   "guides/runtime_quickstart.md"
   "guides/novel_quickstart.md"
@@ -62,6 +68,7 @@ REQUIRED_FILES=(
   "scripts/validate_codex_tree.sh"
   "scripts/validate_codex_tree.ps1"
   "project_template/README.md"
+  "project_template/workspace/lite/.gitkeep"
 )
 
 for dir_path in "${REQUIRED_DIRS[@]}"; do
