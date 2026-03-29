@@ -1,0 +1,140 @@
+name: Release Installers
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, for example installer-20260329-1"
+        required: true
+        type: string
+      title:
+        description: "Release title"
+        required: true
+        type: string
+      notes:
+        description: "Optional release notes"
+        required: false
+        type: string
+      notes_source:
+        description: "manual | changelog | commits | auto"
+        required: true
+        default: auto
+        type: choice
+        options:
+          - auto
+          - changelog
+          - commits
+          - manual
+      prerelease:
+        description: "Mark this release as a prerelease"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build installer assets
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          & ./.github/scripts/build-installer-assets.ps1 `
+            -ManifestPath '.github/release/installers.json' `
+            -OutputDir (Join-Path $env:RUNNER_TEMP 'installer-release')
+
+      - name: Parse generated installers
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $assetDir = Join-Path $env:RUNNER_TEMP 'installer-release'
+          $generatedScripts = Get-ChildItem -Path $assetDir -Filter '*.ps1' -File
+
+          if (-not $generatedScripts) {
+            throw 'No installer scripts were generated.'
+          }
+
+          foreach ($file in $generatedScripts) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              $file.FullName,
+              [ref] $tokens,
+              [ref] $errors
+            ) | Out-Null
+
+            if ($errors.Count -gt 0) {
+              $detail = $errors | ForEach-Object { $_.Message } | Out-String
+              throw "Generated installer failed PowerShell parsing: $($file.Name)`n$detail"
+            }
+          }
+
+      - name: Generate Installer release notes
+        shell: pwsh
+        env:
+          USER_NOTES: ${{ inputs.notes }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          & ./.github/scripts/generate-release-notes.ps1 `
+            -ReleaseClass installers `
+            -NotesSource '${{ inputs.notes_source }}' `
+            -Tag '${{ inputs.tag }}' `
+            -UserNotes $env:USER_NOTES `
+            -OutputPath (Join-Path $env:RUNNER_TEMP 'installer-release-notes.md')
+
+      - name: Create or update Installer release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          RELEASE_TITLE: ${{ inputs.title }}
+          RELEASE_PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          $assetDir = Join-Path $env:RUNNER_TEMP 'installer-release'
+          $notesFile = Join-Path $env:RUNNER_TEMP 'installer-release-notes.md'
+
+          $assets = Get-ChildItem -Path $assetDir -File | Sort-Object Name | Select-Object -ExpandProperty FullName
+          if (-not $assets) {
+            throw 'No installer assets were generated.'
+          }
+
+          & gh release view $env:RELEASE_TAG *> $null
+          $releaseExists = $LASTEXITCODE -eq 0
+
+          if ($releaseExists) {
+            & gh release edit $env:RELEASE_TAG --title $env:RELEASE_TITLE --notes-file $notesFile
+            if ($LASTEXITCODE -ne 0) {
+              throw "Failed to edit existing release: $env:RELEASE_TAG"
+            }
+
+            & gh release upload $env:RELEASE_TAG @assets --clobber
+            if ($LASTEXITCODE -ne 0) {
+              throw "Failed to upload installer assets to release: $env:RELEASE_TAG"
+            }
+          }
+          else {
+            $createArgs = @(
+              'release', 'create', $env:RELEASE_TAG
+            ) + $assets + @(
+              '--title', $env:RELEASE_TITLE,
+              '--notes-file', $notesFile,
+              '--target', $env:GITHUB_SHA
+            )
+
+            if ($env:RELEASE_PRERELEASE -eq 'true') {
+              $createArgs += '--prerelease'
+            }
+
+            & gh @createArgs
+            if ($LASTEXITCODE -ne 0) {
+              throw "Failed to create installer release: $env:RELEASE_TAG"
+            }
+          }

@@ -1,0 +1,30 @@
+[
+  {
+    "source_dir": "03_Modulation/Prism-Engine-Claude-Code",
+    "output_name": "03_Modulation-Prism-Engine-Claude-Code.zip"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-Codex",
+    "output_name": "03_Modulation-Prism-Engine-Codex.zip"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-V6.x",
+    "output_name": "03_Modulation-Prism-Engine-V6.x.zip"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-V7.x",
+    "output_name": "03_Modulation-Prism-Engine-V7.x.zip"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-V7.x-Installer",
+    "output_name": "03_Modulation-Prism-Engine-V7.x-Installer.zip"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-V8.x",
+    "output_name": "03_Modulation-Prism-Engine-V8.x.zip"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-V8.x-Installer",
+    "output_name": "03_Modulation-Prism-Engine-V8.x-Installer.zip"
+  }
+]

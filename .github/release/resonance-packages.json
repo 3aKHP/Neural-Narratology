@@ -1,0 +1,22 @@
+[
+  {
+    "source_dir": "02_Resonance/v5_Legacy",
+    "output_name": "02_Resonance-v5_Legacy.zip"
+  },
+  {
+    "source_dir": "02_Resonance/v6_Omni_Foundry",
+    "output_name": "02_Resonance-v6_Omni_Foundry.zip"
+  },
+  {
+    "source_dir": "02_Resonance/v7_Neuro_Weave",
+    "output_name": "02_Resonance-v7_Neuro_Weave.zip"
+  },
+  {
+    "source_dir": "02_Resonance/v8_Compact-State",
+    "output_name": "02_Resonance-v8_Compact-State.zip"
+  },
+  {
+    "source_dir": "02_Resonance/v8_Compact-State_Lite",
+    "output_name": "02_Resonance-v8_Compact-State_Lite.zip"
+  }
+]

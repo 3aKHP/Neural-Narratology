@@ -13,9 +13,35 @@
 
 ---
 
+## 2026-03-29 — GitHub Actions CI & Split Release Automation
+
+> Git: `(Pending)` · 对应 Prism Engine v8.1
+
+### Added — `[Repo]`
+- 新增 **GitHub Actions CI**：
+  - 新增 `.github/workflows/ci.yml`：对已跟踪的 Shell / PowerShell 脚本执行语法检查与双宿主烟雾测试，并验证 V7.x / V8.x 安装器的 Mode A / Mode B 安装路径。
+- 新增 **分线 Release 自动化**：
+  - 新增 `.github/workflows/release-resonance.yml`：独立发布 `02_Resonance/` 的协议目录压缩包。
+  - 新增 `.github/workflows/release-modulation.yml`：独立发布 `03_Modulation/` 的工具链目录压缩包。
+  - 新增 `.github/workflows/release-installers.yml`：独立构建并发布 V7.x / V8.x 单文件安装器。
+- 新增 **受版本控制的发布脚本与清单**：
+  - 新增 `.github/scripts/package-tracked-assets.ps1`：基于 `git archive` 打包已跟踪目录内容，并生成 `SHA256SUMS.txt`。
+  - 新增 `.github/scripts/build-single-installer.ps1`：将安装器目录构建为单文件 `.ps1`，替代依赖 `dev/` 的构建入口。
+  - 新增 `.github/scripts/build-installer-assets.ps1`：按 manifest 构建安装器资产并生成校验和。
+  - 新增 `.github/scripts/generate-release-notes.ps1`：按 `manual / changelog / commits / auto` 生成分类 Release Notes。
+  - 新增 `.github/release/resonance-packages.json`、`.github/release/modulation-packages.json`、`.github/release/installers.json` 三份发布清单。
+
+### Changed — `[Repo]`
+- 将 Release Notes 生成逻辑接入三条发布线，使 `Resonance` / `Modulation` 默认优先采用 `CHANGELOG.md`，`Installers` 默认优先采用路径过滤后的 Commit Message，并在无匹配时自动回退。
+
+### Changed — `[Modulation]`
+- 更新 `Prism-Engine-Codex/scripts/init_novel_project.sh` 与 `Prism-Engine-Claude-Code/scripts/init_novel_project.sh`，转义 README heredoc 中的字面反引号，避免 Bash 命令替换干扰项目初始化脚本与 Linux runner 验证。
+
+---
+
 ## 2026-03-28 — Compact-State Lite Persona Prompt Profile
 
-> Git: `(Pending)` · 对应 Resonance Protocol v8.0 / Prism Engine v8.1
+> Git: `97abed8` · 对应 Resonance Protocol v8.0 / Prism Engine v8.1
 
 ### Added — `[Resonance]`
 - 新增 **`02_Resonance/v8_Compact-State_Lite/`** 目录：面向单一 System Prompt 聊天宿主的 Compact-State Lite 生产层协议。

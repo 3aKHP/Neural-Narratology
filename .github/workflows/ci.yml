@@ -1,0 +1,268 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install --yes shellcheck
+
+      - name: Lint tracked shell scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(git ls-files '*.sh')
+          if [[ ${#files[@]} -eq 0 ]]; then
+            echo "No tracked shell scripts found."
+            exit 0
+          fi
+          shellcheck "${files[@]}"
+
+  bash-smoke:
+    name: Bash Smoke (${{ matrix.engine }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine:
+          - Prism-Engine-Codex
+          - Prism-Engine-Claude-Code
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Smoke test bash scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          engine_root="03_Modulation/${{ matrix.engine }}"
+          temp_root="$(mktemp -d)"
+          trap 'rm -rf "$temp_root"' EXIT
+
+          cp -R "$engine_root" "$temp_root/"
+          cd "$temp_root/${{ matrix.engine }}"
+
+          bash ./scripts/validate_codex_tree.sh
+          bash ./scripts/init_novel_project.sh demo_ci
+          bash ./scripts/init_chapter_scene.sh demo_ci 1 1
+
+          cat > ./novels/demo_ci/chapters/Chapter_01/Scene_001.md <<'EOF'
+          # Scene 001
+
+          CI smoke content.
+          EOF
+
+          bash ./scripts/compile_chapter.sh demo_ci 1
+          bash ./scripts/snapshot_story_bible.sh demo_ci 1
+          bash ./scripts/init_runtime_session.sh demo_ci_session char_card.md scenario_card.md
+
+          test -f ./novels/demo_ci/Chapter_01.md
+          test -f ./novels/demo_ci/story_bible_ch01.bak.md
+          test -f ./test_runs/demo_ci_session_log.md
+          grep -q 'CI smoke content.' ./novels/demo_ci/Chapter_01.md
+
+  powershell-parse-and-smoke:
+    name: PowerShell Parse And Smoke (${{ matrix.engine }})
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine:
+          - Prism-Engine-Codex
+          - Prism-Engine-Claude-Code
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse tracked PowerShell scripts
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $files = git ls-files '*.ps1'
+          if (-not $files) {
+            Write-Host 'No tracked PowerShell scripts found.'
+            exit 0
+          }
+
+          $parseFailures = @()
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $file),
+              [ref] $tokens,
+              [ref] $errors
+            ) | Out-Null
+
+            if ($errors.Count -gt 0) {
+              $detail = $errors | ForEach-Object { $_.Message }
+              $parseFailures += "$file`n - $($detail -join \"`n - \")"
+            }
+          }
+
+          if ($parseFailures.Count -gt 0) {
+            throw "PowerShell parse failures:`n$($parseFailures -join \"`n\")"
+          }
+
+      - name: Smoke test PowerShell scripts
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          $engineRoot = Join-Path (Get-Location) "03_Modulation/${{ matrix.engine }}"
+          $tempRoot = Join-Path $env:RUNNER_TEMP ([guid]::NewGuid().ToString('N'))
+          $smokeRoot = Join-Path $tempRoot '${{ matrix.engine }}'
+
+          New-Item -ItemType Directory -Force -Path $tempRoot | Out-Null
+          Copy-Item $engineRoot $smokeRoot -Recurse -Force
+
+          powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $smokeRoot 'scripts\validate_codex_tree.ps1')
+          powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $smokeRoot 'scripts\init_novel_project.ps1') -ProjectName demo_ci
+          powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $smokeRoot 'scripts\init_chapter_scene.ps1') -ProjectName demo_ci -ChapterNumber 1 -SceneNumber 1
+
+          Set-Content -Path (Join-Path $smokeRoot 'novels\demo_ci\chapters\Chapter_01\Scene_001.md') -Value "# Scene 001`n`nCI smoke content." -Encoding UTF8
+
+          powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $smokeRoot 'scripts\compile_chapter.ps1') -ProjectName demo_ci -ChapterNumber 1
+          powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $smokeRoot 'scripts\snapshot_story_bible.ps1') -ProjectName demo_ci -ChapterNumber 1
+          powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $smokeRoot 'scripts\init_runtime_session.ps1') -SessionName demo_ci_session -CharacterCard char_card.md -ScenarioCard scenario_card.md
+
+          if (-not (Test-Path (Join-Path $smokeRoot 'novels\demo_ci\Chapter_01.md'))) {
+            throw 'Compiled chapter was not created.'
+          }
+          if (-not (Test-Path (Join-Path $smokeRoot 'novels\demo_ci\story_bible_ch01.bak.md'))) {
+            throw 'Story Bible snapshot was not created.'
+          }
+          if (-not (Test-Path (Join-Path $smokeRoot 'test_runs\demo_ci_session_log.md'))) {
+            throw 'Runtime session log was not created.'
+          }
+
+          $chapter = Get-Content (Join-Path $smokeRoot 'novels\demo_ci\Chapter_01.md') -Raw
+          if ($chapter -notmatch 'CI smoke content\.') {
+            throw 'Compiled chapter content did not match expected smoke content.'
+          }
+
+  installer-smoke:
+    name: Installer Smoke (${{ matrix.installer }} / Mode ${{ matrix.mode }})
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - installer: Prism-Engine-V7.x-Installer
+            template: Prism-Engine-Universe-V7.0-Template
+            mode: A
+            slugs:
+              - prism-dyad
+              - prism-etl
+              - prism-evaluate
+              - prism-runtime
+              - prism-weaver
+            rules: []
+          - installer: Prism-Engine-V7.x-Installer
+            template: Prism-Engine-Universe-V7.0-Template
+            mode: B
+            slugs:
+              - prism-dyad
+              - prism-etl
+              - prism-evaluate
+              - prism-runtime
+              - prism-weaver
+            rules:
+              - rules-prism-dyad
+              - rules-prism-etl
+              - rules-prism-evaluate
+              - rules-prism-runtime
+              - rules-prism-weaver
+          - installer: Prism-Engine-V8.x-Installer
+            template: Prism-Engine-Universe-V8.0-Template
+            mode: A
+            slugs:
+              - prism-dyad
+              - prism-etl
+              - prism-evaluate
+              - prism-runtime
+              - prism-weaver
+              - prism-weaver-orch
+            rules: []
+          - installer: Prism-Engine-V8.x-Installer
+            template: Prism-Engine-Universe-V8.0-Template
+            mode: B
+            slugs:
+              - prism-dyad
+              - prism-etl
+              - prism-evaluate
+              - prism-runtime
+              - prism-weaver
+              - prism-weaver-orch
+            rules:
+              - rules-prism-dyad
+              - rules-prism-etl
+              - rules-prism-evaluate
+              - rules-prism-runtime
+              - rules-prism-weaver
+              - rules-prism-weaver-orch
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Smoke test installer
+        shell: pwsh
+        env:
+          SLUGS_JSON: ${{ toJson(matrix.slugs) }}
+          RULES_JSON: ${{ toJson(matrix.rules) }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          $tempRoot = Join-Path $env:RUNNER_TEMP ([guid]::NewGuid().ToString('N'))
+          $projectTemplatesRoot = Join-Path $tempRoot 'ProjectTemplates'
+          $modesFile = Join-Path $tempRoot 'settings\custom_modes.yaml'
+          $targetRoo = Join-Path $tempRoot '.roo'
+          New-Item -ItemType Directory -Force -Path $projectTemplatesRoot, (Split-Path $modesFile -Parent), $targetRoo | Out-Null
+
+          $installerRoot = Join-Path (Get-Location) '03_Modulation/${{ matrix.installer }}'
+          $installerScript = Join-Path $installerRoot 'Install.ps1'
+
+          powershell -NoProfile -ExecutionPolicy Bypass -File $installerScript `
+            -Mode '${{ matrix.mode }}' `
+            -ProjectTemplatesRoot $projectTemplatesRoot `
+            -ModesFile $modesFile `
+            -TargetRoo $targetRoo `
+            -Force
+
+          $templatePath = Join-Path $projectTemplatesRoot '${{ matrix.template }}'
+          if (-not (Test-Path $templatePath)) {
+            throw "Expected template was not created: $templatePath"
+          }
+
+          $modesContent = Get-Content $modesFile -Raw
+          $slugs = $env:SLUGS_JSON | ConvertFrom-Json
+          foreach ($slug in $slugs) {
+            if ($modesContent -notmatch "(?m)^\s+- slug: $slug\r?$") {
+              throw "Missing mode slug in custom modes file: $slug"
+            }
+          }
+
+          $ruleDirs = $env:RULES_JSON | ConvertFrom-Json
+          foreach ($ruleDir in $ruleDirs) {
+            if (-not [string]::IsNullOrWhiteSpace($ruleDir)) {
+              $rulePath = Join-Path $targetRoo $ruleDir
+              if (-not (Test-Path $rulePath)) {
+                throw "Missing installed rules directory: $rulePath"
+              }
+            }
+          }

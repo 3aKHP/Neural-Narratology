@@ -36,10 +36,10 @@ cp "$ENGINE_ROOT/templates/tpl_story_bible.md" "$STORY_BIBLE_FILE"
 cat > "$PROJECT_DIR/README.md" <<EOF
 # $PROJECT_NAME
 
-- `outline.md`: 结构化章节大纲
-- `story_bible.md`: 世界状态层与连续性记录
-- `chapters/Chapter_XX/Scene_YYY.md`: 场景碎片
-- `Chapter_XX.md`: 编译后的章节产物
+- \`outline.md\`: 结构化章节大纲
+- \`story_bible.md\`: 世界状态层与连续性记录
+- \`chapters/Chapter_XX/Scene_YYY.md\`: 场景碎片
+- \`Chapter_XX.md\`: 编译后的章节产物
 EOF
 
 echo "Initialized novel project: $PROJECT_DIR"
