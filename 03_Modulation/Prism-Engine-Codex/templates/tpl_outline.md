@@ -4,7 +4,7 @@ Total_Chapters: 0
 Primary_POV: "[Character Name or Mixed]"
 Story_Promise: "[One-sentence series promise]"
 Final_Target: "[Desired end-state of the story]"
-Orchestration_Mode: "single"
+Orchestration_Mode: "orchestrated"
 Genre: "[Optional]"
 POV_Style: "[First Person / Third Person Limited / Third Person Omniscient]"
 ---

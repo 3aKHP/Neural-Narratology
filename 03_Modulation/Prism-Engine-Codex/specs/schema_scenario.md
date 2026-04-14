@@ -96,11 +96,13 @@ If Runtime detects the scene has remained in the same beat for three or more tur
 7. If the scene is designed for high-intensity territory and the source material is all-ages, the Affine Transform Agent (Workflow C) must be run first and its DLC output merged with the source material before character card construction.
 8. **L-System Prohibition:** The produced Module B file must not contain L-System tags (L1, L2, L3-A, L3-B, L4, L4-A, L4-B, L5) anywhere. Target intensity is encoded through beat map tension targets and variant configs — never through L-level labels.
 
-## 5. Local Intensity Reference
+## 5. Local Intensity Reference（生产层内部，禁止出现在产出文件）
 
 This schema defines its own intensity working language so the engine can run independently.
 
 ### 5.1 L-System Working Levels
+
+> **警告：以下标签仅供生产层规划使用，严禁出现在任何产出层文件（Module A、Module B、日志）中。**
 
 | Label | Meaning | Typical tension span | Description |
 |:---|:---|:---|:---|

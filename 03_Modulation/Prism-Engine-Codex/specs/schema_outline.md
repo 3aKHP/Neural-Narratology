@@ -67,7 +67,7 @@ Each chapter uses the following structure:
 
 1. YAML frontmatter is mandatory.
 2. At least one chapter entry is required.
-3. Every chapter entry must include all seven bullet fields.
+3. Every chapter entry must include all eight bullet fields.
 4. `Audit Gate` must be actionable and reviewable.
 5. `Key Events` must be concrete enough for scene planning, not thematic slogans.
 

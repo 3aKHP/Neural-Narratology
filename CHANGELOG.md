@@ -59,6 +59,22 @@
 
 ---
 
+## 2026-04-14 — Prism Engine v9.0 State-Space (V9.x Core & Installer)
+
+> Git: `7440f7e` (V9.x core) · `0708bbd` (V9.x-Installer) · 对应 Prism Engine v9.0
+
+### Added — `[Modulation]`
+- 新增 **`Prism-Engine-V9.x/`** 目录：v9.0 State-Space 通用版本，面向 RooCode 宿主。
+  - 六引擎完整系统提示词（ETL / Runtime / Evaluate / Weaver / Weaver-Orch / Dyad）。
+  - 核心新增：**Persona Topology**（不变轴 / 可变轴 / 边界条件）、**State Navigator**（拓扑感知运行时状态追踪）、**Affine Transform Agent（工作流 C）**（All-Ages → L3+ DLC 推导流水线）。
+  - 场景卡改用 `beat_map` 结构，Runtime 输出三段式（`<!-- [!Neural Chain] -->` HTML 注释 + 5 行 HUD + 正文）。
+  - 新增 `specs/schema_dlc.md`、`specs/schema_outline.md`（V9.0）、`specs/schema_story_bible.md`（V9.0）。
+- 新增 **`Prism-Engine-V9.x-Installer/`** 目录：V9.x 安装器与模板分发目录。
+  - 提供 `Install.ps1` 一键安装脚本，支持 Mode A（模板内置 `.roo` 提示词）与 Mode B（用户目录 Rules Pack）。
+  - 内含 V9.0 Project Template、六引擎预设 YAML、Rules XML 与补丁文件。
+
+---
+
 ## 2026-04-14 — Resonance Protocol v9.0 State-Space
 
 > Git: `8b91936` · 对应 Resonance Protocol v9.0

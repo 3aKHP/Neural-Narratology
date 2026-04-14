@@ -1,7 +1,7 @@
 ---
 scenario_name:
 tags: []
-world_state:
+world_state: "[单行字符串 — 物理与社会语境，如：深夜，她的公寓，第一次独处]"
 
 beat_map:
   - label:
