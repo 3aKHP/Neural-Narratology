@@ -48,7 +48,7 @@ function Get-ReleaseClassConfig([string]$Class) {
         "resonance" {
             return @{
                 DisplayName = "Resonance"
-                TagPrefix = "resonance-"
+                TagPrefix = "Resonance-"
                 ChangelogLabel = "Resonance"
                 Pathspecs = @("02_Resonance")
                 PreferredSource = "changelog"
@@ -58,7 +58,7 @@ function Get-ReleaseClassConfig([string]$Class) {
         "modulation" {
             return @{
                 DisplayName = "Modulation"
-                TagPrefix = "modulation-"
+                TagPrefix = "Modulation-"
                 ChangelogLabel = "Modulation"
                 Pathspecs = @("03_Modulation")
                 PreferredSource = "changelog"
@@ -68,7 +68,7 @@ function Get-ReleaseClassConfig([string]$Class) {
         "installers" {
             return @{
                 DisplayName = "Installers"
-                TagPrefix = "installer-"
+                TagPrefix = "Installers-"
                 ChangelogLabel = "Modulation"
                 Pathspecs = @(
                     "03_Modulation/Prism-Engine-V7.x-Installer",
@@ -283,11 +283,11 @@ function Get-ChangelogSummary([hashtable]$Config, [System.Collections.Generic.Ha
             $joined = (($subsection.Heading) + "`n" + (($subsection.Lines -join "`n"))).Trim()
 
             if ($ReleaseClass -eq "installers") {
-                if ($subsection.Heading -match '\[Modulation\]' -and $joined -match $Config.InstallerKeywordRegex) {
+                if ($subsection.Heading -match '[`]?\[Modulation\][`]?' -and $joined -match $Config.InstallerKeywordRegex) {
                     $selectedSections.Add(("### " + $subsection.Heading + "`n" + (($subsection.Lines -join "`n").Trim())))
                 }
             }
-            elseif ($subsection.Heading -match "\[$([regex]::Escape($Config.ChangelogLabel))\]") {
+            elseif ($subsection.Heading -match "[``]?\[$([regex]::Escape($Config.ChangelogLabel))\][``]?") {
                 $selectedSections.Add(("### " + $subsection.Heading + "`n" + (($subsection.Lines -join "`n").Trim())))
             }
         }
