@@ -111,12 +111,12 @@ jobs:
 
             if ($errors.Count -gt 0) {
               $detail = $errors | ForEach-Object { $_.Message }
-              $parseFailures += "$file`n - $($detail -join \"`n - \")"
+              $parseFailures += "$file`n - $($detail -join "`n - ")"
             }
           }
 
           if ($parseFailures.Count -gt 0) {
-            throw "PowerShell parse failures:`n$($parseFailures -join \"`n\")"
+            throw "PowerShell parse failures:`n$($parseFailures -join "`n")"
           }
 
       - name: Smoke test PowerShell scripts
