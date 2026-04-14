@@ -26,5 +26,13 @@
   {
     "source_dir": "03_Modulation/Prism-Engine-V8.x-Installer",
     "output_name": "03_Modulation-Prism-Engine-V8.x-Installer.zip"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-V9.x",
+    "output_name": "03_Modulation-Prism-Engine-V9.x.zip"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-V9.x-Installer",
+    "output_name": "03_Modulation-Prism-Engine-V9.x-Installer.zip"
   }
 ]

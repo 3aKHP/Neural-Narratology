@@ -8,5 +8,10 @@
     "source_dir": "03_Modulation/Prism-Engine-V8.x-Installer",
     "output_name": "Prism-Engine-V8.x-SingleInstaller.ps1",
     "installer_name": "Prism Engine V8.x Single-File Installer"
+  },
+  {
+    "source_dir": "03_Modulation/Prism-Engine-V9.x-Installer",
+    "output_name": "Prism-Engine-V9.x-SingleInstaller.ps1",
+    "installer_name": "Prism Engine V9.x Single-File Installer"
   }
 ]
