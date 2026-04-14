@@ -13,9 +13,33 @@
 
 ---
 
-## 2026-04-15 — Prism Engine v9.0 State-Space (Claude Code Host)
+## 2026-04-15 — Prism Engine v9.0 State-Space (Codex Host)
 
 > Git: `(Pending)` · 对应 Prism Engine v9.0
+
+### Added — `[Modulation]`
+- 新增 `Prism-Engine-Codex/specs/schema_dlc.md`：L3+ DLC 文档 Schema（Affine Transform Agent 产出规范）。
+
+### Changed — `[Modulation]`
+- 将 `Prism-Engine-Codex` 从 **v8.1 Compact-State** 升级至 **v9.0 State-Space**，并补齐分支内独立运行所需的协议定义与宿主文档：
+  - `specs/schema_character.md`：移除 `current_status` YAML 块，新增 `## Persona Topology`（Invariant Axes / Variant Axes / Boundary Conditions），并补充本地概念说明。
+  - `specs/schema_scenario.md`：移除 `l_system_level` 字段与 `Action Guide` 正文节，改用 `beat_map` 数组 + HTML 注释块；补充本地 L-System 工作层定义与输出禁令。
+  - `specs/schema_outline.md` 与 `specs/schema_story_bible.md`：改写为 v9.0 结构化长篇资产规范。
+  - `templates/tpl_module_a.md` 与 `templates/tpl_module_b.md`：替换为 v9.0 模板（静态 YAML + Persona Topology / `beat_map` 结构）。
+  - `templates/tpl_outline.md` 与 `templates/tpl_story_bible.md`：同步到当前 schema，修正长篇项目初始化骨架与规范不一致的问题。
+  - `shared/prompts/etl.md`：新增工作流 C（Affine Transform Agent，三阶段 DLC 生成）；工作流 A Phase 3 改为 Topology & Voice；工作流 B 改用 `beat_map`；明确 L-System 禁令。
+  - `shared/prompts/runtime.md`：重写为 State-Space 规范——11 条叙事公理、State Navigator、三段式输出（`<!-- [!Neural Chain] -->` HTML 注释 + 5 行 HUD + 正文）。
+  - `shared/prompts/evaluate.md`：新增 v9.0 格式合规检查（Module A / B / outline / story_bible），强化对旧字段回流的审计。
+  - `shared/prompts/dyad.md`：更新为 v9.0 格式——`beat_map` 驱动的 simulation_plan、三段式角色回应、拓扑连贯性约束。
+  - 根目录与六引擎 `AGENTS.md`、`START_PROMPT.md`、`guides/*`、`project_template/*`：版本号、工作流、输出命名和独立运行概念说明同步至 v9.0。
+  - `scripts/validate_codex_tree.*`：目录校验新增对 `schema_dlc.md`、`schema_outline.md`、`schema_story_bible.md`、`tpl_outline.md`、`tpl_story_bible.md` 的检查。
+- 更新 `03_Modulation/README.md`：将 `Prism-Engine-Codex` 的版本定位与能力矩阵同步为 v9.0 State-Space 宿主适配。
+
+---
+
+## 2026-04-15 — Prism Engine v9.0 State-Space (Claude Code Host)
+
+> Git: `dc2dac5` · 对应 Prism Engine v9.0
 
 ### Added — `[Modulation]`
 - 新增 `Prism-Engine-Claude-Code/specs/schema_dlc.md`：L3+ DLC 文档 Schema（Affine Transform Agent 产出规范）。

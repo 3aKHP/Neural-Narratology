@@ -1,12 +1,12 @@
 # Prism-Engine-Codex Project Template
 
-此目录提供一个面向 `WSL + Codex CLI` 的最小工作区骨架，可复制到新项目中作为起点。
+此目录提供一个面向 Codex CLI 的最小工作区骨架，可复制到新项目中作为起点。
 
 ## 模板内容
 
 - `AGENTS.md`：项目级协作边界
 - `source_materials/`：原始素材输入
-- `workspace/`：角色卡与场景卡输出
+- `workspace/`：角色卡、场景卡与 DLC 输出
 - `workspace/lite/`：Lite persona prompt 输出
 - `novels/`：长篇项目目录
 - `reports/`：审计报告
@@ -16,7 +16,7 @@
 
 1. 复制整个目录到目标项目根目录
 2. 将上层 `specs/`、`templates/`、`scripts/` 一并带入，或以相对路径引用 `Prism-Engine-Codex/`
-3. 进入目标引擎子目录启动 Codex
+3. 在目标目录启动 Codex 会话
 
 ## 模板目标
 

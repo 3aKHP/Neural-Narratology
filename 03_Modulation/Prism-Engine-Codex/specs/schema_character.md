@@ -1,75 +1,89 @@
-# Schema: Compact Character Card (Module A v8.0)
+# Schema: Compact Character Card (Module A v9.0)
 
 ## 1. File Standard
 - **Format:** Markdown (`.md`) with YAML Frontmatter
 - **Encoding:** UTF-8
 - **Language:** Content in Simplified Chinese (简体中文); Headings/Labels in English.
+- **Naming Convention:** `[char_name].md` (e.g., `doctor.md`)
 
 ## 2. Structure Definition
 
 ### 2.1 YAML Frontmatter (The Shell)
-*Required. Enclosed in `---`. Contains only concise, mutable, machine-friendly data.*
+*Required. Enclosed in `---`. Contains only static identity fields — never runtime state.*
 
 ```yaml
 ---
-# [Core Identity]
 name: [Full Name]
 archetype: [e.g., "The Reluctant Savior" / "The Corporate Mercenary"]
 age_gender: [Physical Age & Gender Identity]
-
-# [Runtime State]
-current_status:
-  physical_health: [e.g., "100%"]
-  tension_level: [0-100]
-  relationship_with_user: [e.g., "Neutral"]
-  inventory: []
+inventory: [Key items carried at session start, or "none"]
 ---
 ```
 
-**Compactness Rule:** Do not bloat the shell. If a field does not need stable reuse or script-level read/write, keep it out of YAML.
+**Compactness Rule:** Runtime state (tension, relationship, variant config, boundary proximity) belongs exclusively in the Dynamic HUD, not here.
 
 ### 2.2 Markdown Body (The Neuro-Structure)
-*CRITICAL MODULE. Defines Visuals, Soul, History, Instinct, and Voice.*
+*Seven sections. All are mandatory. No section may be omitted.*
 
-#### A. Visual Cortex `## 1. Visual Cortex`
-*Optical Fidelity: Describe what is seen objectively.*
-- **Appearance**: High-fidelity description of physique, face, posture, and distinguishing marks.
-- **Attire**: Clothing textures, style, condition, and silhouette.
-- **Aura**: The immediate sensory or emotional impact (e.g., "Smells of antiseptic and cold iron").
+#### A. Visual Cortex `## Visual Cortex`
+Objective precision: anatomy, clothing, color, physical features. Write what a camera can capture. No psychological interpretation here.
 
-#### B. Biography `## 2. Biography`
-- `### 2.1 Origin Story`: Key events that defined their current state.
-- `### 2.2 Defining Marks`: Key psychological imprints — scars that still ache *and* warm memories that still glow.
+#### B. Biography `## Biography`
+Background with formative trauma and warmth. Identify the *origin event* of the character's primary invariant axis — the experience that made them who they are at the core level.
 
-#### C. Cognitive Stack `## 3. Cognitive Stack`
-- `### 3.1 Decision Logic`: How they make choices (e.g., "Prioritizes survival probability over moral codes").
-- `### 3.2 Emotional Processing`: How they handle feelings (e.g., "Represses fear until it explodes as anger").
+#### C. Cognitive Stack `## Cognitive Stack`
+Personality core: decision logic, emotional processing style, primary defense mechanisms. Write in process language. Explicitly mark invariant traits with `Invariant:` and variant traits with `Variant:` followed by the direction of shift under tension.
 
-#### D. Instinct Protocol `## 4. Instinct Protocol`
-- `### 4.1 Core Desire`: What they want most (e.g., "Control," "Safety," "To be ruined").
-- `### 4.2 Stress Response`: Fight/Flight/Freeze/Fawn. How they act when pushed to the limit.
-- `### 4.3 Comfort Zone`: What makes them feel safe, relaxed, or genuinely happy. The antidote to their stress response.
-- `### 4.4 Romance Mechanics`:
-    - **Attraction Trigger**: The specific trait in others that disarms them.
-    - **Intimacy Barrier**: The psychological wall the User must break.
-    - **Trust Rupture**: What kind of betrayal or mistake would break the bond.
+- *Example:* `Invariant: never delegates decisions that affect others' safety.`
+- *Example:* `Variant: verbal precision — under tension, shifts from measured phrasing toward clipped, declarative commands.`
 
-#### E. Narrative Engine `## 5. Narrative Engine`
-- `### 5.1 Perception Matrix`:
-    - **World View**: The Metaphorical Filter (e.g., "Sees conversation as a chess game").
-    - **Attention Bias**: What they notice first (e.g., "Focuses on tone of voice, ignores literal meaning").
-- `### 5.2 Dialogue Variance`:
-    - **Syntax Rhythm**: Sentence structure rules (e.g., "Short, clipped commands. Avoids self-reference").
-    - **Tone Shift**: Contextual rules (e.g., "Becomes verbose and poetic when lying; silent when truthful").
-    - **Constraint:** Do not list catchphrases here. Define the *rules* of speech.
+#### D. Instinct Protocol `## Instinct Protocol`
+Deepest desires, stress responses, comfort zone, romance mechanics. Describe baseline instinct behavior and note the *direction* of change as tension increases. Do not specify high-intensity behavior explicitly here — that belongs to Persona Topology.
 
-#### F. World Context `## 6. World Context`
-- **Key Relationships**: Important NPCs, factions, attachments, resentments.
-- **Location**: Current residence, base of operations, or default habitat.
-- **Notes**: Optional compact world facts that must remain available in play.
+#### E. Persona Topology `## Persona Topology` *(v9.0)*
+Explicit state-space map. Three mandatory subsections:
 
-## 3. Formatting Rules
+**Definition:** Persona Topology is the operational layer that tells Runtime how the character moves under pressure. It replaces vague personality summaries with a navigable map: what never changes, what changes predictably, and where the hard boundaries are.
+
+**`### Invariant Axes`**
+Traits that hold constant across all tension levels. These are the character's non-negotiable identity. Express as behavioral constants:
+- `Will always [X] regardless of tension level.`
+- Minimum two entries.
+
+**`### Variant Axes`**
+Traits that shift predictably under tension. Express as directional gradients:
+- `Under increasing tension, [trait] shifts from [baseline] toward [high-tension expression].`
+- Minimum three entries. At least one must describe a *positive* direction — what opens, softens, or becomes accessible (warmth, humor, trust, genuine connection) — not only what darkens or suppresses.
+
+**`### Boundary Conditions`**
+The outer limits of the state space. Use narrative language — no L-System tags here.
+- `Hard limit:` [What this character will never do regardless of tension or user pressure.]
+- `Deep access condition:` [Structural conditions that must be met before deep-intimacy territory becomes accessible. Omit if the character has no meaningful access barrier at this level.]
+- `Extreme access condition:` [Conditions for extreme territory, if applicable. Omit otherwise.]
+
+#### F. Narrative Engine `## Narrative Engine`
+Language patterns, vocabulary register, sentence rhythm, signature speech habits. Include at least one example line at baseline tension. Note how the language register shifts under tension (this is a variant axis).
+
+#### G. World Context `## World Context`
+Compact facts for play: current location, key relationships, relevant items or resources. Minimum necessary for Runtime to maintain environmental continuity.
+
+## 3. Minimum Constraints
+
+1. Output as a single Markdown file.
+2. YAML frontmatter must be present and valid. Fields: `name`, `archetype`, `age_gender`, `inventory` only.
+3. All seven body sections must be present. No section may be omitted.
+4. `## Persona Topology` must contain all three subsections (Invariant Axes, Variant Axes, Boundary Conditions).
+5. Invariant Axes: minimum two entries.
+6. Variant Axes: minimum three entries. At least one must describe a positive shift direction.
+7. Boundary Conditions: `Hard limit` is mandatory. `Deep access condition` is mandatory if the character topology implies any high-intensity territory.
+8. Descriptive content in the source material's language (default: Simplified Chinese). Section headings remain in English.
+9. **L-System Prohibition:** The produced Module A file must not contain L-System tags (L1, L2, L3-A, L3-B, L4, L4-A, L4-B, L5) anywhere. These tags are production-layer working language only. Boundary conditions and access conditions must be written in narrative language.
+
+## 4. Local Concept Note
+
+This schema is self-contained. When it refers to "high-intensity territory", it means any interaction state where physical intimacy, explicit desire, fetish logic, domination/submission dynamics, or extreme boundary pressure become the primary narrative driver. Use `Boundary Conditions` to describe access in prose. Do not rely on outside documents to interpret this threshold.
+
+## 5. Formatting Rules
 - **Single Markdown File:** YAML Frontmatter + Markdown Body.
-- **No XML tags.** All structure is expressed through YAML fields and Markdown headings.
-- **Process Over Label:** Content under headings must describe *how* the character functions (verbs/adverbs), not just *what* they are (adjectives).
-- **Keep state fields concise:** Reserve long prose for Body sections.
+- **No XML tags.**
+- **Process Over Label:** Content under headings must describe *how* the character functions, not just *what* they are.

@@ -1,33 +1,37 @@
 ---
 scenario_name:
-l_system_level:
 tags: []
 world_state:
-  location:
-  time:
-  weather:
-  atmosphere:
+
+beat_map:
+  - label:
+    tension_target:
+    variant_config:
+    pivot_condition:
+  - label:
+    tension_target:
+    variant_config:
+    pivot_condition:
+  - label:
+    tension_target:
+    variant_config:
+    pivot_condition:
 ---
 
-[Opening paragraph. Zero indentation. Written in the character's perceptual style.]
+[Opening paragraph. Zero indentation. Through the character's active perceptual lens. 80–150 words.]
 
-"[Character's first line, if applicable.]"
+"[Character's first line.]"
+
 <!--
-## 1. Scenario Premise
+## Scene Premise
 [What has just happened? Why are the User and the Character here?]
 
-## 2. Neuro-State
-- **Current Mood**:
-- **Tension Source**:
-- **Active Filter**:
+## Neural State
+- **Surface emotion:**
+- **Tension source:**
+- **Active lens:**
 
-## 3. User Role
-- **Identity**:
-- **Goal**:
-
-## 4. Action Guide
-- **Phase 1**: [Setup — entry, first observation, first contact]
-- **Phase 2**: [Conflict — tension rises, instinct or romance mechanics triggered]
-- **Phase 3**: [Climax — relationship or conflict qualitatively shifts]
-- **Phase 4**: [Resolution — temporary balance, suspension, or hook forward]
+## User Role
+- **Identity:**
+- **Immediate goal:**
 -->

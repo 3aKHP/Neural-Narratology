@@ -71,11 +71,11 @@ graph TB
   - ETL 新增 **Lite Persona Prompt** 输出 Profile
   - 新增 **Story Bible 世界状态层**与**结构化 Outline**
   - 内含 `presets/` 子目录，存放六引擎预设 YAML 配置
-- **[`Prism-Engine-Codex/`](./Prism-Engine-Codex/)**: **Codex 宿主适配目录**（实验性迁移中）
-  - 面向 **WSL + Codex CLI** 的宿主层落地
+- **[`Prism-Engine-Codex/`](./Prism-Engine-Codex/)**: **Codex 宿主适配目录**
+  - 面向 **Codex CLI** 的宿主层落地
   - 以局部 `AGENTS.md` 组织六引擎作用域
-  - 共享 `specs/` 与 `templates/` 资产，含 Lite Persona Prompt
-  - 通过 `scripts/` 提供长篇项目初始化、章节编译与 Story Bible 快照入口
+  - 协议层已对齐 **v9.0 State-Space**
+  - 共享 `specs/`、`templates/`、`scripts/` 资产，含 Lite Persona Prompt 与 `schema_dlc.md`
   - 长篇正文采用 `Scene Shards` 协议写入 `novels/{project}/chapters/`
 - **[`Prism-Engine-Claude-Code/`](./Prism-Engine-Claude-Code/)**: **Claude Code 宿主适配目录**
   - 面向 **Claude Code CLI** 的宿主层落地
@@ -109,8 +109,8 @@ graph TB
 | 版本目录 | 协议代际侧重 | 已提供引擎 |
 |:---|:---|:---|
 | `Prism-Engine-V8.x` | v8.0 Compact-State | `etl` + `runtime` + `evaluate` + `weaver` + `weaver-orch` + `dyad` |
-| `Prism-Engine-Codex` | v8.1 Compact-State / Codex 宿主适配 | 六引擎目录作用域（AGENTS.md + shared/prompts） |
-| `Prism-Engine-Claude-Code` | v8.1 Compact-State / Claude Code 宿主适配 | 六引擎目录作用域（CLAUDE.md + shared/prompts + Agent 子代理） |
+| `Prism-Engine-Codex` | v9.0 State-Space / Codex 宿主适配 | 六引擎目录作用域（AGENTS.md + shared/prompts） |
+| `Prism-Engine-Claude-Code` | v9.0 State-Space / Claude Code 宿主适配 | 六引擎目录作用域（CLAUDE.md + shared/prompts + Agent 子代理） |
 | `Prism-Engine-V7.x` | v7.0 Neuro-Weave | `etl` + `runtime` + `evaluate` + `weaver` + `dyad` |
 | `Prism-Engine-V6.x/Prism-ETL-Claude` | v6.x Holographic / ETL 专项 | `etl` |
 | `Prism-Engine-V6.x/Prism-ETL-Deepseek` | v6.x Holographic / ETL 专项 | `etl` |
@@ -120,8 +120,8 @@ graph TB
 
 - **当前状态**：
   - `Prism-Engine-V8.x` 为 v8.1 完整实现（六引擎），RooCode 宿主。
-  - `Prism-Engine-Codex` 为 v8.1 Codex CLI 宿主适配（六引擎目录作用域）。
-  - `Prism-Engine-Claude-Code` 为 v8.1 Claude Code CLI 宿主适配（六引擎目录作用域 + Agent 子代理委派）。
+  - `Prism-Engine-Codex` 为 v9.0 Codex CLI 宿主适配（六引擎目录作用域）。
+  - `Prism-Engine-Claude-Code` 为 v9.0 Claude Code CLI 宿主适配（六引擎目录作用域 + Agent 子代理委派）。
   - `Prism-Engine-V7.x` 为 v7.0 完整实现（五引擎）。
   - `Prism-Engine-V6.x/Prism-ETL-Claude` / `Prism-Engine-V6.x/Prism-ETL-Deepseek` / `Prism-Engine-V6.x/Prism-ETL-Gemini` 为 v6.x 语义的 ETL 专项分支。
 - **升级目标**：

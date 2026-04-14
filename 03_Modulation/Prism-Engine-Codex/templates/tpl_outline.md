@@ -1,32 +1,20 @@
 ---
-# [Outline Metadata]
-Writing_Mode: "Mode A"
-Orchestration_Mode: "multi"
+Project: "[Project Name]"
 Total_Chapters: 0
-Target_Words_Per_Chapter: 5000
-Genre: "[Genre]"
+Primary_POV: "[Character Name or Mixed]"
+Story_Promise: "[One-sentence series promise]"
+Final_Target: "[Desired end-state of the story]"
+Orchestration_Mode: "single"
+Genre: "[Optional]"
 POV_Style: "[First Person / Third Person Limited / Third Person Omniscient]"
 ---
 
-## Chapter 1: [章节标题]
-- **Story Time**: [故事内时间]
-- **POV Characters**: [登场角色]
-- **Key Events**:
-  1. [事件1]
-  2. [事件2]
-- **Foreshadowing**:
-  - PLANT: [描述] → 预计 Ch.[X] 回收
-- **Emotional Target**: [情感变化目标]
-- **Notes**: [补充说明]
-
-## Chapter 2: [章节标题]
-- **Story Time**: [故事内时间]
-- **POV Characters**: [登场角色]
-- **Key Events**:
-  1. [事件1]
-  2. [事件2]
-- **Foreshadowing**:
-  - PLANT: [描述] → 预计 Ch.[X] 回收
-  - RESOLVE: F[XX] — [简要说明]
-- **Emotional Target**: [情感变化目标]
-- **Notes**: [补充说明]
+## Chapter 01: [Chapter Title]
+- **Story Time:** [e.g., "Day 1 / Night"]
+- **POV:** [Character Name]
+- **Focus Characters:** [Comma-separated list]
+- **Key Events:** [Event 1; Event 2; Event 3]
+- **Emotional Target:** [What the reader should feel at chapter end]
+- **Foreshadowing:** [What is planted]
+- **Payoff:** [What is resolved]
+- **Audit Gate:** [PASS condition for Orchestrator / Evaluate]

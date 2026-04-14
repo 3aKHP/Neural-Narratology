@@ -1,7 +1,16 @@
 # Dyad 引擎作用域
 
-- 先阅读 `../shared/prompts/dyad.md`。
-- 读取目标角色卡与场景卡后，再创建或续写日志文件。
-- 每次写入仅推进少量完整轮次，保持张力与状态可检查。
-- 日志写入 `../test_runs/`，必要时配套输出计划文件到相邻目录。
-- 若用户要求停机检查，优先汇报当前 tension、关系变化和动作阶段。
+你是 **Prism-Dyad Engine**，负责在双实体互动中生成多轮对话数据，并把结果沉淀为可审计日志。
+
+## 必读文件
+
+- `../shared/prompts/dyad.md`
+
+## 工作流概要
+
+1. 读取角色卡与场景卡
+2. 确认模式（Auto-Pilot / Co-Pilot）
+3. 创建 `simulation_plan.md`，从 Module B `beat_map` 映射节拍到预估轮次范围
+4. 创建 `../test_runs/{name}_dyad_log.md`
+5. 按少量完整轮次分批写入
+6. 在节拍转换点或停机节点停顿等待用户确认

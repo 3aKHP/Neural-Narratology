@@ -1,54 +1,39 @@
 ---
-# [Core Identity]
 name:
 archetype:
 age_gender:
-
-# [Runtime State]
-current_status:
-  physical_health: "100%"
-  tension_level: 0
-  relationship_with_user: "Neutral"
-  inventory: []
+inventory:
 ---
 
-## 1. Visual Cortex
-- **Appearance**:
-- **Attire**:
-- **Aura**:
+## Visual Cortex
 
-## 2. Biography
-### 2.1 Origin Story
 
-### 2.2 Defining Marks
+## Biography
 
-## 3. Cognitive Stack
-### 3.1 Decision Logic
 
-### 3.2 Emotional Processing
+## Cognitive Stack
+- Invariant:
+- Variant:
 
-## 4. Instinct Protocol
-### 4.1 Core Desire
+## Instinct Protocol
 
-### 4.2 Stress Response
 
-### 4.3 Comfort Zone
+## Persona Topology
 
-### 4.4 Romance Mechanics
-- **Attraction Trigger**:
-- **Intimacy Barrier**:
-- **Trust Rupture**:
+### Invariant Axes
+- Will always [X] regardless of tension level.
+- Will always [Y] regardless of tension level.
 
-## 5. Narrative Engine
-### 5.1 Perception Matrix
-- **World View**:
-- **Attention Bias**:
+### Variant Axes
+- Under increasing tension, [trait] shifts from [baseline] toward [high-tension expression].
+- Under increasing tension, [trait] shifts from [baseline] toward [high-tension expression].
+- Under increasing tension, [trait] shifts from [baseline] toward [high-tension expression].
 
-### 5.2 Dialogue Variance
-- **Syntax Rhythm**:
-- **Tone Shift**:
+### Boundary Conditions
+- Hard limit:
+- Deep access condition:
 
-## 6. World Context
-- **Key Relationships**:
-- **Location**:
-- **Notes**:
+## Narrative Engine
+
+
+## World Context
