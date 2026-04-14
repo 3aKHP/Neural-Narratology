@@ -1,4 +1,4 @@
-# Schema: Structured Outline (V8.1)
+# Schema: Structured Outline (V9.0)
 
 ## 1. File Standard
 - **Format:** Markdown (`.md`) with YAML Frontmatter
@@ -8,7 +8,7 @@
 - **Ownership:** Created by **Prism-Weaver-Orch** (Phase 1) or by **Prism-Weaver** (standalone mode Phase 1).
 
 ## 2. Purpose
-The Structured Outline replaces the V8.0 free-form outline with a **constrained, machine-readable chapter plan**. Each chapter entry specifies not just "what happens" but also:
+The Structured Outline provides a **constrained, machine-readable chapter plan**. Each chapter entry specifies not just "what happens" but also:
 - Which characters appear
 - What story-internal time it covers
 - What foreshadowing is planted or resolved
@@ -42,7 +42,7 @@ POV_Style: "[First Person / Third Person Limited / Third Person Omniscient]"
 | `Genre` | string | ❌ | Genre tag for tonal guidance |
 | `POV_Style` | string | ❌ | Narrative perspective style |
 
-**Compatibility Note:** When `Orchestration_Mode: "single"`, the outline is consumed by the standalone `prism-weaver` using V8.0 logic. The structured chapter entries below are still beneficial but the Orchestrator workflow is not invoked.
+**Compatibility Note:** When `Orchestration_Mode: "single"`, the outline is consumed by the standalone `prism-weaver` in single-agent mode. The structured chapter entries below are still beneficial but the Orchestrator workflow is not invoked.
 
 ### 3.2 Markdown Body (Chapter Entries)
 

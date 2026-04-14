@@ -96,7 +96,50 @@ If Runtime detects the scene has remained in the same beat for three or more tur
 7. If the scene is designed for high-intensity territory and the source material is all-ages, the Affine Transform Agent (Workflow C) must be run first and its DLC output merged with the source material before character card construction.
 8. **L-System Prohibition:** The produced Module B file must not contain L-System tags (L1, L2, L3-A, L3-B, L4, L4-A, L4-B, L5) anywhere. Target intensity is encoded through beat map tension targets and variant configs — never through L-level labels.
 
-## 5. Formatting Rules
+## 5. L-System Reference
+
+The L-System is the **production-layer intensity classification** used by the ETL Engine when designing beat maps and by the Runtime Engine when navigating the character's state space. L-System labels (L1, L2, L3-A, L3-B, L4-A, L4-B, L5) are working language for creators and engines — they must never appear as labels in any produced output file (Module A, Module B, DLC document, or session log). Target intensity is encoded in output files through `tension_target` values, `variant_config` strings, and narrative prose.
+
+### 5.1 L-System Layers
+
+| Label | Name | Tension Range | Characterization |
+|:---|:---|:---|:---|
+| **L1** | Daily Life | 0–25 | Slice-of-life. Cognitive Stack stable. Habitual distance maintained. Comfort, humor, everyday rhythm. |
+| **L2** | Romance & Bond | 20–45 | Emotional resonance. Attraction Trigger activated. Courtship through hesitation, misreading, testing, soft disclosure. |
+| **L3-A** | Soft Intimacy | 40–65 | Sensual but not explicit. Atmosphere, tension, physical proximity, foreplay. Intimacy Barrier under pressure but not broken. R-15 territory. **Optional sublevel — a scene may skip L3-A and enter L3-B directly.** |
+| **L3-B** | Pure Passion | 60–85 | Consensual, passionate, emotionally fulfilling physical union. Pure Love (純愛). Intimacy Barrier fully lowered. R-18 territory. |
+| **L4-A** | Fetish & Psychology | 70–90 | Raw expression of Core Desire. Desire as compensation, ritual, fixation, or release. Power dynamics, suppressed drives. R-18 territory. |
+| **L4-B** | Fetish Specialization | 75–92 | Specialized fetish territory. **Default protocol: weight worship** — boots/feet as the medium of connection, motivation is love and possession, not malice ("以重量崇拜"，靴/足作为连接媒介，动机为爱与占有而非恶意). This default applies unless the character's topology or user instruction specifies otherwise. R-18 territory. |
+| **L5** | Extreme | 85–100 | **Locked by default.** Requires explicit user request AND structural compatibility with the character's Boundary Conditions. Escalation must remain internally coherent with character topology. |
+
+**Design note:** Layers overlap intentionally. A scene can occupy the boundary between two layers. The `tension_target` in the beat map encodes position within this space numerically; the `variant_config` encodes the character's behavioral configuration at that position.
+
+### 5.2 Tension Value Semantics
+
+`tension_target` is an integer from 0 to 100 representing the **accumulated narrative pressure** at the end of a beat — not a moment-to-moment reading.
+
+| Range | Corresponding L-Level | Meaning |
+|:---|:---|:---|
+| 0–25 | L1 | Baseline. Character in default behavioral configuration. No active pressure. |
+| 26–45 | L1–L2 | Low pressure. Emotional undercurrents present. Variant Axes beginning to shift. |
+| 46–65 | L2–L3-A | Moderate pressure. Defense mechanisms active. Variant config noticeably different from baseline. |
+| 66–80 | L3-B–L4-A | High pressure. Core Desire and Stress Response in direct tension. Boundary Conditions becoming relevant. |
+| 81–92 | L4-A–L4-B | Very high pressure. Character near or at Boundary Conditions. Invariant Axes under stress. |
+| 93–100 | L5 | Maximum. Requires explicit Boundary Condition clearance and user request. |
+
+### 5.3 Variant Config Convention
+
+`variant_config` is a **free-form string** that names the character's active behavioral configuration during a beat. It must be derivable from the character's Variant Axes in Module A — it is not a global vocabulary.
+
+**Naming convention (recommended):** Use a hyphenated descriptor that reflects the character's current state on their primary Variant Axes. Examples:
+- `"suppression-active"` — character is actively suppressing a drive
+- `"defense-softening"` — primary defense mechanism beginning to lower
+- `"disclosure-open"` — character has moved to voluntary self-disclosure
+- `"desire-surface"` — Core Desire is surfacing through behavior
+
+The ETL Engine invents these strings per character. The Runtime Engine reads them from the beat map and uses them to constrain character behavior within that beat.
+
+## 6. Formatting Rules
 - **Single Markdown File:** YAML Frontmatter + Markdown Body.
 - **No XML tags.**
 - **Opening paragraph must be flush left / zero indentation.**

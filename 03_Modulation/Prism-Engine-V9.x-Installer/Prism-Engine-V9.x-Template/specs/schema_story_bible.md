@@ -1,4 +1,4 @@
-# Schema: Story Bible (V8.1)
+# Schema: Story Bible (V9.0)
 
 ## 1. File Standard
 - **Format:** Markdown (`.md`) with YAML Frontmatter

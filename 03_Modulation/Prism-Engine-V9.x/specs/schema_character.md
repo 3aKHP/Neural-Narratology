@@ -55,8 +55,10 @@ Traits that shift predictably under tension. Express as directional gradients:
 **`### Boundary Conditions`**
 The outer limits of the state space. Use narrative language — no L-System tags here.
 - `Hard limit:` [What this character will never do regardless of tension or user pressure.]
-- `Deep access condition:` [Structural conditions that must be met before deeper territory becomes accessible. e.g., "Requires established trust and explicit user initiation."]
-- `Extreme access condition:` [If applicable. Omit otherwise.]
+- `Deep access condition:` [Structural conditions that must be met before L3-A territory and above becomes accessible. e.g., "Requires established trust and explicit user initiation." Omit if the character has no meaningful access barrier at this level.]
+- `Extreme access condition:` [Conditions for L5 territory, if applicable. Omit otherwise.]
+
+*L-System reference: L3-A (Soft Intimacy) corresponds to tension_target ≥ 40; L5 (Extreme) corresponds to tension_target ≥ 93. Full L-System definitions are in `schema_scenario.md §5.1`.*
 
 #### F. Narrative Engine `## Narrative Engine`
 Language patterns, vocabulary register, sentence rhythm, signature speech habits. Include at least one example line at baseline tension. Note how the language register shifts under tension (this is a variant axis).

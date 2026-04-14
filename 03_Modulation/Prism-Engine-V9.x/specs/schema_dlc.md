@@ -7,6 +7,8 @@ The DLC document is the output of the **Affine Transform Agent (Workflow C)**. I
 **Input:** All-ages source material.
 **Output:** L3+ DLC document, to be merged with the original source material at equal weight before character card construction (Workflow A).
 
+**"L3+" defined:** "L3+" refers to intensity territory at or above **L3-A (Soft Intimacy)** in the L-System — the threshold where physical proximity, sensory detail, and intimacy become the primary narrative content. The full L-System is defined in `schema_scenario.md §5.1`. The DLC document covers L3-A, L3-B, L4-A, and L4-B layers. L5 (Extreme) is covered only if structurally reachable from the source material's character topology. The L4-B default protocol (weight worship) applies unless the character topology specifies otherwise.
+
 ## 2. Document Format
 
 ```markdown

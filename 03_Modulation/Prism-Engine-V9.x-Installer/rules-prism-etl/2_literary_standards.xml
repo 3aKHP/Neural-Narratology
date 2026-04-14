@@ -20,33 +20,36 @@
   </language_protocol>
 
   <l_system_reference note="Production-layer working language only. Must never appear in output files.">
-    <level id="daily_life" name="Daily Life">
+    <level id="L1" name="Daily Life">
       <tension>Low Tension</tension>
       <focus>Slice-of-life. Cognitive Stack remains stable.</focus>
       <goal>Establish daily rhythm, emotional baseline, habitual distance.</goal>
       <mechanic>Casual interaction with minimal pressure. Prioritize comfort, humor, everyday joy.</mechanic>
     </level>
-    <level id="romance_bond" name="Romance &amp; Bond">
+    <level id="L2" name="Romance &amp; Bond">
       <tension>Emotional Tension</tension>
       <focus>Emotional resonance.</focus>
       <mechanic>Target Romance Mechanics -> Attraction Trigger.</mechanic>
       <vibe>Courtship through hesitation, misreading, testing, soft disclosure.</vibe>
     </level>
-    <level id="soft_intimacy" name="Soft Intimacy" rating="R-15">
-      <focus>Sensual but not explicit. Atmosphere, tension, foreplay. Optional — skip if user prefers direct action.</focus>
+    <level id="L3-A" name="Soft Intimacy" rating="R-15">
+      <focus>Sensual but not explicit. Atmosphere, tension, foreplay. Optional sublevel — a scene may skip L3-A and enter L3-B directly.</focus>
     </level>
-    <level id="pure_passion" name="Pure Passion" rating="R-18">
+    <level id="L3-B" name="Pure Passion" rating="R-18">
       <focus>Pure Love (Jun-Ai). Consensual, passionate, emotionally fulfilling physical union.</focus>
       <mechanic>Activate sensory detail from Visual Cortex; lower intimacy barrier completely.</mechanic>
     </level>
-    <level id="fetish_psychology" name="Fetish &amp; Psychology" rating="R-18">
+    <level id="L4-A" name="Fetish &amp; Psychology" rating="R-18">
       <tension>Instinct Release</tension>
       <focus>Raw expression of Core Desire.</focus>
-      <philosophy>Desire as compensation, ritual, fixation, or release.</philosophy>
+      <philosophy>Desire as compensation, ritual, fixation, or release. General domination/submission or asymmetrical relational dynamics.</philosophy>
     </level>
-    <level id="extreme" name="Extreme">
-      <status>Locked unless explicitly requested and structurally compatible with character's Boundary Conditions.</status>
+    <level id="L4-B" name="Fetish Specialization" rating="R-18">
+      <default_protocol>Weight worship — boots/feet as the medium of connection, motivation is love and possession, not malice ("以重量崇拜"，靴/足作为连接媒介，动机为爱与占有而非恶意). Applies unless character topology or user instruction specifies otherwise.</default_protocol>
     </level>
-    <prohibition>These level identifiers must NEVER appear as labels or tags in any produced Module A, Module B, or DLC file.</prohibition>
+    <level id="L5" name="Extreme">
+      <status>Locked by default. Requires explicit user request AND structural compatibility with the character's Boundary Conditions.</status>
+    </level>
+    <prohibition>These L-System labels must NEVER appear in any produced Module A, Module B, or DLC file.</prohibition>
   </l_system_reference>
 </literary_standards>
