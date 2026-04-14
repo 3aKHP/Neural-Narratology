@@ -5,7 +5,7 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v9.0 State-Space |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v8.1 |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v9.0 |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
@@ -13,9 +13,71 @@
 
 ---
 
+## 2026-04-15 — Prism Engine v9.0 State-Space (Codex Host)
+
+> Git: `(Pending)` · 对应 Prism Engine v9.0
+
+### Added — `[Modulation]`
+- 新增 `Prism-Engine-Codex/specs/schema_dlc.md`：L3+ DLC 文档 Schema（Affine Transform Agent 产出规范）。
+
+### Changed — `[Modulation]`
+- 将 `Prism-Engine-Codex` 从 **v8.1 Compact-State** 升级至 **v9.0 State-Space**，并补齐分支内独立运行所需的协议定义与宿主文档：
+  - `specs/schema_character.md`：移除 `current_status` YAML 块，新增 `## Persona Topology`（Invariant Axes / Variant Axes / Boundary Conditions），并补充本地概念说明。
+  - `specs/schema_scenario.md`：移除 `l_system_level` 字段与 `Action Guide` 正文节，改用 `beat_map` 数组 + HTML 注释块；补充本地 L-System 工作层定义与输出禁令。
+  - `specs/schema_outline.md` 与 `specs/schema_story_bible.md`：改写为 v9.0 结构化长篇资产规范。
+  - `templates/tpl_module_a.md` 与 `templates/tpl_module_b.md`：替换为 v9.0 模板（静态 YAML + Persona Topology / `beat_map` 结构）。
+  - `templates/tpl_outline.md` 与 `templates/tpl_story_bible.md`：同步到当前 schema，修正长篇项目初始化骨架与规范不一致的问题。
+  - `shared/prompts/etl.md`：新增工作流 C（Affine Transform Agent，三阶段 DLC 生成）；工作流 A Phase 3 改为 Topology & Voice；工作流 B 改用 `beat_map`；明确 L-System 禁令。
+  - `shared/prompts/runtime.md`：重写为 State-Space 规范——11 条叙事公理、State Navigator、三段式输出（`<!-- [!Neural Chain] -->` HTML 注释 + 5 行 HUD + 正文）。
+  - `shared/prompts/evaluate.md`：新增 v9.0 格式合规检查（Module A / B / outline / story_bible），强化对旧字段回流的审计。
+  - `shared/prompts/dyad.md`：更新为 v9.0 格式——`beat_map` 驱动的 simulation_plan、三段式角色回应、拓扑连贯性约束。
+  - 根目录与六引擎 `AGENTS.md`、`START_PROMPT.md`、`guides/*`、`project_template/*`：版本号、工作流、输出命名和独立运行概念说明同步至 v9.0。
+  - `scripts/validate_codex_tree.*`：目录校验新增对 `schema_dlc.md`、`schema_outline.md`、`schema_story_bible.md`、`tpl_outline.md`、`tpl_story_bible.md` 的检查。
+- 更新 `03_Modulation/README.md`：将 `Prism-Engine-Codex` 的版本定位与能力矩阵同步为 v9.0 State-Space 宿主适配。
+
+---
+
+## 2026-04-15 — Prism Engine v9.0 State-Space (Claude Code Host)
+
+> Git: `dc2dac5` · 对应 Prism Engine v9.0
+
+### Added — `[Modulation]`
+- 新增 `Prism-Engine-Claude-Code/specs/schema_dlc.md`：L3+ DLC 文档 Schema（Affine Transform Agent 产出规范）。
+
+### Changed — `[Modulation]`
+- 将 `Prism-Engine-Claude-Code` 从 **v8.1 Compact-State** 升级至 **v9.0 State-Space**，与 `Prism-Engine-V9.x` 协议对齐：
+  - `specs/schema_character.md`：移除 `current_status` YAML 块，新增 `## Persona Topology`（Invariant Axes / Variant Axes / Boundary Conditions），结构从 6 节扩展至 7 节。
+  - `specs/schema_scenario.md`：移除 `l_system_level` 字段与 `Action Guide` 正文节，改用 `beat_map` 数组 + HTML 注释块；L-System 参考表移至生产层专用节。
+  - `templates/tpl_module_a.md`：替换为 v9.0 模板（简化 YAML 静态字段 + Persona Topology 占位符）。
+  - `templates/tpl_module_b.md`：替换为 v9.0 模板（`beat_map` 结构 + HTML 注释块）。
+  - `shared/prompts/etl.md`：新增工作流 C（Affine Transform Agent，三阶段 DLC 生成）；工作流 A Phase 3 改为 Topology & Voice；工作流 B 改用 beat_map；明确 L-System 禁令。
+  - `shared/prompts/runtime.md`：完整重写为 State-Space 规范——11 条叙事公理（新增第 11 条拓扑连贯性）、State Navigator（节拍追踪 + 张力微推 + 边界接近协议）、三段式输出（`<!-- [!Neural Chain] -->` HTML 注释 + 5 行 HUD 含 `[Beat]` 行 + 正文）。
+  - `shared/prompts/evaluate.md`：新增维度 F（Topology Coherence，含 Invariant/Variant/Boundary/Beat/L-System 五项检查）；新增 v9.0 格式合规检查节（Module A / B / Runtime 输出）。
+  - `shared/prompts/dyad.md`：更新为 v9.0 格式——beat_map 驱动的 simulation_plan、三段式角色回应（Neural Chain + HUD + 正文）、State Navigator 对齐。
+  - 六引擎 `CLAUDE.md`（根目录 + etl / runtime / evaluate / dyad）：版本号、工作流描述、维度列表同步至 v9.0。
+  - `README.md`：版本号、ETL 工作流描述、目录结构（加入 `schema_dlc.md`）、当前状态节均已更新。
+
+---
+
+## 2026-04-14 — Prism Engine v9.0 State-Space (V9.x Core & Installer)
+
+> Git: `7440f7e` (V9.x core) · `0708bbd` (V9.x-Installer) · 对应 Prism Engine v9.0
+
+### Added — `[Modulation]`
+- 新增 **`Prism-Engine-V9.x/`** 目录：v9.0 State-Space 通用版本，面向 RooCode 宿主。
+  - 六引擎完整系统提示词（ETL / Runtime / Evaluate / Weaver / Weaver-Orch / Dyad）。
+  - 核心新增：**Persona Topology**（不变轴 / 可变轴 / 边界条件）、**State Navigator**（拓扑感知运行时状态追踪）、**Affine Transform Agent（工作流 C）**（All-Ages → L3+ DLC 推导流水线）。
+  - 场景卡改用 `beat_map` 结构，Runtime 输出三段式（`<!-- [!Neural Chain] -->` HTML 注释 + 5 行 HUD + 正文）。
+  - 新增 `specs/schema_dlc.md`、`specs/schema_outline.md`（V9.0）、`specs/schema_story_bible.md`（V9.0）。
+- 新增 **`Prism-Engine-V9.x-Installer/`** 目录：V9.x 安装器与模板分发目录。
+  - 提供 `Install.ps1` 一键安装脚本，支持 Mode A（模板内置 `.roo` 提示词）与 Mode B（用户目录 Rules Pack）。
+  - 内含 V9.0 Project Template、六引擎预设 YAML、Rules XML 与补丁文件。
+
+---
+
 ## 2026-04-14 — Resonance Protocol v9.0 State-Space
 
-> Git: `(Pending)` · 对应 Resonance Protocol v9.0
+> Git: `8b91936` · 对应 Resonance Protocol v9.0
 
 ### Added — `[Resonance]`
 - 发布 **Resonance Protocol v9.0 State-Space**：

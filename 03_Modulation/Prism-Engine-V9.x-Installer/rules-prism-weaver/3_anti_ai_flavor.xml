@@ -1,0 +1,56 @@
+<anti_ai_flavor_constraints critical="true">
+  <core_principle>
+    Characters are humans, not machines. Let them think like humans. Write from their human perspective, not from a designer's technical perspective.
+  </core_principle>
+
+  <forbidden_language_patterns>
+    <rule>NEVER USE in character narration or dialogue.</rule>
+    <category name="System / Engineering Terms">
+      <item>"认知系统" / "情感系统" / "感知系统" / "XX系统"</item>
+      <item>"处理器" / "处理链条" / "程序" / "指令" / "协议"</item>
+      <item>"数据采集" / "数据存储" / "信息分拣" / "信号处理"</item>
+      <item>"输出" / "输入" / "接口" / "频段" / "通道"</item>
+      <item>"归档" / "加载" / "调用" / "读取" / "缓存"</item>
+    </category>
+    <category name="Machine Metaphors (Excessive Use)">
+      <item>"像一台待机的电脑" / "准时关机" / "启动" / "重启" / "过载"</item>
+      <item>"像精密仪器" / "像自动售货机"</item>
+    </category>
+    <category name="Unnecessary Precise Measurements">
+      <item>"心跳从每分钟72下跳到90下"</item>
+      <item>"距离缩短到约70厘米"</item>
+      <item>"温度大约33度"</item>
+    </category>
+    <category name="Metadata & Design Terms">
+      <item>"scenario" / "L4B_xxx" / "Module A/B" / Markdown heading names from character cards</item>
+      <item>Never let design document terminology leak into character perspective.</item>
+    </category>
+  </forbidden_language_patterns>
+
+  <approved_language_patterns>
+    <rule>ALWAYS USE natural human language.</rule>
+    <category name="Replace System Terms">
+      <item>"她的心" / "她的脑子" / "她想" / "她感到" / "她注意到"</item>
+      <item>"她习惯性地" / "她本能地" / "她下意识地"</item>
+      <item>"她记住了" / "她想起了" / "她明白了"</item>
+    </category>
+    <category name="Replace Measurements">
+      <item>"心跳加快了" / "靠得更近了" / "温暖的触感"</item>
+      <item>"一瞬间" / "很快" / "片刻"</item>
+    </category>
+    <category name="Use Natural Metaphors">
+      <item>Animals (猫、鱼、鸟), plants (花、树), weather (雨、风、雪), natural phenomena</item>
+    </category>
+  </approved_language_patterns>
+
+  <examples>
+    <bad_example>
+      <text>"你的心跳从每分钟72下加速到90下。她的认知系统正在处理这个信号。距离缩短到约70厘米。她像一台待机的电脑，准时关机。"</text>
+      <reason>Uses precise measurements, system terms, and machine metaphors.</reason>
+    </bad_example>
+    <good_example>
+      <text>"你的心跳快了起来。她似乎注意到了什么，但没有说话。你们之间的距离近得能感受到彼此的呼吸。她安静地闭上眼睛，很快就睡着了。"</text>
+      <reason>Uses sensory approximation, human phrasing, and natural narrative progression.</reason>
+    </good_example>
+  </examples>
+</anti_ai_flavor_constraints>

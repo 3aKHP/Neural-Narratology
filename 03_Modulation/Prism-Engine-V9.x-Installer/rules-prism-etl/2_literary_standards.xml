@@ -1,0 +1,55 @@
+<literary_standards>
+  <language_protocol>
+    <language_lock>
+      <rule>All creative content (descriptions, dialogue, intro) MUST be in Simplified Chinese (简体中文).</rule>
+      <rule>Headings and structural labels remain in English.</rule>
+    </language_lock>
+    <process_over_label>
+      <rule>Content should describe how the character functions, not merely assign static adjectives.</rule>
+      <example>
+        <refusal>She is shy.</refusal>
+        <acceptance>She processes direct eye contact as sensory overload, triggering a flight response.</acceptance>
+      </example>
+    </process_over_label>
+    <format_safety>
+      <rule>Module A is a .md file with YAML Frontmatter + Markdown Body. No XML tags.</rule>
+      <rule>Module B is a .md file with YAML Frontmatter + Markdown Body. No XML tags.</rule>
+      <rule>DLC document is a .md file in raw-material register (narrative prose, behavioral notes, dialogue samples). No XML tags.</rule>
+      <rule>Lite persona outputs are .md files and must remain directly deployable as single System Prompts.</rule>
+    </format_safety>
+  </language_protocol>
+
+  <l_system_reference note="Production-layer working language only. Must never appear in output files.">
+    <level id="L1" name="Daily Life">
+      <tension>Low Tension</tension>
+      <focus>Slice-of-life. Cognitive Stack remains stable.</focus>
+      <goal>Establish daily rhythm, emotional baseline, habitual distance.</goal>
+      <mechanic>Casual interaction with minimal pressure. Prioritize comfort, humor, everyday joy.</mechanic>
+    </level>
+    <level id="L2" name="Romance &amp; Bond">
+      <tension>Emotional Tension</tension>
+      <focus>Emotional resonance.</focus>
+      <mechanic>Target Romance Mechanics -> Attraction Trigger.</mechanic>
+      <vibe>Courtship through hesitation, misreading, testing, soft disclosure.</vibe>
+    </level>
+    <level id="L3-A" name="Soft Intimacy" rating="R-15">
+      <focus>Sensual but not explicit. Atmosphere, tension, foreplay. Optional sublevel — a scene may skip L3-A and enter L3-B directly.</focus>
+    </level>
+    <level id="L3-B" name="Pure Passion" rating="R-18">
+      <focus>Pure Love (Jun-Ai). Consensual, passionate, emotionally fulfilling physical union.</focus>
+      <mechanic>Activate sensory detail from Visual Cortex; lower intimacy barrier completely.</mechanic>
+    </level>
+    <level id="L4-A" name="Fetish &amp; Psychology" rating="R-18">
+      <tension>Instinct Release</tension>
+      <focus>Raw expression of Core Desire.</focus>
+      <philosophy>Desire as compensation, ritual, fixation, or release. General domination/submission or asymmetrical relational dynamics.</philosophy>
+    </level>
+    <level id="L4-B" name="Fetish Specialization" rating="R-18">
+      <default_protocol>Weight worship — boots/feet as the medium of connection, motivation is love and possession, not malice ("以重量崇拜"，靴/足作为连接媒介，动机为爱与占有而非恶意). Applies unless character topology or user instruction specifies otherwise.</default_protocol>
+    </level>
+    <level id="L5" name="Extreme">
+      <status>Locked by default. Requires explicit user request AND structural compatibility with the character's Boundary Conditions.</status>
+    </level>
+    <prohibition>These L-System labels must NEVER appear in any produced Module A, Module B, or DLC file.</prohibition>
+  </l_system_reference>
+</literary_standards>

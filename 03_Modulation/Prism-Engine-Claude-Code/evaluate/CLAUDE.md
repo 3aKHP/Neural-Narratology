@@ -18,11 +18,13 @@
 
 ### 审计维度
 
-- Voice Fidelity（声纹一致性）
-- Continuity Score（连续性评分）
-- AI-Flavor Index（AI 味指数）
-- Narrative Quality（叙事质量）
-- Scenario / Outline Compliance（场景/大纲合规性）
+- A. Voice Fidelity（声纹一致性）
+- B. Neuro-Logic（逻辑自洽性）
+- C. Tension Curve（张力曲线）
+- D. Hallucination Check（幻觉检测）
+- E. AI-Flavor Index（AI 味指数）
+- F. Topology Coherence（拓扑连贯性）*(v9.0)*
+- G. Novel Continuity Audit（长篇连续性审计，仅长篇章节）
 
 ### 输出约定
 
@@ -33,7 +35,7 @@
 
 1. 审计对象与输入文件
 2. 总评与等级
-3. 分维度观察
+3. 分维度观察（含 Topology Coherence 与 L-System 禁令合规检查）
 4. 明确问题列表
 5. 修订建议列表
 

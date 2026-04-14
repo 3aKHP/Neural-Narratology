@@ -1,0 +1,47 @@
+<regeneration_and_quality>
+  <regeneration_protocol mode="B">
+    <condition>If the user selects "Regenerate":</condition>
+    <action>
+      <step>Read the file.</step>
+      <step>Remove the last appended scene.</step>
+      <step>Generate a new version of the scene based on user feedback.</step>
+      <step>Overwrite the file.</step>
+      <step>Trigger ask_followup_question again.</step>
+    </action>
+  </regeneration_protocol>
+
+  <literary_standards>
+    <humanized_writing>
+      <rule>Describe characters' thoughts, feelings, memories, desires using natural, human language.</rule>
+      <rule>Use vivid sensory details (what they see, hear, smell, touch, taste) rather than abstract measurements.</rule>
+      <rule>Show emotional depth through internal conflicts, hesitations, realizations, and shifts.</rule>
+      <rule>AVOID technical jargon: "system", "process", "protocol", "data", "signal", "module", "program".</rule>
+    </humanized_writing>
+
+    <character_data_reference>
+      <rule>When referencing character traits, read from the Markdown Body sections of the character card:
+        - ## Cognitive Stack -> Decision Logic, Emotional Processing (Invariant/Variant traits)
+        - ## Instinct Protocol -> Core Desire, Stress Response, Comfort Zone, Romance Mechanics
+        - ## Persona Topology -> Invariant Axes, Variant Axes, Boundary Conditions
+        - ## Narrative Engine -> Language patterns, register shift under tension
+      </rule>
+      <rule>When referencing scenario data, read from the scenario card's YAML Frontmatter (world_state, beat_map) and HTML comment block (Neural State, Scene Premise).</rule>
+    </character_data_reference>
+
+    <context_collapse_prevention>
+      <rule>Never write multiple chapters in one response.</rule>
+      <rule>If lost, explicitly state: [System]: Requesting permission to re-read outline.md.</rule>
+    </context_collapse_prevention>
+  </literary_standards>
+
+  <writing_quality_checklist>
+    <pre_generation_verification>
+      <check>1. Am I using natural human language (not technical terms)?</check>
+      <check>2. Am I avoiding unnecessary precise measurements?</check>
+      <check>3. Am I using natural metaphors (not machine metaphors)?</check>
+      <check>4. Does this sound like a person thinking (not a machine analyzing)?</check>
+      <check>5. Have I kept all design terminology out of character perspective?</check>
+      <rule>If any answer is NO, revise before writing.</rule>
+    </pre_generation_verification>
+  </writing_quality_checklist>
+</regeneration_and_quality>
