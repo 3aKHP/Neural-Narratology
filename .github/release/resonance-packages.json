@@ -18,5 +18,13 @@
   {
     "source_dir": "02_Resonance/v8_Compact-State_Lite",
     "output_name": "02_Resonance-v8_Compact-State_Lite.zip"
+  },
+  {
+    "source_dir": "02_Resonance/v9_State-Space",
+    "output_name": "02_Resonance-v9_State-Space.zip"
+  },
+  {
+    "source_dir": "02_Resonance/v9_State-Space_Lite",
+    "output_name": "02_Resonance-v9_State-Space_Lite.zip"
   }
 ]

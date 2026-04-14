@@ -55,6 +55,7 @@
 *   **[`v8_Compact-State/`](./v8_Compact-State/)**: 包含 v8.0 的 Compact-State 主题更新。通过 YAML+Markdown 轻骨架压缩格式性文本开销，减少对正文空间与注意力的挤占。
 *   **[`v8_Compact-State_Lite/`](./v8_Compact-State_Lite/)**: 包含 v8.0 的 Lite 生产层协议。面向 Chatbox、QuickQuip 一类单一 System Prompt 宿主，聚焦角色主提示词锻造。
 *   **[`v9_State-Space/`](./v9_State-Space/)**: 包含 v9.0 的 State-Space 人格拓扑引擎。在 Compact-State 基础上引入显式人格拓扑建模，支持拓扑感知的状态导航与 ETL 变换流水线。⭐ 最新
+*   **[`v9_State-Space_Lite/`](./v9_State-Space_Lite/)**: 包含 v9.0 的 Lite 生产层协议。面向 Chatbox 类单一 System Prompt 宿主，在 v8 Lite 基础上新增 Persona Topology 节（不变轴 / 可变轴 / 边界条件），支持接入 Step 1C 仿射变换预处理。⭐ 最新
 
 ## 🔄 演进路径 (Evolution Path)
 
@@ -91,7 +92,8 @@ graph LR
 - **如果你需要深度博弈**：使用 [`v6_Omni_Foundry`](./v6_Omni_Foundry/)，但需要投入时间学习其复杂的逻辑系统
 - **如果你追求心理真实感**：使用 [`v7_Neuro_Weave`](./v7_Neuro_Weave/)，它在复杂度和效果之间取得了最佳平衡
 - **如果你需要轻结构的工业化协议**：使用 [`v8_Compact-State`](./v8_Compact-State/)，它通过 Compact-State 更新显著降低了格式负担与注意力污染
-- **如果你需要单一 System Prompt 角色主提示词**：使用 [`v8_Compact-State_Lite`](./v8_Compact-State_Lite/)，它聚焦聊天宿主中的人格压缩与可部署性
+- **如果你需要单一 System Prompt 角色主提示词（v8 基础）**：使用 [`v8_Compact-State_Lite`](./v8_Compact-State_Lite/)，它聚焦聊天宿主中的人格压缩与可部署性
+- **如果你需要单一 System Prompt 角色主提示词（v9 拓扑感知）**：使用 [`v9_State-Space_Lite`](./v9_State-Space_Lite/)，在 v8 Lite 基础上新增 Persona Topology，让张力变化有结构可循 ⭐
 - **如果你需要拓扑感知的高保真角色模拟**：使用 [`v9_State-Space`](./v9_State-Space/)，它在 Compact-State 基础上引入人格拓扑建模与 ETL 变换流水线 ⭐
 - **如果你需要自动化工具**：直接使用 [Phase III: Modulation](../03_Modulation/) 中的 Prism-ETL 工具链
 
