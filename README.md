@@ -80,8 +80,9 @@ Neural-Narratology/
 │   ├── v5_Legacy/                  # 社区标准版协议（剧本优先）
 │   ├── v6_Omni_Foundry/            # 全息灵魂协议（动态状态机）
 │   ├── v7_Neuro_Weave/             # 神经编织引擎（认知模拟）
-│   ├── v8_Compact-State/           # Compact-State 主题更新（轻结构协议）⭐ 最新
+│   ├── v8_Compact-State/           # Compact-State 主题更新（轻结构协议）
 │   ├── v8_Compact-State_Lite/      # Compact-State Lite（单提示词人格协议）
+│   ├── v9_State-Space/             # State-Space 人格拓扑引擎（状态空间导航）⭐ 最新
 │   ├── "共鸣"项目研究报告-Repo-Git.md
 │   └── "共鸣"项目研究报告-Repo-Git.pdf
 │
@@ -119,7 +120,8 @@ Neural-Narratology/
 | **v5.0** | Legacy | 剧本优先 | 快速创作、社区分享 |
 | **v6.0** | Omni-Foundry | 全息灵魂 | 深度博弈、技术原型 |
 | **v7.0** | Neuro-Weave | 认知模拟 | 心理真实感、可攻略性 |
-| **v8.0** | Compact-State | 结构降维 | 工业化生产、上下文节流 ⭐ |
+| **v8.0** | Compact-State | 结构降维 | 工业化生产、上下文节流 |
+| **v9.0** | State-Space | 人格拓扑 | 高保真模拟、边界管理 ⭐ |
 
 ### Phase III: 工程实现
 
@@ -273,7 +275,7 @@ graph LR
 > **统计口径（更新于 2026-03-10）**：仅统计仓库内可追踪资产；不含 `.git/` 与本地 `dev/` 工作目录。
 
 - **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
-- **协议版本**: 4 个主要版本（v5.0, v6.0, v7.0, v8.0）+ 1 个 Lite Profile（Compact-State Lite）
+- **协议版本**: 5 个主要版本（v5.0, v6.0, v7.0, v8.0, v9.0）+ 1 个 Lite Profile（Compact-State Lite）
 - **Prism 工具链目录**: 9 个（`Prism-Engine-V8.x` + `Prism-Engine-V8.x-Installer` + `Prism-Engine-Codex` + `Prism-Engine-Claude-Code` + `Prism-Engine-V7.x` + `Prism-Engine-V7.x-Installer` + `Prism-Engine-V6.x/` 下 3 个 ETL 专项目录）
 - **引擎预设配置**: 6 个（ETL / Runtime / Evaluate / Weaver / Weaver-Orch / Dyad）
 - **`.roo` 系统提示词**: 17 份（V8.x 6 份 + V8.x-Installer/Template 6 份 + V7.x 5 份）

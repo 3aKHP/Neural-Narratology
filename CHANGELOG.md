@@ -4,7 +4,7 @@
 
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
-| **Resonance Protocol** | Phase II 角色协议（理论框架） | v8.0 Compact-State |
+| **Resonance Protocol** | Phase II 角色协议（理论框架） | v9.0 State-Space |
 | **Prism Engine** | Phase III 自动化工具链（工程实现） | v8.1 |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
@@ -13,9 +13,22 @@
 
 ---
 
+## 2026-04-14 — Resonance Protocol v9.0 State-Space
+
+> Git: `(Pending)` · 对应 Resonance Protocol v9.0
+
+### Added — `[Resonance]`
+- 发布 **Resonance Protocol v9.0 State-Space**：
+  - 新增 `v9_State-Space/` 目录，包含 `en-US/` 与 `zh-CN/` 双语版本。
+  - 七个协议文件：`Step0 - Kernel`、`Step1A - MainDriver`、`Step1B - MainStdlib`、`Step1C - TransformDriver`、`Step2A - StoryDriver`、`Step2B - StoryStdlib`、`Step3 - Runtime`。
+  - 核心新增：**Persona Topology**（人格拓扑）——不变轴、可变轴、边界条件的显式建模；**State Navigator**（状态导航器）——拓扑感知的运行时状态追踪；**Affine Transform Agent**（仿射变换代理，Step 1C）——ETL Extract 阶段的 All-Ages → L3+ DLC 推导流水线。
+  - Bug 修复：Step 1A Handover Note 措辞明确 Step 1C 为前置流程；Step 1C 默认变换范围从 L3-A 扩展至 L3-B；Step 3 Runtime 从 10173 字符压缩至 6000 字符以内。
+
+---
+
 ## 2026-03-29 — GitHub Actions CI & Split Release Automation
 
-> Git: `(Pending)` · 对应 Prism Engine v8.1
+> Git: `4549da7` · 对应 Prism Engine v8.1
 
 ### Added — `[Repo]`
 - 新增 **GitHub Actions CI**：
@@ -381,3 +394,4 @@
 | 2026-03-10 | **v8.0 Compact-State** | **v8.0 (Compact Engine)** | 协议 + 引擎同步升级 |
 | 2026-03-12 | — | **v8.1 (Codex Host Adaptation)** | Codex CLI 宿主适配 |
 | 2026-03-18 | — | **v8.1 (Claude Code Host Adaptation)** | Claude Code CLI 宿主适配 |
+| 2026-04-14 | **v9.0 State-Space** | — | 人格拓扑引擎，ETL 变换流水线 |
