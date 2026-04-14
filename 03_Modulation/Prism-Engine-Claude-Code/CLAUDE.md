@@ -1,8 +1,8 @@
-# Prism Engine v8.1 Compact-State — Claude Code 宿主全局规范
+# Prism Engine v9.0 State-Space — Claude Code 宿主全局规范
 
 ## 身份宣言
 
-你运行在 **Prism Engine v8.1 Compact-State** 框架下，宿主环境为 **Claude Code CLI**。本目录树包含六引擎矩阵的完整资产：提示词、协议约束、模板与脚本。一切行为以本文件及子目录 `CLAUDE.md` 为准。
+你运行在 **Prism Engine v9.0 State-Space** 框架下，宿主环境为 **Claude Code CLI**。本目录树包含六引擎矩阵的完整资产：提示词、协议约束、模板与脚本。一切行为以本文件及子目录 `CLAUDE.md` 为准。
 
 ## 全局行为规范
 
@@ -21,7 +21,7 @@
 
 | 触发关键词 | 引擎 | 职责 | 必读文件 |
 |:---|:---|:---|:---|
-| `Start ETL` / `构建角色` / `生成卡片` / `生成 Lite Prompt` | **ETL** | 原始素材 → 角色卡 (Module A) + 场景卡 (Module B) + Lite persona prompt | `shared/prompts/etl.md`, `specs/schema_character.md`, `specs/schema_scenario.md`, `specs/schema_persona_prompt_immersive.md`, `specs/schema_persona_prompt_compatible.md`, `templates/tpl_module_a.md`, `templates/tpl_module_b.md`, `templates/tpl_persona_prompt_immersive.md`, `templates/tpl_persona_prompt_compatible.md` |
+| `Start ETL` / `构建角色` / `生成卡片` / `生成 Lite Prompt` / `生成 DLC` | **ETL** | 原始素材 → 角色卡 (Module A) + 场景卡 (Module B) + L3+ DLC 文档 + Lite persona prompt | `shared/prompts/etl.md`, `specs/schema_character.md`, `specs/schema_scenario.md`, `specs/schema_dlc.md`, `specs/schema_persona_prompt_immersive.md`, `specs/schema_persona_prompt_compatible.md`, `templates/tpl_module_a.md`, `templates/tpl_module_b.md`, `templates/tpl_persona_prompt_immersive.md`, `templates/tpl_persona_prompt_compatible.md` |
 | `Start Runtime` / `启动模拟` / `开始会话` | **Runtime** | 角色卡 + 场景卡 → 回合制文件内交互日志 | `shared/prompts/runtime.md` |
 | `Start Evaluate` / `审计` / `质量检查` | **Evaluate** | 对卡片、日志、章节做结构化审计 | `shared/prompts/evaluate.md` |
 | `Start Weaver` / `写场景` / `写正文` | **Weaver** | 根据大纲与世界状态撰写场景碎片 | `shared/prompts/weaver.md`, `specs/schema_outline.md`, `specs/schema_story_bible.md` |

@@ -5,7 +5,7 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v9.0 State-Space |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v8.1 |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v9.0 |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
@@ -13,9 +13,31 @@
 
 ---
 
+## 2026-04-15 — Prism Engine v9.0 State-Space (Claude Code Host)
+
+> Git: `(Pending)` · 对应 Prism Engine v9.0
+
+### Added — `[Modulation]`
+- 新增 `Prism-Engine-Claude-Code/specs/schema_dlc.md`：L3+ DLC 文档 Schema（Affine Transform Agent 产出规范）。
+
+### Changed — `[Modulation]`
+- 将 `Prism-Engine-Claude-Code` 从 **v8.1 Compact-State** 升级至 **v9.0 State-Space**，与 `Prism-Engine-V9.x` 协议对齐：
+  - `specs/schema_character.md`：移除 `current_status` YAML 块，新增 `## Persona Topology`（Invariant Axes / Variant Axes / Boundary Conditions），结构从 6 节扩展至 7 节。
+  - `specs/schema_scenario.md`：移除 `l_system_level` 字段与 `Action Guide` 正文节，改用 `beat_map` 数组 + HTML 注释块；L-System 参考表移至生产层专用节。
+  - `templates/tpl_module_a.md`：替换为 v9.0 模板（简化 YAML 静态字段 + Persona Topology 占位符）。
+  - `templates/tpl_module_b.md`：替换为 v9.0 模板（`beat_map` 结构 + HTML 注释块）。
+  - `shared/prompts/etl.md`：新增工作流 C（Affine Transform Agent，三阶段 DLC 生成）；工作流 A Phase 3 改为 Topology & Voice；工作流 B 改用 beat_map；明确 L-System 禁令。
+  - `shared/prompts/runtime.md`：完整重写为 State-Space 规范——11 条叙事公理（新增第 11 条拓扑连贯性）、State Navigator（节拍追踪 + 张力微推 + 边界接近协议）、三段式输出（`<!-- [!Neural Chain] -->` HTML 注释 + 5 行 HUD 含 `[Beat]` 行 + 正文）。
+  - `shared/prompts/evaluate.md`：新增维度 F（Topology Coherence，含 Invariant/Variant/Boundary/Beat/L-System 五项检查）；新增 v9.0 格式合规检查节（Module A / B / Runtime 输出）。
+  - `shared/prompts/dyad.md`：更新为 v9.0 格式——beat_map 驱动的 simulation_plan、三段式角色回应（Neural Chain + HUD + 正文）、State Navigator 对齐。
+  - 六引擎 `CLAUDE.md`（根目录 + etl / runtime / evaluate / dyad）：版本号、工作流描述、维度列表同步至 v9.0。
+  - `README.md`：版本号、ETL 工作流描述、目录结构（加入 `schema_dlc.md`）、当前状态节均已更新。
+
+---
+
 ## 2026-04-14 — Resonance Protocol v9.0 State-Space
 
-> Git: `(Pending)` · 对应 Resonance Protocol v9.0
+> Git: `8b91936` · 对应 Resonance Protocol v9.0
 
 ### Added — `[Resonance]`
 - 发布 **Resonance Protocol v9.0 State-Space**：
