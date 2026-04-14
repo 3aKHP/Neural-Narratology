@@ -6,7 +6,7 @@
 
 `Prism-Engine-Claude-Code` 是 Prism Engine 六引擎矩阵在 **Claude Code CLI** 环境下的落地实现。它通过目录作用域 `CLAUDE.md` 组织六引擎行为边界，通过文件系统承载全部可持续状态，通过 Scene Shards 协议支撑长文本的碎片化写入与编译。
 
-协议层以 [v9.0 State-Space](../../02_Resonance/) 为主。本目录关注的是**宿主层**——即如何在 Claude Code 中启动引擎、管理文件和推进工作流。
+协议层以 v9.0 State-Space 为主。本目录关注的是**宿主层**——即如何在 Claude Code 中启动引擎、管理文件和推进工作流。
 
 > 快速开始请直接阅读 [`START_HERE.md`](./START_HERE.md)。
 
