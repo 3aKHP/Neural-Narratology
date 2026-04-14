@@ -2,10 +2,10 @@
 
 ## 1. Overview
 
-The DLC document is the output of the **Affine Transform Agent (Step 1C)**. It is raw-material-register content — narrative prose, behavioral notes, and dialogue samples — derived from all-ages source material through principled state-space traversal. It is not a structured character card.
+The DLC document is the output of the **Affine Transform Agent (Workflow C)**. It is raw-material-register content — narrative prose, behavioral notes, and dialogue samples — derived from all-ages source material through principled state-space traversal. It is not a structured character card.
 
 **Input:** All-ages source material.
-**Output:** L3+ DLC document, to be merged with the original source material at equal weight before character card construction (Step 1A + 1B).
+**Output:** L3+ DLC document, to be merged with the original source material at equal weight before character card construction (Workflow A).
 
 ## 2. Document Format
 

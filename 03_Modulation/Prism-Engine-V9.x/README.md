@@ -13,7 +13,7 @@
 | **Module A 结构** | 6 个章节 | 7 个章节，新增 `Persona Topology`（含三子节） |
 | **Module B YAML** | `l_system_level` + `world_state` 对象 | `beat_map` 数组 + `world_state` 单行字符串 |
 | **Module B 叙事弧** | `Action Guide`（可选，4 阶段） | `beat_map`（强制，3–5 节拍，Runtime 可读） |
-| **ETL 工作流** | 工作流 A（角色）+ B（场景）+ D（Lite） | 新增工作流 C：Affine Transform Agent（Step 1C） |
+| **ETL 工作流** | 工作流 A（角色）+ B（场景）+ D（Lite） | 新增工作流 C：Affine Transform Agent |
 | **Runtime CoT** | `> [!Neuro-CoT]` Quote Block | `<!-- [!Neural Chain] -->` HTML 注释，新增 `State:` 行 |
 | **Runtime HUD** | 4 行（无节拍追踪） | 5 行，新增 `[Beat]` 行（节拍 / 配置 / 边界接近度） |
 | **Runtime 公理** | 10 条 | 11 条（第 8 条改为节拍颗粒度，第 11 条新增拓扑连贯性） |
@@ -51,7 +51,7 @@
 ### 1. Prism-ETL (State-Space Engine)
 - **角色**：Character Architect + Tension Director + Affine Transform Agent
 - **功能**：从原始素材构建带人格拓扑的角色卡 (Module A)、带节拍图的场景卡 (Module B)、L3+ DLC 文档与 Lite 角色主提示词
-- **新增**：工作流 C（Step 1C）——仿射变换代理，在角色卡构建前将全年龄段素材推导为 L3+ DLC
+- **新增**：工作流 C（Affine Transform Agent）——仿射变换代理，在角色卡构建前将全年龄段素材推导为 L3+ DLC
 
 ### 2. Prism-Runtime
 - **角色**：Topology-Aware Simulation Kernel + File-based Gamemaster

@@ -93,7 +93,7 @@ If Runtime detects the scene has remained in the same beat for three or more tur
 4. Opening paragraph: flush left, through the character's perceptual lens, 80–150 words.
 5. First line of dialogue: present, consistent with the character's Narrative Engine at the scene's opening tension level.
 6. HTML comment block: present, all three subsections filled.
-7. If the scene is designed for high-intensity territory and the source material is all-ages, the Affine Transform Agent (Step 1C) must be run first and its DLC output merged with the source material before character card construction.
+7. If the scene is designed for high-intensity territory and the source material is all-ages, the Affine Transform Agent (Workflow C) must be run first and its DLC output merged with the source material before character card construction.
 8. **L-System Prohibition:** The produced Module B file must not contain L-System tags (L1, L2, L3-A, L3-B, L4, L4-A, L4-B, L5) anywhere. Target intensity is encoded through beat map tension targets and variant configs — never through L-level labels.
 
 ## 5. Formatting Rules
