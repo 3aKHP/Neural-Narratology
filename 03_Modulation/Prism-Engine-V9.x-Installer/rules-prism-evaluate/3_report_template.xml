@@ -1,0 +1,59 @@
+<report_template>
+  <markdown_structure>
+    <![CDATA[
+# Neuro-Integrity Report: [Character Name]
+**Date:** [Date] | **Log Ref:** [Log Filename]
+**Overall Score:** [S/A/B/C/F]
+
+## 1. Executive Summary
+[Brief overview of the session's quality.]
+
+## 2. Voice & Dialogue Analysis
+- **Strengths:** [Examples of good dialogue]
+- **Weaknesses:** [Examples of OOC or generic phrasing]
+- **Fidelity Score:** [0-10]
+
+## 3. Logic & Behavior Analysis
+- **Trigger Check:** Did stress response trigger correctly? [Yes/No/N/A]
+- **Consistency:** [Analysis of decision making]
+- **Logic Score:** [0-10]
+
+## 4. Tension Curve Analysis
+- **Beat Map Compliance:** [Did tension follow the beat map trajectory?]
+- **Beat Advances:** [Were advances earned through narrative interaction?]
+- **Tension Fluctuation:** [Did tension fluctuate, or was it monotonically increasing?]
+- **Tension Score:** [0-10]
+
+## 5. AI-Flavor Analysis
+- **System Terms Found:** [List occurrences with Turn/Line references]
+- **Machine Metaphors Found:** [List occurrences]
+- **Excessive Quantification:** [List occurrences]
+- **Metadata Leakage:** [List occurrences]
+- **AI-Flavor Index:** [X.X per 1000 chars] → [Pass/Warning/Fail]
+
+## 6. Topology Coherence Analysis
+- **Invariant Axis Violations:** [Any response that violated an Invariant Axis — was it routed correctly?]
+- **Variant Config Drift:** [Any configuration changes without basis in Variant Axes?]
+- **Boundary Condition Compliance:** [Hard limits respected? Access conditions met?]
+- **Beat Tracking Accuracy:** [HUD Beat line correct each turn? Beat advances logged in Neural Chain?]
+- **L-System Tag Leakage:** [Any L-System tags found in output files?]
+- **Topology Score:** [0-10] → [PASS/CONDITIONAL/FAIL]
+
+## 7. Critical Issues (Bugs)
+- [List any hallucinations, logic breaks, topology violations, or formatting errors]
+
+## 8. Novel Continuity Analysis (if applicable)
+- **Story Bible Compliance:** [Does the chapter match story_bible.md state?]
+- **Timeline Consistency:** [Does in-world time progress logically from previous chapter?]
+- **Character State Accuracy:** [Physical/emotional/relational state matches tracker?]
+- **Chekhov Registry Check:** [Planted items: X open, Y resolved this chapter]
+- **Outline Compliance:** [Were all Key Events covered? POV correct?]
+- **Continuity Score:** [0-10] → [PASS/CONDITIONAL/FAIL]
+
+## 9. Optimization Recommendations (For ETL Agent)
+- **Update Character Card:** [Specific suggestions to modify Module A sections]
+- **Update Scenario Card:** [Specific suggestions to modify Module B beat map or opening]
+- **Anti-AI-Flavor Notes:** [Specific language patterns to avoid in future sessions]
+    ]]>
+  </markdown_structure>
+</report_template>

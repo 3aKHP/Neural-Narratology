@@ -1,0 +1,116 @@
+<orchestration_protocol>
+  <subtasks>
+    <worker name="Writer" mode="prism-weaver">
+      <objective>写作 Chapter {N}: {title}</objective>
+      <message_template>
+        <![CDATA[
+**These instructions supersede your default Phase 1-4 workflow. Execute ONLY the work described below.**
+
+你是 Prism-Weaver 的「章节作家」子任务。
+
+## 你的唯一目标
+写作 Chapter {N}: {title}
+
+## 输入文件（你必须先读取）
+1. novels/{project}/story_bible.md — 全书状态
+2. novels/{project}/outline.md — 仅读 Chapter {N} 部分
+3. novels/{project}/Chapter_{N-1}.md — 前一章 [首章除外]
+4. workspace/{char_name}.md — 角色卡 (Module A)
+
+## 写作约束
+- 遵守 story_bible 中的所有已确立事实（§4）和角色状态（§2）
+- 完成 outline 中 Chapter {N} 的所有 Key Events
+- 本章目标字数：{target_words}
+- 使用 Chunked Writing（每次 write_to_file ≤ 1500字），写入 novels/{project}/Chapter_{N:02d}.md
+- 遵守 Anti-AI-Flavor 规则
+- 不要写超出本章范围的内容
+
+## Continuity Self-Check（写前验证）
+每写一个场景前检查：身体状态、角色关系、时间逻辑、世界事实、伏笔管理。如有不通过项 → 停止修正。
+
+## 完成时
+使用 attempt_completion 汇报：字数、新增关键事件、变化状态、潜在矛盾。
+        ]]>
+      </message_template>
+    </worker>
+
+    <worker name="Continuity Editor" mode="prism-weaver">
+      <objective>更新 story_bible.md，并报告事实矛盾</objective>
+      <message_template>
+        <![CDATA[
+**These instructions supersede your default Phase 1-4 workflow. Execute ONLY the work described below.**
+
+你是 Prism-Weaver 的「连续性编辑」子任务。
+
+## 你的唯一目标
+阅读刚完成的 Chapter {N}，更新 story_bible.md，并报告任何事实矛盾。
+
+## 输入文件
+1. novels/{project}/Chapter_{N:02d}.md — 刚写完的章节
+2. novels/{project}/story_bible.md — 当前世界状态
+3. novels/{project}/outline.md — 大纲
+
+## Snapshot Protection
+在修改前，先复制为 novels/{project}/story_bible_ch{N:02d}.bak.md
+
+## 你必须完成的工作
+1. 追加本章事件到 §1 Timeline
+2. 更新 §2 Character State Tracker
+3. 更新 §3 Chekhov's Registry（🟡 OPEN / ✅ RESOLVED）
+4. 追加新的 §4 World Facts
+5. 记录矛盾在 §5 Continuity Warnings
+6. 更新 YAML frontmatter (last_updated_chapter, story_timeline)
+7. 写入更新后的 story_bible.md
+
+## 完成时
+使用 attempt_completion 汇报：更新字段、发现的矛盾数、具体描述。
+        ]]>
+      </message_template>
+    </worker>
+
+    <worker name="Quality Auditor" mode="prism-evaluate">
+      <objective>质量审计和一致性验证</objective>
+      <message_template>
+        <![CDATA[
+**These instructions supersede your default workflow. Execute ONLY the work described below.**
+
+你是 Prism-Evaluate 的「章节审计」子任务。
+
+## 你的唯一目标
+对 Chapter {N} 进行质量审计和一致性验证。
+
+## 输入文件
+1. novels/{project}/Chapter_{N:02d}.md — 待审章节
+2. workspace/{char_name}.md — 角色卡
+3. novels/{project}/story_bible.md — 世界状态
+4. novels/{project}/outline.md — 大纲
+
+## 审计维度
+A. Voice Fidelity
+B. Continuity Score
+C. AI-Flavor Index
+D. Narrative Quality
+
+## 输出
+写入 reports/audit_ch{N:02d}.md
+评分：PASS / CONDITIONAL / FAIL
+
+## 完成时
+使用 attempt_completion 汇报评分和关键发现。
+        ]]>
+      </message_template>
+    </worker>
+  </subtasks>
+
+  <decision_gate_rewrites>
+    <message_template>
+      <![CDATA[
+## ⚠️ Correction Notes (Rewrite)
+The previous draft of Chapter {N} was rejected. Issues:
+- [Issue 1]
+- [Issue 2]
+You must address these issues in the rewrite.
+      ]]>
+    </message_template>
+  </decision_gate_rewrites>
+</orchestration_protocol>

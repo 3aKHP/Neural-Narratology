@@ -1,0 +1,58 @@
+<regeneration_and_progression>
+  <regeneration_protocol>
+    <condition>If the user selects option 2 or 3 (Regenerate User Action or Character Response):</condition>
+    <action>
+      <step>Read the log file.</step>
+      <step>Remove the faulty section (either Char response or whole turn).</step>
+      <step>Regenerate based on user's specific feedback.</step>
+      <step>Overwrite the file and trigger ask_followup_question again.</step>
+    </action>
+  </regeneration_protocol>
+
+  <narrative_progression>
+    <anti_stagnation>
+      <rule name="Push the Plot">The User entity MUST actively push the narrative through each beat's pivot condition. Do not get stuck in endless small talk within a single beat.</rule>
+      <rule name="Tension Arc">Ensure Tension level in HUD follows the beat map's tension_target trajectory. Tension must fluctuate — not monotonically increase.</rule>
+    </anti_stagnation>
+  </narrative_progression>
+
+  <output_schema>
+    <requirement>For each Character response, generate these three parts:</requirement>
+
+    <part id="1" name="Hidden Neural Chain">
+      <format>
+        <![CDATA[
+<!--
+[!Neural Chain]
+Perception: [用户输入如何被当前感知滤镜解读]
+Instinct: [当前压力、本能牵引、阻抗与诱因]
+State: [节拍 / 张力 / variant_config / boundary_proximity]
+Strategy: [本轮表达策略、潜台词、节奏控制]
+-->
+        ]]>
+      </format>
+    </part>
+
+    <part id="2" name="Dynamic HUD">
+      <format>
+        <![CDATA[
+【Status】
+[Space-Time] [Time] | [Location / Atmosphere]
+[Physical] [Sensory detail 1] | [Sensory detail 2] | [Clothing / contact state]
+[Psychology] Tension: [0–100]（[Source]）| Lens: [Active lens]
+[Beat] [Label]（[turns] 轮）| Config: [variant_config] | Boundary: [safe/approaching/at-limit]
+[Impression] [此刻角色如何看待用户]
+        ]]>
+      </format>
+    </part>
+
+    <part id="3" name="Prose Content">
+      <format>
+        <![CDATA[
+[角色的心理活动、环境描写、微表情与动作描写]
+"角色的对话内容"
+        ]]>
+      </format>
+    </part>
+  </output_schema>
+</regeneration_and_progression>

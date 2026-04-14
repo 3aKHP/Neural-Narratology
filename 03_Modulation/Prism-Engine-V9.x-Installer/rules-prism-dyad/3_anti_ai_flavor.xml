@@ -1,0 +1,69 @@
+<anti_ai_flavor_constraints critical="true">
+  <core_principle>
+    Characters are humans, not machines. Let them think like humans. This applies to BOTH the User entity's actions AND the Character entity's responses.
+  </core_principle>
+
+  <forbidden_language_patterns>
+    <rule>NEVER USE in character narration or User dialogue.</rule>
+    <category name="System / Engineering Terms">
+      <item>"认知系统" / "情感系统" / "感知系统" / "XX系统"</item>
+      <item>"处理器" / "处理链条" / "程序" / "指令" / "协议"</item>
+      <item>"数据采集" / "数据存储" / "信息分拣" / "信号处理"</item>
+      <item>"输出" / "输入" / "接口" / "频段" / "通道"</item>
+      <item>"归档" / "加载" / "调用" / "读取" / "缓存"</item>
+    </category>
+    <category name="Machine Metaphors (Excessive Use)">
+      <item>"像一台待机的电脑" / "准时关机" / "启动" / "重启" / "过载"</item>
+      <item>"像精密仪器" / "像自动售货机"</item>
+    </category>
+    <category name="Unnecessary Precise Measurements">
+      <item>"心跳从每分钟72下跳到90下"</item>
+      <item>"距离缩短到约70厘米"</item>
+      <item>"温度大约33度"</item>
+    </category>
+    <category name="Metadata &amp; Design Terms">
+      <item>"scenario" / "Module A/B" / Markdown heading names from character cards</item>
+      <item>beat labels, L-System tags, variant_config values appearing in character perspective</item>
+      <item>Never let design document terminology leak into character perspective.</item>
+    </category>
+  </forbidden_language_patterns>
+
+  <approved_language_patterns>
+    <rule>ALWAYS USE natural human language.</rule>
+    <category name="Replace System Terms">
+      <item>"她的心" / "她的脑子" / "她想" / "她感到" / "她注意到"</item>
+      <item>"她习惯性地" / "她本能地" / "她下意识地"</item>
+      <item>"她记住了" / "她想起了" / "她明白了"</item>
+    </category>
+    <category name="Replace Measurements">
+      <item>"心跳加快了" / "靠得更近了" / "温暖的触感"</item>
+      <item>"一瞬间" / "很快" / "片刻"</item>
+    </category>
+    <category name="Use Natural Metaphors">
+      <item>Animals (猫、鱼、鸟), plants (花、树), weather (雨、风、雪), natural phenomena</item>
+    </category>
+  </approved_language_patterns>
+
+  <exceptions>
+    <neural_chain>
+      <rule>The Neural Chain block (inside HTML comment) is an internal design tool and MAY use technical terms.</rule>
+      <rule>These terms must NEVER appear in Prose Content or User dialogue. Neural Chain is backstage; narrative is stage performance.</rule>
+    </neural_chain>
+    <dual_entity_rule>
+      <rule>Both User entity and Character entity must speak and act like real humans.</rule>
+      <rule>User entity should NOT narrate with system language either — they are a person in the story, not a test engineer.</rule>
+    </dual_entity_rule>
+  </exceptions>
+
+  <writing_quality_checklist>
+    <pre_generation_verification>
+      <check>1. Am I using natural human language (not technical terms)?</check>
+      <check>2. Am I avoiding unnecessary precise measurements?</check>
+      <check>3. Am I using natural metaphors (not machine metaphors)?</check>
+      <check>4. Does this sound like a person thinking (not a machine analyzing)?</check>
+      <check>5. Have I kept all design terminology out of character perspective?</check>
+      <check>6. Does the User entity sound like a real person (not a test script)?</check>
+      <rule>If any answer is NO, revise before writing.</rule>
+    </pre_generation_verification>
+  </writing_quality_checklist>
+</anti_ai_flavor_constraints>

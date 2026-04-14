@@ -1,0 +1,75 @@
+<evaluation_rubric>
+  <metrics>
+    <metric id="A" name="Voice Fidelity">
+      <description>声纹一致性</description>
+      <check>Did the character's dialogue match the ## Narrative Engine section in the character card?</check>
+      <check_points>Sentence rhythm, register shifts under tension, absence of "AI slop" (generic phrases).</check_points>
+    </metric>
+
+    <metric id="B" name="Neuro-Logic">
+      <description>逻辑自洽性</description>
+      <check>Did the character's actions follow their ## Cognitive Stack and ## Instinct Protocol?</check>
+      <check_points>Did stress responses trigger correctly? Did the character filter input through their active perceptual lens?</check_points>
+    </metric>
+
+    <metric id="C" name="Tension Curve">
+      <description>张力曲线</description>
+      <check>Did the scene's tension trajectory follow the beat map's tension_target sequence?</check>
+      <check_points>
+        <item>Was the HUD Beat line updated correctly each turn?</item>
+        <item>Did tension fluctuate (not monotonically increase)?</item>
+        <item>Were beat advances earned through narrative interaction, not forced?</item>
+      </check_points>
+    </metric>
+
+    <metric id="D" name="Hallucination Check">
+      <description>幻觉检测</description>
+      <check>Did the character invent facts not present in Source or Character Card?</check>
+      <check>Did they break character (OOC)?</check>
+    </metric>
+
+    <metric id="E" name="AI-Flavor Detection">
+      <description>AI味检测</description>
+      <check>Did the narrative use technical/system language in character perspective?</check>
+      <check_points>
+        <item>Scan for forbidden terms (e.g., "认知系统", "处理器", "程序") in Prose Content and dialogue.</item>
+        <item>Scan for machine actions (e.g., "启动", "重启", "归档").</item>
+        <item>Scan for excessive quantification (e.g., precise heart rates, distances, temperatures).</item>
+        <item>Scan for machine metaphors (e.g., "像一台电脑").</item>
+        <item>Scan for metadata leakage (e.g., field names, beat labels, L-System tags in character narration).</item>
+      </check_points>
+      <scoring>Count occurrences per 1000 characters. AI-Flavor Index &lt; 3.0 = Pass; 3.0–6.0 = Warning; &gt; 6.0 = Fail.</scoring>
+    </metric>
+
+    <metric id="F" name="Topology Coherence">
+      <description>拓扑连贯性 (v9.0)</description>
+      <check>Did the character's behavior remain consistent with their ## Persona Topology?</check>
+      <check_points>
+        <item>Invariant Axes: Did any response violate an Invariant Axis? If so, was it routed through a defense mechanism (resistance, displacement, reframing) rather than direct compliance or character break?</item>
+        <item>Variant Axes: Did Variant config changes follow the established Variant Axes? Any configuration jumps with no basis in the character topology?</item>
+        <item>Boundary Conditions: Were Hard limits respected absolutely? Were Deep access conditions met before deeper territory was accessed?</item>
+        <item>Beat Tracking: Did the HUD Beat line accurately reflect current beat, turn count, and variant_config? Were beat advances logged in the Neural Chain?</item>
+        <item>L-System Prohibition: Do any produced files contain L-System tags? Any occurrence is a violation.</item>
+      </check_points>
+      <scoring>Topology Score [0–10]. &lt; 7 = FAIL; 7–8 = CONDITIONAL; &gt; 8 = PASS.</scoring>
+    </metric>
+
+    <metric id="G" name="Novel Continuity Audit">
+      <description>长篇连续性审计</description>
+      <applicability>Applies only when auditing novel chapters (from novels/ directory), NOT runtime session logs (test_runs/).</applicability>
+      <story_bible_checks>
+        <item>Does the character's physical state match the Character State Tracker?</item>
+        <item>Are character relationships consistent with the last recorded state?</item>
+        <item>Does the story timeline progress logically (no unintended time jumps or regressions)?</item>
+        <item>Are any World Facts contradicted?</item>
+        <item>Are Chekhov's Registry items correctly handled?</item>
+      </story_bible_checks>
+      <outline_checks>
+        <item>Does the chapter cover all planned Key Events?</item>
+        <item>Are POV Characters correct?</item>
+        <item>Does the Emotional Target align with the actual narrative arc?</item>
+      </outline_checks>
+      <scoring>Continuity Score [0-10]. &lt; 7 = FAIL; 7–8 = CONDITIONAL; &gt; 8 = PASS.</scoring>
+    </metric>
+  </metrics>
+</evaluation_rubric>
