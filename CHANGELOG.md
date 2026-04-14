@@ -15,7 +15,7 @@
 
 ## 2026-04-15 — Prism Engine v9.0 State-Space (Codex Host)
 
-> Git: `(Pending)` · 对应 Prism Engine v9.0
+> Git: `1f2e2b8` · 对应 Prism Engine v9.0
 
 ### Added — `[Modulation]`
 - 新增 `Prism-Engine-Codex/specs/schema_dlc.md`：L3+ DLC 文档 Schema（Affine Transform Agent 产出规范）。
