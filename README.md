@@ -19,6 +19,12 @@
 2.  **理论构建**：如何定义一套标准化的协议，使 AI 角色具备深度逻辑与叙事动力学？
 3.  **工程实践**：如何将角色创作从手工作坊式的 Prompt 编写，转化为工业化的 **Agentic Workflow**？
 
+## 🧭 当前进度 (Current Focus)
+
+> 正在开发下一代协议 **V10**(针对新一代 LLM 的语言习惯重做);工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。v9.x 及更早协议与对应的 Phase III 宿主实现作为历史演进档案保留。
+
+---
+
 ## 🗺️ 研究路线图 (Roadmap)
 
 本研究共分为三个递进阶段，分别对应了从"破解"到"构建"再到"自动化"的技术演进：
@@ -60,6 +66,16 @@
     *   发布 **Prism Engine v8.1**：新增 **Weaver-Orch** 第六引擎（基于 Orchestrator 的长篇编排器）。
     *   **多宿主适配**：六引擎矩阵已扩展至 RooCode、Codex CLI 和 Claude Code CLI 三个宿主环境。
 *   **🛠️ [获取工具链](./03_Modulation/)**
+
+### [🌕 Phase IV: Projection (投射)](./04_Projection/)
+> **"Project the Character Across Platforms."**
+
+*   **核心任务**：将 Prism 角色资产投射到多形态消费环境。
+*   **姊妹项目 Prism Vesicle**：独立终端宿主 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**（Bun + TypeScript）是 Prism Engine 的直连 API 宿主，承担角色资产的生产与有状态试运行（Runtime 模拟器），系统提示词完全由 Prism 资产掌控。
+*   **关键成果（规划中）**：
+    *   **Core Profile**：平台无关角色描述规范，作为跨平台投射的统一内核。
+    *   **消费环境解耦**：将 Core Profile 编译到无状态消费前端——SillyTavern（CCv3 Lorebook Decorators）与 RikkaHub（思维链自维护 HUD）。
+*   **📄 [阅读设计文档](./04_Projection/)**
 
 ---
 
@@ -108,6 +124,16 @@ Neural-Narratology/
 │   ├── README.md
 │   └── "调制"项目研究报告-Repo-Git.md
 │
+├── 04_Projection/                   # Phase IV: 消费环境解耦(有状态宿主见姊妹项目 Prism Vesicle)
+│   ├── README.md
+│   ├── Core-Profile/                # 平台无关角色描述规范
+│   │   └── README.md
+│   ├── Platforms/                   # 伪有状态消费前端编译层
+│   │   ├── README.md
+│   │   ├── SillyTavern/             # B 类:CCv3 Lorebook Decorators 编译
+│   │   └── RikkaHub/                # C 类:思维链自维护 HUD
+│   └── "投射"项目研究报告-Repo-Git.md  # 研究报告（占位）
+│
 └── README.md                       # 项目总览
 ```
 
@@ -122,6 +148,7 @@ Neural-Narratology/
 | **v7.0** | Neuro-Weave | 认知模拟 | 心理真实感、可攻略性 |
 | **v8.0** | Compact-State | 结构降维 | 工业化生产、上下文节流 |
 | **v9.0** | State-Space | 人格拓扑 | 高保真模拟、边界管理 ⭐ |
+| **Core Profile** | Projection | 平台无关角色内核 | 多消费平台投射、协议去耦 🚧 |
 
 ### Phase III: 工程实现
 
@@ -274,7 +301,7 @@ graph LR
 
 > **统计口径（更新于 2026-03-10）**：仅统计仓库内可追踪资产；不含 `.git/` 与本地 `dev/` 工作目录。
 
-- **研究阶段**: 3 个（`01_Echo` / `02_Resonance` / `03_Modulation`）
+- **研究阶段**: 4 个（`01_Echo` / `02_Resonance` / `03_Modulation` / `04_Projection`）
 - **协议版本**: 5 个主要版本（v5.0, v6.0, v7.0, v8.0, v9.0）+ 1 个 Lite Profile（Compact-State Lite）
 - **Prism 工具链目录**: 9 个（`Prism-Engine-V8.x` + `Prism-Engine-V8.x-Installer` + `Prism-Engine-Codex` + `Prism-Engine-Claude-Code` + `Prism-Engine-V7.x` + `Prism-Engine-V7.x-Installer` + `Prism-Engine-V6.x/` 下 3 个 ETL 专项目录）
 - **引擎预设配置**: 6 个（ETL / Runtime / Evaluate / Weaver / Weaver-Orch / Dyad）
