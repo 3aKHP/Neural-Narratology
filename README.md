@@ -21,7 +21,7 @@
 
 ## 🧭 当前进度 (Current Focus)
 
-> 正在开发下一代协议 **V10**(针对新一代 LLM 的语言习惯重做);工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。v9.x 及更早协议与对应的 Phase III 宿主实现作为历史演进档案保留。
+> 已发布下一代协议 **v10.0 Tempered-Voice**(针对新一代 LLM 的语言习惯重做协议语言层);工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。v9.x 及更早协议与对应的 Phase III 宿主实现作为历史演进档案保留。
 
 ---
 
@@ -98,7 +98,9 @@ Neural-Narratology/
 │   ├── v7_Neuro_Weave/             # 神经编织引擎（认知模拟）
 │   ├── v8_Compact-State/           # Compact-State 主题更新（轻结构协议）
 │   ├── v8_Compact-State_Lite/      # Compact-State Lite（单提示词人格协议）
-│   ├── v9_State-Space/             # State-Space 人格拓扑引擎（状态空间导航）⭐ 最新
+│   ├── v9_State-Space/             # State-Space 人格拓扑引擎（状态空间导航）
+│   ├── v9_State-Space_Lite/        # State-Space Lite（单提示词人格协议）
+│   ├── v10_Tempered-Voice/         # Tempered-Voice 协议（强基底语言层重做）⭐ 最新
 │   ├── "共鸣"项目研究报告-Repo-Git.md
 │   └── "共鸣"项目研究报告-Repo-Git.pdf
 │
@@ -147,7 +149,8 @@ Neural-Narratology/
 | **v6.0** | Omni-Foundry | 全息灵魂 | 深度博弈、技术原型 |
 | **v7.0** | Neuro-Weave | 认知模拟 | 心理真实感、可攻略性 |
 | **v8.0** | Compact-State | 结构降维 | 工业化生产、上下文节流 |
-| **v9.0** | State-Space | 人格拓扑 | 高保真模拟、边界管理 ⭐ |
+| **v9.0** | State-Space | 人格拓扑 | 高保真模拟、边界管理 |
+| **v10.0** | Tempered-Voice | 强基底约束与嗓音淬炼 | 新一代 LLM、语言层现代化、反 AI 味治理 ⭐ |
 | **Core Profile** | Projection | 平台无关角色内核 | 多消费平台投射、协议去耦 🚧 |
 
 ### Phase III: 工程实现

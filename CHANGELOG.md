@@ -4,12 +4,31 @@
 
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
-| **Resonance Protocol** | Phase II 角色协议（理论框架） | v9.0 State-Space |
+| **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
 | **Prism Engine** | Phase III 自动化工具链（工程实现） | v9.0 |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-12 — Resonance Protocol v10.0 Tempered-Voice
+
+> 对应 Resonance Protocol v10.0
+
+### Added — `[Resonance]`
+- 新增 **`02_Resonance/v10_Tempered-Voice/`** 目录：v10.0 Tempered-Voice 协议，提供 en-US 与 zh-CN 双语版本，各含完整七步协议文档（Step0 Kernel / Step1A-1B 构造层 / Step1C 变换层 / Step2A-2B 导演层 / Step3 Runtime）。
+
+### Changed — `[Resonance]`
+- **定位为 v9.0 State-Space 的成熟形态，不引入新理论。** 延续人格拓扑（不变轴 / 可变轴 / 边界条件），在"强基底"假设下重做协议**语言层**：将拓扑从"搭建灵魂的脚手架"收束为"给强模型划界、管理注意力"的约束框架。
+- **语言层现代化（创作层 Step 0/1/2）**：删身份神化宣言与"不是…而是…"对比句式，高压全大写命令降级为冷静祈使，跨文件重复的 L-System 禁令提取至内核声明一次。保结构、只改措辞——Phase 机制、schema 与约束条目数不变。
+- **HUD 抗机器化（消费层 Step 3）**：新增 HUD 字段语域规范（`[Physical]` 写身体感受而非解剖术语，`[Psychology]` 写状态而非链式推理），并在 HUD 与散文正文之间立起语域防火墙。消费层处理原则与创作层相反——默认保留机制（三段式、Neural Chain、State Navigator、特殊协议均不动）。
+- **L-System 最小解耦**：保留 L1–L5 强度阶梯与 R-15 / R-18 分级门控，拆除"缺省内容领域"的硬编码，改为"从角色拓扑推导；无法推导则标记 gap"，修复 v9.0 内核"要求从角色推导却硬塞全局默认值"的内部矛盾。
+- **反 AI 味升格**：明确旧公理瞄错靶子（防"出戏"而非"文学层 AI 味"），将反 AI 味规划为独立一等模块；本协议相关公理暂占位保留（`[ANTI-AI-MODULE]` 注释标记），待独立模块落地后迁入并引用。
+
+### Notes
+- 统一律："脚手架的重量应匹配基底的能力"——创作层卸载脚手架（可控强模型），消费层保留脚手架（FurryBar 用户自选、最坏为无推理弱模型）。
 
 ---
 
@@ -457,3 +476,4 @@
 | 2026-03-12 | — | **v8.1 (Codex Host Adaptation)** | Codex CLI 宿主适配 |
 | 2026-03-18 | — | **v8.1 (Claude Code Host Adaptation)** | Claude Code CLI 宿主适配 |
 | 2026-04-14 | **v9.0 State-Space** | — | 人格拓扑引擎，ETL 变换流水线 |
+| 2026-07-12 | **v10.0 Tempered-Voice** | — | 强基底下语言层重做，约束与嗓音淬炼 |
