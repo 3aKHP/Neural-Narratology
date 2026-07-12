@@ -13,6 +13,27 @@
 
 ---
 
+## 2026-07-12 — Shared Anti-AI-Flavor Module
+
+### Added — `[Repo]`
+- 新增顶层 **`shared/`** 目录：Neural-Narratology 与姊妹项目 [Prism Vesicle](https://github.com/3aKHP/prism-vesicle) 的共享资产存放约定（判断准则、归属先例见 `shared/README.md`）。
+- 新增 **`shared/anti-ai-flavor/`**：反 AI 味（文学层 AI 味 / slop）知识源模块，首个落地的共享模块：
+  - `knowledge-source.yaml`：单一 YAML 知识源，21 条中文条目（F0 字面套话 / F1 句式骨架 / F3 结构与判断信号三层），提炼自内部写作纪要，含正反例、严重度分级、外参来源登记表（cn-antislop / antislop-sampler / the-antislop / SillyTavern 正则预设，均已核许可）。
+  - `zh-CN/prose-craft-guide.md`：知识源手工派生的 A 层（前置指导层）文档，可直接引用/粘贴进协议或 system prompt。
+  - `docs/ARCHITECTURE.md`：两大作用面（A 前置指导 / B 后处理查杀）+ 四层指纹模型（F0–F3，刻意避开 L-System 的 L1–L5 编号）+ 知识源与外参接入位 + 组件引用关系。
+  - `SCHEMA-SPEC.md`：知识源条目 / 来源登记的字段契约与 A/B 两层派生规则。
+
+### Changed — `[Resonance]`
+- Resonance Protocol v10.0 Tempered-Voice 的 **Step 3 Runtime（zh-CN）** 接入 `shared/anti-ai-flavor/` 模块：Narrative Axiom 10 与第 8 节 Anti-AI Taste Constraints 补充引用 A 层指导文档并内嵌高严重度规则摘要；Narrative Axiom 4 的历史占位注释移除（其"出戏/助手腔"关注点不属本模块范围，无需模块化处理）。
+- Step 3 Runtime（en-US）与 Step 0 Kernel（zh-CN + en-US）的历史占位注释更新为准确的当前状态说明（模块已落地，英文 A 层内容待补）。
+- `02_Resonance/v10_Tempered-Voice/README.md`：反 AI 味升格相关描述从"规划中"更新为已落地状态，附模块链接。
+- 根 `README.md`：目录结构图与当前进度均补充 `shared/` 说明。
+
+### Notes
+- 本轮范围：中文（zh-CN）知识源与 A 层内容 + Neural-Narratology 侧 v10 协议接入。英文 A 层内容、B 层扁平化制品与 Vesicle 代码层对接、Prism Engine（Weaver/Transform/Evaluate）侧接入均留待后续（详见模块 README"当前状态"）。
+
+---
+
 ## 2026-07-12 — Resonance Protocol v10.0 Tempered-Voice
 
 > 对应 Resonance Protocol v10.0

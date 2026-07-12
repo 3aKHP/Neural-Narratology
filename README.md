@@ -21,7 +21,7 @@
 
 ## 🧭 当前进度 (Current Focus)
 
-> 已发布下一代协议 **v10.0 Tempered-Voice**(针对新一代 LLM 的语言习惯重做协议语言层);工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。v9.x 及更早协议与对应的 Phase III 宿主实现作为历史演进档案保留。
+> 已发布下一代协议 **v10.0 Tempered-Voice**(针对新一代 LLM 的语言习惯重做协议语言层);工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。首个跨仓库共享模块 **[`shared/anti-ai-flavor/`](./shared/anti-ai-flavor/)**(反 AI 味文体规则)已随 v10.0 落地,由本仓库与 Prism Vesicle 共享。v9.x 及更早协议与对应的 Phase III 宿主实现作为历史演进档案保留。
 
 ---
 
@@ -135,6 +135,15 @@ Neural-Narratology/
 │   │   ├── SillyTavern/             # B 类:CCv3 Lorebook Decorators 编译
 │   │   └── RikkaHub/                # C 类:思维链自维护 HUD
 │   └── "投射"项目研究报告-Repo-Git.md  # 研究报告（占位）
+│
+├── shared/                          # 跨姊妹项目共享资产(与 Prism Vesicle 共享)
+│   ├── README.md
+│   └── anti-ai-flavor/              # 反 AI 味知识源(前置指导层 + 后处理查杀层)
+│       ├── README.md
+│       ├── SCHEMA-SPEC.md
+│       ├── knowledge-source.yaml
+│       ├── docs/ARCHITECTURE.md
+│       └── zh-CN/prose-craft-guide.md
 │
 └── README.md                       # 项目总览
 ```
