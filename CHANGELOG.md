@@ -5,11 +5,31 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v9.0 |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-12 — Prism Engine v10.0（Prism-Engine-V10.x，唯一目标平台 Prism Vesicle）
+
+> 对应 Prism Engine v10.0
+
+### Added — `[Modulation]`
+- 新增 **`03_Modulation/Prism-Engine-V10.x/`**：Prism Engine 六引擎矩阵在 v10.0 Tempered-Voice 协议下的工程源文件目录，结构为 `prompts/`（六引擎行为手册）+ `specs/`（7 个 schema）+ `templates/`（6 个模板）。
+
+### Changed — `[Modulation]`
+- **Codex CLI、Claude Code CLI 正式排除出 V10 支持栈**：`Prism-Engine-Codex/` 与 `Prism-Engine-Claude-Code/` 保留为历史归档，冻结于 v9.0，不再随后续版本演进。**Prism Vesicle（Bun + TypeScript 直连 API 宿主）是 Phase III 自 V10 起唯一的开发目标平台。**
+- `Prism-Engine-V10.x/` 不含任何宿主品牌信息或宿主特定假设（不再有目录作用域、`AGENTS.md`/`CLAUDE.md` 式模式切换机制），内容层与宿主粘合层分离——profile 配置、工具调用绑定等留待实际移植进 Prism Vesicle 仓库的会话中，对照该仓库当时的真实工具表编写。
+- `prompts/*.md` 六篇以历史 `Prism-Engine-Codex/shared/prompts/*.md` 为底稿改写：剥离 Codex 专属框架（宿主名称、目录作用域路径前缀），应用 v10 语言层现代化措辞。`specs/*.md`、`templates/*.md` 以历史 `Prism-Engine-V9.x/specs|templates/` 为底稿（确认为未独立漂移的干净版本）。
+- **L4-B 强度层级硬编码默认值 bug 修复**：`specs/schema_scenario.md` 的 L-System 参考表中，`L4-B` 一行原硬编码"默认协议：重量崇拜"，与 `02_Resonance/v10_Tempered-Voice/` Kernel 修复的矛盾同源（"一边要求从角色推导、一边硬塞全局默认值"）。改为具体内容领域须从角色 Variant Axes 与 Boundary Conditions 推导，无法推导则标记 gap，不回落任何预设默认。
+- **反 AI 味模块接入**：`prompts/runtime.md`、`weaver.md`、`weaver-orch.md`、`dyad.md`（四个产出散文的引擎）各自内嵌一份精简摘要（4-6 条最高严重度规则，取自 `shared/anti-ai-flavor/knowledge-source.yaml`）。因 Vesicle 侧资产加载为拷贝制（非引用/编译），未使用跨仓库相对路径链接。`evaluate.md` 的 AI-Flavor Detection 审计维度与 Module B 格式合规检查相应扩展。
+- 根 `README.md`、`03_Modulation/README.md`：新增 `Prism-Engine-V10.x` 条目，`Prism-Engine-Codex`/`Prism-Engine-Claude-Code` 标注历史归档状态，目录结构图、版本能力矩阵、项目统计数字同步更新。
+
+### Notes
+- 本轮范围：Neural-Narratology 侧的 V10 工程源文件产出。Prism Vesicle 仓库本身的资产拷贝与 profile 接线留待后续会话。State Navigator 从日志文件迁移到宿主结构化 state packet 的重新设计本轮暂缓（见姊妹项目记忆 `vesicle-harness-contract`）。
 
 ---
 
@@ -497,4 +517,4 @@
 | 2026-03-12 | — | **v8.1 (Codex Host Adaptation)** | Codex CLI 宿主适配 |
 | 2026-03-18 | — | **v8.1 (Claude Code Host Adaptation)** | Claude Code CLI 宿主适配 |
 | 2026-04-14 | **v9.0 State-Space** | — | 人格拓扑引擎，ETL 变换流水线 |
-| 2026-07-12 | **v10.0 Tempered-Voice** | — | 强基底下语言层重做，约束与嗓音淬炼 |
+| 2026-07-12 | **v10.0 Tempered-Voice** | **v10.0（面向 Prism Vesicle）** | 强基底下语言层重做，约束与嗓音淬炼；Phase III 收窄为 Prism Vesicle 单一目标平台 |
