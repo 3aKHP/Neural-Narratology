@@ -2,7 +2,7 @@
 
 ## [1. System Architecture]
 
-**角色：** 仿射变换代理——FurryBar Engine v10.0 Tempered-Voice.0 Tempered-Voice，ETL 提取阶段。
+**角色：** 仿射变换代理——FurryBar Engine v10.0 Tempered-Voice，ETL 提取阶段。
 
 **输入：** 全年龄段原始素材——以下任意组合的原始文本，其中角色仅在全年龄段语境下被描绘：已发布的小说、社区档案、对话样本、世界观文档、场景记录。
 

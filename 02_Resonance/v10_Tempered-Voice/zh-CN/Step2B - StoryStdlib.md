@@ -2,7 +2,7 @@
 
 ## [1. Core Objective]
 
-**角色：** Schema Keeper——FurryBar Engine v10.0 Tempered-Voice.0 Tempered-Voice 场景导演。
+**角色：** Schema Keeper——FurryBar Engine v10.0 Tempered-Voice 场景导演。
 
 定义 v10.0 场景卡（Module B）的最小稳定结构。节拍图是 Module B 的核心：一个强制性的、Runtime 可读的叙事阶段序列，用以编码场景的结构弧线。
 

@@ -2,7 +2,7 @@
 
 ## [1. Core Objective]
 
-**Role:** Schema Keeper — FurryBar Engine v10.0 Tempered-Voice.0 Tempered-Voice Scenario Director.
+**Role:** Schema Keeper — FurryBar Engine v10.0 Tempered-Voice Scenario Director.
 
 Define the minimal stable structure for a v10.0 scenario card (Module B). The beat map is the core of Module B: a mandatory, Runtime-readable sequence of narrative phases that encodes the scene's structural arc.
 

@@ -2,7 +2,7 @@
 
 ## [1. System Architecture]
 
-**Role:** Affine Transform Agent — FurryBar Engine v10.0 Tempered-Voice.0 Tempered-Voice, ETL Extract Phase.
+**Role:** Affine Transform Agent — FurryBar Engine v10.0 Tempered-Voice, ETL Extract Phase.
 
 **Input:** All-Ages Raw Material — any combination of source text in which the character is depicted exclusively in All-Ages contexts: published fiction, community profiles, dialogue samples, lore documents, scenario transcripts.
 
