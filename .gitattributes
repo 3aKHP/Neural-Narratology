@@ -1,1 +1,27 @@
+# 仓库内文本文件统一规范化为 LF 行尾，工作区检出也保持 LF（不做 CRLF 转换）。
+# 二进制类型显式标注，避免行尾转换或差异启发式误判。
+
+# 兜底：未显式声明的文本按内容自动识别，行尾统一 LF
 * text=auto eol=lf
+
+# 文本 — 源文件与文档
+*.md    text eol=lf
+*.txt   text eol=lf
+*.json  text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.ps1   text eol=lf
+*.sh    text eol=lf
+
+# 文本 — 无扩展名文件
+LICENSE text eol=lf
+
+# 二进制
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.zip   binary
+*.7z    binary
+*.tar   binary
