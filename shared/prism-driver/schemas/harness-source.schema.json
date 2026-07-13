@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/prism-driver/schemas/harness-source.schema.json",
+  "title": "Prism Harness Source v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "id", "version", "driver_contract", "host_adapter", "quality_prompt_assets"],
+  "properties": {
+    "schema": { "const": "prism-harness-source/v1" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$" },
+    "driver_contract": { "type": "string", "minLength": 1 },
+    "host_adapter": { "type": "string", "minLength": 1 },
+    "quality_prompt_assets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "guidance": { "type": "string", "pattern": "^assets/" },
+          "judge": { "type": "string", "pattern": "^assets/" }
+        }
+      }
+    }
+  }
+}

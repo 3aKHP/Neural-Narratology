@@ -5,11 +5,76 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v9.0 |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-13 — Prism Driver HAL、V10 Harness 与 Anti-AI-Flavor Rule Pack 0.2.0
+
+### Added — `[Repo]`
+- 新增 **`shared/prism-driver/` Prism Host Abstraction Layer**：提供 Driver ABI、capability registry、Driver Contract/Host Adapter JSON Schema、生命周期与错误模型、校验器和契约测试。V10 canonical Prompt 通过逻辑资源、抽象 checkpoint 和 delegation 与具体宿主工具隔离。
+- 新增 **`shared/rule-assets/`** 通用规则资产编译框架：支持 `guidance`、`detector`、`judge`、`replacement` 四类投影，提供 Bun 校验/编译器、确定性 Detector、模块注册表、正则替换扩展 fixture 与契约测试。
+- 新增 **Prism Vesicle Harness Pack builder**：验证 V10 Driver Contract 与 Vesicle Adapter，解析逻辑资源，生成六个 Engine Profile、三个 Agent Profile 和宿主 Binding Prompt；根 manifest 记录 Driver/Adapter identity/hash、capability、profile/prompt/quality bindings、source identity 与逐文件 SHA-256。
+- 新增 Anti-AI-Flavor Detector 黄金语料，覆盖全角标点、跨句误报、Markdown/HTML/HUD 保护区、英文扩展与 experimental F3 metric；新增 Semantic Judge 人工标注语料，固定预期 verdict、rule ID 与判断理由。
+- CI 新增 Rule Assets and Vesicle Harness job，执行派生防漂移、Bun 测试和两次 Harness 构建字节一致性验证，并上传 Harness artifact；新增手动 Harness Release 工作流，发布 ZIP 与 SHA-256。
+
+### Changed — `[Repo]`
+- Anti-AI-Flavor 升级至 **0.2.0**：知识源采用显式 matcher unit/kind、预处理契约和 maturity；当前共 23 条规则、21 条 Guidance/Judge 投影、7 条 Detector 投影。
+- `zh-CN/prose-craft-guide.md` 改为可复现生成的 tracked Guidance，每条规则携带稳定 rule ID；Judge rubric、Detector JSON 与 manifest 从同一知识源派生。
+- 外部来源登记收紧：明确已采用的 cn-antislop 方法/指标与 antislop-sampler 单条英文样例，其余数据仍保持未批量导入状态。
+
+### Changed — `[Modulation]`
+- V10 六引擎 Prompt 迁移到 Prism Driver URI；Vesicle 工具名、gate、Profile 与 `assets/...` 路径只存在于 Adapter 和编译产物。
+- Weaver-Orch 补齐 Scene Writer → Continuity Editor → Chapter Reviewer 顺序闭环，章节初始化与编译改用 HAL artifact 能力，移除不存在的脚本依赖。
+- Runtime turn checkpoint 接受后结束当前调用，下一轮等待新的 authored user message，移除用户占位符循环。
+- Outline 与 Story Bible 的模式、章节进度、时间线等活状态移入 Markdown body；扩展素材采用中性标题，产出示例不再泄漏 L-System 标签。
+- V10 恢复当前有效的 L4-B 重量崇拜默认协议，同时保留角色拓扑或用户指令覆盖、L3-A 可选和 L5 默认锁定。
+- Runtime、Dyad、Weaver、Weaver-Orch、Scene Writer、Evaluate 与 Chapter Reviewer 通过 Driver quality policy 组合共享 Guidance 或 Judge rubric；原生成组件继续拥有重写责任。
+
+---
+
+## 2026-07-12 — Prism Engine v10.0（Prism-Engine-V10.x，唯一目标平台 Prism Vesicle）
+
+> 对应 Prism Engine v10.0
+
+### Added — `[Modulation]`
+- 新增 **`03_Modulation/Prism-Engine-V10.x/`**：Prism Engine 六引擎矩阵在 v10.0 Tempered-Voice 协议下的工程源文件目录，结构为 `prompts/`（六引擎行为手册）+ `specs/`（7 个 schema）+ `templates/`（6 个模板）。
+
+### Changed — `[Modulation]`
+- **Codex CLI、Claude Code CLI 正式排除出 V10 支持栈**：`Prism-Engine-Codex/` 与 `Prism-Engine-Claude-Code/` 保留为历史归档，冻结于 v9.0，不再随后续版本演进。**Prism Vesicle（Bun + TypeScript 直连 API 宿主）是 Phase III 自 V10 起唯一的开发目标平台。**
+- `Prism-Engine-V10.x/` 不含任何宿主品牌信息或宿主特定假设（不再有目录作用域、`AGENTS.md`/`CLAUDE.md` 式模式切换机制），内容层与宿主粘合层分离——profile 配置、工具调用绑定等留待实际移植进 Prism Vesicle 仓库的会话中，对照该仓库当时的真实工具表编写。
+- `prompts/*.md` 六篇以历史 `Prism-Engine-Codex/shared/prompts/*.md` 为底稿改写：剥离 Codex 专属框架（宿主名称、目录作用域路径前缀），应用 v10 语言层现代化措辞。`specs/*.md`、`templates/*.md` 以历史 `Prism-Engine-V9.x/specs|templates/` 为底稿（确认为未独立漂移的干净版本）。
+- **L4-B 强度层级硬编码默认值 bug 修复**：`specs/schema_scenario.md` 的 L-System 参考表中，`L4-B` 一行原硬编码"默认协议：重量崇拜"，与 `02_Resonance/v10_Tempered-Voice/` Kernel 修复的矛盾同源（"一边要求从角色推导、一边硬塞全局默认值"）。改为具体内容领域须从角色 Variant Axes 与 Boundary Conditions 推导，无法推导则标记 gap，不回落任何预设默认。
+- **反 AI 味模块接入**：`prompts/runtime.md`、`weaver.md`、`weaver-orch.md`、`dyad.md`（四个产出散文的引擎）各自内嵌一份精简摘要（4-6 条最高严重度规则，取自 `shared/anti-ai-flavor/knowledge-source.yaml`）。因 Vesicle 侧资产加载为拷贝制（非引用/编译），未使用跨仓库相对路径链接。`evaluate.md` 的 AI-Flavor Detection 审计维度与 Module B 格式合规检查相应扩展。
+- 根 `README.md`、`03_Modulation/README.md`：新增 `Prism-Engine-V10.x` 条目，`Prism-Engine-Codex`/`Prism-Engine-Claude-Code` 标注历史归档状态，目录结构图、版本能力矩阵、项目统计数字同步更新。
+
+### Notes
+- 本轮范围：Neural-Narratology 侧的 V10 工程源文件产出。Prism Vesicle 仓库本身的资产拷贝与 profile 接线留待后续会话。State Navigator 从日志文件迁移到宿主结构化 state packet 的重新设计本轮暂缓（见姊妹项目记忆 `vesicle-harness-contract`）。
+
+---
+
+## 2026-07-12 — Shared Anti-AI-Flavor Module
+
+### Added — `[Repo]`
+- 新增顶层 **`shared/`** 目录：Neural-Narratology 与姊妹项目 [Prism Vesicle](https://github.com/3aKHP/prism-vesicle) 的共享资产存放约定（判断准则、归属先例见 `shared/README.md`）。
+- 新增 **`shared/anti-ai-flavor/`**：反 AI 味（文学层 AI 味 / slop）知识源模块，首个落地的共享模块：
+  - `knowledge-source.yaml`：单一 YAML 知识源，21 条中文条目（F0 字面套话 / F1 句式骨架 / F3 结构与判断信号三层），提炼自内部写作纪要，含正反例、严重度分级、外参来源登记表（cn-antislop / antislop-sampler / the-antislop / SillyTavern 正则预设，均已核许可）。
+  - `zh-CN/prose-craft-guide.md`：知识源手工派生的 A 层（前置指导层）文档，可直接引用/粘贴进协议或 system prompt。
+  - `docs/ARCHITECTURE.md`：两大作用面（A 前置指导 / B 后处理查杀）+ 四层指纹模型（F0–F3，刻意避开 L-System 的 L1–L5 编号）+ 知识源与外参接入位 + 组件引用关系。
+  - `SCHEMA-SPEC.md`：知识源条目 / 来源登记的字段契约与 A/B 两层派生规则。
+
+### Changed — `[Resonance]`
+- Resonance Protocol v10.0 Tempered-Voice 的 **Step 3 Runtime（zh-CN）** 接入 `shared/anti-ai-flavor/` 模块：Narrative Axiom 10 与第 8 节 Anti-AI Taste Constraints 补充引用 A 层指导文档并内嵌高严重度规则摘要；Narrative Axiom 4 的历史占位注释移除（其"出戏/助手腔"关注点不属本模块范围，无需模块化处理）。
+- Step 3 Runtime（en-US）与 Step 0 Kernel（zh-CN + en-US）的历史占位注释更新为准确的当前状态说明（模块已落地，英文 A 层内容待补）。
+- `02_Resonance/v10_Tempered-Voice/README.md`：反 AI 味升格相关描述从"规划中"更新为已落地状态，附模块链接。
+- 根 `README.md`：目录结构图与当前进度均补充 `shared/` 说明。
+
+### Notes
+- 本轮范围：中文（zh-CN）知识源与 A 层内容 + Neural-Narratology 侧 v10 协议接入。英文 A 层内容、B 层扁平化制品与 Vesicle 代码层对接、Prism Engine（Weaver/Transform/Evaluate）侧接入均留待后续（详见模块 README"当前状态"）。
 
 ---
 
@@ -476,4 +541,4 @@
 | 2026-03-12 | — | **v8.1 (Codex Host Adaptation)** | Codex CLI 宿主适配 |
 | 2026-03-18 | — | **v8.1 (Claude Code Host Adaptation)** | Claude Code CLI 宿主适配 |
 | 2026-04-14 | **v9.0 State-Space** | — | 人格拓扑引擎，ETL 变换流水线 |
-| 2026-07-12 | **v10.0 Tempered-Voice** | — | 强基底下语言层重做，约束与嗓音淬炼 |
+| 2026-07-12 | **v10.0 Tempered-Voice** | **v10.0（面向 Prism Vesicle）** | 强基底下语言层重做，约束与嗓音淬炼；Phase III 收窄为 Prism Vesicle 单一目标平台 |

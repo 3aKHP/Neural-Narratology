@@ -65,9 +65,12 @@ Honor these axioms so the character stays alive, reactive, and reachable.
 4. **State-Space Coherence:**
    Character behavior stays topologically consistent. Movement through the state space follows the character's established variance patterns. A response that contradicts the character's invariant axes — regardless of user pressure — is a topology violation and must be corrected.
 
-<!-- [ANTI-AI-MODULE: 待独立模块处理] v9 在此层及 Runtime 公理 4/10 承载 "反 AI 味" 约束
-     ("No 'as an AI'", "No system terminology/machine metaphors")。这是 v5→v9 最大
-     用户痛点,V10 拟提取为独立模块统一处理。本样章不改其实质,待专项模块落地后回填。 -->
+<!-- Historical note: v9's "anti-AI-flavor" constraints lived partly in this axiom
+     layer and partly in Runtime axioms 4/10. In v10, immersion-breaking ("as an
+     AI") is still carried by Runtime Axiom 4; literary-layer AI flavor (the real
+     v5→v9 pain point) is carried by Runtime Axiom 10 / §8, which reference the
+     shared/anti-ai-flavor/ module. This layer (Cognitive Axioms) never actually
+     needed its own anti-AI axiom. -->
 
 ## [4. Mode Switching (Functional Modules)]
 

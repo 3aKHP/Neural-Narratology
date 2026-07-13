@@ -1,0 +1,9 @@
+{
+  "schema": "rule-module-registry/v1",
+  "modules": [
+    {
+      "id": "anti-ai-flavor",
+      "config": "shared/anti-ai-flavor/module.config.json"
+    }
+  ]
+}

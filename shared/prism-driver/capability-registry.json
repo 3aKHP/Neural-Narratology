@@ -1,0 +1,45 @@
+{
+  "schema": "prism-driver-capability-registry/v1",
+  "operations": {
+    "artifact.inspect": {
+      "kind": "artifact",
+      "description": "Locate, enumerate, search, and read declared resources or project artifacts."
+    },
+    "artifact.compose": {
+      "kind": "artifact",
+      "description": "Create directories and files, then write, replace, or append content."
+    },
+    "artifact.snapshot": {
+      "kind": "artifact",
+      "description": "Copy a single-writer state artifact before mutation."
+    },
+    "research.external": {
+      "kind": "research",
+      "description": "Perform attributable external research for bounded source-material gaps."
+    },
+    "interaction.confirm": {
+      "kind": "interaction",
+      "description": "Pause at a declared blocking checkpoint and accept or reject progression."
+    },
+    "interaction.select": {
+      "kind": "interaction",
+      "description": "Request one choice from mutually exclusive workflow options."
+    },
+    "agent.delegate": {
+      "kind": "delegation",
+      "description": "Delegate a bounded task to a declared Agent Profile."
+    },
+    "quality.guard": {
+      "kind": "quality",
+      "description": "Apply host-managed pre-delivery quality policy to a candidate."
+    },
+    "quality.analyze": {
+      "kind": "quality",
+      "description": "Return deterministic or semantic quality findings for evaluation."
+    },
+    "workflow.handoff": {
+      "kind": "interaction",
+      "description": "Request a confirmed handoff to another Prism Engine for future turns."
+    }
+  }
+}

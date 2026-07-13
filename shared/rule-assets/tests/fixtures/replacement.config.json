@@ -1,0 +1,6 @@
+{
+  "schema": "rule-module-build/v1",
+  "id": "regex-replacement-fixture",
+  "source": "shared/rule-assets/tests/fixtures/replacement-source.yaml",
+  "required_capabilities": ["rule-replacement/v1"]
+}

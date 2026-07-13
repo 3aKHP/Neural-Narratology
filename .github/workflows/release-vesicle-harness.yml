@@ -1,0 +1,87 @@
+name: Release Vesicle Harness Pack
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag, for example harness-20260713-1"
+        required: true
+        type: string
+      title:
+        description: "Release title"
+        required: true
+        type: string
+      notes:
+        description: "Release notes"
+        required: false
+        type: string
+      prerelease:
+        description: "Mark this release as a prerelease"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Validate rule assets and Prism Driver
+        run: |
+          bun shared/rule-assets/scripts/check.ts
+          bun shared/prism-driver/scripts/check.ts
+          bun test shared/rule-assets/tests shared/prism-driver/tests
+
+      - name: Build Harness Pack
+        run: |
+          bun shared/rule-assets/scripts/build-harness.ts --out "$RUNNER_TEMP/prism-vesicle-harness"
+          test "$(jq -r .sourceState "$RUNNER_TEMP/prism-vesicle-harness/manifest.json")" = clean
+
+      - name: Package Harness Pack
+        run: |
+          cd "$RUNNER_TEMP/prism-vesicle-harness"
+          zip -q -r "$RUNNER_TEMP/prism-vesicle-harness-v10.zip" .
+          cd "$RUNNER_TEMP"
+          sha256sum prism-vesicle-harness-v10.zip > prism-vesicle-harness-v10.SHA256SUMS.txt
+
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          RELEASE_TITLE: ${{ inputs.title }}
+          RELEASE_NOTES: ${{ inputs.notes }}
+          RELEASE_PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          set -euo pipefail
+          notes_file="$RUNNER_TEMP/harness-release-notes.md"
+          if [[ -n "$RELEASE_NOTES" ]]; then
+            printf '%s\n' "$RELEASE_NOTES" > "$notes_file"
+          else
+            printf '%s\n' "Prism Vesicle Harness Pack generated from $GITHUB_SHA." > "$notes_file"
+          fi
+          assets=(
+            "$RUNNER_TEMP/prism-vesicle-harness-v10.zip"
+            "$RUNNER_TEMP/prism-vesicle-harness-v10.SHA256SUMS.txt"
+          )
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release edit "$RELEASE_TAG" --title "$RELEASE_TITLE" --notes-file "$notes_file"
+            gh release upload "$RELEASE_TAG" "${assets[@]}" --clobber
+          else
+            args=("$RELEASE_TAG" "${assets[@]}" --title "$RELEASE_TITLE" --notes-file "$notes_file" --target "$GITHUB_SHA")
+            if [[ "$RELEASE_PRERELEASE" == true ]]; then
+              args+=(--prerelease)
+            fi
+            gh release create "${args[@]}"
+          fi

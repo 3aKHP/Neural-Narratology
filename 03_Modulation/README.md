@@ -64,7 +64,14 @@ graph TB
 
 本项目包含多个针对不同协议版本和模型优化的实现：
 
-- **[`Prism-Engine-V9.x/`](./Prism-Engine-V9.x/)**: **V9.x 通用版本**（⭐ 最新推荐）
+- **[`Prism-Engine-V10.x/`](./Prism-Engine-V10.x/)**: **V10.x 工程源文件**（⭐ 最新，面向 Prism Vesicle）
+  - 基于 v10.0 Tempered-Voice 协议；Prism Vesicle 是 Phase III 唯一目标宿主
+  - 六引擎 canonical Prompt 通过 [`shared/prism-driver/`](../shared/prism-driver/) HAL 与 Vesicle 工具、Profile 和资产路径隔离
+  - `driver/contract.json` 声明工作流语义，`adapters/vesicle/adapter.json` 集中承载唯一宿主耦合点
+  - Harness 构建生成六个 Engine Profile、三个 Agent Profile、编译后 Prompt、Schema、模板和 Anti-AI-Flavor Rule Pack
+  - Weaver-Orch 采用 Scene Writer → Continuity Editor → Chapter Reviewer 的顺序闭环
+  - 长篇活状态移出 YAML；产出层 L-System 禁令、L4-B 当前默认协议与 L5 锁定由自动化测试保护
+- **[`Prism-Engine-V9.x/`](./Prism-Engine-V9.x/)**: **V9.x 通用版本**
   - 基于 v9.0 State-Space 协议
   - 包含完整的**六引擎**系统提示词（ETL/Runtime/Evaluate/Weaver/Weaver-Orch/Dyad）
   - 新增 **Persona Topology**（不变轴 / 可变轴 / 边界条件）与 **State Navigator**
@@ -74,13 +81,13 @@ graph TB
   - 提供 `Install.ps1` 一键安装脚本
   - 支持 **Mode A（模板内置 `.roo` 提示词）** 与 **Mode B（用户目录 Rules Pack）**
   - 内含 V9.0 Project Template、六引擎预设 YAML、Rules XML 与补丁文件
-- **[`Prism-Engine-Codex/`](./Prism-Engine-Codex/)**: **Codex 宿主适配目录**
+- **[`Prism-Engine-Codex/`](./Prism-Engine-Codex/)**: **Codex 宿主适配目录**（历史归档，冻结于 v9.0，V10 起不再维护——见上方 `Prism-Engine-V10.x`）
   - 面向 **Codex CLI** 的宿主层落地
   - 以局部 `AGENTS.md` 组织六引擎作用域
   - 协议层已对齐 **v9.0 State-Space**
   - 共享 `specs/`、`templates/`、`scripts/` 资产，含 Lite Persona Prompt 与 `schema_dlc.md`
   - 长篇正文采用 `Scene Shards` 协议写入 `novels/{project}/chapters/`
-- **[`Prism-Engine-Claude-Code/`](./Prism-Engine-Claude-Code/)**: **Claude Code 宿主适配目录**
+- **[`Prism-Engine-Claude-Code/`](./Prism-Engine-Claude-Code/)**: **Claude Code 宿主适配目录**（历史归档，冻结于 v9.0，V10 起不再维护）
   - 面向 **Claude Code CLI** 的宿主层落地
   - 以目录作用域 `CLAUDE.md` 组织六引擎行为边界
   - 自然语言触发 + 目录作用域双轨引擎切换
@@ -118,9 +125,10 @@ graph TB
 
 | 版本目录 | 协议代际侧重 | 已提供引擎 |
 |:---|:---|:---|
+| `Prism-Engine-V10.x` | v10.0 Tempered-Voice / Prism Driver HAL / 面向 Prism Vesicle | 六引擎 + 三个长篇 Agent + 完整 Harness Pack |
 | `Prism-Engine-V8.x` | v8.0 Compact-State | `etl` + `runtime` + `evaluate` + `weaver` + `weaver-orch` + `dyad` |
-| `Prism-Engine-Codex` | v9.0 State-Space / Codex 宿主适配 | 六引擎目录作用域（AGENTS.md + shared/prompts） |
-| `Prism-Engine-Claude-Code` | v9.0 State-Space / Claude Code 宿主适配 | 六引擎目录作用域（CLAUDE.md + shared/prompts + Agent 子代理） |
+| `Prism-Engine-Codex`（历史归档） | v9.0 State-Space / Codex 宿主适配 | 六引擎目录作用域（AGENTS.md + shared/prompts） |
+| `Prism-Engine-Claude-Code`（历史归档） | v9.0 State-Space / Claude Code 宿主适配 | 六引擎目录作用域（CLAUDE.md + shared/prompts + Agent 子代理） |
 | `Prism-Engine-V7.x` | v7.0 Neuro-Weave | `etl` + `runtime` + `evaluate` + `weaver` + `dyad` |
 | `Prism-Engine-V6.x/Prism-ETL-Claude` | v6.x Holographic / ETL 专项 | `etl` |
 | `Prism-Engine-V6.x/Prism-ETL-Deepseek` | v6.x Holographic / ETL 专项 | `etl` |
@@ -129,9 +137,10 @@ graph TB
 ### 协议代际路线图 (Roadmap)
 
 - **当前状态**：
+  - `Prism-Engine-V10.x` 为 v10.0 Tempered-Voice 工程源文件，面向 Prism Vesicle（Phase III 唯一开发目标平台）。
   - `Prism-Engine-V8.x` 为 v8.1 完整实现（六引擎），RooCode 宿主。
-  - `Prism-Engine-Codex` 为 v9.0 Codex CLI 宿主适配（六引擎目录作用域）。
-  - `Prism-Engine-Claude-Code` 为 v9.0 Claude Code CLI 宿主适配（六引擎目录作用域 + Agent 子代理委派）。
+  - `Prism-Engine-Codex`（历史归档，冻结于 v9.0）为 v9.0 Codex CLI 宿主适配（六引擎目录作用域）。
+  - `Prism-Engine-Claude-Code`（历史归档，冻结于 v9.0）为 v9.0 Claude Code CLI 宿主适配（六引擎目录作用域 + Agent 子代理委派）。
   - `Prism-Engine-V7.x` 为 v7.0 完整实现（五引擎）。
   - `Prism-Engine-V6.x/Prism-ETL-Claude` / `Prism-Engine-V6.x/Prism-ETL-Deepseek` / `Prism-Engine-V6.x/Prism-ETL-Gemini` 为 v6.x 语义的 ETL 专项分支。
 - **升级目标**：

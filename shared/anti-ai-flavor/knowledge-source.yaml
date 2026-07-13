@@ -1,0 +1,473 @@
+# ==============================================================================
+# 反 AI 味模块 · 知识源 (single source of truth)
+# schema: 见 SCHEMA-SPEC.md 与 ../rule-assets/SCHEMA-SPEC.md
+# 派生: Guidance、Detector、Judge rubric 与未来 Replacement 制品均由
+#       shared/rule-assets 编译器生成;zh-CN/prose-craft-guide.md 是受 CI 检查的
+#       tracked Guidance 投影,不得手工维护副本。
+# 条目来源: 多数自建(source: self),提炼自内部写作纪要(一部日常系轻小说的
+#           创作复盘笔记,人类经验总结,非任何外部数据集),含首批与后续补充批次;
+#           外参只采用已在 sources[] 与 THIRD_PARTY_NOTICES.md 明确登记的单条
+#           数据或方法,不做整库导入。
+# 示例已去实例化: 原始笔记中的具体人名/地名(如某主角名、某港口小镇)已替换为
+#           泛化指代,保留"带正反例"的教学力度。
+# ==============================================================================
+
+meta:
+  source_schema: rule-source/v1
+  schema_version: "0.2"
+  module: anti-ai-flavor
+  version: "0.2.0"
+  display_name: Anti-AI Flavor
+  primary_lang: zh-CN
+  default_targets:
+    - narrative-prose
+  preprocessing:
+    line_endings: LF
+    unicode_normalization: NFC
+    offset_basis: normalized-candidate
+    protected_regions:
+      - markdown-fenced-code
+      - markdown-blockquote
+      - html-comment
+      - prism-hud
+      - host-provided-ranges
+
+entries:
+  # ================== F0 字面层:原句套话 ==================
+
+  - id: zh-f0-air-thick-with
+    tier: F0
+    lang: zh-CN
+    face: both
+    title: 「空气中弥漫着」环境套话
+    matcher:
+      kind: literal
+      value: "空气中弥漫着"
+      unit: candidate
+    guidance: >
+      避免「空气中弥漫着 X」这类现成环境铺陈套话。改为让角色的某个身体部位
+      去承受这个环境(嗅觉、皮肤、呼吸),写感受而非写画面。
+    examples:
+      bad: 空气中弥漫着淡淡的血腥味。
+      good: 血腥味钻进鼻腔,她喉头一紧。
+    severity: tier1
+    source: self
+    notes: cn-antislop L0 层典型条目;此处自建,后续可与其词表比对。
+
+  - id: zh-f0-meaningless-filler
+    tier: F0
+    lang: zh-CN
+    face: both
+    title: 无意义装饰短句
+    matcher:
+      kind: regex
+      value: "^(就这样(?:[，,][^。！？!?]{0,12})?|于是[^。！？!?]{0,8}了)[。！!？?]?$"
+      unit: sentence
+      flags: u
+    guidance: >
+      不写没有实际信息承载的装饰性短句(「就这样。」「于是她来了。」)。
+      每一句话都要么推进情节,要么交代状态,要么完成一个动作——不要只为
+      制造"文学停顿感"而存在。
+    examples:
+      bad: 就这样,一天过去了。
+      good: 她把最后一页日历撕掉,窗外的天已经黑透。
+    severity: tier2
+    source: self
+
+  - id: en-f0-took-a-deep-breath
+    tier: F0
+    lang: en-US
+    face: B
+    title: "\"took a deep breath\" 高频套话"
+    matcher:
+      kind: literal
+      value: "took a deep breath"
+      unit: candidate
+    severity: tier2
+    source: antislop-sampler
+    notes: antislop slop_phrases 头部词条(原始数据集中出现 28671 次)。英文产出时启用;中文首批不含。
+
+  - id: zh-f0-essay-register-connectors
+    tier: F0
+    lang: zh-CN
+    face: both
+    title: 论说文语域连接词渗入叙事
+    matcher:
+      kind: regex
+      value: "(总而言之|不得不说|值得一提的是|与此同时[，,])"
+      unit: sentence
+      flags: u
+    guidance: >
+      「总而言之」「不得不说」「值得一提的是」这类论说文/说明文连接词,是
+      叙事散文里最扎眼的语域错位——它们暴露的是"总结陈词"的姿态,而不是
+      角色的活人视角。删掉连接词,直接切入下一个感受或动作。
+    examples:
+      bad: 值得一提的是,她其实很少这样笑。
+      good: 她很少这样笑。
+    severity: tier2
+    source: self
+    notes: 中文语域场景下与英文 the-antislop 收录的 moreover/it's worth noting 同类,跨语言通病。
+
+  # ================== F1 骨架层:句式套路 ==================
+
+  - id: zh-f1-not-x-but-y
+    tier: F1
+    lang: zh-CN
+    face: both
+    title: 「不是……而是……」对比句式
+    matcher:
+      kind: regex
+      value: "不是[^。！？!?]{1,30}而是"
+      unit: sentence
+      flags: u
+    guidance: >
+      避免用「不是 X 而是 Y」的对比模具承载信息。这是最标志性的 AI 文风之一,
+      僵硬刻板。改为直接铺陈:先给实况,再给与预期的落差,不套对比框架。
+    examples:
+      bad: 码头边没有渔网晾晒,不是渔村该有的样子,而是一排灰墙红瓦的仓库。
+      good: 这里比她想象的更冷清。码头边没有渔网晾晒,取而代之的是一排灰墙红瓦的仓库。
+    severity: tier1
+    source: self
+    notes: 与 antislop 英文正则 `(?i)not [^.!?]{3,60} but` 同源,跨语言通病。
+
+  - id: zh-f1-pov-leak
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 视角滑出角色本体,作者代读者划重点
+    guidance: >
+      写角色看到什么、摸到什么、想到什么,不写作者想让读者知道什么。读者
+      通过角色的眼睛看世界;一旦叙述内容超出角色当下感官与认知范围,就变成
+      作者在替角色说话、替读者划重点。每写一句先问:这是角色此刻能感知到
+      的,还是我作为作者想插播的信息?
+    examples:
+      bad: 她不知道,这栋楼三年前发生过一场大火,烧掉了半条街。
+      good: 墙皮上还留着一道焦黑的痕迹,她没多想,径直走了进去。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-obscure-simile
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 晦涩比喻
+    guidance: >
+      比喻要日常,要贴近角色会脱口而出的联想。不要写正常人不会这么想的
+      文学化比喻——那种比喻的存在感来自"作者在秀文笔",而不是角色的
+      真实感受。
+    examples:
+      bad: 她的脚步像是已经把这条路走过太多遍的人那样从容。
+      good: 她走得很熟,连拐弯都不带犹豫的。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-simile-explains-not-embodies
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 比喻停留在解释,而非身体化的物理过程
+    guidance: >
+      好的比喻是一个读者能在身体里想象到的物理过程,而不是对情绪贴标签式
+      的解释。写比喻时,问自己:这个比喻能不能让读者的身体也"跟着做"一遍
+      这个动作?
+    examples:
+      bad: 她像是刚听完什么好玩的事一样开心。
+      good: 思路眼看要凝聚成答案了,一转瞬却又散了——像是伸手去接一滴快要
+        落下的水,指尖碰到的瞬间它却先一步坠下去。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-scenery-not-sensation
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 写画面而非身体感受
+    guidance: >
+      每写一段景物,先问:角色此刻用身体的哪个部位在感受(皮肤/眼睛/耳朵/
+      手指)?写角色身体承受到的刺激,而非供读者观看的图像。风吹动的不是
+      画面里的头发,是她的皮肤。
+    examples:
+      bad: 阳光筛成一地碎金。
+      good: 阳光刺得双眼发酸。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-scenery-block-no-reaction
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 大段景物描写不跟人物反应
+    guidance: >
+      景物描写可以换成角色的感叹、心理活动,或者更好的是神态。整段的湖面
+      —塔尖—阳光式扫描镜头容易读成说明文。每一段景物之后,必须跟上一个
+      人物反应(自言自语/心理活动/神态),叙事密度靠人物当下的细微反应
+      推进,不是靠景色铺陈本身。
+    examples:
+      bad: 湖面泛着粼粼波光,远处的塔尖在阳光下泛着金色,风拂过湖岸的芦苇。
+      good: 「好安静啊。」她边走边看,湖面被风吹皱了一小片。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-written-dialogue
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 对话书面化,缺口语特征
+    guidance: >
+      对话不是朗读课文。写完念一遍,念不顺就改。用倒装(「好安静啊,这里。」)、
+      省略主语(「到了。」)、语气词(啊/吧/呢/嘛/哦/呗/啦)、半截话
+      (「……想看看。」)、口语连词(「跟」而非「和」、「回头」而非「之后」)
+      让台词像是从嘴里说出来的,而不是写出来的。
+    examples:
+      bad: 我认为这个地方非常安静,并且十分适合休息。
+      good: 好安静啊,这里。挺适合歇会儿的。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-dialogue-static-no-body
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 对话是纯信息交换,人物没有身体动作
+    guidance: >
+      对话不是信息交换。每一轮对话之间,人的身体也在动——挠头、凑近、
+      用手背挡嘴、莞尔一笑。读者不是在听录音,是在看一场有表情有动作的
+      戏。对话也要有小推拉,不能一问一答就结束。
+    examples:
+      bad: 「你叫什么名字?」「我叫小雨。」「几岁了?」「十七。」
+      good: 「你叫什么名字？」她歪着头看过来。「……小雨。」他挠了挠后颈,声音
+        比预想的小了一截。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-narrator-summarizes
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 叙述者替角色总结,而非让声音直出
+    guidance: >
+      凡写到心理活动,先问能否直接让角色的声音浮上来,而非由叙述者转述。
+      不加「她想」,直接让问句或念头出现。
+    examples:
+      bad: 她想过这个问题。在很久之前,她曾经反复问过自己为什么是自己。
+      good: 为什么是我呢?为什么偏偏是自己?
+    severity: tier2
+    source: self
+
+  - id: zh-f1-split-action-explanation
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 动作、情绪、背景拆成三句话分别交代
+    guidance: >
+      好的动作描写不只是一个动作——它同时承载了情绪、信息和角色状态。
+      先写动作、再解释情绪、再补背景,分三句话才完成一件事,是典型的
+      AI 分步式写法。找到这些"动作+解释"的配对,看能不能合成一句话。
+    examples:
+      bad: 她拿起了那封信。她心里很紧张。这封信对她来说意义重大。
+      good: 她指尖发颤地捏起那封信,像是捏着一件随时会碎的东西。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-info-dump-paragraph
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 独立成段的背景解释,而非从角色思绪里漏出来
+    guidance: >
+      不要单独起一段交代背景("档案袋"式塞设定)。判断标准:删掉这段话,
+      角色当下的表现会不会受影响?不会,说明这段话只是在塞设定。让信息
+      混在角色当下的思绪或半句话里自然流出,而不是写过去时态的解释段落。
+    examples:
+      bad: 以前住的地方条件不好,她从来没有过自己单独的房间,晚上睡觉总要
+        侧身给别人让出位置。
+      good: 她从来没住过这么安静的房间。用不着让出位置,用不着侧身躺。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-narrator-filler-before-quote
+    tier: F1
+    lang: zh-CN
+    face: both
+    title: 引号前的旁白式停顿("她顿了一下,然后说——")
+    matcher:
+      kind: regex
+      value: "(顿了一下|沉默了一会儿)[,，]?然后说"
+      unit: sentence
+      flags: u
+    guidance: >
+      凡是「她顿了一下,然后说——」「她沉默了一会儿,然后说」这类旁白,先问
+      能不能用一个标点解决。省略号自带停顿的呼吸感,不需要叙述者出面
+      说明"有一个停顿发生了"。
+    examples:
+      bad: 她顿了一下,然后说:「其实我没那么想去。」
+      good: 「……其实我没那么想去。」
+    severity: tier1
+    source: self
+
+  - id: zh-f1-metaphor-stacking
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 比喻堆砌,辞藻铺满舞台
+    guidance: >
+      好比喻是好道具,但道具堆满舞台,演员就没地方走了。同一段场景描写里
+      不要连续堆叠多个各自独立的比喻。写完自查:删掉所有比喻和修饰,这场戏
+      还能不能成立?不能成立,说明比喻在替角色抢戏、代替角色完成表演;能
+      成立,比喻才是锦上添花。辞藻密度要为场景分量分配——初见、高潮、
+      能力初显这类叙事重量时刻可以铺开写,日常过渡段落要克制,不是每段
+      描写都值得一个比喻。
+    examples:
+      bad: 她站在门口犹豫要不要迈进去——桌子太远了,上面的纸被风吹得轻轻飘。
+        那纸飘起来的样子像一只垂死的白鸟。她的手指在门把手上收紧,骨节像
+        未开封的白色棋子。阳光从她身后铺进来,在地毯上切开一道金色的伤口。
+      good: 她站在门口犹豫要不要迈进去。桌子太远了,上面的纸被风吹得轻轻飘。
+        她把手从门把上松开——手心是湿的。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-dialogue-format-flat
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 对话格式单一,不随场景调度
+    guidance: >
+      对话不止「某某说:'……'」一种形式。争吵或密集交锋可以连珠炮不报幕;
+      秘密可以压低声音或用口型无声传递;人还没出场声音先到;独处时可以
+      自言自语。格式本身就是场景节奏和角色性格的表达——写之前先问这场
+      戏需要哪种声音的调度,不要每一轮对话都套同一个"某某+说"的模具。
+    examples:
+      bad: 「你好。」艾莉娅说。「你好。」校长说。「我是来交推荐信的。」艾莉娅说。
+        「信呢。」校长说。
+      good: 「你好。」「你好。」「我是来交推荐信的。」「信呢。」——去掉"某某说"
+        之后,短句和完整句的落差本身就区分出了两个人的声线。
+    severity: tier2
+    source: self
+
+  # ================== F3 结构层:宏观/判断性信号 ==================
+
+  - id: zh-f3-fragment-no-subject
+    tier: F3
+    lang: zh-CN
+    face: A
+    title: 单独成段短句缺主语
+    guidance: >
+      短句留白可以,但主谓宾要完整。所有单独成段的短句,检查一遍有没有
+      主语。「走下台阶。」→「她走下台阶。」;「安静了一会儿。」→
+      「车厢里安静了一会儿。」
+    examples:
+      bad: 安静了一会儿。
+      good: 车厢里安静了一会儿。
+    severity: tier3
+    source: self
+    notes: 归 F3(结构层)因其是句法完整性信号,非词表;但以 A 层指导形态呈现更自然。
+
+  - id: zh-f3-emdash-density
+    tier: F3
+    lang: zh-CN
+    face: B
+    title: 破折号密度过高
+    matcher:
+      kind: metric
+      unit: paragraph
+      metric:
+        signal: em_dash_per_100_chars
+        operator: gte
+        threshold: 2.0
+    maturity: experimental
+    severity: tier3
+    source: cn-antislop
+    notes: >
+      cn-antislop 结构指标之一,不依赖词表。阈值为占位待校准。
+      face=B:作为 observe-only 检测信号,不宜写成给 LLM 的硬规则(易矫枉过正)。
+
+  - id: zh-f3-mechanical-plot-compliance
+    tier: F3
+    lang: zh-CN
+    face: A
+    title: 角色机械服从情节安排,缺乏自主反应判断
+    guidance: >
+      根据角色的性格去判断角色会做什么,而不是机械地安排情节。时刻自问:
+      这句话是角色真的会说的,还是我需要她说所以才让她说的?这个反应是
+      角色当下的自然反应,还是为了让读者理解而硬塞的解释?
+    examples:
+      bad: 尽管她一向谨慎,但为了推动剧情,她还是毫不犹豫地答应了陌生人的
+        邀请。
+      good: 她盯着那张邀请函看了很久,手指摩挲着信封边缘,还是没接。
+    severity: tier3
+    source: self
+
+  - id: zh-f3-passive-compliant-character
+    tier: F3
+    lang: zh-CN
+    face: A
+    title: 角色被动服从,没有自己的历史与抵抗
+    guidance: >
+      角色要有自己的想法和反应,不是任人摆布的木偶。被问到敏感问题时,
+      她不是"没想过"——通常是想过很多次,只是没对任何人说过。对话要
+      符合身份:该结巴就结巴,该沉默就沉默,该说"啊?"就说"啊?"。
+    examples:
+      bad: 「你为什么要来这里?」她愣了一下,随即坦然地说出了全部原因。
+      good: 「你为什么要来这里？」她张了张嘴,又闭上——这个问题她想过很多
+        次,只是从没对人说过。
+    severity: tier3
+    source: self
+
+  - id: zh-f3-padding-without-escalation
+    tier: F3
+    lang: zh-CN
+    face: A
+    title: 无效情节 / 过渡填充,节奏慢却空洞
+    guidance: >
+      为了逻辑合理而硬加的过渡桥段可以删,读者不需要看每一步。但节奏慢
+      不等于空洞——散步、闲聊、看风景都可以慢,前提是必须有内容:角色
+      感受、世界细节、伏笔。区分标准:这段话有没有推进角色状态或埋下
+      信息,还是只是在填充时长。
+    examples:
+      bad: 她走出门,走过一条街,又走过一条街,终于到了目的地。
+      good: 她数着路过的每一根电线杆——第七根的时候,终于看见了那扇熟悉的门。
+    severity: tier3
+    source: self
+
+sources:
+  - id: cn-antislop
+    name: "中文 AI 味(slop)指纹提取工具 / Chinese AI Slop Fingerprint Toolkit"
+    url: "https://github.com/Yi-111-a/cn-antislop"
+    license: MIT
+    lang: zh-CN
+    face: both
+    status: adopted
+    note: >
+      四层指纹模型(F0-F3)方法论与破折号密度信号已采纳。其 L0/L1 中文词表与
+      骨架表仍列为后续评估对象,未批量导入。
+
+  - id: antislop-sampler
+    name: "antislop-sampler (sam-paech)"
+    url: "https://github.com/sam-paech/antislop-sampler"
+    license: Apache-2.0
+    lang: en-US
+    face: B
+    status: adopted
+    note: >
+      已采用 took a deep breath 单条短语作为英文扩展与编译器多语言样例;其余
+      slop_phrases / slop_regexes 未导入。Apache-2.0 来源随 bundle manifest 保留。
+
+  - id: the-antislop
+    name: "The AntiSlop (Claude Skill)"
+    url: "https://github.com/aplaceforallmystuff/the-antislop"
+    license: MIT
+    lang: en-US
+    face: A
+    status: reference
+    note: >
+      借其 Tier1/2/3 severity 分级形式与 Horoscope Test 启发式("Could anyone
+      have written this, for anyone?");不搬英文词条。
+
+  - id: sillytavern-regex
+    name: "SillyTavern 正则替换预设(社区)"
+    url: "TBD — 待用户提供权威来源"
+    license: TBD
+    lang: zh-CN
+    face: B
+    status: evaluating
+    note: 社区分散,无单一权威源。待用户指定具体仓库后评估。
