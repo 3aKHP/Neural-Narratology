@@ -21,7 +21,7 @@
 
 ## 🧭 当前进度 (Current Focus)
 
-> 已发布下一代协议 **v10.0 Tempered-Voice**(针对新一代 LLM 的语言习惯重做协议语言层);工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。首个跨仓库共享模块 **[`shared/anti-ai-flavor/`](./shared/anti-ai-flavor/)**(反 AI 味文体规则)已随 v10.0 落地,由本仓库与 Prism Vesicle 共享。v9.x 及更早协议与对应的 Phase III 宿主实现作为历史演进档案保留。
+> 已发布下一代协议 **v10.0 Tempered-Voice**（针对新一代 LLM 的语言习惯重做协议语言层）；工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。**[`shared/prism-driver/`](./shared/prism-driver/)** 提供 Prism HAL，隔离六引擎协议与宿主工具实现；**[`shared/rule-assets/`](./shared/rule-assets/)** 编译 Vesicle Harness Pack，首个模块 **[`shared/anti-ai-flavor/`](./shared/anti-ai-flavor/)** 提供 Guidance、Detector 与 Judge rubric。v9.x 及更早协议与宿主实现作为历史演进档案保留。
 
 ---
 
@@ -142,7 +142,9 @@ Neural-Narratology/
 │
 ├── shared/                          # 跨姊妹项目共享资产(与 Prism Vesicle 共享)
 │   ├── README.md
-│   └── anti-ai-flavor/              # 反 AI 味知识源(前置指导层 + 后处理查杀层)
+│   ├── rule-assets/                 # 通用规则源校验、编译、测试与 Harness Pack
+│   ├── prism-driver/                # Prism HAL / Driver ABI / Adapter Schema
+│   └── anti-ai-flavor/              # 反 AI 味知识源(Guidance + Detector + Judge)
 │       ├── README.md
 │       ├── SCHEMA-SPEC.md
 │       ├── knowledge-source.yaml

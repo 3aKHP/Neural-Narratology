@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/prism-driver/schemas/driver-contract.schema.json",
+  "title": "Prism Driver Contract v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "id", "version", "protocolVersion", "resources", "agents", "engines"],
+  "properties": {
+    "schema": { "const": "prism-driver-contract/v1" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$" },
+    "protocolVersion": { "type": "string", "minLength": 1 },
+    "resources": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/resource" }
+    },
+    "agents": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/agent" }
+    },
+    "engines": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/engine" }
+    }
+  },
+  "$defs": {
+    "identifier": { "type": "string", "pattern": "^[a-z][a-z0-9.-]*$" },
+    "stringList": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "source"],
+      "properties": {
+        "kind": { "enum": ["engine-prompt", "agent-prompt", "schema", "template"] },
+        "source": { "type": "string", "minLength": 1 }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module", "mode", "candidate", "rewriteOwner", "promptProjection"],
+      "properties": {
+        "module": { "type": ["string", "null"] },
+        "mode": { "enum": ["off", "observe", "rewrite", "strict", "analyze"] },
+        "candidate": { "type": ["string", "null"] },
+        "rewriteOwner": { "type": ["string", "null"] },
+        "promptProjection": { "enum": ["none", "guidance", "judge"] }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "operation", "purpose", "onAccept", "onReject", "nextInput"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "operation": { "enum": ["interaction.confirm", "interaction.select"] },
+        "purpose": { "type": "string", "minLength": 1 },
+        "onAccept": { "type": "string", "minLength": 1 },
+        "onReject": { "type": "string", "minLength": 1 },
+        "nextInput": { "enum": ["gate-resolution", "authored-user-message", "selected-option"] },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "label", "description"],
+            "properties": {
+              "id": { "$ref": "#/$defs/identifier" },
+              "label": { "type": "string", "minLength": 1 },
+              "description": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "delegation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "agent", "mode", "purpose", "retryLimit"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "agent": { "$ref": "#/$defs/identifier" },
+        "mode": { "enum": ["foreground", "background"] },
+        "purpose": { "type": "string", "minLength": 1 },
+        "retryLimit": { "type": "integer", "minimum": 0, "maximum": 3 }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["displayName", "description", "prompt", "operations", "resources", "contextMode", "modelPolicy", "defaultMode", "maxTurns", "quality"],
+      "properties": {
+        "displayName": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "prompt": { "$ref": "#/$defs/identifier" },
+        "operations": { "$ref": "#/$defs/stringList" },
+        "resources": { "$ref": "#/$defs/stringList" },
+        "contextMode": { "enum": ["fresh", "summary", "fork"] },
+        "modelPolicy": { "const": "inherit" },
+        "defaultMode": { "enum": ["foreground", "background"] },
+        "maxTurns": { "type": "integer", "minimum": 1 },
+        "quality": { "$ref": "#/$defs/quality" }
+      }
+    },
+    "engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["displayName", "prompt", "operations", "resources", "interactions", "delegations", "validators", "stateRoots", "quality"],
+      "properties": {
+        "displayName": { "type": "string", "minLength": 1 },
+        "prompt": { "$ref": "#/$defs/identifier" },
+        "operations": { "$ref": "#/$defs/stringList" },
+        "resources": { "$ref": "#/$defs/stringList" },
+        "interactions": { "type": "array", "items": { "$ref": "#/$defs/interaction" } },
+        "delegations": { "type": "array", "items": { "$ref": "#/$defs/delegation" } },
+        "validators": { "$ref": "#/$defs/stringList" },
+        "stateRoots": { "$ref": "#/$defs/stringList" },
+        "quality": { "$ref": "#/$defs/quality" }
+      }
+    }
+  }
+}

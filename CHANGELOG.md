@@ -13,6 +13,30 @@
 
 ---
 
+## 2026-07-13 — Prism Driver HAL、V10 Harness 与 Anti-AI-Flavor Rule Pack 0.2.0
+
+### Added — `[Repo]`
+- 新增 **`shared/prism-driver/` Prism Host Abstraction Layer**：提供 Driver ABI、capability registry、Driver Contract/Host Adapter JSON Schema、生命周期与错误模型、校验器和契约测试。V10 canonical Prompt 通过逻辑资源、抽象 checkpoint 和 delegation 与具体宿主工具隔离。
+- 新增 **`shared/rule-assets/`** 通用规则资产编译框架：支持 `guidance`、`detector`、`judge`、`replacement` 四类投影，提供 Bun 校验/编译器、确定性 Detector、模块注册表、正则替换扩展 fixture 与契约测试。
+- 新增 **Prism Vesicle Harness Pack builder**：验证 V10 Driver Contract 与 Vesicle Adapter，解析逻辑资源，生成六个 Engine Profile、三个 Agent Profile 和宿主 Binding Prompt；根 manifest 记录 Driver/Adapter identity/hash、capability、profile/prompt/quality bindings、source identity 与逐文件 SHA-256。
+- 新增 Anti-AI-Flavor Detector 黄金语料，覆盖全角标点、跨句误报、Markdown/HTML/HUD 保护区、英文扩展与 experimental F3 metric；新增 Semantic Judge 人工标注语料，固定预期 verdict、rule ID 与判断理由。
+- CI 新增 Rule Assets and Vesicle Harness job，执行派生防漂移、Bun 测试和两次 Harness 构建字节一致性验证，并上传 Harness artifact；新增手动 Harness Release 工作流，发布 ZIP 与 SHA-256。
+
+### Changed — `[Repo]`
+- Anti-AI-Flavor 升级至 **0.2.0**：知识源采用显式 matcher unit/kind、预处理契约和 maturity；当前共 23 条规则、21 条 Guidance/Judge 投影、7 条 Detector 投影。
+- `zh-CN/prose-craft-guide.md` 改为可复现生成的 tracked Guidance，每条规则携带稳定 rule ID；Judge rubric、Detector JSON 与 manifest 从同一知识源派生。
+- 外部来源登记收紧：明确已采用的 cn-antislop 方法/指标与 antislop-sampler 单条英文样例，其余数据仍保持未批量导入状态。
+
+### Changed — `[Modulation]`
+- V10 六引擎 Prompt 迁移到 Prism Driver URI；Vesicle 工具名、gate、Profile 与 `assets/...` 路径只存在于 Adapter 和编译产物。
+- Weaver-Orch 补齐 Scene Writer → Continuity Editor → Chapter Reviewer 顺序闭环，章节初始化与编译改用 HAL artifact 能力，移除不存在的脚本依赖。
+- Runtime turn checkpoint 接受后结束当前调用，下一轮等待新的 authored user message，移除用户占位符循环。
+- Outline 与 Story Bible 的模式、章节进度、时间线等活状态移入 Markdown body；扩展素材采用中性标题，产出示例不再泄漏 L-System 标签。
+- V10 恢复当前有效的 L4-B 重量崇拜默认协议，同时保留角色拓扑或用户指令覆盖、L3-A 可选和 L5 默认锁定。
+- Runtime、Dyad、Weaver、Weaver-Orch、Scene Writer、Evaluate 与 Chapter Reviewer 通过 Driver quality policy 组合共享 Guidance 或 Judge rubric；原生成组件继续拥有重写责任。
+
+---
+
 ## 2026-07-12 — Prism Engine v10.0（Prism-Engine-V10.x，唯一目标平台 Prism Vesicle）
 
 > 对应 Prism Engine v10.0

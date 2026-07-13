@@ -1,19 +1,36 @@
 # ==============================================================================
 # 反 AI 味模块 · 知识源 (single source of truth)
-# schema: 见 ../SCHEMA-SPEC.md
-# 派生: zh-CN/prose-craft-guide.md 是本文件 face ∈ {A, both} 条目的手工派生产物,
-#       两者应保持同步(见 SCHEMA-SPEC.md §6 关于暂不上自动化派生脚本的说明)。
-# 条目来源: 多数自建(source: self),首批提炼自内部写作纪要(一部日常系轻小说的
-#           创作复盘笔记,人类经验总结,非任何外部数据集);外参数据本轮不导入,
-#           仅在 sources[] 登记评估状态。
+# schema: 见 SCHEMA-SPEC.md 与 ../rule-assets/SCHEMA-SPEC.md
+# 派生: Guidance、Detector、Judge rubric 与未来 Replacement 制品均由
+#       shared/rule-assets 编译器生成;zh-CN/prose-craft-guide.md 是受 CI 检查的
+#       tracked Guidance 投影,不得手工维护副本。
+# 条目来源: 多数自建(source: self),提炼自内部写作纪要(一部日常系轻小说的
+#           创作复盘笔记,人类经验总结,非任何外部数据集),含首批与后续补充批次;
+#           外参只采用已在 sources[] 与 THIRD_PARTY_NOTICES.md 明确登记的单条
+#           数据或方法,不做整库导入。
 # 示例已去实例化: 原始笔记中的具体人名/地名(如某主角名、某港口小镇)已替换为
 #           泛化指代,保留"带正反例"的教学力度。
 # ==============================================================================
 
 meta:
-  schema_version: "0.1"
+  source_schema: rule-source/v1
+  schema_version: "0.2"
   module: anti-ai-flavor
+  version: "0.2.0"
+  display_name: Anti-AI Flavor
   primary_lang: zh-CN
+  default_targets:
+    - narrative-prose
+  preprocessing:
+    line_endings: LF
+    unicode_normalization: NFC
+    offset_basis: normalized-candidate
+    protected_regions:
+      - markdown-fenced-code
+      - markdown-blockquote
+      - html-comment
+      - prism-hud
+      - host-provided-ranges
 
 entries:
   # ================== F0 字面层:原句套话 ==================
@@ -23,7 +40,10 @@ entries:
     lang: zh-CN
     face: both
     title: 「空气中弥漫着」环境套话
-    pattern: "空气中弥漫着"
+    matcher:
+      kind: literal
+      value: "空气中弥漫着"
+      unit: candidate
     guidance: >
       避免「空气中弥漫着 X」这类现成环境铺陈套话。改为让角色的某个身体部位
       去承受这个环境(嗅觉、皮肤、呼吸),写感受而非写画面。
@@ -39,7 +59,11 @@ entries:
     lang: zh-CN
     face: both
     title: 无意义装饰短句
-    pattern: "^(就这样。|于是[^。！？]{0,6}了。)$"
+    matcher:
+      kind: regex
+      value: "^(就这样(?:[，,][^。！？!?]{0,12})?|于是[^。！？!?]{0,8}了)[。！!？?]?$"
+      unit: sentence
+      flags: u
     guidance: >
       不写没有实际信息承载的装饰性短句(「就这样。」「于是她来了。」)。
       每一句话都要么推进情节,要么交代状态,要么完成一个动作——不要只为
@@ -55,7 +79,10 @@ entries:
     lang: en-US
     face: B
     title: "\"took a deep breath\" 高频套话"
-    pattern: "took a deep breath"
+    matcher:
+      kind: literal
+      value: "took a deep breath"
+      unit: candidate
     severity: tier2
     source: antislop-sampler
     notes: antislop slop_phrases 头部词条(原始数据集中出现 28671 次)。英文产出时启用;中文首批不含。
@@ -65,7 +92,11 @@ entries:
     lang: zh-CN
     face: both
     title: 论说文语域连接词渗入叙事
-    pattern: "(总而言之|不得不说|值得一提的是|与此同时,)"
+    matcher:
+      kind: regex
+      value: "(总而言之|不得不说|值得一提的是|与此同时[，,])"
+      unit: sentence
+      flags: u
     guidance: >
       「总而言之」「不得不说」「值得一提的是」这类论说文/说明文连接词,是
       叙事散文里最扎眼的语域错位——它们暴露的是"总结陈词"的姿态,而不是
@@ -84,7 +115,11 @@ entries:
     lang: zh-CN
     face: both
     title: 「不是……而是……」对比句式
-    pattern: "不是[^。!?]{1,30}而是"
+    matcher:
+      kind: regex
+      value: "不是[^。！？!?]{1,30}而是"
+      unit: sentence
+      flags: u
     guidance: >
       避免用「不是 X 而是 Y」的对比模具承载信息。这是最标志性的 AI 文风之一,
       僵硬刻板。改为直接铺陈:先给实况,再给与预期的落差,不套对比框架。
@@ -255,7 +290,11 @@ entries:
     lang: zh-CN
     face: both
     title: 引号前的旁白式停顿("她顿了一下,然后说——")
-    pattern: "(顿了一下|沉默了一会儿)[,，]?然后说"
+    matcher:
+      kind: regex
+      value: "(顿了一下|沉默了一会儿)[,，]?然后说"
+      unit: sentence
+      flags: u
     guidance: >
       凡是「她顿了一下,然后说——」「她沉默了一会儿,然后说」这类旁白,先问
       能不能用一个标点解决。省略号自带停顿的呼吸感,不需要叙述者出面
@@ -264,6 +303,45 @@ entries:
       bad: 她顿了一下,然后说:「其实我没那么想去。」
       good: 「……其实我没那么想去。」
     severity: tier1
+    source: self
+
+  - id: zh-f1-metaphor-stacking
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 比喻堆砌,辞藻铺满舞台
+    guidance: >
+      好比喻是好道具,但道具堆满舞台,演员就没地方走了。同一段场景描写里
+      不要连续堆叠多个各自独立的比喻。写完自查:删掉所有比喻和修饰,这场戏
+      还能不能成立?不能成立,说明比喻在替角色抢戏、代替角色完成表演;能
+      成立,比喻才是锦上添花。辞藻密度要为场景分量分配——初见、高潮、
+      能力初显这类叙事重量时刻可以铺开写,日常过渡段落要克制,不是每段
+      描写都值得一个比喻。
+    examples:
+      bad: 她站在门口犹豫要不要迈进去——桌子太远了,上面的纸被风吹得轻轻飘。
+        那纸飘起来的样子像一只垂死的白鸟。她的手指在门把手上收紧,骨节像
+        未开封的白色棋子。阳光从她身后铺进来,在地毯上切开一道金色的伤口。
+      good: 她站在门口犹豫要不要迈进去。桌子太远了,上面的纸被风吹得轻轻飘。
+        她把手从门把上松开——手心是湿的。
+    severity: tier2
+    source: self
+
+  - id: zh-f1-dialogue-format-flat
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 对话格式单一,不随场景调度
+    guidance: >
+      对话不止「某某说:'……'」一种形式。争吵或密集交锋可以连珠炮不报幕;
+      秘密可以压低声音或用口型无声传递;人还没出场声音先到;独处时可以
+      自言自语。格式本身就是场景节奏和角色性格的表达——写之前先问这场
+      戏需要哪种声音的调度,不要每一轮对话都套同一个"某某+说"的模具。
+    examples:
+      bad: 「你好。」艾莉娅说。「你好。」校长说。「我是来交推荐信的。」艾莉娅说。
+        「信呢。」校长说。
+      good: 「你好。」「你好。」「我是来交推荐信的。」「信呢。」——去掉"某某说"
+        之后,短句和完整句的落差本身就区分出了两个人的声线。
+    severity: tier2
     source: self
 
   # ================== F3 结构层:宏观/判断性信号 ==================
@@ -289,15 +367,19 @@ entries:
     lang: zh-CN
     face: B
     title: 破折号密度过高
-    metric:
-      signal: em_dash_per_100_chars
-      threshold: 2.0
-      window: paragraph
+    matcher:
+      kind: metric
+      unit: paragraph
+      metric:
+        signal: em_dash_per_100_chars
+        operator: gte
+        threshold: 2.0
+    maturity: experimental
     severity: tier3
     source: cn-antislop
     notes: >
       cn-antislop 结构指标之一,不依赖词表。阈值为占位待校准。
-      face=B:作为检测信号,不宜写成给 LLM 的硬规则(易矫枉过正)。
+      face=B:作为 observe-only 检测信号,不宜写成给 LLM 的硬规则(易矫枉过正)。
 
   - id: zh-f3-mechanical-plot-compliance
     tier: F3
@@ -354,10 +436,10 @@ sources:
     license: MIT
     lang: zh-CN
     face: both
-    status: evaluating
+    status: adopted
     note: >
-      四层指纹模型(F0-F3)方法论已采纳为本模块骨架。其 L0/L1 中文词表与骨架表
-      列为后续评估纳入对象。极可能被 Vesicle 代码层"AI 味查杀"复用。
+      四层指纹模型(F0-F3)方法论与破折号密度信号已采纳。其 L0/L1 中文词表与
+      骨架表仍列为后续评估对象,未批量导入。
 
   - id: antislop-sampler
     name: "antislop-sampler (sam-paech)"
@@ -365,10 +447,10 @@ sources:
     license: Apache-2.0
     lang: en-US
     face: B
-    status: reference
+    status: adopted
     note: >
-      英文 slop_phrases / slop_regexes 数据资产。归"英文产出时启用",中文首批不含。
-      Apache-2.0:引入其数据须保留 NOTICE/出处。
+      已采用 took a deep breath 单条短语作为英文扩展与编译器多语言样例;其余
+      slop_phrases / slop_regexes 未导入。Apache-2.0 来源随 bundle manifest 保留。
 
   - id: the-antislop
     name: "The AntiSlop (Claude Skill)"

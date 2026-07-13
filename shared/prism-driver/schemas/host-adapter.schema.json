@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/prism-driver/schemas/host-adapter.schema.json",
+  "title": "Prism Host Adapter v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "id", "version", "targetHost", "capabilities", "operationBindings", "resourceBindings", "interactionBindings", "engineBindings", "agentBindings"],
+  "properties": {
+    "schema": { "const": "prism-host-adapter/v1" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$" },
+    "targetHost": { "type": "string", "minLength": 1 },
+    "capabilities": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "operationBindings": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind"],
+        "properties": {
+          "kind": { "enum": ["tool-group", "interaction-tool", "runtime-capability", "optional-tool"] },
+          "tools": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+          "tool": { "type": "string", "minLength": 1 },
+          "capability": { "type": "string", "minLength": 1 },
+          "profileVisible": { "type": "boolean" }
+        }
+      }
+    },
+    "resourceBindings": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "pattern": "^assets/" }
+    },
+    "interactionBindings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "checkpoint": { "type": "string", "minLength": 1 },
+          "header": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "engineBindings": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/profileBinding" }
+    },
+    "agentBindings": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/profileBinding" }
+    }
+  },
+  "$defs": {
+    "profileBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profileId", "basePrompts"],
+      "properties": {
+        "profileId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "basePrompts": { "type": "array", "items": { "type": "string", "pattern": "^assets/" }, "uniqueItems": true },
+        "hostContracts": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    }
+  }
+}

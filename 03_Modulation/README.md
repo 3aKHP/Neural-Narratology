@@ -65,11 +65,12 @@ graph TB
 本项目包含多个针对不同协议版本和模型优化的实现：
 
 - **[`Prism-Engine-V10.x/`](./Prism-Engine-V10.x/)**: **V10.x 工程源文件**（⭐ 最新，面向 Prism Vesicle）
-  - 基于 v10.0 Tempered-Voice 协议
-  - **自 V10 起，[Prism Vesicle](https://github.com/3aKHP/prism-vesicle) 是 Phase III 唯一开发目标平台**；不含任何宿主品牌信息，不含目录作用域/AGENTS.md 式机制
-  - 内容层：六引擎行为手册（`prompts/`）+ schema（`specs/`）+ 模板（`templates/`）；不含 profile 配置与工具调用绑定（留待实际移植进 Vesicle 时编写）
-  - 接入 [`shared/anti-ai-flavor/`](../shared/anti-ai-flavor/) 共享模块：产出散文的四个引擎内嵌反 AI 味精简摘要
-  - 修复 `schema_scenario.md` 中 `L4-B` 强度层级的硬编码默认值遗留 bug
+  - 基于 v10.0 Tempered-Voice 协议；Prism Vesicle 是 Phase III 唯一目标宿主
+  - 六引擎 canonical Prompt 通过 [`shared/prism-driver/`](../shared/prism-driver/) HAL 与 Vesicle 工具、Profile 和资产路径隔离
+  - `driver/contract.json` 声明工作流语义，`adapters/vesicle/adapter.json` 集中承载唯一宿主耦合点
+  - Harness 构建生成六个 Engine Profile、三个 Agent Profile、编译后 Prompt、Schema、模板和 Anti-AI-Flavor Rule Pack
+  - Weaver-Orch 采用 Scene Writer → Continuity Editor → Chapter Reviewer 的顺序闭环
+  - 长篇活状态移出 YAML；产出层 L-System 禁令、L4-B 当前默认协议与 L5 锁定由自动化测试保护
 - **[`Prism-Engine-V9.x/`](./Prism-Engine-V9.x/)**: **V9.x 通用版本**
   - 基于 v9.0 State-Space 协议
   - 包含完整的**六引擎**系统提示词（ETL/Runtime/Evaluate/Weaver/Weaver-Orch/Dyad）
@@ -124,7 +125,7 @@ graph TB
 
 | 版本目录 | 协议代际侧重 | 已提供引擎 |
 |:---|:---|:---|
-| `Prism-Engine-V10.x` | v10.0 Tempered-Voice / 面向 Prism Vesicle | 六引擎内容层（`prompts/` + `specs/` + `templates/`，不含宿主粘合层） |
+| `Prism-Engine-V10.x` | v10.0 Tempered-Voice / Prism Driver HAL / 面向 Prism Vesicle | 六引擎 + 三个长篇 Agent + 完整 Harness Pack |
 | `Prism-Engine-V8.x` | v8.0 Compact-State | `etl` + `runtime` + `evaluate` + `weaver` + `weaver-orch` + `dyad` |
 | `Prism-Engine-Codex`（历史归档） | v9.0 State-Space / Codex 宿主适配 | 六引擎目录作用域（AGENTS.md + shared/prompts） |
 | `Prism-Engine-Claude-Code`（历史归档） | v9.0 State-Space / Claude Code 宿主适配 | 六引擎目录作用域（CLAUDE.md + shared/prompts + Agent 子代理） |

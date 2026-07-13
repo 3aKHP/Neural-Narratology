@@ -1,0 +1,50 @@
+{
+  "schema": "rule-module-build/v1",
+  "id": "anti-ai-flavor",
+  "source": "shared/anti-ai-flavor/knowledge-source.yaml",
+  "tracked_guidance": "shared/anti-ai-flavor/zh-CN/prose-craft-guide.md",
+  "projection_map": {
+    "A": ["guidance", "judge"],
+    "B": ["detector"],
+    "both": ["guidance", "detector", "judge"]
+  },
+  "required_capabilities": [
+    "quality-guard/anti-ai-flavor@1"
+  ],
+  "guidance": {
+    "language": "zh-CN",
+    "preamble": "shared/anti-ai-flavor/templates/guidance-preamble.zh-CN.md",
+    "postamble": "shared/anti-ai-flavor/templates/guidance-postamble.zh-CN.md",
+    "severity_labels": {
+      "tier1": "几乎必是 AI",
+      "tier2": "高度可疑",
+      "tier3": "语境相关"
+    },
+    "sections": [
+      {
+        "tier": "F0",
+        "title": "一、字面套话（F0）——一眼认出的现成短语",
+        "intro": "这类短语本身就是标志。看到自己写出以下模具，直接换一种说法。"
+      },
+      {
+        "tier": "F1",
+        "title": "二、句式骨架（F1）——实词一换就能认出的套路",
+        "intro": "这一层关注可替换实词的句式模具。换掉里面的词，模具仍然可辨认。"
+      },
+      {
+        "tier": "F3",
+        "title": "三、结构与判断信号（F3）——不靠词表，靠句法与人物判断",
+        "intro": "这一层关注整体的结构完整性与角色行为逻辑。"
+      }
+    ]
+  },
+  "judge": {
+    "language": "zh-CN",
+    "preamble": "shared/anti-ai-flavor/templates/judge-preamble.zh-CN.md"
+  },
+  "corpora": {
+    "detector": "shared/anti-ai-flavor/corpus/detector.zh-CN.jsonl",
+    "judge": "shared/anti-ai-flavor/corpus/judge.zh-CN.jsonl"
+  },
+  "notices": "shared/anti-ai-flavor/THIRD_PARTY_NOTICES.md"
+}

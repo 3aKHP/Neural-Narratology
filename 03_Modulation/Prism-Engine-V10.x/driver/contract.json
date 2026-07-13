@@ -1,0 +1,291 @@
+{
+  "schema": "prism-driver-contract/v1",
+  "id": "prism-engine-v10",
+  "version": "10.0.0",
+  "protocolVersion": "v10.0-tempered-voice",
+  "resources": {
+    "prompt.engine.etl": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/etl.md" },
+    "prompt.engine.runtime": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/runtime.md" },
+    "prompt.engine.evaluate": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/evaluate.md" },
+    "prompt.engine.weaver": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/weaver.md" },
+    "prompt.engine.weaver-orch": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/weaver-orch.md" },
+    "prompt.engine.dyad": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/dyad.md" },
+    "prompt.agent.scene-writer": { "kind": "agent-prompt", "source": "03_Modulation/Prism-Engine-V10.x/agents/scene-writer.md" },
+    "prompt.agent.continuity-editor": { "kind": "agent-prompt", "source": "03_Modulation/Prism-Engine-V10.x/agents/continuity-editor.md" },
+    "prompt.agent.chapter-reviewer": { "kind": "agent-prompt", "source": "03_Modulation/Prism-Engine-V10.x/agents/chapter-reviewer.md" },
+    "schema.character": { "kind": "schema", "source": "03_Modulation/Prism-Engine-V10.x/specs/schema_character.md" },
+    "schema.scenario": { "kind": "schema", "source": "03_Modulation/Prism-Engine-V10.x/specs/schema_scenario.md" },
+    "schema.dlc": { "kind": "schema", "source": "03_Modulation/Prism-Engine-V10.x/specs/schema_dlc.md" },
+    "schema.persona.immersive": { "kind": "schema", "source": "03_Modulation/Prism-Engine-V10.x/specs/schema_persona_prompt_immersive.md" },
+    "schema.persona.compatible": { "kind": "schema", "source": "03_Modulation/Prism-Engine-V10.x/specs/schema_persona_prompt_compatible.md" },
+    "schema.outline": { "kind": "schema", "source": "03_Modulation/Prism-Engine-V10.x/specs/schema_outline.md" },
+    "schema.story-bible": { "kind": "schema", "source": "03_Modulation/Prism-Engine-V10.x/specs/schema_story_bible.md" },
+    "template.module-a": { "kind": "template", "source": "03_Modulation/Prism-Engine-V10.x/templates/tpl_module_a.md" },
+    "template.module-b": { "kind": "template", "source": "03_Modulation/Prism-Engine-V10.x/templates/tpl_module_b.md" },
+    "template.persona.immersive": { "kind": "template", "source": "03_Modulation/Prism-Engine-V10.x/templates/tpl_persona_prompt_immersive.md" },
+    "template.persona.compatible": { "kind": "template", "source": "03_Modulation/Prism-Engine-V10.x/templates/tpl_persona_prompt_compatible.md" },
+    "template.outline": { "kind": "template", "source": "03_Modulation/Prism-Engine-V10.x/templates/tpl_outline.md" },
+    "template.story-bible": { "kind": "template", "source": "03_Modulation/Prism-Engine-V10.x/templates/tpl_story_bible.md" }
+  },
+  "agents": {
+    "scene-writer": {
+      "displayName": "Prism Scene Writer",
+      "description": "Write one bounded scene shard from an orchestrator-supplied task packet without changing outline or story state.",
+      "prompt": "prompt.agent.scene-writer",
+      "operations": ["artifact.inspect", "artifact.compose", "quality.guard"],
+      "resources": ["schema.character", "schema.scenario", "schema.outline", "schema.story-bible"],
+      "contextMode": "fresh",
+      "modelPolicy": "inherit",
+      "defaultMode": "foreground",
+      "maxTurns": 20,
+      "quality": {
+        "module": "anti-ai-flavor",
+        "mode": "observe",
+        "candidate": "scene.prose",
+        "rewriteOwner": "scene-writer",
+        "promptProjection": "guidance"
+      }
+    },
+    "continuity-editor": {
+      "displayName": "Prism Continuity Editor",
+      "description": "Snapshot and synchronize one completed chapter into the Story Bible without writing prose or deciding the audit verdict.",
+      "prompt": "prompt.agent.continuity-editor",
+      "operations": ["artifact.inspect", "artifact.compose", "artifact.snapshot"],
+      "resources": ["schema.story-bible"],
+      "contextMode": "fresh",
+      "modelPolicy": "inherit",
+      "defaultMode": "foreground",
+      "maxTurns": 16,
+      "quality": {
+        "module": null,
+        "mode": "off",
+        "candidate": null,
+        "rewriteOwner": null,
+        "promptProjection": "none"
+      }
+    },
+    "chapter-reviewer": {
+      "displayName": "Prism Chapter Reviewer",
+      "description": "Independently audit one compiled chapter against its cards, outline, Story Bible, and prose-quality rubric.",
+      "prompt": "prompt.agent.chapter-reviewer",
+      "operations": ["artifact.inspect", "artifact.compose", "quality.analyze"],
+      "resources": ["schema.character", "schema.scenario", "schema.outline", "schema.story-bible"],
+      "contextMode": "fresh",
+      "modelPolicy": "inherit",
+      "defaultMode": "foreground",
+      "maxTurns": 20,
+      "quality": {
+        "module": "anti-ai-flavor",
+        "mode": "analyze",
+        "candidate": "chapter.prose",
+        "rewriteOwner": null,
+        "promptProjection": "judge"
+      }
+    }
+  },
+  "engines": {
+    "etl": {
+      "displayName": "Prism ETL Engine",
+      "prompt": "prompt.engine.etl",
+      "operations": ["artifact.inspect", "artifact.compose", "artifact.snapshot", "research.external", "interaction.confirm", "interaction.select"],
+      "resources": ["schema.character", "schema.scenario", "schema.dlc", "schema.persona.immersive", "schema.persona.compatible", "template.module-a", "template.module-b", "template.persona.immersive", "template.persona.compatible"],
+      "interactions": [
+        {
+          "id": "etl.blueprint",
+          "operation": "interaction.confirm",
+          "purpose": "Approve a workflow blueprint before any phase artifact is written.",
+          "onAccept": "advance to the first artifact-writing phase",
+          "onReject": "revise or discuss the current blueprint without writing the next phase",
+          "nextInput": "gate-resolution"
+        },
+        {
+          "id": "etl.phase",
+          "operation": "interaction.confirm",
+          "purpose": "Approve the just-written phase artifact before the following phase begins.",
+          "onAccept": "advance exactly one declared phase",
+          "onReject": "revise the current phase artifact without advancing",
+          "nextInput": "gate-resolution"
+        },
+        {
+          "id": "etl.scenario-hook",
+          "operation": "interaction.select",
+          "purpose": "Select one of three topology-derived scenario hooks.",
+          "onAccept": "build the scenario card from the selected hook",
+          "onReject": "regenerate the hook set from user feedback",
+          "nextInput": "selected-option",
+          "options": [
+            { "id": "hook-1", "label": "Hook 1", "description": "Use the first generated conflict and beat direction." },
+            { "id": "hook-2", "label": "Hook 2", "description": "Use the second generated conflict and beat direction." },
+            { "id": "hook-3", "label": "Hook 3", "description": "Use the third generated conflict and beat direction." }
+          ]
+        }
+      ],
+      "delegations": [],
+      "validators": ["character-card", "scenario-card"],
+      "stateRoots": ["source_materials", "workspace"],
+      "quality": { "module": "anti-ai-flavor", "mode": "off", "candidate": null, "rewriteOwner": null, "promptProjection": "none" }
+    },
+    "runtime": {
+      "displayName": "Prism Runtime Engine",
+      "prompt": "prompt.engine.runtime",
+      "operations": ["artifact.inspect", "artifact.compose", "interaction.confirm", "quality.guard"],
+      "resources": ["schema.character", "schema.scenario"],
+      "interactions": [
+        {
+          "id": "runtime.turn",
+          "operation": "interaction.confirm",
+          "purpose": "Accept or revise the current character packet before closing the invocation.",
+          "onAccept": "close the current invocation without generating another character packet",
+          "onReject": "revise or discuss the current packet without advancing state",
+          "nextInput": "authored-user-message"
+        }
+      ],
+      "delegations": [],
+      "validators": ["runtime-packet"],
+      "stateRoots": ["workspace", "test_runs"],
+      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "runtime.prose", "rewriteOwner": "runtime", "promptProjection": "guidance" }
+    },
+    "evaluate": {
+      "displayName": "Prism Evaluate Engine",
+      "prompt": "prompt.engine.evaluate",
+      "operations": ["artifact.inspect", "artifact.compose", "research.external", "quality.analyze"],
+      "resources": ["schema.character", "schema.scenario", "schema.dlc", "schema.outline", "schema.story-bible"],
+      "interactions": [],
+      "delegations": [],
+      "validators": ["evaluate-report"],
+      "stateRoots": ["source_materials", "workspace", "test_runs", "novels", "reports"],
+      "quality": { "module": "anti-ai-flavor", "mode": "analyze", "candidate": "audit.target-prose", "rewriteOwner": null, "promptProjection": "judge" }
+    },
+    "weaver": {
+      "displayName": "Prism Weaver Engine",
+      "prompt": "prompt.engine.weaver",
+      "operations": ["artifact.inspect", "artifact.compose", "interaction.select", "quality.guard"],
+      "resources": ["schema.character", "schema.scenario", "schema.outline", "schema.story-bible"],
+      "interactions": [
+        {
+          "id": "weaver.checkpoint",
+          "operation": "interaction.select",
+          "purpose": "Choose the next action after a scene or chapter checkpoint.",
+          "onAccept": "perform the selected continuation or revision action",
+          "onReject": "remain at the current artifact and request concrete revision direction",
+          "nextInput": "selected-option",
+          "options": [
+            { "id": "continue", "label": "继续", "description": "进入下一场景或下一章。" },
+            { "id": "revise", "label": "修订", "description": "根据反馈修订当前场景。" },
+            { "id": "stop", "label": "停止并交接", "description": "保留现有产物并输出交接摘要。" }
+          ]
+        }
+      ],
+      "delegations": [],
+      "validators": [],
+      "stateRoots": ["workspace", "novels"],
+      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "scene.prose", "rewriteOwner": "weaver", "promptProjection": "guidance" }
+    },
+    "weaver-orch": {
+      "displayName": "Prism Weaver-Orch Engine",
+      "prompt": "prompt.engine.weaver-orch",
+      "operations": ["artifact.inspect", "artifact.compose", "artifact.snapshot", "interaction.select", "agent.delegate", "quality.guard"],
+      "resources": ["schema.character", "schema.scenario", "schema.outline", "schema.story-bible", "template.outline", "template.story-bible"],
+      "interactions": [
+        {
+          "id": "weaver-orch.bootstrap",
+          "operation": "interaction.select",
+          "purpose": "Approve or revise the initialized long-form project skeleton.",
+          "onAccept": "enter the first chapter loop",
+          "onReject": "revise the selected planning artifact",
+          "nextInput": "selected-option",
+          "options": [
+            { "id": "continue", "label": "进入第一章", "description": "接受 outline 与 Story Bible。" },
+            { "id": "revise-outline", "label": "调整 Outline", "description": "修订章节规划后再次检查。" },
+            { "id": "revise-bible", "label": "调整 Story Bible", "description": "修订初始状态层后再次检查。" }
+          ]
+        },
+        {
+          "id": "weaver-orch.progress",
+          "operation": "interaction.select",
+          "purpose": "Apply the configured scene-level or chapter-level user checkpoint.",
+          "onAccept": "perform the selected progression action",
+          "onReject": "remain on the current scene or chapter",
+          "nextInput": "selected-option",
+          "options": [
+            { "id": "continue", "label": "继续", "description": "进入下一场景或审计阶段。" },
+            { "id": "revise", "label": "局部修订", "description": "返工当前场景后重新检查。" },
+            { "id": "stop", "label": "停止并交接", "description": "保留产物并输出当前项目状态。" }
+          ]
+        },
+        {
+          "id": "weaver-orch.audit-decision",
+          "operation": "interaction.select",
+          "purpose": "Choose how to act on the independent chapter audit verdict.",
+          "onAccept": "continue, revise, or rebuild according to the selected verdict action",
+          "onReject": "keep the chapter blocked at the audit checkpoint",
+          "nextInput": "selected-option",
+          "options": [
+            { "id": "continue", "label": "接受并继续", "description": "仅适用于 PASS，进入下一章。" },
+            { "id": "local-revision", "label": "局部返工", "description": "修订问题场景并重新编译、复审。" },
+            { "id": "rebuild", "label": "重做本章", "description": "回退到 Scene Plan，重写本章。" }
+          ]
+        },
+        {
+          "id": "weaver-orch.agent-failure",
+          "operation": "interaction.select",
+          "purpose": "Resolve an exhausted scene-writer, continuity-editor, or chapter-reviewer failure.",
+          "onAccept": "perform the selected recovery action",
+          "onReject": "keep the chapter blocked",
+          "nextInput": "selected-option",
+          "options": [
+            { "id": "retry", "label": "再次重试", "description": "在用户明确授权后再执行一次子任务。" },
+            { "id": "manual-repair", "label": "人工修复后继续", "description": "等待用户修改相关文件。" },
+            { "id": "abort", "label": "放弃本章", "description": "停止当前章节并输出交接状态。" }
+          ]
+        }
+      ],
+      "delegations": [
+        { "id": "weaver-orch.scene-writer", "agent": "scene-writer", "mode": "foreground", "purpose": "Write exactly one scene shard from a complete task packet.", "retryLimit": 1 },
+        { "id": "weaver-orch.continuity", "agent": "continuity-editor", "mode": "foreground", "purpose": "Snapshot and synchronize the compiled chapter into the Story Bible.", "retryLimit": 1 },
+        { "id": "weaver-orch.chapter-review", "agent": "chapter-reviewer", "mode": "foreground", "purpose": "Audit the compiled chapter and return a structured verdict.", "retryLimit": 1 }
+      ],
+      "validators": [],
+      "stateRoots": ["workspace", "novels", "reports"],
+      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "orchestrator-authored-prose", "rewriteOwner": "weaver-orch", "promptProjection": "guidance" }
+    },
+    "dyad": {
+      "displayName": "Prism Dyad Engine",
+      "prompt": "prompt.engine.dyad",
+      "operations": ["artifact.inspect", "artifact.compose", "interaction.select", "quality.guard"],
+      "resources": ["schema.character", "schema.scenario"],
+      "interactions": [
+        {
+          "id": "dyad.mode",
+          "operation": "interaction.select",
+          "purpose": "Select Auto-Pilot or Co-Pilot before simulation artifacts are created.",
+          "onAccept": "initialize the selected simulation loop",
+          "onReject": "discuss the desired simulation control level",
+          "nextInput": "selected-option",
+          "options": [
+            { "id": "auto", "label": "Auto-Pilot", "description": "按批次自动推进到 Resolution。" },
+            { "id": "copilot", "label": "Co-Pilot", "description": "每个完整轮次后等待用户决策。" }
+          ]
+        },
+        {
+          "id": "dyad.turn",
+          "operation": "interaction.select",
+          "purpose": "Choose the next Co-Pilot action after one complete simulated turn.",
+          "onAccept": "perform the selected continuation or regeneration action",
+          "onReject": "keep the current turn and request revision direction",
+          "nextInput": "selected-option",
+          "options": [
+            { "id": "continue", "label": "继续", "description": "生成下一完整轮次。" },
+            { "id": "regenerate-user", "label": "重生成用户行为", "description": "只替换本轮用户实体行动。" },
+            { "id": "regenerate-character", "label": "重生成角色反应", "description": "保留用户行动并替换角色回应。" },
+            { "id": "reload", "label": "读取修改后继续", "description": "重新读取人工修改的日志后推进。" }
+          ]
+        }
+      ],
+      "delegations": [],
+      "validators": [],
+      "stateRoots": ["workspace", "test_runs"],
+      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "dyad.character-response", "rewriteOwner": "dyad", "promptProjection": "guidance" }
+    }
+  }
+}

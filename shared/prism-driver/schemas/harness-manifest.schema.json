@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/prism-driver/schemas/harness-manifest.schema.json",
+  "title": "Prism Harness Pack Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "version",
+    "sourceRepository",
+    "sourceCommit",
+    "sourceState",
+    "harnessConfigHash",
+    "compilerHash",
+    "requiredCapabilities",
+    "externalHostAssets",
+    "driver",
+    "ruleModules",
+    "profileBindings",
+    "agentProfileBindings",
+    "promptBindings",
+    "agentPromptBindings",
+    "qualityBindings",
+    "agentQualityBindings",
+    "assets"
+  ],
+  "properties": {
+    "schema": { "const": "prism-harness-pack/v1" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$" },
+    "sourceRepository": { "type": "string", "minLength": 1 },
+    "sourceCommit": { "type": "string", "minLength": 1 },
+    "sourceState": { "enum": ["clean", "dirty"] },
+    "harnessConfigHash": { "$ref": "#/$defs/hash" },
+    "compilerHash": { "$ref": "#/$defs/hash" },
+    "requiredCapabilities": { "$ref": "#/$defs/stringList" },
+    "externalHostAssets": { "$ref": "#/$defs/assetPathList" },
+    "driver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract", "contractHash", "contractSourceHash", "adapter", "adapterHash", "adapterSourceHash", "adapterId", "adapterVersion", "targetHost"],
+      "properties": {
+        "contract": { "$ref": "#/$defs/assetPath" },
+        "contractHash": { "$ref": "#/$defs/hash" },
+        "contractSourceHash": { "$ref": "#/$defs/hash" },
+        "adapter": { "$ref": "#/$defs/assetPath" },
+        "adapterHash": { "$ref": "#/$defs/hash" },
+        "adapterSourceHash": { "$ref": "#/$defs/hash" },
+        "adapterId": { "type": "string", "minLength": 1 },
+        "adapterVersion": { "type": "string", "minLength": 1 },
+        "targetHost": { "type": "string", "minLength": 1 }
+      }
+    },
+    "ruleModules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "manifest"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "manifest": { "$ref": "#/$defs/assetPath" }
+        }
+      }
+    },
+    "profileBindings": { "$ref": "#/$defs/pathMap" },
+    "agentProfileBindings": { "$ref": "#/$defs/pathMap" },
+    "promptBindings": { "$ref": "#/$defs/pathListMap" },
+    "agentPromptBindings": { "$ref": "#/$defs/pathListMap" },
+    "qualityBindings": { "$ref": "#/$defs/qualityMap" },
+    "agentQualityBindings": { "$ref": "#/$defs/qualityMap" },
+    "assets": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/hash" }
+    }
+  },
+  "$defs": {
+    "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "assetPath": { "type": "string", "pattern": "^assets/" },
+    "stringList": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+    "assetPathList": { "type": "array", "items": { "$ref": "#/$defs/assetPath" }, "uniqueItems": true },
+    "pathMap": { "type": "object", "additionalProperties": { "$ref": "#/$defs/assetPath" } },
+    "pathListMap": { "type": "object", "additionalProperties": { "$ref": "#/$defs/assetPathList" } },
+    "qualityMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": { "enum": ["off", "observe", "rewrite", "strict", "analyze"] }
+      }
+    }
+  }
+}

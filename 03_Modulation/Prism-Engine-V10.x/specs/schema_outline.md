@@ -1,101 +1,91 @@
-# Schema: Structured Outline (V10.0)
+# Schema: Structured Outline (v10.0)
 
 ## 1. File Standard
-- **Format:** Markdown (`.md`) with YAML Frontmatter
+
+- **Format:** Markdown without YAML frontmatter
 - **Encoding:** UTF-8
-- **Language:** Content in Simplified Chinese (简体中文); Headings/Labels in English.
+- **Language:** Simplified Chinese content; English headings and labels
 - **Location:** `novels/{project_name}/outline.md`
-- **Ownership:** Created by **Prism-Weaver-Orch** (Phase 1) or by **Prism-Weaver** (standalone mode Phase 1).
+- **Ownership:** Weaver-Orch, or Weaver in standalone mode
 
 ## 2. Purpose
-The Structured Outline provides a **constrained, machine-readable chapter plan**. Each chapter entry specifies not just "what happens" but also:
-- Which characters appear
-- What story-internal time it covers
-- What foreshadowing is planted or resolved
-- What emotional trajectory is targeted
 
-This enables the Orchestrator to inject precise context into each Writer subtask, and enables the Continuity Editor to verify chapter compliance.
+The Outline is the forward-looking chapter contract. It records who can appear, which objects and foreshadowing matter, the intended rhythm, and the outcomes each chapter must reach. Runtime progress and mutable world state remain in the Story Bible body.
 
-## 3. Structure Definition
+Key Events are written after actors, props, foreshadowing, and rhythm have been established. They define outcomes; they do not prescribe actions that violate character logic.
 
-### 3.1 YAML Frontmatter (Outline Metadata)
-*Required. Enclosed in `---`.*
+## 3. Structure
 
-```yaml
----
-# [Outline Metadata]
-Writing_Mode: "Mode A"          # "Mode A" (Auto-Pilot) or "Mode B" (Co-Pilot)
-Orchestration_Mode: "multi"     # "multi" (Orchestrator + subtasks) or "single" (V8.0 legacy)
-Total_Chapters: 12
-Target_Words_Per_Chapter: 5000
-Genre: "[Genre]"
-POV_Style: "[First Person / Third Person Limited / Third Person Omniscient]"
----
-```
-
-| Field | Type | Required | Description |
-|:---|:---|:---|:---|
-| `Writing_Mode` | string | ✅ | `"Mode A"` = Auto-Pilot (chapter-level pause); `"Mode B"` = Co-Pilot (scene-level pause) |
-| `Orchestration_Mode` | string | ✅ | `"multi"` = Use Orchestrator workflow with `new_task`; `"single"` = V8.0 legacy single-agent mode |
-| `Total_Chapters` | integer | ✅ | Planned total number of chapters |
-| `Target_Words_Per_Chapter` | integer | ✅ | Target word count per chapter (guides Writer pacing) |
-| `Genre` | string | ❌ | Genre tag for tonal guidance |
-| `POV_Style` | string | ❌ | Narrative perspective style |
-
-**Compatibility Note:** When `Orchestration_Mode: "single"`, the outline is consumed by the standalone `prism-weaver` in single-agent mode. The structured chapter entries below are still beneficial but the Orchestrator workflow is not invoked.
-
-### 3.2 Markdown Body (Chapter Entries)
-
-Each chapter is a `## Chapter N: [Title]` section with structured sub-fields.
+### 3.1 Project Configuration
 
 ```markdown
-## Chapter 1: [章节标题]
-- **Story Time**: [故事内时间，e.g., "Day 1, Evening"]
-- **POV Characters**: [本章视角/登场角色，逗号分隔]
-- **Key Events**:
-  1. [事件1]
-  2. [事件2]
-  3. [事件3]
-- **Foreshadowing**:
-  - PLANT: [描述] → 预计 Ch.[X] 回收
-  - RESOLVE: F[XX] — [简要说明]
-- **Emotional Target**: [角色情感变化目标，e.g., "角色从 Tension 20 → 35"]
-- **Notes**: [可选的补充说明]
+# Structured Outline: [Project Name]
 
-## Chapter 2: [章节标题]
-- ...
+## Project Configuration
+- **Writing Mode:** Mode A
+- **Orchestration Mode:** orchestrated
+- **Total Chapters:** 12
+- **Target Words Per Chapter:** 5000
+- **Genre:** [Genre]
+- **POV Style:** [First Person / Third Person Limited / Third Person Omniscient]
 ```
-
-### 3.3 Chapter Entry Field Definitions
 
 | Field | Required | Description |
 |:---|:---|:---|
-| **Story Time** | ✅ | In-world time for this chapter. Must form a logical progression across chapters. |
-| **POV Characters** | ✅ | Characters who appear or are referenced in this chapter. The Writer will load their Module A cards. |
-| **Key Events** | ✅ | Numbered list of plot-critical events. These are **contractual** — the Writer must include all of them. |
-| **Foreshadowing** | ❌ | `PLANT:` = introduce a new Chekhov's Gun (will be registered in story_bible). `RESOLVE: F[XX]` = pay off an existing one. |
-| **Emotional Target** | ❌ | Directional guidance for character emotional state. Not a precise number — a trajectory (e.g., "从警惕到好奇"). |
-| **Notes** | ❌ | Free-form notes for the Writer (e.g., "本章节奏偏慢，以对话为主"). |
+| Writing Mode | Yes | `Mode A` uses chapter checkpoints; `Mode B` uses scene checkpoints |
+| Orchestration Mode | Yes | `orchestrated` uses sequential Scene Writer, Continuity Editor, and Chapter Reviewer agents; `single` uses Weaver only |
+| Total Chapters | Yes | Planned chapter count |
+| Target Words Per Chapter | Yes | Pacing target |
+| Genre | No | Tonal guidance |
+| POV Style | No | Narrative perspective |
+
+These values are production configuration in the Markdown body. They are not YAML identity fields and are never treated as live session HUD state.
+
+### 3.2 Chapter Entries
+
+```markdown
+## Chapter 1: [章节标题]
+- **Story Time:** [故事内时间]
+- **POV Characters:**
+  - [角色] — [当前位置、状态和在场理由]
+- **Props:**
+  - [道具] — [持有人/位置/叙事信号]
+- **Foreshadowing:**
+  - PLANT: [描述] → 预计 Ch.[X] 回收
+  - RESOLVE: F[XX] — [说明]
+- **Scene Rhythm:** [情感温度变化，用 → 连接]
+- **Key Events:**
+  1. [结果一]
+  2. [结果二]
+- **Emotional Target:** [方向性变化]
+- **Notes:** [可选]
+```
+
+### 3.3 Field Rules
+
+- Story Time forms a logical progression across chapters.
+- POV Characters lists only characters who appear or are referenced, with a plausible spatiotemporal reason.
+- Props name current holder or location and their informational purpose.
+- Foreshadowing uses `PLANT:` and `RESOLVE:` prefixes.
+- Scene Rhythm is one `→`-chained line.
+- Key Events are numbered contractual outcomes. The Writer derives the path from character logic.
+- Emotional Target is directional prose, not a precise runtime score.
 
 ## 4. Relationship to Story Bible
 
-The Outline and Story Bible serve complementary roles:
-
 | Dimension | Outline | Story Bible |
 |:---|:---|:---|
-| **Time orientation** | Forward-looking (plan) | Backward-looking (record) |
-| **Mutability** | May be revised by user/Orchestrator before writing begins | Append-only during writing |
-| **Granularity** | Chapter-level plan | Event-level tracking |
-| **Consumer** | Writer (what to write) | Continuity Editor (what happened) |
+| Time orientation | Forward plan | Completed-state record |
+| Owner | User / Weaver-Orch | Continuity Editor after initialization |
+| Granularity | Chapter outcomes | Event and state continuity |
+| Mutation | Revised through planning decisions | Updated after accepted chapters |
 
-The Orchestrator reads **both** at each chapter loop iteration:
-1. Outline → to know what should happen in Chapter X
-2. Story Bible → to know what has already happened up to Chapter X-1
+Every chapter loop reads both files before Scene planning.
 
 ## 5. Formatting Rules
-- **Single Markdown File:** YAML Frontmatter + Markdown Body.
-- **No XML tags.**
-- **Chapter headings must use `## Chapter N:` format** for reliable parsing.
-- **Key Events must be numbered lists** (not bullet points) to distinguish from other fields.
-- **Foreshadowing uses `PLANT:` / `RESOLVE:` prefixes** for machine-readability.
-- **Writing_Mode and Orchestration_Mode are mandatory** in the frontmatter.
+
+- No YAML frontmatter.
+- Chapter headings use `## Chapter N:`.
+- Key Events use numbered lists.
+- POV Characters and Props use one item per bullet.
+- Production configuration stays under `## Project Configuration`.

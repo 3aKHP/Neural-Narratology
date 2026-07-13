@@ -1,0 +1,116 @@
+{
+  "schema": "prism-host-adapter/v1",
+  "id": "vesicle-v1",
+  "version": "1.0.0",
+  "targetHost": "Prism Vesicle",
+  "capabilities": [
+    "prism-driver/v1",
+    "prism-host/vesicle@1",
+    "prism-interaction/confirmation@1",
+    "prism-interaction/select@1",
+    "prism-agent/delegation@1"
+  ],
+  "operationBindings": {
+    "artifact.inspect": {
+      "kind": "tool-group",
+      "tools": ["stat_path", "list_files", "list_directory", "grep_files", "read_file", "view_image"],
+      "profileVisible": true
+    },
+    "artifact.compose": {
+      "kind": "tool-group",
+      "tools": ["create_file", "create_directory", "write_file", "replace_in_file", "append_file"],
+      "profileVisible": true
+    },
+    "artifact.snapshot": {
+      "kind": "tool-group",
+      "tools": ["copy_file"],
+      "profileVisible": true
+    },
+    "research.external": {
+      "kind": "tool-group",
+      "tools": ["web_search", "web_fetch", "web_map", "web_crawl", "web_research"],
+      "profileVisible": true
+    },
+    "interaction.confirm": {
+      "kind": "interaction-tool",
+      "tool": "request_confirmation",
+      "profileVisible": false
+    },
+    "interaction.select": {
+      "kind": "interaction-tool",
+      "tool": "ask_user_question",
+      "profileVisible": false
+    },
+    "agent.delegate": {
+      "kind": "interaction-tool",
+      "tool": "spawn_agent",
+      "profileVisible": false
+    },
+    "quality.guard": {
+      "kind": "runtime-capability",
+      "capability": "quality-guard/anti-ai-flavor@1",
+      "profileVisible": false
+    },
+    "quality.analyze": {
+      "kind": "optional-tool",
+      "tool": "analyze_prose_quality",
+      "capability": "quality-analysis/anti-ai-flavor@1",
+      "profileVisible": false
+    },
+    "workflow.handoff": {
+      "kind": "interaction-tool",
+      "tool": "request_engine_switch",
+      "profileVisible": false
+    }
+  },
+  "resourceBindings": {
+    "prompt.engine.etl": "assets/prompts/engines/etl.md",
+    "prompt.engine.runtime": "assets/prompts/engines/runtime.md",
+    "prompt.engine.evaluate": "assets/prompts/engines/evaluate.md",
+    "prompt.engine.weaver": "assets/prompts/engines/weaver.md",
+    "prompt.engine.weaver-orch": "assets/prompts/engines/weaver-orch.md",
+    "prompt.engine.dyad": "assets/prompts/engines/dyad.md",
+    "prompt.agent.scene-writer": "assets/prompts/agents/scene-writer.md",
+    "prompt.agent.continuity-editor": "assets/prompts/agents/continuity-editor.md",
+    "prompt.agent.chapter-reviewer": "assets/prompts/agents/chapter-reviewer.md",
+    "schema.character": "assets/specs/schema_character.md",
+    "schema.scenario": "assets/specs/schema_scenario.md",
+    "schema.dlc": "assets/specs/schema_dlc.md",
+    "schema.persona.immersive": "assets/specs/schema_persona_prompt_immersive.md",
+    "schema.persona.compatible": "assets/specs/schema_persona_prompt_compatible.md",
+    "schema.outline": "assets/specs/schema_outline.md",
+    "schema.story-bible": "assets/specs/schema_story_bible.md",
+    "template.module-a": "assets/templates/tpl_module_a.md",
+    "template.module-b": "assets/templates/tpl_module_b.md",
+    "template.persona.immersive": "assets/templates/tpl_persona_prompt_immersive.md",
+    "template.persona.compatible": "assets/templates/tpl_persona_prompt_compatible.md",
+    "template.outline": "assets/templates/tpl_outline.md",
+    "template.story-bible": "assets/templates/tpl_story_bible.md"
+  },
+  "interactionBindings": {
+    "etl.blueprint": { "checkpoint": "blueprint-confirmation" },
+    "etl.phase": { "checkpoint": "phase-confirmation" },
+    "etl.scenario-hook": { "header": "剧情钩子" },
+    "runtime.turn": { "checkpoint": "runtime-turn" },
+    "weaver.checkpoint": { "header": "写作检查点" },
+    "weaver-orch.bootstrap": { "header": "项目骨架" },
+    "weaver-orch.progress": { "header": "写作进度" },
+    "weaver-orch.audit-decision": { "header": "章节审计" },
+    "weaver-orch.agent-failure": { "header": "子任务失败" },
+    "dyad.mode": { "header": "运行模式" },
+    "dyad.turn": { "header": "下一步" }
+  },
+  "engineBindings": {
+    "etl": { "profileId": "etl", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
+    "runtime": { "profileId": "runtime", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
+    "evaluate": { "profileId": "evaluate", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
+    "weaver": { "profileId": "weaver", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
+    "weaver-orch": { "profileId": "weaver-orch", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
+    "dyad": { "profileId": "dyad", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] }
+  },
+  "agentBindings": {
+    "scene-writer": { "profileId": "scene-writer", "basePrompts": ["assets/prompts/agents/base.md"] },
+    "continuity-editor": { "profileId": "continuity-editor", "basePrompts": ["assets/prompts/agents/base.md"] },
+    "chapter-reviewer": { "profileId": "chapter-reviewer", "basePrompts": ["assets/prompts/agents/base.md"] }
+  }
+}

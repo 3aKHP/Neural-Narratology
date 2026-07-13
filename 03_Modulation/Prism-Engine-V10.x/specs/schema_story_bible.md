@@ -1,142 +1,107 @@
-# Schema: Story Bible (V10.0)
+# Schema: Story Bible (v10.0)
 
 ## 1. File Standard
-- **Format:** Markdown (`.md`) with YAML Frontmatter
+
+- **Format:** Markdown without YAML frontmatter
 - **Encoding:** UTF-8
-- **Language:** Content in Simplified Chinese (简体中文); Headings/Labels in English.
+- **Language:** Simplified Chinese content; English headings and labels
 - **Location:** `novels/{project_name}/story_bible.md`
-- **Ownership:** Created and initialized by **Prism-Weaver-Orch** (Phase 1); updated by **Continuity Editor** subtask after each chapter.
+- **Ownership:** Weaver-Orch initializes; Continuity Editor updates after accepted chapters
 
 ## 2. Purpose
-The Story Bible is the **persistent world-state layer** for long-form novel generation. It serves as compressed external memory — retaining all continuity-critical facts so the LLM does not need to re-read entire chapters.
 
-*Think of it as a human editor's "Series Bible": much shorter than the full text (~5-10% of novel length), but containing every fact that matters for consistency.*
+The Story Bible is the persistent long-form world-state layer. It retains continuity-critical facts in a compact form so later chapters do not require rereading the entire novel.
 
-## 3. Structure Definition
+All mutable progress lives in Markdown body fields. YAML is not used for chapter progress, timeline, relationship state, location, or other live values.
 
-### 3.1 YAML Frontmatter (Metadata)
-*Required. Enclosed in `---`. Contains project-level metadata.*
+## 3. Structure
 
-```yaml
----
-# [Story Bible Metadata]
-project_name: "[Project Name]"
-last_updated_chapter: 0
-story_timeline: "—"
-total_chapters_planned: 0
----
+### 3.1 Project Status
+
+```markdown
+# Story Bible: [Project Name]
+
+## Project Status
+- **Project Name:** [Project Name]
+- **Last Updated Chapter:** 0
+- **Story Timeline:** —
+- **Total Chapters Planned:** 0
 ```
 
-| Field | Type | Description |
-|:---|:---|:---|
-| `project_name` | string | Must match the project directory name |
-| `last_updated_chapter` | integer | The last chapter number whose events have been synced into this bible |
-| `story_timeline` | string | Human-readable story-internal time range (e.g., "Day 1 → Day 14") |
-| `total_chapters_planned` | integer | From `outline.md` metadata |
+The Continuity Editor updates Last Updated Chapter and Story Timeline after each accepted chapter. Project Name and Total Chapters Planned originate from project initialization.
 
-### 3.2 Markdown Body (5 Sections)
+### 3.2 Five State Sections
 
 #### A. Timeline `## 1. Timeline`
-*A chronological table mapping chapters to story-internal time and key events.*
 
 ```markdown
 ## 1. Timeline
 | Chapter | Story Time | Key Events |
 |:--------|:-----------|:-----------|
-| Ch.01   | [时间]      | [事件1]；[事件2] |
-| Ch.02   | [时间]      | [事件1]；[事件2] |
+| Ch.01 | [时间] | [事件一]；[事件二] |
 ```
 
-**Rules:**
-- One row per chapter. Events are semicolon-separated within a cell.
-- "Story Time" uses in-world time (e.g., "Day 1, Evening"), NOT real-world dates.
-- Append-only: never delete or modify past rows. If a correction is needed, note it in §5 Continuity Warnings.
+- One row per accepted chapter.
+- Past rows are append-only. Corrections are recorded in Continuity Warnings.
 
 #### B. Character State Tracker `## 2. Character State Tracker`
-*Per-character tracking of physical, emotional, relational, and informational state.*
 
 ```markdown
 ## 2. Character State Tracker
 
 ### [Character Name]
-- **Physical**: [Current physical state, injuries, conditions — with chapter reference]
-- **Emotional Arc**: [Emotion trajectory across chapters, e.g., "警惕(Ch.01) → 好奇(Ch.03) → 依赖(Ch.05)"]
-- **Relationship with User**: [Current relationship label + chapter where it changed]
-- **Known Secrets**: [What this character knows / doesn't know — with chapter reference]
-- **Inventory**: [Notable objects in possession, if relevant]
-
-### [Other Character Name]
-- ...
+- **Location:** [Latest known position and activity] (Ch.XX)
+- **Physical:** [Current physical state] (Ch.XX)
+- **Emotional Arc:** [State progression with chapter references]
+- **Relationship with User:** [Current relationship and change chapter]
+- **Known Secrets:** [Information asymmetry with references]
+- **Inventory:** [Notable held objects with references]
 ```
 
-**Rules:**
-- Each bullet must include a chapter reference `(Ch.XX)` for traceability.
-- "Emotional Arc" is cumulative — append new entries, don't replace.
-- "Known Secrets" tracks information asymmetry: what the character knows vs. what the reader/user knows.
+- Location is replaced with the latest known position when movement is established.
+- Characters absent from a chapter retain their last known value.
+- Emotional Arc is cumulative.
+- Every changed value includes a chapter reference.
 
 #### C. Chekhov's Registry `## 3. Chekhov's Registry`
-*A foreshadowing tracking table following the "Chekhov's Gun" principle: if planted, it must be resolved.*
 
 ```markdown
 ## 3. Chekhov's Registry
-| ID  | Planted (Chapter) | Description | Status      | Resolved (Chapter) |
-|:----|:-------------------|:------------|:------------|:-------------------|
-| F01 | Ch.02              | [描述]       | 🟡 OPEN     | —                  |
-| F02 | Ch.03              | [描述]       | ✅ RESOLVED | Ch.07              |
+| ID | Planted | Description | Status | Resolved |
+|:---|:--------|:------------|:-------|:---------|
+| F01 | Ch.02 | [描述] | OPEN | — |
 ```
 
-**Rules:**
-- IDs are sequential: F01, F02, F03...
-- Status values: `🟡 OPEN` (planted, not yet resolved) | `✅ RESOLVED` (paid off) | `❌ DROPPED` (intentionally abandoned, with explanation)
-- When resolving, fill the "Resolved (Chapter)" column.
-- The Orchestrator should warn if too many items remain OPEN near the story's end.
+- IDs are sequential.
+- Status is `OPEN`, `RESOLVED`, or `DROPPED` with explanation.
 
 #### D. World Facts `## 4. World Facts`
-*Established facts about the story world that must remain consistent.*
 
-```markdown
-## 4. World Facts
-- [Fact 1 — with chapter of establishment if relevant]
-- [Fact 2]
-- ...
-```
-
-**Rules:**
-- Only include facts that are **constraining** — things that, if contradicted, would create a plot hole.
-- Examples: locations, distances, rules of the world, character backstory facts, time constraints.
-- Do NOT include subjective interpretations or thematic notes.
+Only facts whose contradiction would create a continuity error belong here. Subjective interpretation and thematic commentary stay out.
 
 #### E. Continuity Warnings `## 5. Continuity Warnings`
-*Flagged inconsistencies discovered during writing or editing.*
 
 ```markdown
 ## 5. Continuity Warnings
-- ⚠️ [Description of inconsistency — Chapter reference — Severity: Minor/Major]
+- [矛盾描述] — Ch.XX — Severity: Minor/Major
 ```
 
-**Rules:**
-- Added by the Continuity Editor when a contradiction is detected.
-- Severity: `Minor` (cosmetic, e.g., eye color discrepancy) | `Major` (plot-breaking, e.g., dead character reappears).
-- The Orchestrator reads this section at each Decision Gate to determine if re-writing is needed.
+Major warnings block chapter progression until Weaver-Orch obtains a decision.
 
 ## 4. Update Protocol
 
-### 4.1 Who Updates
-- **Initialization:** Prism-Weaver-Orch creates the file during Phase 1 using `tpl_story_bible.md`.
-- **Per-Chapter Updates:** The Continuity Editor subtask (delegated by Orchestrator via `new_task`).
-- **Never:** The Writer subtask. Writers read the bible but do not modify it (separation of concerns).
+1. Copy `story_bible.md` to `story_bible_ch{X}.bak.md`.
+2. Read the compiled chapter and its Outline entry.
+3. Update Project Status and the five state sections.
+4. Re-read the file and verify one Timeline row for the chapter, preserved headings, and no duplicate registry entries.
+5. Return an update summary and all new warnings.
 
-### 4.2 Snapshot Protection
-Before each update, the Continuity Editor should preserve the previous version:
-- Copy `story_bible.md` → `story_bible_ch{X}.bak.md` (where X = the chapter just completed).
-- This enables rollback if the bible is corrupted.
-
-### 4.3 Merge Conflicts
-The Story Bible is a single-writer file (only one Continuity Editor subtask runs at a time), so merge conflicts should not occur. If manual edits are detected, the Continuity Editor should re-read the file before updating.
+Only one Continuity Editor writes the Story Bible at a time.
 
 ## 5. Formatting Rules
-- **Single Markdown File:** YAML Frontmatter + Markdown Body.
-- **No XML tags.** All structure is expressed through YAML fields and Markdown headings/tables.
-- **Append-only for Timeline and Chekhov's Registry.** Do not rewrite history.
-- **Chapter references are mandatory** in Character State Tracker entries.
-- **Keep concise.** The bible should stay under ~10% of total novel word count.
+
+- No YAML frontmatter.
+- Timeline and registry history are append-only.
+- Project Status is a body section with explicit labels.
+- Chapter references are mandatory for changed character state.
+- Keep the Story Bible below roughly ten percent of total novel length.

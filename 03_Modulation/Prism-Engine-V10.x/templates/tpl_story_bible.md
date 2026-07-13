@@ -1,10 +1,10 @@
----
-# [Story Bible Metadata]
-project_name: "[Project Name]"
-last_updated_chapter: 0
-story_timeline: "—"
-total_chapters_planned: 0
----
+# Story Bible: [Project Name]
+
+## Project Status
+- **Project Name:** [Project Name]
+- **Last Updated Chapter:** 0
+- **Story Timeline:** —
+- **Total Chapters Planned:** 0
 
 ## 1. Timeline
 | Chapter | Story Time | Key Events |
@@ -13,18 +13,19 @@ total_chapters_planned: 0
 ## 2. Character State Tracker
 
 ### [Character Name]
-- **Physical**: [初始身体状态]
-- **Emotional Arc**: [初始情绪状态(Ch.01)]
-- **Relationship with User**: [初始关系]
-- **Known Secrets**: [初始信息状态]
-- **Inventory**: [初始物品]
+- **Location:** [Latest known position and activity] (Ch.00)
+- **Physical:** [Initial physical state] (Ch.00)
+- **Emotional Arc:** [Initial emotional state] (Ch.00)
+- **Relationship with User:** [Initial relationship] (Ch.00)
+- **Known Secrets:** [Initial information state] (Ch.00)
+- **Inventory:** [Initial notable objects] (Ch.00)
 
 ## 3. Chekhov's Registry
-| ID  | Planted (Chapter) | Description | Status  | Resolved (Chapter) |
-|:----|:-------------------|:------------|:--------|:-------------------|
+| ID | Planted | Description | Status | Resolved |
+|:---|:--------|:------------|:-------|:---------|
 
 ## 4. World Facts
-- [在此记录已确立的世界事实]
+- [Constraining fact with source chapter]
 
 ## 5. Continuity Warnings
-- [暂无警告]
+- None.

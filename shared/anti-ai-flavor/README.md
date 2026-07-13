@@ -1,57 +1,77 @@
 # 反 AI 味模块（Anti-AI-Flavor）
 
-> 消除 LLM 在认真扮演/叙事时露出的"文学层 AI 味"（slop）——不是"出戏"，而是
-> "入戏但写得像 AI"。
+> 治理 LLM 在认真扮演与叙事时出现的文学层 AI 味（slop）。
 
-本模块是 [Neural-Narratology](../../README.md) 与姊妹项目
-[Prism Vesicle](https://github.com/3aKHP/prism-vesicle) 的**共享资产**，收录于
-仓库顶层 [`shared/`](../README.md) 目录。参见该目录的顶层说明了解 `shared/`
-的定位。
+本模块是 [Neural-Narratology](../../README.md) 与
+[Prism Vesicle](https://github.com/3aKHP/prism-vesicle) 的共享知识资产，也是
+[`shared/rule-assets/`](../rule-assets/) 通用规则编译框架的首个注册模块。
 
-## 为什么需要这个模块
+## 职责
 
-Resonance Protocol v5.0 至 v9.0 一路反馈的最大用户痛点是"AI 味"。旧版公理防的
-是"出戏/助手腔"（"作为 AI"、"我不能"）——这个问题已经被既有的沉浸类公理充分
-覆盖，不是真正的靶子。真正的痛点是**强模型认真扮演时仍会露出的精致文体
-病症**：僵硬的对比句式、现成的环境套话、写画面而非身体感受、叙述者代角色
-总结、档案袋式塞设定……这些不是模型"不想演"，而是模型"演得很像 AI 生成的
-通用散文"。
+模块维护一份结构化知识源，并从中派生四类投影：
 
-本模块提供的是**正面的文体交火规则**，而非"不要像 AI"的空洞禁令。
+| 投影 | 当前制品 | 消费者 |
+|:---|:---|:---|
+| Guidance | `guidance.zh-CN.md` | Runtime / Dyad / Weaver / Weaver-Orch |
+| Detector | `detector-rules.<lang>.json` | Vesicle Output Quality Guard、Evaluate |
+| Judge | `judge-rubric.zh-CN.md` | 无工具 Semantic Judge、Evaluate |
+| Replacement | 当前为空 | 未来显式替换表；宿主决定是否执行 |
 
-## 架构：两个作用面
+Detector 只返回 finding、证据与稳定 rule ID。自动重写的策略、次数、超时与用户
+交互由 Vesicle 宿主控制，原始生成引擎负责重写。
 
-```
-A. 前置指导层 (Guidance)   —— 喂给 LLM 的自然语言文体规则，注入协议/system prompt
-B. 后处理查杀层 (Detection) —— 确定性规则/数据（正则、短语表），供代码层 import 做检测/改写
-```
+## 文件
 
-详见 [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)。
-
-## 文件说明
-
-| 文件 | 作用 |
+| 文件/目录 | 作用 |
 |:---|:---|
-| [`knowledge-source.yaml`](./knowledge-source.yaml) | **单一知识源**。所有 slop 条目的结构化记录，A/B 两层都从它派生。Schema 见 [`SCHEMA-SPEC.md`](./SCHEMA-SPEC.md)。 |
-| [`zh-CN/prose-craft-guide.md`](./zh-CN/prose-craft-guide.md) | **A 层 · 中文**。可直接粘贴进协议/system prompt 的人类可读文体规则，按 F0（字面套话）/F1（句式骨架）/F3（结构与判断信号）三层组织，每条带正反例。 |
-| [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | 架构设计文档：两大作用面、四层指纹模型、知识源与外参接入位、与其它组件的引用关系。 |
-| [`SCHEMA-SPEC.md`](./SCHEMA-SPEC.md) | `knowledge-source.yaml` 的字段契约与派生规则。 |
+| [`knowledge-source.yaml`](./knowledge-source.yaml) | 单一规则知识源，当前版本 0.2.0。 |
+| [`module.config.json`](./module.config.json) | 编译配置、A/B 到通用 projection 的映射、模板与语料入口。 |
+| [`SCHEMA-SPEC.md`](./SCHEMA-SPEC.md) | 本模块字段语义；通用 matcher/pack 契约见 `../rule-assets/SCHEMA-SPEC.md`。 |
+| [`zh-CN/prose-craft-guide.md`](./zh-CN/prose-craft-guide.md) | 编译器生成并由 CI 防漂移的 tracked Guidance。 |
+| [`templates/`](./templates/) | Guidance 与 Judge rubric 的模块语域模板。 |
+| [`corpus/`](./corpus/) | Detector 黄金语料与 Semantic Judge 人工标注语料。 |
+| [`THIRD_PARTY_NOTICES.md`](./THIRD_PARTY_NOTICES.md) | 已采用外部方法/数据的许可证与范围。 |
+| [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | 跨仓架构与边界。 |
 
-## 当前状态（首次落地：2026-07-12）
+## 当前状态（0.2.0）
 
-- ✅ 中文（zh-CN）知识源与 A 层指导文档已落地，21 条条目，提炼自内部写作纪要。
-- ✅ Resonance Protocol v10 Tempered-Voice（zh-CN）的 Step 3 Runtime 已接入本模块 A 层。
-- ⬜ 英文（en-US）知识源与 A 层内容——待需要时补充。
-- ⬜ B 层扁平化制品与 Vesicle 代码层对接——留给 Vesicle 侧按其运行时需要实现。
-- ⬜ Prism Engine（Weaver / Weaver-Orch / Transform Agent / Evaluate）侧接入——留待该侧升级时对接。
-- ⬜ 外参数据（cn-antislop 词表等）逐条评估纳入——`knowledge-source.yaml` 的 `sources[]` 中标注状态。
+- 23 条规则：22 条 zh-CN、1 条 en-US。
+- 21 条 Guidance / Judge 规则。
+- 7 条 Deterministic Detector 规则。
+- F0 / F1 / F3 已落地；F2 暂无条目。
+- 破折号密度属于 `experimental` observe-only 信号，阈值仍需校准。
+- V10 Harness Pack 通过 Prism Driver quality policy 组合六引擎与 Agent；Agent Profile
+  所需的同内容副本由构建器确定性生成，不维护多份 Guidance 源副本。
+- 英文 Guidance、更多外部文风库和替换表可以作为独立模块增量注册。
 
-## 引用本模块的方式
+## 开发命令
 
-**协议/system prompt（A 层）：** 直接引用或摘录 `zh-CN/prose-craft-guide.md` 的
-内容。若目标场景对 token 预算敏感（如 FurryBar 消费端「回复格式」栏），优先
-摘录标注"几乎必是 AI"的条目，其余作为创作阶段（Step 0–2）的参考素材。
+```bash
+# 修改 knowledge-source.yaml 后同步 tracked Guidance
+bun shared/rule-assets/scripts/sync-guidance.ts
 
-**代码层（B 层）：** 从 `knowledge-source.yaml` 中筛选 `face: B`/`both` 的条目，
-自行实现扁平化与检测逻辑（本模块本轮不提供派生脚本，见
-[`SCHEMA-SPEC.md`](./SCHEMA-SPEC.md) §6）。
+# 校验 schema、派生一致性与正则
+bun shared/rule-assets/scripts/check.ts
+
+# 运行黄金语料与扩展性测试
+bun test shared/rule-assets/tests
+
+# 构建独立 Rule Pack
+bun shared/rule-assets/scripts/build.ts --out dev/build/rule-packs
+
+# 构建 Vesicle Harness Pack
+bun shared/rule-assets/scripts/build-harness.ts --out dev/build/prism-vesicle-harness
+```
+
+## 增加规则
+
+1. 在 `knowledge-source.yaml` 添加稳定 ID、领域字段、示例与来源。
+2. Guidance/Judge 规则使用 `face: A`；Detector 规则使用 `face: B`；两边共用使用
+   `face: both`。
+3. Detector 条目必须提供带 `kind`、`unit` 的 matcher。
+4. 运行同步、检查与测试。
+5. 为机器规则补充黄金语料，确认中文标点、保护区和反例。
+
+大规模引入新的词表或替换库时，优先创建独立 `shared/<module>/`，通过通用
+`projections` 注册。这样可以独立版本、许可和启停，避免把不同语义的规则混入
+Anti-AI-Flavor。

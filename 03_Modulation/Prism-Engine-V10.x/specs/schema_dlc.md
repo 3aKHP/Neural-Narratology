@@ -1,43 +1,45 @@
-# Schema: L3+ DLC Document (v10.0)
+# Schema: Intensity Expansion Dossier (v10.0)
 
 ## 1. Overview
 
-The DLC document is the output of the **Affine Transform Agent (Workflow C)**. It is raw-material-register content — narrative prose, behavioral notes, and dialogue samples — derived from all-ages source material through principled state-space traversal. It is not a structured character card.
+The Intensity Expansion Dossier is produced by the Affine Transform workflow. It is a traceable raw-material supplement containing narrative prose, behavioral notes, and dialogue samples derived from source signals. It is combined with the original source material before character-card construction.
 
-**Input:** All-ages source material.
-**Output:** L3+ DLC document, to be merged with the original source material at equal weight before character card construction (Workflow A).
+Production uses the L-System to plan traversal. The produced dossier must use neutral narrative register names and must not contain L-System labels anywhere, including its title, headings, metadata lines, or body.
 
-**"L3+" defined:** "L3+" refers to intensity territory at or above **L3-A (Soft Intimacy)** in the L-System — the threshold where physical proximity, sensory detail, and intimacy become the primary narrative content. The full L-System is defined in `schema_scenario.md §5.1`. The DLC document covers L3-A, L3-B, L4-A, and L4-B layers. L5 (Extreme) is covered only if structurally reachable from the source material's character topology. The L4-B default protocol (weight worship) applies unless the character topology specifies otherwise.
+Current production defaults remain in force:
+
+- L3-A is optional and may be skipped when the character topology supports direct entry into the following intimacy range.
+- L4-B defaults to weight worship: boots/feet as the medium of connection, motivated by affection and possession rather than malice. Character topology or explicit user direction may override this with another coherent specialization.
+- L5 is locked by default. It requires an explicit user request and compatibility with the character's Boundary Conditions.
 
 ## 2. Document Format
 
 ```markdown
-# L3+ DLC: [Character Name]
+# Intensity Expansion Dossier: [Character Name]
 *Derived from: [Source material description]*
-*Covered intensity levels: [e.g., Soft Intimacy, Pure Passion, Fetish & Psychology]*
+*Covered registers: [Narrative register names]*
 *Transform date: [Date]*
 
 ---
 
 ## Invariant Anchors
-- Regardless of tension level, [character] will [X]. *(Source: [signal])*
-- Regardless of tension level, [character] will [Y]. *(Source: [signal])*
-[Minimum two. Add as needed.]
+- Regardless of pressure, [character] will [X]. *(Source: [signal])*
+- Regardless of pressure, [character] will [Y]. *(Source: [signal])*
 
 ---
 
 ## Soft Intimacy Material
 
 ### Behavioral Notes
-[Character behavior at this level. Prose description. Anchored to variant signals.]
-*(Derived from: [source signal] — [one-line reasoning])*
+[Behavior at this register, anchored to variant signals.]
+*(Derived from: [source signal] — [reasoning])*
 
 ### Dialogue Samples
-- "[Example line at this register]" *(Derived from: [language pattern in source])*
-- "[Example line at this register]" *(Derived from: [language pattern in source])*
+- "[Example line]" *(Derived from: [language pattern])*
+- "[Example line]" *(Derived from: [language pattern])*
 
 ### Scene Fragment
-[100–200 word narrative paragraph. Character in a soft intimacy moment. Written through their perceptual lens.]
+[100–200 word narrative fragment through the character's perceptual lens.]
 *(Derived from: [source signal] — [reasoning])*
 
 ---
@@ -45,55 +47,58 @@ The DLC document is the output of the **Affine Transform Agent (Workflow C)**. I
 ## Pure Passion Material
 
 ### Behavioral Notes
-[Character behavior at this level. Include trigger conditions — what moves them from the previous level to this one.]
+[Behavior and transition conditions at this register.]
 *(Derived from: [source signal] — [reasoning])*
 
 ### Dialogue Samples
-- "[Example line at this register]" *(Derived from: [language pattern source])*
-- "[Example line at this register]" *(Derived from: [language pattern source])*
+- "[Example line]" *(Derived from: [language pattern])*
+- "[Example line]" *(Derived from: [language pattern])*
 
 ### Scene Fragment
-[100–200 word narrative paragraph.]
+[100–200 word narrative fragment.]
 *(Derived from: [source signal] — [reasoning])*
 
 ---
 
-## Fetish & Psychology Material
-*[Include only if structurally reachable from the source material. Omit this section if not.]*
+## Specialized Intimacy Material
+*[Include when the default protocol or another topology-supported specialization is reachable.]*
 
 ### Behavioral Notes
-[Suppressed desires or power dynamics that become active. The character's psychological experience. Access conditions.]
+[Connection medium, access conditions, power dynamics, and psychological experience.]
 *(Derived from: [source signal] — [reasoning])*
 
 ### Dialogue Samples
-- "[Example line at this register]" *(Derived from: [source])*
+- "[Example line]" *(Derived from: [language pattern])*
+- "[Example line]" *(Derived from: [language pattern])*
 
 ### Scene Fragment
-[100–200 word narrative paragraph.]
+[100–200 word narrative fragment.]
 *(Derived from: [source signal] — [reasoning])*
 
 ---
 
 ## Handover Note
 **Invariant anchors confirmed:** [List]
-**Covered intensity levels:** [List]
-**Derivation gaps:** [Any low-confidence areas]
+**Covered registers:** [List]
+**Derivation gaps:** [Low-confidence or missing areas]
 **Recommended combination weight:** [Equal weight / Lower confidence — reason]
 ```
 
 ## 3. Minimum Constraints
 
-1. Invariant Anchors: minimum two entries. Each must cite its source signal.
-2. Every DLC element must carry a `*(Derived from: ...)*` annotation. No undocumented content.
-3. Dialogue Samples: minimum two per covered level.
-4. Scene Fragments: 100–200 words each. Written in the source material's register (narrative prose, not schema).
-5. Handover Note: all four fields required.
-6. **No L-System tags** in the document body. Intensity levels are described in narrative terms (e.g., "Soft Intimacy", "Pure Passion"), not L-codes.
-7. DLC is not a replacement for all-ages source material. Both are fed to the character builder at equal weight.
+1. At least two Invariant Anchors, each citing a source signal.
+2. Every derived element carries a `*(Derived from: ...)*` annotation.
+3. At least two Dialogue Samples per covered register.
+4. Scene Fragments are 100–200 words and follow the source register.
+5. All four Handover Note fields are present.
+6. The produced file contains no L-System labels.
+7. The dossier supplements the all-ages source material; it does not replace it.
+8. The default specialization applies when no topology or user instruction provides a coherent override.
 
 ## 4. Derivation Rules
 
-1. Never compose DLC elements that cannot be traced to the source material. If a derivation requires information absent from the source, flag it as a gap rather than filling it with invention.
-2. Invariant Anchors are absolute. No DLC element may contradict them.
-3. Traversal must follow the character's own logic. Do not import generic archetypes. A character who suppresses desire through intellectual displacement will not suddenly become physically aggressive — their collapse looks like *their* collapse.
-4. **Tonal balance requirement:** High tension does not mean darkness. For every variant axis traced toward suppression or release, also trace what warmth, humor, or genuine connection looks like for this character at the same intensity level. A DLC that maps only the dark half of the state space produces characters that default to "dark-broken-tragic." Both halves are required.
+1. Every element must be traceable to source material or an explicit protocol default.
+2. Invariant Anchors remain absolute across all covered registers.
+3. Traversal follows the character's own defense mechanisms, desires, warmth, humor, and connection patterns.
+4. High pressure does not imply a uniformly dark register. Each axis includes its constructive or affectionate expression when the character supports one.
+5. Missing information outside the protocol default is reported as a gap.

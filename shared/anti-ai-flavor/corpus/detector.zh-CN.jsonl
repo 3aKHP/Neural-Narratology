@@ -1,0 +1,12 @@
+{"name":"literal-environment-cliche","text":"空气中弥漫着淡淡的血腥味。","expectedRuleIds":["zh-f0-air-thick-with"]}
+{"name":"standalone-filler-with-detail","text":"她关上门。\n\n就这样，一天过去了。","expectedRuleIds":["zh-f0-meaningless-filler"]}
+{"name":"essay-connector-fullwidth-comma","text":"与此同时，她把窗户推开。","expectedRuleIds":["zh-f0-essay-register-connectors"]}
+{"name":"not-but-skeleton","text":"那不是害怕，而是她终于意识到了代价。","expectedRuleIds":["zh-f1-not-x-but-y"]}
+{"name":"not-but-does-not-cross-chinese-question-mark","text":"这不是事实？而是另一个人事后的猜测。","expectedRuleIds":[]}
+{"name":"narrator-pause","text":"她沉默了一会儿，然后说：「我留下。」","expectedRuleIds":["zh-f1-narrator-filler-before-quote"]}
+{"name":"english-extension","text":"She took a deep breath before opening the door.","expectedRuleIds":["en-f0-took-a-deep-breath"]}
+{"name":"protected-fenced-code","text":"```text\n空气中弥漫着\n不是害怕，而是迟疑\n```","expectedRuleIds":[]}
+{"name":"protected-html-comment-and-hud","text":"<!--[!Neural Chain] 不是害怕，而是迟疑 -->\n[Beat] Opening | Config: guarded\n她把手从门把上松开。","expectedRuleIds":[]}
+{"name":"protected-markdown-quote","text":"> 示例：她顿了一下，然后说。\n\n她把杯子放下。","expectedRuleIds":[]}
+{"name":"emdash-density-observe-signal","text":"她——停住——回头——又把手缩了回去。","expectedRuleIds":["zh-f3-emdash-density"]}
+{"name":"clean-prose","text":"血腥味钻进鼻腔，她喉头一紧。","expectedRuleIds":[]}

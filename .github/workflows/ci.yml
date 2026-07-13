@@ -1,8 +1,8 @@
 name: CI
 
 # CC/CX/Roo 面向的引擎脚本与安装器自 V9 起封顶冻结（V10 起对齐 Vesicle，不再产出
-# Roo/CC/CX 协议包）。CI 相应收敛为 ubuntu 上的轻量静态检查：脚本一个不删，但不再
-# 重跑完整创作工作流或真实安装。完整工作流/安装验证仅在主动改动这些冻结产物时才需要。
+# Roo/CC/CX 协议包）。冻结产物继续执行轻量静态检查；V10 共享规则资产执行 Bun
+# 契约测试、黄金语料与 Harness Pack 可复现构建。
 
 on:
   push:
@@ -15,6 +15,39 @@ permissions:
   contents: read
 
 jobs:
+  rule-assets:
+    name: Rule Assets and Vesicle Harness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Validate rule sources and generated guidance
+        run: |
+          bun shared/rule-assets/scripts/check.ts
+          bun shared/prism-driver/scripts/check.ts
+
+      - name: Run rule asset and Prism Driver tests
+        run: bun test shared/rule-assets/tests shared/prism-driver/tests
+
+      - name: Build Harness Pack twice
+        run: |
+          bun shared/rule-assets/scripts/build-harness.ts --out dev/build/prism-vesicle-harness
+          bun shared/rule-assets/scripts/build-harness.ts --out dev/build/prism-vesicle-harness-repeat
+          diff -rq dev/build/prism-vesicle-harness dev/build/prism-vesicle-harness-repeat
+
+      - name: Upload Vesicle Harness Pack
+        uses: actions/upload-artifact@v4
+        with:
+          name: prism-vesicle-harness-v10
+          path: dev/build/prism-vesicle-harness
+          if-no-files-found: error
+
   shellcheck:
     name: ShellCheck
     runs-on: ubuntu-latest

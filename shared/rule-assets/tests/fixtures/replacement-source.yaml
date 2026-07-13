@@ -1,0 +1,27 @@
+meta:
+  source_schema: rule-source/v1
+  schema_version: "1.0"
+  module: regex-replacement-fixture
+  version: "0.1.0"
+  primary_lang: zh-CN
+  default_targets:
+    - narrative-prose
+entries:
+  - id: zh-replace-double-space
+    tier: normalization
+    lang: zh-CN
+    projections:
+      - detector
+      - replacement
+    title: 连续空格归一化
+    matcher:
+      kind: regex
+      value: " {2,}"
+      unit: candidate
+      flags: u
+    replacement:
+      kind: literal
+      value: " "
+    severity: tier1
+    source: self
+sources: []

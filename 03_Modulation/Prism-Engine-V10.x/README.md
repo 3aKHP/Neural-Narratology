@@ -1,48 +1,120 @@
 # Prism-Engine-V10.x
 
-> **Prism Engine v10.0 Tempered-Voice —— 面向 Prism Vesicle 的工程源文件**
+> Prism Engine v10.0 Tempered-Voice — HAL 驱动的六引擎工程源
 
 ## 定位
 
-`Prism-Engine-V10.x` 是 Prism Engine 六引擎矩阵在 **v10.0 Tempered-Voice** 协议下的工程源文件目录。
+`Prism-Engine-V10.x` 是 Phase III 当前工程源。Prism Vesicle 是 v10 的目标宿主，六引擎协议仍通过 Prism Driver / Host Abstraction Layer 与具体工具、Profile Schema 和资产目录隔离。
 
-**自 V10 起，[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)（Bun + TypeScript 直连 API 宿主）是 Phase III 唯一的开发目标平台。** Codex CLI、Claude Code CLI 等此前的宿主适配层已从 V10 支持栈中排除；本目录不含任何宿主品牌信息或宿主特定假设（如目录作用域、`AGENTS.md` 模式切换）。历史宿主适配保留在 [`../Prism-Engine-Codex/`](../Prism-Engine-Codex/) 与 [`../Prism-Engine-Claude-Code/`](../Prism-Engine-Claude-Code/)，两者冻结于 v9.0，不再随 V10 演进。
+源 Prompt 只表达：
 
-本目录只承载**协议内容层**——六引擎行为手册、schema 定义、模板。不承载 Vesicle 侧的宿主粘合层（profile 配置、工具调用绑定等，见"本轮边界"）。
+- Prism 工作流语义；
+- `prism://resource/...` 逻辑资源；
+- `hal://interaction/...` checkpoint；
+- `hal://delegation/...` 子任务。
 
-## 目录结构
+Vesicle 工具名、gate 名、逻辑路径和 Profile 形状集中在 [`adapters/vesicle/adapter.json`](./adapters/vesicle/adapter.json)。Harness 构建时解析这些抽象并生成宿主可执行资产。
 
-```
+## 目录
+
+```text
 Prism-Engine-V10.x/
-├── prompts/       # 六引擎行为手册
-│   ├── etl.md
-│   ├── runtime.md
-│   ├── evaluate.md
-│   ├── weaver.md
-│   ├── weaver-orch.md
-│   └── dyad.md
-├── specs/          # 7 个 schema 定义
-└── templates/       # 6 个模板文件
+├── prompts/                    # 六引擎 canonical Prompt
+├── agents/                     # Scene Writer / Continuity Editor / Chapter Reviewer
+├── specs/                      # 七个 Schema
+├── templates/                  # 六个模板
+├── driver/
+│   └── contract.json           # 六引擎资源、操作、生命周期和质量策略
+├── adapters/
+│   └── vesicle/adapter.json    # 唯一宿主耦合点
+├── docs/
+│   ├── DELIVERY.md
+│   └── VESICLE_ADAPTER_IMPLEMENTATION.md
+└── harness.config.json
 ```
 
-对应 Vesicle 侧未来预期的落点：`prompts/*.md` → `assets/prompts/engines/*.md`；`specs/*.md` → `assets/specs/*.md`；`templates/*.md` → `assets/templates/*.md`（映射方式与命名参照姊妹项目 2026-07-07 的 v9.0 资产拷贝先例，具体以实际移植会话为准）。
+通用 ABI、Schema 和校验器位于 [`shared/prism-driver/`](../../shared/prism-driver/)。
 
-## 内容来源
+## 六引擎与 Agent
 
-- **`prompts/*.md`**：以历史 `Prism-Engine-Codex/shared/prompts/*.md` 为底稿改写——这是仓库里最接近"面向程序化宿主、无 IDE 装饰"语域的版本。改写时剥离了 Codex 专属框架（宿主名称、目录作用域路径前缀 `../`），应用 v10 语言层现代化，并接入 [`shared/anti-ai-flavor/`](../../shared/anti-ai-flavor/) 模块（Runtime / Weaver / Weaver-Orch / Dyad 四个产出散文的引擎各自内嵌一份精简摘要，不使用跨仓库相对路径——理由见下）。
-- **`specs/*.md`、`templates/*.md`**：以历史 `Prism-Engine-V9.x/specs|templates/` 为底稿——这是未独立漂移的干净版本（`Prism-Engine-Codex` 的对应文件已独立漂移）。`schema_scenario.md` 额外修复了 `L4-B` 强度层级硬编码默认值（"默认协议：重量崇拜"）的 bug，与 Phase II `02_Resonance/v10_Tempered-Voice/` 的 Kernel 修复同源：具体内容领域须从角色拓扑推导，无法推导则标记 gap，不回落任何预设默认。
+| 组件 | 责任 |
+|:---|:---|
+| ETL | Module A、Module B、Intensity Expansion Dossier、Lite Persona Prompt |
+| Runtime | authored user message 驱动的单向模拟与 turn checkpoint |
+| Dyad | Auto-Pilot / Co-Pilot 双实体模拟 |
+| Weaver | 单引擎 Scene Shards 写作与确定性章节编译 |
+| Weaver-Orch | 顺序委派、状态同步、独立审计和用户决策 |
+| Evaluate | 角色、场景、日志、扩展素材和长篇法证审计 |
+| Scene Writer | 一次只写一个 Scene，不修改状态层 |
+| Continuity Editor | 快照并更新 Story Bible |
+| Chapter Reviewer | 独立写入章节审计报告 |
 
-## 为什么不用跨仓库相对路径引用反 AI 味模块
+Weaver-Orch 的章节闭环：
 
-Vesicle 侧资产加载是**拷贝制**（2026-07-07 那次拷贝记录明确写"非引用/编译"），本目录未来落地进 Vesicle `assets/` 时也会以同样方式拷贝，届时目录树相对位置与本仓库不同。任何指向 `shared/anti-ai-flavor/` 的相对路径链接在拷贝后都会失效。因此四个产出散文的引擎手册各自内嵌了一份精简摘要（4–6 条最高严重度规则），而非链接引用。
+```text
+Scene Plan
+→ sequential Scene Writer
+→ deterministic chapter compile
+→ Continuity Editor snapshot/update
+→ Chapter Reviewer audit
+→ user decision
+```
 
-## 本轮边界
+## 协议不变量
 
-以下内容**不在本目录**，留给实际移植进 Prism Vesicle 的会话按当时的真实工具表与代码现状编写，此刻预先编写有与实现脱节的风险：
+- Module A YAML 只含 `name`、`archetype`、`age_gender`、`inventory`。
+- Module B YAML 只含允许的静态场景字段与 `beat_map`。
+- Outline 与 Story Bible 不使用 YAML 保存模式、章节进度、时间线或关系活状态。
+- L-System 标签不能出现在 Module A、Module B、扩展素材、Session Log 或小说正文中。
+- L3-A 可选。
+- L4-B 默认协议为重量崇拜：靴/足作为连接媒介，动机为爱与占有；角色拓扑或用户明确指令可以覆盖。
+- L5 默认锁定，需要用户明确请求并满足 Boundary Conditions。
+- Runtime checkpoint 接受后结束当前调用，下一角色回合等待新的 authored user message。
 
-- `*.profile.yaml`（引擎 profile 配置）
-- `vesicle-base.md`（宿主身份与工具契约样板）
-- 具体工具调用语法（如确认门、引擎切换的实际函数签名）
-- Vesicle 仓库本身的任何改动
+## HAL 与 Harness
 
-State Navigator 从日志文件迁移到宿主结构化 state packet 的重新设计同样不在本轮范围（见姊妹项目记忆 `vesicle-harness-contract` 与 `v10-development-scope`）。
+构建命令：
+
+```bash
+bun shared/prism-driver/scripts/check.ts
+bun shared/rule-assets/scripts/check.ts
+bun test shared/prism-driver/tests shared/rule-assets/tests
+bun shared/rule-assets/scripts/build-harness.ts --out dev/build/prism-vesicle-harness
+```
+
+Harness 包含：
+
+```text
+manifest.json
+assets/
+├── engines/                    # 六个生成的 Engine Profile
+├── agents/                     # 三个生成的 Agent Profile
+├── prism-driver/               # Contract 与目标 Adapter
+├── prompts/engines/            # 已解析路径并附宿主 Binding 的 Prompt
+├── prompts/agents/
+├── quality/anti-ai-flavor/
+├── specs/
+└── templates/
+```
+
+宿主提供两个外部基础资产：
+
+- `assets/prompts/shared/vesicle-base.md`
+- `assets/prompts/agents/base.md`
+
+manifest 记录外部资产、required capabilities、Driver/Adapter hash、Profile bindings、Prompt bindings、Quality bindings 和全部资产 SHA-256。
+
+## Anti-AI-Flavor
+
+[`shared/rule-assets/`](../../shared/rule-assets/) 从 [`shared/anti-ai-flavor/`](../../shared/anti-ai-flavor/) 单一知识源生成 Guidance、Detector 与 Judge rubric。
+
+- Runtime、Dyad、Weaver、Weaver-Orch 和 Scene Writer 组合 Guidance。
+- Evaluate 与 Chapter Reviewer 组合 Judge rubric。
+- 原引擎或 Scene Writer 拥有重写责任。
+- Evaluate 和 Chapter Reviewer 的报告不递归进入 Guard。
+
+## 宿主边界
+
+本仓库交付 Driver Contract、Vesicle Adapter 描述和完整 Harness Pack。Vesicle 仍拥有工具实现、权限、Provider loop、会话、TUI、质量运行时和安装器。
+
+当前所需 Vesicle 代码工作已记录在 [`docs/VESICLE_ADAPTER_IMPLEMENTATION.md`](./docs/VESICLE_ADAPTER_IMPLEMENTATION.md)。本轮没有修改 Prism Vesicle 仓库。
