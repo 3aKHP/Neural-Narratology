@@ -109,13 +109,24 @@ export function sha256(value: string | Uint8Array): string {
 
 export async function gitIdentity(): Promise<{ commit: string; state: "clean" | "dirty" }> {
   const commitResult = Bun.spawnSync(["git", "-C", repoRoot, "rev-parse", "HEAD"]);
-  const statusResult = Bun.spawnSync(["git", "-C", repoRoot, "status", "--porcelain", "--untracked-files=normal"]);
-  if (commitResult.exitCode !== 0 || statusResult.exitCode !== 0) {
+  const worktreeResult = Bun.spawnSync(["git", "-C", repoRoot, "diff", "--quiet", "--ignore-cr-at-eol", "--"]);
+  const indexResult = Bun.spawnSync(["git", "-C", repoRoot, "diff", "--cached", "--quiet", "--ignore-cr-at-eol", "--"]);
+  const untrackedResult = Bun.spawnSync(["git", "-C", repoRoot, "ls-files", "--others", "--exclude-standard"]);
+  if (
+    commitResult.exitCode !== 0
+    || worktreeResult.exitCode > 1
+    || indexResult.exitCode > 1
+    || untrackedResult.exitCode !== 0
+  ) {
     return { commit: "unknown", state: "dirty" };
   }
   return {
     commit: commitResult.stdout.toString().trim(),
-    state: statusResult.stdout.toString().trim() ? "dirty" : "clean",
+    state: worktreeResult.exitCode === 0
+      && indexResult.exitCode === 0
+      && !untrackedResult.stdout.toString().trim()
+      ? "clean"
+      : "dirty",
   };
 }
 
