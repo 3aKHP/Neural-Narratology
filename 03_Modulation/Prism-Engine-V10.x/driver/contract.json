@@ -1,7 +1,7 @@
 {
   "schema": "prism-driver-contract/v1",
   "id": "prism-engine-v10",
-  "version": "10.0.0",
+  "version": "10.0.1-alpha.1",
   "protocolVersion": "v10.0-tempered-voice",
   "resources": {
     "prompt.engine.etl": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/etl.md" },
@@ -143,7 +143,7 @@
       "delegations": [],
       "validators": ["runtime-packet"],
       "stateRoots": ["workspace", "test_runs"],
-      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "runtime.prose", "rewriteOwner": "runtime", "promptProjection": "guidance" }
+      "quality": { "module": "anti-ai-flavor", "mode": "rewrite", "candidate": "runtime.prose", "rewriteOwner": "runtime", "promptProjection": "guidance" }
     },
     "evaluate": {
       "displayName": "Prism Evaluate Engine",

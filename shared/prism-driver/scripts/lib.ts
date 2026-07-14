@@ -170,11 +170,14 @@ export async function validateDriverPair(contract: DriverContract, adapter: Host
         errors.push(`interaction ${interaction.id}: selection requires 2-4 options`);
       }
     }
+    const delegatedAgents = new Set<string>();
     for (const delegation of engine.delegations) {
       if (allDelegationIds.has(delegation.id)) errors.push(`duplicate delegation id ${delegation.id}`);
       allDelegationIds.add(delegation.id);
       if (!engine.operations.includes("agent.delegate")) errors.push(`engine ${id}: delegation ${delegation.id} requires agent.delegate`);
       if (!contract.agents[delegation.agent]) errors.push(`delegation ${delegation.id}: unknown agent ${delegation.agent}`);
+      if (delegatedAgents.has(delegation.agent)) errors.push(`engine ${id}: agent ${delegation.agent} has multiple delegation bindings`);
+      delegatedAgents.add(delegation.agent);
     }
     validateQuality(`engine ${id}`, engine.quality, engine.operations, errors);
   }

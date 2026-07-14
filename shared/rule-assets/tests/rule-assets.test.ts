@@ -40,6 +40,23 @@ describe("anti-ai-flavor rule pack", () => {
     }
   });
 
+  test("matches the cross-host conformance corpus", async () => {
+    const config = await loadModuleConfig(antiConfigPath);
+    const { source } = await loadRuleSource(config);
+    const rules = normalizeRules(source, config);
+    const corpus = await readFile(absolute(config.corpora!["host-conformance"]), "utf8");
+    for (const line of corpus.trim().split("\n")) {
+      const item = JSON.parse(line) as {
+        name: string;
+        text: string;
+        protectedRanges?: Array<{ start: number; end: number }>;
+        expectedRuleIds: string[];
+      };
+      const actual = [...new Set(detectText(item.text, rules, { protectedRanges: item.protectedRanges }).map((finding) => finding.ruleId))].sort();
+      expect(actual, item.name).toEqual([...item.expectedRuleIds].sort());
+    }
+  });
+
   test("judge corpus references valid semantic rules", async () => {
     const config = await loadModuleConfig(antiConfigPath);
     const { source } = await loadRuleSource(config);
@@ -95,7 +112,24 @@ describe("anti-ai-flavor rule pack", () => {
     expect(first.manifest.ruleCount).toBe(23);
     expect(first.artifacts.has("THIRD_PARTY_NOTICES.md")).toBe(true);
     expect(first.artifacts.has("calibration/detector.jsonl")).toBe(true);
+    expect(first.artifacts.has("calibration/host-conformance.jsonl")).toBe(true);
     expect(first.artifacts.has("calibration/judge.jsonl")).toBe(true);
+    for (const name of ["detector-rules", "host-conformance-case", "rule-pack"]) {
+      const path = `schemas/${name}.schema.json`;
+      expect(first.artifacts.has(path), path).toBe(true);
+      expect((first.manifest.artifacts as Record<string, string>)[path], path).toMatch(/^[a-f0-9]{64}$/);
+    }
+  });
+
+  test("rejects invalid schema artifact names and JSON", async () => {
+    const config = await loadModuleConfig(antiConfigPath);
+    const { source } = await loadRuleSource(config);
+    expect(validateModule(source, { ...config, schemas: { "Invalid Name": "schema.json" } })).toContain(
+      "schema artifact Invalid Name must be kebab-case",
+    );
+    await expect(compileModule("shared/rule-assets/tests/fixtures/invalid-schema.config.json")).rejects.toThrow(
+      /invalid JSON Schema .*invalid-schema\.json/,
+    );
   });
 });
 

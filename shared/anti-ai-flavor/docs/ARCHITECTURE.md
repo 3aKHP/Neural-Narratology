@@ -79,7 +79,7 @@ Prompt。
 | 引擎 | Prompt 资产 | 初始质量模式 |
 |:---|:---|:---|
 | ETL | engine prompt | off |
-| Runtime | engine prompt + Guidance | observe |
+| Runtime | engine prompt + Guidance | rewrite |
 | Dyad | engine prompt + Guidance | observe |
 | Weaver | engine prompt + Guidance | observe |
 | Weaver-Orch | engine prompt + Guidance | observe |
@@ -93,7 +93,8 @@ Prompt。
 | Continuity Editor | agent prompt | off |
 | Chapter Reviewer | agent prompt + Judge rubric | analyze |
 
-未来 Rewrite 模式由 Vesicle 在 Observe 校准后启用，无需重新复制 Guidance。
+Runtime 作为首个 rewrite dogfood 面；其它正文生成面继续 observe，按真实误报与重写
+稳定性逐步启用，无需重新复制 Guidance。
 
 ## 6. 指纹与匹配
 
@@ -122,7 +123,9 @@ Prompt。
 
 - Source Schema 0.2 / Rule Pack v1。
 - 23 条规则，21 条 Guidance/Judge，7 条 Detector。
-- 确定性黄金语料、Semantic Judge 人工标注语料和 replacement 扩展 fixture。
+- 确定性黄金语料、跨宿主 conformance 语料、Semantic Judge 人工标注语料和
+  replacement 扩展 fixture。
+- Rule Pack、Detector 与 host conformance JSON Schema。
 - 可复现 Bun 编译器。
 - V10 Harness Pack builder。
 - Prism Driver quality policy 与 Engine/Agent binding。

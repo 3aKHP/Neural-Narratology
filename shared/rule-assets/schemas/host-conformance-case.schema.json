@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/host-conformance-case.schema.json",
+  "title": "Rule Host Conformance Case v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "candidateType", "text", "expectedRuleIds"],
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "candidateType": { "type": "string", "minLength": 1 },
+    "text": { "type": "string" },
+    "protectedRanges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["start", "end"],
+        "properties": {
+          "start": { "type": "integer", "minimum": 0 },
+          "end": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "expectedRuleIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
+  }
+}

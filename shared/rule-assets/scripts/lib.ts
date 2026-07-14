@@ -21,6 +21,7 @@ export type ModuleConfig = {
   };
   judge?: { language: string; preamble: string };
   corpora?: Record<string, string>;
+  schemas?: Record<string, string>;
   notices?: string;
 };
 
@@ -176,6 +177,12 @@ export function validateModule(source: RuleSource, config: ModuleConfig): string
   }
   if (!Array.isArray(source.entries) || source.entries.length === 0) errors.push(`entries must be a non-empty array`);
   if (!Array.isArray(source.sources)) errors.push(`sources must be an array`);
+  for (const [name, path] of Object.entries(config.schemas ?? {})) {
+    if (!/^[a-z][a-z0-9-]*$/.test(name)) errors.push(`schema artifact ${name} must be kebab-case`);
+    if (!path || path.startsWith("/") || path.includes("..") || path.includes("\\")) {
+      errors.push(`schema artifact ${name} must use a safe repository-relative source path`);
+    }
+  }
 
   const sourceIds = new Map((source.sources ?? []).map((item) => [item.id, item]));
   if (sourceIds.size !== (source.sources ?? []).length) errors.push(`sources contain duplicate ids`);
@@ -369,6 +376,16 @@ export async function compileModule(configPath: string): Promise<{ config: Modul
   }
   const rules = normalizeRules(source, config);
   const artifacts = new Map<string, string>();
+  for (const [name, path] of Object.entries(config.schemas ?? {}).sort(([left], [right]) => left.localeCompare(right))) {
+    const text = await readFile(absolute(path), "utf8");
+    let schema: unknown;
+    try {
+      schema = JSON.parse(text);
+    } catch (error) {
+      throw new Error(`${config.id}: invalid JSON Schema ${path}: ${(error as Error).message}`);
+    }
+    artifacts.set(`schemas/${name}.schema.json`, stableJson(schema));
+  }
   for (const [name, content] of corpusArtifacts) artifacts.set(name, content);
   if (config.notices) artifacts.set("THIRD_PARTY_NOTICES.md", await readFile(absolute(config.notices), "utf8"));
   const guidance = await renderGuidance(source, config);
@@ -401,6 +418,7 @@ export async function compileModule(configPath: string): Promise<{ config: Modul
     config.guidance?.postamble,
     config.judge?.preamble,
     ...Object.values(config.corpora ?? {}),
+    ...Object.values(config.schemas ?? {}),
     config.notices,
   ].filter((path): path is string => Boolean(path));
   const inputParts: string[] = [];

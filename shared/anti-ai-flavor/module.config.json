@@ -44,7 +44,13 @@
   },
   "corpora": {
     "detector": "shared/anti-ai-flavor/corpus/detector.zh-CN.jsonl",
+    "host-conformance": "shared/anti-ai-flavor/corpus/host-conformance.zh-CN.jsonl",
     "judge": "shared/anti-ai-flavor/corpus/judge.zh-CN.jsonl"
+  },
+  "schemas": {
+    "detector-rules": "shared/rule-assets/schemas/detector-rules.schema.json",
+    "host-conformance-case": "shared/rule-assets/schemas/host-conformance-case.schema.json",
+    "rule-pack": "shared/rule-assets/schemas/rule-pack.schema.json"
   },
   "notices": "shared/anti-ai-flavor/THIRD_PARTY_NOTICES.md"
 }

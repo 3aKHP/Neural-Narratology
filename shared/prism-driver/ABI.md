@@ -65,14 +65,21 @@ write current character packet
 
 ## 4. Delegation 生命周期
 
-Delegation 必须声明 Agent、默认执行模式和输入包。父引擎负责：
+Delegation 必须声明 Agent、默认执行模式和任务目的。宿主工具的自包含 task prompt 作为 v1
+输入包，不要求 Driver Contract 再定义一套嵌套 Task Packet Schema。父引擎负责：
 
 1. 提供完整路径与任务边界；
 2. 校验子任务结果；
 3. 最多按契约规定重试；
 4. 在最终失败时进入用户决策点，不能静默继续。
 
-子任务不能递归委派，也不能扩大自己的写入范围。
+子任务不能递归委派，也不能扩大自己的有效工具面。Agent Profile 负责声明 child 的工具集合，
+Host Adapter 只负责把 `agent.delegate` 映射到宿主 SubAgent runtime；HAL 不建立第二套授权策略。
+
+实际 tool call 的 ask / allow / deny 由宿主统一权限系统处理。项目路径、symlink、并发冲突、
+timeout、环境隔离和进程清理属于 Tool Runtime 的硬不变量，不因 permission mode 或 HAL binding
+而关闭。v1 不要求 per-delegation path scope；更窄的任务级路径限制可在真实需求出现后作为宿主
+可选增强实现。
 
 ## 5. 资源解析
 

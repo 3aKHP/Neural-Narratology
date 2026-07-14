@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/detector-rules.schema.json",
+  "title": "Detector Rules v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "module", "language", "rules"],
+  "properties": {
+    "schema": { "const": "detector-rules/v1" },
+    "module": { "$ref": "#/$defs/identifier" },
+    "language": { "type": "string", "minLength": 1 },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/rule" }
+    }
+  },
+  "$defs": {
+    "identifier": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "stringList": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "tier", "lang", "title", "severity", "maturity", "targets", "matcher", "source"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "tier": { "type": "string", "minLength": 1 },
+        "lang": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "severity": { "type": "string", "minLength": 1 },
+        "maturity": { "enum": ["experimental", "stable"] },
+        "targets": { "$ref": "#/$defs/stringList" },
+        "matcher": { "$ref": "#/$defs/matcher" },
+        "source": { "type": "string", "minLength": 1 }
+      }
+    },
+    "matcher": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value", "unit"],
+          "properties": {
+            "kind": { "enum": ["literal", "regex"] },
+            "value": { "type": "string", "minLength": 1 },
+            "unit": { "enum": ["candidate", "paragraph", "sentence"] },
+            "flags": { "type": "string", "pattern": "^[dimsuv]*$" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "unit", "metric"],
+          "properties": {
+            "kind": { "const": "metric" },
+            "unit": { "enum": ["candidate", "paragraph", "sentence"] },
+            "metric": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["signal", "operator", "threshold"],
+              "properties": {
+                "signal": { "type": "string", "minLength": 1 },
+                "operator": { "enum": ["gte", "gt", "lte", "lt"] },
+                "threshold": { "type": "number" }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

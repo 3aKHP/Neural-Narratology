@@ -5,11 +5,30 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.1 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-14 — V10 Harness first delivery 与 Anti-AI-Flavor 0.2.1
+
+### Added — `[Repo]`
+- Rule Pack 新增可发布 JSON Schema：`rule-pack/v1`、`detector-rules/v1` 与 host
+  conformance case；Schema 进入 module input hash 和逐制品 SHA-256。
+- 新增跨宿主 conformance corpus，覆盖 Runtime/Dyad 命中、CRLF、fenced code/HUD、
+  host protected ranges、引用排除、clean prose 与 experimental metric。
+- Prism Driver 回归合同固定 Weaver-Orch 三个 delegation 的 Agent、mode、purpose 与
+  retry limit，并拒绝同一 Engine 内歧义的 delegation-to-Agent 映射。
+
+### Changed — `[Modulation]`
+- Harness/Driver 升级到 **10.0.1-alpha.1**，Anti-AI-Flavor 升级到 **0.2.1**。
+- Runtime quality policy 从 `observe` 切换为 `rewrite`，作为首个 Guard dogfood 面；Dyad、
+  Weaver、Weaver-Orch 与 Scene Writer 保持 `observe`。
+- 明确 `/permissions` 是唯一 ask/allow/deny 层；Harness/HAL 只绑定 delegation 与质量
+  语义，不增加 Task Packet、per-delegation path scope 或第二套权限策略。
 
 ---
 
@@ -542,3 +561,4 @@
 | 2026-03-18 | — | **v8.1 (Claude Code Host Adaptation)** | Claude Code CLI 宿主适配 |
 | 2026-04-14 | **v9.0 State-Space** | — | 人格拓扑引擎，ETL 变换流水线 |
 | 2026-07-12 | **v10.0 Tempered-Voice** | **v10.0（面向 Prism Vesicle）** | 强基底下语言层重做，约束与嗓音淬炼；Phase III 收窄为 Prism Vesicle 单一目标平台 |
+| 2026-07-14 | v10.0 Tempered-Voice | **v10.0.1-alpha.1 Harness** | Delegation 合同与 Runtime Quality Guard first delivery |

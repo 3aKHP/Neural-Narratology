@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-Anti-AI-Flavor 0.2.0 登记以下外部来源。Rule Pack manifest 同时保留来源 URL、
+Anti-AI-Flavor 0.2.1 登记以下外部来源。Rule Pack manifest 同时保留来源 URL、
 许可证、采用状态和范围。
 
 ## cn-antislop

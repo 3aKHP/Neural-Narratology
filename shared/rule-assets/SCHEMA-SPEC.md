@@ -83,15 +83,19 @@ replacement:
 ├── manifest.json
 ├── THIRD_PARTY_NOTICES.md           # 可选
 ├── calibration/*.jsonl              # 可选黄金语料
+├── schemas/*.schema.json            # 可选宿主合同
 ├── guidance.<lang>.md              # 可选
 ├── detector-rules.<lang>.json      # 可选
 ├── judge-rubric.<lang>.md           # 可选
 └── replacement-rules.<lang>.json   # 可选
 ```
 
-Manifest 使用 `rule-pack/v1`，记录模块版本、知识源 hash、包含 config/template/corpus
+Manifest 使用 `rule-pack/v1`，记录模块版本、知识源 hash、包含 config/template/corpus/schema
 的 module input hash、编译器 hash、各投影计数、required capabilities、来源登记与
 每个制品的 SHA-256。输出不含构建时间。
+
+`schemas` 配置键必须是 kebab-case，源路径必须是安全的仓库相对路径。编译器会解析并
+稳定化 JSON，输出为 `schemas/<name>.schema.json`；无效 JSON 必须使构建失败。
 
 ## 5. 兼容性
 
