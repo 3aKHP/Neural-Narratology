@@ -40,12 +40,17 @@ git diff --check
 - canonical Prompt 中不存在具体宿主工具名。
 - 编译后 ETL、Runtime、Dyad、Weaver、Weaver-Orch Prompt 含正确交互绑定。
 - 编译后 Weaver-Orch 含三个 foreground delegation profile ID。
+- delegation profile、mode、purpose 与 retry limit 由 Contract 固定，同一 Engine 的
+  delegation-to-Agent 映射无歧义。
 - 所有 `prism://resource/...` 在产物中完成解析。
 - Runtime `runtime.turn` 的下一输入为 `authored-user-message`。
 - Outline 与 Story Bible 模板没有 YAML frontmatter。
 - Intensity Expansion Dossier 输出示例没有 L-System 标签。
 - L4-B 默认协议、L3-A 可选与 L5 锁定保持有效。
 - 两次 Harness 构建字节一致。
+- Harness/Driver 版本为 `10.0.1-alpha.1`，Runtime quality binding 为 `rewrite`；Dyad、
+  Weaver、Weaver-Orch 和 Scene Writer 仍为 `observe`。
+- Rule Pack 包含 JSON Schema 与 host conformance corpus，且全部进入 manifest hash。
 
 ## 已知宿主前置条件
 

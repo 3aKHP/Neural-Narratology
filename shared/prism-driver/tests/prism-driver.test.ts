@@ -73,6 +73,50 @@ describe("Prism Driver contract", () => {
     expect(interaction.onAccept).toContain("close the current invocation");
   });
 
+  test("keeps Weaver-Orch delegation bindings exact and unambiguous", async () => {
+    const contract = await loadDriverContract(contractPath);
+    expect(contract.engines["weaver-orch"].delegations).toEqual([
+      {
+        id: "weaver-orch.scene-writer",
+        agent: "scene-writer",
+        mode: "foreground",
+        purpose: "Write exactly one scene shard from a complete task packet.",
+        retryLimit: 1,
+      },
+      {
+        id: "weaver-orch.continuity",
+        agent: "continuity-editor",
+        mode: "foreground",
+        purpose: "Snapshot and synchronize the compiled chapter into the Story Bible.",
+        retryLimit: 1,
+      },
+      {
+        id: "weaver-orch.chapter-review",
+        agent: "chapter-reviewer",
+        mode: "foreground",
+        purpose: "Audit the compiled chapter and return a structured verdict.",
+        retryLimit: 1,
+      },
+    ]);
+    const agents = contract.engines["weaver-orch"].delegations.map((item) => item.agent);
+    expect(new Set(agents).size).toBe(agents.length);
+  });
+
+  test("rejects duplicate Agent mappings within one Engine", async () => {
+    const contract = structuredClone(await loadDriverContract(contractPath));
+    const adapter = await loadHostAdapter(adapterPath);
+    contract.engines["weaver-orch"].delegations.push({
+      id: "weaver-orch.scene-writer-duplicate",
+      agent: "scene-writer",
+      mode: "foreground",
+      purpose: "Duplicate binding used only by this validation test.",
+      retryLimit: 0,
+    });
+    expect(await validateDriverPair(contract, adapter)).toContain(
+      "engine weaver-orch: agent scene-writer has multiple delegation bindings",
+    );
+  });
+
   test("compiles exact Vesicle interaction bindings outside the canonical prompt", async () => {
     const contract = await loadDriverContract(contractPath);
     const adapter = await loadHostAdapter(adapterPath);
@@ -87,6 +131,23 @@ describe("Prism Driver contract", () => {
     expect(etl).toContain('"blueprint-confirmation"');
     expect(etl).toContain('"phase-confirmation"');
     expect(etl).toContain("ask_user_question");
+  });
+
+  test("compiles delegation profile, mode, purpose, and retry outside the canonical prompt", async () => {
+    const contract = await loadDriverContract(contractPath);
+    const adapter = await loadHostAdapter(adapterPath);
+    const engine = contract.engines["weaver-orch"];
+    const source = await readFile(join(import.meta.dir, "../../..", contract.resources[engine.prompt].source), "utf8");
+    expect(source).toContain("hal://delegation/weaver-orch.scene-writer");
+    expect(source).not.toContain("spawn_agent");
+
+    const binding = renderEngineBinding("weaver-orch", engine, contract, adapter);
+    expect(binding).toContain("hal://delegation/weaver-orch.scene-writer");
+    expect(binding).toContain("`spawn_agent`");
+    expect(binding).toContain("`profile` 使用 `scene-writer`");
+    expect(binding).toContain("`mode` 使用 `foreground`");
+    expect(binding).toContain("Write exactly one scene shard from a complete task packet.");
+    expect(binding).toContain("失败时最多重试 1 次");
   });
 
   test("derives a current Vesicle-compatible engine profile", async () => {
@@ -164,6 +225,7 @@ describe("compiled Harness Pack", () => {
 
   test("records driver identity and binding ownership", async () => {
     const manifest = JSON.parse(await readFile(join(harnessDir, "manifest.json"), "utf8"));
+    expect(manifest.version).toBe("10.0.1-alpha.1");
     expect(manifest.driver.adapterId).toBe("vesicle-v1");
     expect(manifest.driver.contractHash).toBe(manifest.assets[manifest.driver.contract]);
     expect(manifest.driver.adapterHash).toBe(manifest.assets[manifest.driver.adapter]);
@@ -171,6 +233,21 @@ describe("compiled Harness Pack", () => {
     expect(manifest.profileBindings.runtime).toBe("assets/engines/runtime.profile.yaml");
     expect(manifest.agentProfileBindings["chapter-reviewer"]).toBe("assets/agents/chapter-reviewer.agent.yaml");
     expect(manifest.qualityBindings.etl["anti-ai-flavor"]).toBe("off");
+    expect(manifest.qualityBindings.runtime["anti-ai-flavor"]).toBe("rewrite");
+    expect(manifest.qualityBindings.dyad["anti-ai-flavor"]).toBe("observe");
+    expect(manifest.qualityBindings.weaver["anti-ai-flavor"]).toBe("observe");
+    expect(manifest.qualityBindings["weaver-orch"]["anti-ai-flavor"]).toBe("observe");
     expect(manifest.agentQualityBindings["scene-writer"]["anti-ai-flavor"]).toBe("observe");
+  });
+
+  test("ships Quality Guard schemas and host conformance cases", async () => {
+    for (const path of [
+      "assets/quality/anti-ai-flavor/schemas/rule-pack.schema.json",
+      "assets/quality/anti-ai-flavor/schemas/detector-rules.schema.json",
+      "assets/quality/anti-ai-flavor/schemas/host-conformance-case.schema.json",
+      "assets/quality/anti-ai-flavor/calibration/host-conformance.jsonl",
+    ]) {
+      expect(await Bun.file(join(harnessDir, path)).exists(), path).toBe(true);
+    }
   });
 });

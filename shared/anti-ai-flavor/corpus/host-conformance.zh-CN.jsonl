@@ -1,0 +1,8 @@
+{"name":"runtime-literal-detection","candidateType":"runtime.prose","text":"空气中弥漫着潮湿的铁锈味。","expectedRuleIds":["zh-f0-air-thick-with"]}
+{"name":"dyad-skeleton-detection","candidateType":"dyad.character-response","text":"这不是迟疑，而是她终于承认自己害怕。","expectedRuleIds":["zh-f1-not-x-but-y"]}
+{"name":"scene-protected-fence-and-hud","candidateType":"scene.prose","text":"```text\n空气中弥漫着旧例。\n```\n[Beat] Opening | 不是退让，而是试探\n她把湿透的袖口卷到肘上。","expectedRuleIds":[]}
+{"name":"host-provided-inline-protection","candidateType":"audit.target-prose","text":"审计示例：空气中弥漫着。正文没有问题。","protectedRanges":[{"start":5,"end":11}],"expectedRuleIds":[]}
+{"name":"crlf-normalization","candidateType":"runtime.prose","text":"门轴响了一声。\r\n空气中弥漫着雨味。","expectedRuleIds":["zh-f0-air-thick-with"]}
+{"name":"experimental-em-dash-metric","candidateType":"scene.prose","text":"她——停住——回头——又把手缩了回去。","expectedRuleIds":["zh-f3-emdash-density"]}
+{"name":"clean-orchestrator-prose","candidateType":"orchestrator-authored-prose","text":"三段场景已经合并。她在末段关掉走廊的灯，下一章从清晨开始。","expectedRuleIds":[]}
+{"name":"quoted-report-text-exclusion","candidateType":"audit.target-prose","text":"> 报告引用：空气中弥漫着旧例。\n\n本段只记录审计结论。","expectedRuleIds":[]}

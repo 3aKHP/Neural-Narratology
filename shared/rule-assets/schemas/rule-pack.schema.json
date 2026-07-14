@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/rule-pack.schema.json",
+  "title": "Rule Pack Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "module",
+    "version",
+    "primaryLanguage",
+    "sourceRepository",
+    "sourceCommit",
+    "sourceState",
+    "sourceHash",
+    "moduleInputHash",
+    "compilerHash",
+    "ruleCount",
+    "projectionCounts",
+    "requiredCapabilities",
+    "preprocessing",
+    "sources",
+    "corpora",
+    "artifacts"
+  ],
+  "properties": {
+    "schema": { "const": "rule-pack/v1" },
+    "module": { "$ref": "#/$defs/identifier" },
+    "version": { "$ref": "#/$defs/semver" },
+    "primaryLanguage": { "type": "string", "minLength": 1 },
+    "sourceRepository": { "type": "string", "minLength": 1 },
+    "sourceCommit": { "type": "string", "minLength": 1 },
+    "sourceState": { "enum": ["clean", "dirty"] },
+    "sourceHash": { "$ref": "#/$defs/hash" },
+    "moduleInputHash": { "$ref": "#/$defs/hash" },
+    "compilerHash": { "$ref": "#/$defs/hash" },
+    "ruleCount": { "type": "integer", "minimum": 1 },
+    "projectionCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["guidance", "detector", "judge", "replacement"],
+      "properties": {
+        "guidance": { "type": "integer", "minimum": 0 },
+        "detector": { "type": "integer", "minimum": 0 },
+        "judge": { "type": "integer", "minimum": 0 },
+        "replacement": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "requiredCapabilities": { "$ref": "#/$defs/stringList" },
+    "preprocessing": { "type": "object" },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "corpora": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cases", "hash"],
+        "properties": {
+          "cases": { "type": "integer", "minimum": 1 },
+          "hash": { "$ref": "#/$defs/hash" }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/artifactPath" },
+      "additionalProperties": { "$ref": "#/$defs/hash" }
+    }
+  },
+  "$defs": {
+    "identifier": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "semver": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$" },
+    "hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "artifactPath": {
+      "type": "string",
+      "pattern": "^(?:[A-Za-z0-9._-]+/)*[A-Za-z0-9._-]+$"
+    },
+    "stringList": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
+  }
+}

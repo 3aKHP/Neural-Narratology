@@ -108,10 +108,12 @@ manifest 记录外部资产、required capabilities、Driver/Adapter hash、Prof
 
 [`shared/rule-assets/`](../../shared/rule-assets/) 从 [`shared/anti-ai-flavor/`](../../shared/anti-ai-flavor/) 单一知识源生成 Guidance、Detector 与 Judge rubric。
 
-- Runtime、Dyad、Weaver、Weaver-Orch 和 Scene Writer 组合 Guidance。
+- Runtime、Dyad、Weaver、Weaver-Orch 和 Scene Writer 组合 Guidance；Runtime 首发使用
+  `rewrite`，其余正文生成面保持 `observe`。
 - Evaluate 与 Chapter Reviewer 组合 Judge rubric。
 - 原引擎或 Scene Writer 拥有重写责任。
 - Evaluate 和 Chapter Reviewer 的报告不递归进入 Guard。
+- Rule Pack 同包交付 JSON Schema 与 host conformance corpus，供 Vesicle 独立实现和回归。
 
 ## 宿主边界
 
