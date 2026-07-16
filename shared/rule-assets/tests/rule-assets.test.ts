@@ -30,7 +30,7 @@ describe("anti-ai-flavor rule pack", () => {
     expect(rules.filter((rule) => rule.projections.includes("judge"))).toHaveLength(21);
     expect(rules.filter((rule) => rule.projections.includes("detector"))).toHaveLength(13);
     expect(config.required_capabilities).toContain("quality-detector/document-metrics@1");
-    expect(config.required_capabilities).not.toContain("quality-judge/anti-ai-flavor@1");
+    expect(config.required_capabilities).toContain("quality-judge/anti-ai-flavor@1");
   });
 
   test("matches the golden detector corpus", async () => {

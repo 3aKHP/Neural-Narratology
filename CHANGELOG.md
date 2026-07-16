@@ -5,13 +5,24 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.2 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.3 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
 ---
+
+## 2026-07-16 — Semantic Judge observe capability
+
+### Changed — `[Modulation]`
+- Harness/Driver 升级到 **10.0.1-alpha.3**，Anti-AI-Flavor 升级到
+  **0.3.0-alpha.2**；root Harness 与 Rule Pack 激活
+  `quality-judge/anti-ai-flavor@1`。
+- Semantic Judge 首轮只在 Vesicle Runtime observe，使用当前 provider/model 的独立
+  无工具请求；finding 不进入自动重写策略，后续晋级继续受 held-out 门槛约束。
+- Judge rubric JSON 示例同步为 `quality-judge-result/v1` exact-key 合同。规则、语料、
+  detector metrics、quality bindings 与阈值保持不变。
 
 ## 2026-07-16 — Anti-AI-Flavor Rule Pack 0.3 contract 与实验 signals
 
@@ -579,3 +590,4 @@
 | 2026-07-12 | **v10.0 Tempered-Voice** | **v10.0（面向 Prism Vesicle）** | 强基底下语言层重做，约束与嗓音淬炼；Phase III 收窄为 Prism Vesicle 单一目标平台 |
 | 2026-07-14 | v10.0 Tempered-Voice | **v10.0.1-alpha.1 Harness** | Delegation 合同与 Runtime Quality Guard first delivery |
 | 2026-07-16 | v10.0 Tempered-Voice | **v10.0.1-alpha.2 Harness** | Rule Pack 0.3 contract、实验 document metrics 与校准语料 |
+| 2026-07-16 | v10.0 Tempered-Voice | **v10.0.1-alpha.3 Harness** | Semantic Judge Runtime observe capability |

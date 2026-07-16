@@ -4,13 +4,15 @@
 >
 > Neural-Narratology 基线：当前工作树
 >
-> Prism Vesicle 只读核对基线：`develop` / `9086abd53bcec341d88df630ab298d879161629c`
+> Prism Vesicle 宿主基线：PR 4 metrics 已合入 `develop`；PR 5 Semantic Judge observe
+> 已完成本地合同与运行时验证。
 >
 > 约束：本文只记录 Prism Vesicle 所需工作，不修改姊妹项目代码。
 
 该基线已经实现 managed/bundled Harness Pack、精确 capability 协商、
 `quality-guard/anti-ai-flavor@1`、artifact post-image 检查、durable quality outcome 与
-TUI resume。本工作只修改 Neural-Narratology；PR 4 才会修改 Vesicle。
+TUI resume、document metrics 与 Semantic Judge observe host service。本工作只修改
+Neural-Narratology 的发布能力声明与精确制品。
 
 ## 1. 当前兼容性结论
 
@@ -27,10 +29,10 @@ V10 Harness Builder 已生成：
 `loadAgentProfile()` 和 `loadAgentSystemPrompt()` 进行只读加载验证。六引擎、三个 Agent
 均可解析，基础 Prompt 可从 Vesicle bundled assets 回落加载。
 
-当前 Vesicle 能安装、验证和固定旧 Rule Pack，并执行既有 deterministic Guard。
-`10.0.1-alpha.2` 新增 required capability `quality-detector/document-metrics@1`，因此该
-基线会按设计拒绝激活新包。PR 4 实现有限 metric registry 并通过本包的 24 条 host
-conformance case 后，才具备兼容性。Judge capability 留待后续 PR。
+当前 Vesicle 能安装、验证和固定 Rule Pack，执行 deterministic Guard 与有限 document
+metric registry。PR 5 增加 verified Judge rubric/rules/result loader、tool-free provider
+service、严格 JSON/evidence 校验、一次 repair、timeout/cancel、bounded usage/session
+事件和 Runtime-only observe。`10.0.1-alpha.3` 同时要求 metrics 与 Judge capability。
 
 ## 2. 已实现基线 — Harness 安装与验证
 
@@ -87,7 +89,7 @@ Harness loader 验证：
 
 `promptBindings` 和 `agentPromptBindings` 用于审计及漂移检测；运行时仍以 Profile 的 `systemPrompt` 为直接加载入口。
 
-## 4. PR 4 — Document metrics
+## 4. PR 4 / PR 5 — Document metrics 与 Semantic Judge observe
 
 manifest 的 `qualityBindings` 与 `agentQualityBindings` 已接入宿主质量策略。PR 4 在该
 既有 lifecycle 内增加有限 document metric signal，不改变 target、durability、rewrite
@@ -106,9 +108,9 @@ PR 4 验收能力：
 代码责任域继续使用既有 `src/core/quality/`，Harness quality binding 仍是配置来源。
 
 Rule Pack 同时交付 `judge-rubric.zh-CN.md`、`judge-rules.zh-CN.json` 与
-`judge-result.schema.json`。这些文件在本阶段属于已验证合同资产；Adapter 与 root
-manifest 尚未要求 `quality-judge/anti-ai-flavor@1`，宿主不得提前执行 Judge 或把其
-finding 接入 rewrite policy。
+`judge-result.schema.json`。Adapter 与 root manifest 从 `10.0.1-alpha.3` 起要求
+`quality-judge/anti-ai-flavor@1`。宿主只在 Runtime 调用当前 provider/model，使用空工具
+与独立上下文；finding 只记录 observe，后续 rewrite 晋级需要独立 held-out 校准。
 
 ## 5. P1 — Evaluate 分析工具
 

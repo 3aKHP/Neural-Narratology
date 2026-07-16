@@ -105,8 +105,8 @@ Harness manifest 记录：
 - `quality-detector/document-metrics@1`：有限 document metric signal registry；
 - `quality-judge/anti-ai-flavor@1`：无工具 Semantic Judge 合同。
 
-Rule Pack 可以同时交付已验证的 Judge schema/rubric，而暂不把 Judge capability 放入
-`requiredCapabilities`。此时资产可供后续宿主实现，当前运行时不会执行 Judge。
+Rule Pack `0.3.0-alpha.2` 起把 Judge capability 放入 `requiredCapabilities`。首轮宿主
+只在 Runtime 以独立、无工具请求执行 observe；semantic finding 不进入自动重写策略。
 
 宿主遇到未知 required capability 必须拒绝激活，不得猜测或降级为相似工具。
 

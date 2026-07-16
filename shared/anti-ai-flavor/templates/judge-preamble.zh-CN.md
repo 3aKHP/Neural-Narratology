@@ -14,14 +14,16 @@
 
 ```json
 {
+  "schema": "quality-judge-result/v1",
   "verdict": "pass | rewrite",
   "confidence": 0.0,
   "findings": [
     {
       "ruleId": "zh-f1-example",
       "evidence": "候选中的短证据",
-      "reason": "为什么命中",
-      "suggestion": "修改方向"
+      "confidence": 0.0,
+      "explanation": "为什么命中",
+      "rewriteInstruction": "修改方向"
     }
   ]
 }
