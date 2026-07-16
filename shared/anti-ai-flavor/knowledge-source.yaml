@@ -16,7 +16,7 @@ meta:
   source_schema: rule-source/v1
   schema_version: "0.2"
   module: anti-ai-flavor
-  version: "0.3.0-alpha.1"
+  version: "0.3.0-alpha.2"
   display_name: Anti-AI Flavor
   primary_lang: zh-CN
   default_targets:

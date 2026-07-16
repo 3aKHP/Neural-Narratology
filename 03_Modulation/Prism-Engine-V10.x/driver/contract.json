@@ -1,7 +1,7 @@
 {
   "schema": "prism-driver-contract/v1",
   "id": "prism-engine-v10",
-  "version": "10.0.1-alpha.2",
+  "version": "10.0.1-alpha.3",
   "protocolVersion": "v10.0-tempered-voice",
   "resources": {
     "prompt.engine.etl": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/etl.md" },

@@ -11,7 +11,7 @@ meta:
   source_schema: rule-source/v1
   schema_version: "0.2"
   module: anti-ai-flavor
-  version: "0.3.0-alpha.1"
+  version: "0.3.0-alpha.2"
   primary_lang: zh-CN
   default_targets: [narrative-prose]
   preprocessing: {}
@@ -98,6 +98,8 @@ Engine/Agent Profile。
 
 ## 7. 版本记录
 
+- 0.3.0-alpha.2（2026-07-16）：激活 `quality-judge/anti-ai-flavor@1`，同步 rubric
+  JSON 示例与 `quality-judge-result/v1` exact-key 合同；规则、语料与阈值保持不变。
 - 0.3.0-alpha.1（2026-07-16）：增加 6 条 experimental 文档 metric、Judge
   rules/result contract、完整 calibration metadata、42 条 Guidance pairs、24 条 host
   conformance case 和 cn-antislop evaluating candidate 资产；只激活 metrics capability。

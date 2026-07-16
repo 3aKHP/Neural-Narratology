@@ -243,13 +243,13 @@ describe("compiled Harness Pack", () => {
 
   test("records driver identity and binding ownership", async () => {
     const manifest = JSON.parse(await readFile(join(harnessDir, "manifest.json"), "utf8"));
-    expect(manifest.version).toBe("10.0.1-alpha.2");
+    expect(manifest.version).toBe("10.0.1-alpha.3");
     expect(manifest.driver.adapterId).toBe("vesicle-v1");
     expect(manifest.driver.contractHash).toBe(manifest.assets[manifest.driver.contract]);
     expect(manifest.driver.adapterHash).toBe(manifest.assets[manifest.driver.adapter]);
     expect(manifest.requiredCapabilities).toContain("prism-driver/v1");
     expect(manifest.requiredCapabilities).toContain("quality-detector/document-metrics@1");
-    expect(manifest.requiredCapabilities).not.toContain("quality-judge/anti-ai-flavor@1");
+    expect(manifest.requiredCapabilities).toContain("quality-judge/anti-ai-flavor@1");
     expect(manifest.profileBindings.runtime).toBe("assets/engines/runtime.profile.yaml");
     expect(manifest.agentProfileBindings["chapter-reviewer"]).toBe("assets/agents/chapter-reviewer.agent.yaml");
     expect(manifest.qualityBindings.etl["anti-ai-flavor"]).toBe("off");

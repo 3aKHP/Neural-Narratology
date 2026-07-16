@@ -11,7 +11,8 @@
   },
   "required_capabilities": [
     "quality-guard/anti-ai-flavor@1",
-    "quality-detector/document-metrics@1"
+    "quality-detector/document-metrics@1",
+    "quality-judge/anti-ai-flavor@1"
   ],
   "guidance": {
     "language": "zh-CN",
