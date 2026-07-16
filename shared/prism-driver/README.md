@@ -51,4 +51,6 @@ bun shared/rule-assets/scripts/build-harness.ts --out dev/build/prism-vesicle-ha
 - HAL 是 Prism 专用的窄 ABI，不是任意 Agent 宿主插件框架。
 - 宿主仍拥有权限、会话、TUI、Provider、重试和实际工具执行。
 - Adapter 可以把一个抽象操作映射为单个工具或一组工具；映射不能改变操作生命周期。
-- 新增操作先进入 capability registry，再更新 Schema、fixture、Adapter 和契约测试。
+- 新增操作或 required capability 先进入 capability registry，再更新 Schema、fixture、
+  Adapter 和契约测试。Rule Pack 可以登记未激活 capability；只有 manifest 中的
+  `requiredCapabilities` 决定当前包的兼容门槛。

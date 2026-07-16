@@ -10,6 +10,7 @@ export type ModuleConfig = {
   id: string;
   source: string;
   tracked_guidance?: string;
+  tracked_calibration?: string;
   projection_map?: Record<string, Projection[]>;
   required_capabilities?: string[];
   guidance?: {
@@ -21,16 +22,43 @@ export type ModuleConfig = {
   };
   judge?: { language: string; preamble: string };
   corpora?: Record<string, string>;
+  data_artifacts?: Record<string, string>;
   schemas?: Record<string, string>;
   notices?: string;
 };
+
+export type MetricPattern = {
+  id: string;
+  value: string;
+  flags?: string;
+  core?: boolean;
+};
+
+export type DocumentMetricSignal =
+  | "em_dash_per_100_chars"
+  | "micro_action_per_1000_chars"
+  | "action_list_verbs_per_paragraph"
+  | "cliche_per_1000_chars"
+  | "metaphor_markers_per_1000_chars"
+  | "reasoning_chain_per_1000_chars"
+  | "abstract_summary_per_1000_chars";
 
 export type Matcher =
   | { kind: "literal" | "regex"; value: string; unit: "candidate" | "paragraph" | "sentence"; flags?: string }
   | {
       kind: "metric";
       unit: "candidate" | "paragraph" | "sentence";
-      metric: { signal: string; operator: "gte" | "gt" | "lte" | "lt"; threshold: number };
+      metric: {
+        signal: DocumentMetricSignal;
+        operator: "gte" | "gt" | "lte" | "lt";
+        threshold: number;
+        minimumMatches?: number;
+        minimumCoreMatches?: number;
+        minimumBuckets?: number;
+        minimumSeparators?: number;
+        excludeDialogue?: boolean;
+        patterns?: MetricPattern[];
+      };
     };
 
 export type RuleEntry = {
@@ -80,6 +108,15 @@ export type Finding = {
 
 const allowedProjections = new Set<Projection>(["guidance", "detector", "judge", "replacement"]);
 const allowedUnits = new Set(["candidate", "paragraph", "sentence"]);
+const documentMetricSignals = new Set<DocumentMetricSignal>([
+  "em_dash_per_100_chars",
+  "micro_action_per_1000_chars",
+  "action_list_verbs_per_paragraph",
+  "cliche_per_1000_chars",
+  "metaphor_markers_per_1000_chars",
+  "reasoning_chain_per_1000_chars",
+  "abstract_summary_per_1000_chars",
+]);
 
 export function absolute(path: string): string {
   return resolve(repoRoot, path);
@@ -183,6 +220,12 @@ export function validateModule(source: RuleSource, config: ModuleConfig): string
       errors.push(`schema artifact ${name} must use a safe repository-relative source path`);
     }
   }
+  for (const [name, path] of Object.entries(config.data_artifacts ?? {})) {
+    if (!/^[a-z][a-z0-9-]*$/.test(name)) errors.push(`data artifact ${name} must be kebab-case`);
+    if (!path || path.startsWith("/") || path.includes("..") || path.includes("\\")) {
+      errors.push(`data artifact ${name} must use a safe repository-relative source path`);
+    }
+  }
 
   const sourceIds = new Map((source.sources ?? []).map((item) => [item.id, item]));
   if (sourceIds.size !== (source.sources ?? []).length) errors.push(`sources contain duplicate ids`);
@@ -192,6 +235,9 @@ export function validateModule(source: RuleSource, config: ModuleConfig): string
     if (!registered.license) errors.push(`${registered.id}: source license is required`);
     if (!["adopted", "evaluating", "reference", "rejected"].includes(registered.status)) {
       errors.push(`${registered.id}: invalid source status ${registered.status}`);
+    }
+    if (["adopted", "reference"].includes(registered.status) && !/^[a-f0-9]{40}$/.test(String(registered.commit ?? ""))) {
+      errors.push(`${registered.id}: adopted/reference source requires a fixed commit`);
     }
   }
   const seen = new Set<string>();
@@ -247,7 +293,35 @@ function validateMatcher(rule: NormalizedRule, errors: string[]): void {
     if (!metric?.signal) errors.push(`${prefix}: metric signal is required`);
     if (!["gte", "gt", "lte", "lt"].includes(metric?.operator)) errors.push(`${prefix}: invalid metric operator`);
     if (!Number.isFinite(metric?.threshold)) errors.push(`${prefix}: metric threshold must be finite`);
-    if (metric?.signal !== "em_dash_per_100_chars") errors.push(`${prefix}: unsupported metric signal ${metric?.signal}`);
+    if (!documentMetricSignals.has(metric?.signal)) errors.push(`${prefix}: unsupported metric signal ${metric?.signal}`);
+    for (const field of ["minimumMatches", "minimumCoreMatches", "minimumBuckets", "minimumSeparators"] as const) {
+      const value = metric?.[field];
+      if (value !== undefined && (!Number.isInteger(value) || value < 1)) errors.push(`${prefix}: ${field} must be a positive integer`);
+    }
+    if (metric?.signal !== "em_dash_per_100_chars") {
+      if (!Array.isArray(metric?.patterns) || metric.patterns.length === 0) errors.push(`${prefix}: ${metric?.signal} requires patterns`);
+      if (metric?.excludeDialogue !== true) errors.push(`${prefix}: ${metric?.signal} must exclude dialogue`);
+    }
+    const patternIds = new Set<string>();
+    for (const pattern of metric?.patterns ?? []) {
+      if (!/^[a-z][a-z0-9-]*$/.test(pattern.id ?? "")) errors.push(`${prefix}: metric pattern id must be kebab-case`);
+      if (patternIds.has(pattern.id)) errors.push(`${prefix}: duplicate metric pattern id ${pattern.id}`);
+      patternIds.add(pattern.id);
+      const flags = pattern.flags ?? "u";
+      if (/[gy]/.test(flags)) errors.push(`${prefix}: metric pattern flags g/y are reserved by the detector`);
+      try {
+        new RegExp(pattern.value, flags);
+      } catch (error) {
+        errors.push(`${prefix}: metric pattern ${pattern.id} does not compile: ${(error as Error).message}`);
+      }
+    }
+    if (metric?.signal === "reasoning_chain_per_1000_chars") {
+      if (!metric.minimumCoreMatches) errors.push(`${prefix}: reasoning chain metric requires minimumCoreMatches`);
+      if (!metric.minimumBuckets) errors.push(`${prefix}: reasoning chain metric requires minimumBuckets`);
+    }
+    if (metric?.signal === "action_list_verbs_per_paragraph" && !metric.minimumSeparators) {
+      errors.push(`${prefix}: action list metric requires minimumSeparators`);
+    }
   } else {
     errors.push(`${prefix}: unsupported matcher kind ${(rule.matcher as { kind: string }).kind}`);
   }
@@ -334,6 +408,62 @@ export async function renderJudgeRubric(source: RuleSource, config: ModuleConfig
   return `${blocks.join("\n")}\n`;
 }
 
+function dialogueRatio(text: string): number {
+  const quotePairs = [/“[^”]*”/gu, /「[^」]*」/gu, /『[^』]*』/gu];
+  let dialogue = 0;
+  for (const pattern of quotePairs) {
+    for (const match of text.matchAll(pattern)) dialogue += [...match[0]].length;
+  }
+  return Number((dialogue / Math.max(1, [...text].length)).toFixed(4));
+}
+
+function lengthBucket(text: string): "short" | "medium" | "long" {
+  if (text.length <= 240) return "short";
+  if (text.length <= 2_000) return "medium";
+  return "long";
+}
+
+export function renderGuidanceCalibration(source: RuleSource, config: ModuleConfig): string | undefined {
+  if (!config.tracked_calibration || !config.guidance) return undefined;
+  const rules = normalizeRules(source, config).filter(
+    (rule) => rule.lang === config.guidance!.language
+      && rule.projections.includes("guidance")
+      && rule.projections.includes("judge")
+      && rule.examples?.bad
+      && rule.examples?.good,
+  );
+  const cases: Array<Record<string, unknown>> = [];
+  for (const rule of rules) {
+    for (const variant of ["bad", "good"] as const) {
+      const text = normalizeHumanText(rule.examples![variant]!, rule.lang);
+      const isBad = variant === "bad";
+      cases.push({
+        schema: "quality-calibration-case/v1",
+        name: `guidance-${rule.id}-${variant}`,
+        language: rule.lang,
+        targetType: "narrative-prose",
+        split: "train",
+        genre: "mixed-narrative",
+        sourceKind: "curated-rule-example",
+        modelFamily: "not-applicable",
+        lengthBucket: lengthBucket(text),
+        pov: "mixed",
+        dialogueRatio: dialogueRatio(text),
+        text,
+        expectedVerdict: isBad ? "rewrite" : "pass",
+        expectedRuleIds: isBad ? [rule.id] : [],
+        provenance: {
+          source: "3aKHP/Neural-Narratology knowledge-source",
+          license: "MIT",
+          ruleId: rule.id,
+          notes: "Generated from the tracked rule example; not a held-out measurement.",
+        },
+      });
+    }
+  }
+  return `${cases.map((item) => JSON.stringify(item)).join("\n")}\n`;
+}
+
 function detectorPayload(rule: NormalizedRule): Record<string, unknown> {
   return {
     id: rule.id,
@@ -352,8 +482,28 @@ function replacementPayload(rule: NormalizedRule): Record<string, unknown> {
   return { ...detectorPayload(rule), replacement: rule.replacement };
 }
 
+function judgePayload(rule: NormalizedRule): Record<string, unknown> {
+  return {
+    id: rule.id,
+    title: rule.title,
+    severity: rule.severity,
+    maturity: rule.maturity,
+    targets: rule.targets,
+    source: rule.source,
+    evidence: {
+      mode: "exact-substring",
+      minCodePoints: 1,
+      maxCodePoints: 240,
+    },
+  };
+}
+
 export async function compileModule(configPath: string): Promise<{ config: ModuleConfig; artifacts: Map<string, string>; manifest: Record<string, unknown> }> {
   const config = await loadModuleConfig(configPath);
+  const capabilityRegistry = await loadJson<{ capabilities: Record<string, unknown> }>("shared/prism-driver/capability-registry.json");
+  for (const capability of config.required_capabilities ?? []) {
+    if (!capabilityRegistry.capabilities?.[capability]) throw new Error(`${config.id}: unregistered required capability ${capability}`);
+  }
   const { source, sourceText } = await loadRuleSource(config);
   const errors = validateModule(source, config);
   if (errors.length) throw new Error(`Invalid rule module ${config.id}:\n- ${errors.join("\n- ")}`);
@@ -386,6 +536,14 @@ export async function compileModule(configPath: string): Promise<{ config: Modul
     }
     artifacts.set(`schemas/${name}.schema.json`, stableJson(schema));
   }
+  for (const [name, path] of Object.entries(config.data_artifacts ?? {}).sort(([left], [right]) => left.localeCompare(right))) {
+    const text = await readFile(absolute(path), "utf8");
+    try {
+      artifacts.set(`data/${name}.json`, stableJson(JSON.parse(text)));
+    } catch (error) {
+      throw new Error(`${config.id}: invalid JSON data artifact ${path}: ${(error as Error).message}`);
+    }
+  }
   for (const [name, content] of corpusArtifacts) artifacts.set(name, content);
   if (config.notices) artifacts.set("THIRD_PARTY_NOTICES.md", await readFile(absolute(config.notices), "utf8"));
   const guidance = await renderGuidance(source, config);
@@ -408,16 +566,25 @@ export async function compileModule(configPath: string): Promise<{ config: Modul
         stableJson({ schema: "replacement-rules/v1", module: config.id, language: lang, rules: replacements.map(replacementPayload) }),
       );
     }
+    const judges = rules.filter((rule) => rule.lang === lang && rule.projections.includes("judge"));
+    if (judges.length) {
+      artifacts.set(
+        `judge-rules.${lang}.json`,
+        stableJson({ schema: "judge-rules/v1", module: config.id, language: lang, rules: judges.map(judgePayload) }),
+      );
+    }
   }
 
   const identity = await gitIdentity();
   const inputPaths = [
     configPath,
     config.source,
+    config.tracked_calibration,
     config.guidance?.preamble,
     config.guidance?.postamble,
     config.judge?.preamble,
     ...Object.values(config.corpora ?? {}),
+    ...Object.values(config.data_artifacts ?? {}),
     ...Object.values(config.schemas ?? {}),
     config.notices,
   ].filter((path): path is string => Boolean(path));
@@ -509,6 +676,32 @@ export function preprocessCandidate(input: string, protectedRanges: Array<{ star
   return buffer.join("");
 }
 
+function protectDocumentMetricStructure(text: string): string {
+  const buffer = text.split("");
+  const lines = text.split("\n");
+  if (lines[0]?.trim() === "---") {
+    let sawYamlField = false;
+    let offset = lines[0].length + 1;
+    for (let index = 1; index < Math.min(lines.length, 40); index += 1) {
+      const line = lines[index];
+      const trimmed = line.trim();
+      if (trimmed === "---") {
+        if (sawYamlField) protectRange(buffer, 0, offset + line.length);
+        break;
+      }
+      if (/^[A-Za-z0-9_-]+:\s*/u.test(trimmed)) sawYamlField = true;
+      offset += line.length + 1;
+    }
+  }
+
+  const structural = /^[ \t]*(?:#{1,6}\s|[-*+]\s|\d+[.)]\s|\|).*$/gmu;
+  const chapter = /^[ \t]*第[零一二三四五六七八九十百千万\d]+章(?:\s|_|$).*$/gmu;
+  for (const pattern of [structural, chapter]) {
+    for (const match of text.matchAll(pattern)) protectRange(buffer, match.index, match.index + match[0].length);
+  }
+  return buffer.join("");
+}
+
 function textUnits(text: string, unit: Matcher["unit"]): Array<{ text: string; start: number }> {
   if (unit === "candidate") return [{ text, start: 0 }];
   if (unit === "sentence") {
@@ -538,16 +731,114 @@ function compareMetric(value: number, operator: string, threshold: number): bool
   return value < threshold;
 }
 
+function metricProse(text: string): string {
+  // Keep one array entry per UTF-16 code unit so finding offsets stay host-compatible.
+  const chars = text.split("");
+  const quotePairs: Array<[string, string]> = [
+    ["「", "」"],
+    ["『", "』"],
+    ["【", "】"],
+    ["“", "”"],
+    ["‘", "’"],
+    ["\"", "\""],
+    ["'", "'"],
+  ];
+  for (const [open, close] of quotePairs) {
+    let cursor = 0;
+    while (cursor < text.length) {
+      const start = text.indexOf(open, cursor);
+      if (start < 0) break;
+      const end = text.indexOf(close, start + open.length);
+      if (end < 0) break;
+      protectRange(chars, start, end + close.length);
+      cursor = end + close.length;
+    }
+  }
+  return chars.join("");
+}
+
+function visibleLength(text: string): number {
+  return text.match(/[一-鿿Ａ-ｚA-Za-z0-9]/gu)?.length ?? 0;
+}
+
+function metricFinding(
+  unit: { text: string; start: number },
+  matcher: Extract<Matcher, { kind: "metric" }>,
+  rule: NormalizedRule,
+): Finding | undefined {
+  const metric = matcher.metric;
+  if (metric.signal === "em_dash_per_100_chars") {
+    // Preserve the pre-0.3 metric denominator for the existing Rule Pack contract.
+    const length = Math.max(1, [...unit.text].length);
+    const count = [...unit.text].filter((char) => char === "—").length;
+    const value = (count / length) * 100;
+    if (!compareMetric(value, metric.operator, metric.threshold)) return undefined;
+    const local = unit.text.indexOf("—");
+    return {
+      ruleId: rule.id,
+      severity: rule.severity,
+      maturity: rule.maturity,
+      start: unit.start + Math.max(0, local),
+      end: unit.start + Math.max(0, local) + (local >= 0 ? 1 : 0),
+      evidence: local >= 0 ? "—" : "",
+      metric: { signal: metric.signal, value, threshold: metric.threshold },
+    };
+  }
+
+  const narrative = metric.excludeDialogue ? metricProse(unit.text) : unit.text;
+  const matches: Array<{ start: number; end: number; evidence: string; pattern: MetricPattern }> = [];
+  const buckets = new Set<string>();
+  let coreMatches = 0;
+  for (const pattern of metric.patterns ?? []) {
+    const flags = `${pattern.flags ?? "u"}g`;
+    for (const match of narrative.matchAll(new RegExp(pattern.value, flags))) {
+      if (!match[0]) continue;
+      if (
+        metric.signal === "metaphor_markers_per_1000_chars"
+        && pattern.id === "material-like-phrase"
+        && /好像|像是|像|仿佛|宛如|如同|犹如/u.test(narrative.slice(Math.max(0, match.index - 8), match.index))
+      ) continue;
+      matches.push({ start: match.index, end: match.index + match[0].length, evidence: match[0], pattern });
+      buckets.add(pattern.id);
+      if (pattern.core) coreMatches += 1;
+    }
+  }
+  if (matches.length < (metric.minimumMatches ?? 1)) return undefined;
+  if (coreMatches < (metric.minimumCoreMatches ?? 0)) return undefined;
+  if (buckets.size < (metric.minimumBuckets ?? 0)) return undefined;
+
+  let value: number;
+  if (metric.signal === "action_list_verbs_per_paragraph") {
+    const separators = [...narrative].filter((char) => "，、；;".includes(char)).length;
+    if (separators < (metric.minimumSeparators ?? 1)) return undefined;
+    value = matches.length;
+  } else {
+    value = (matches.length / Math.max(1, visibleLength(narrative))) * 1000;
+  }
+  if (!compareMetric(value, metric.operator, metric.threshold)) return undefined;
+  const first = matches.sort((left, right) => left.start - right.start)[0];
+  return {
+    ruleId: rule.id,
+    severity: rule.severity,
+    maturity: rule.maturity,
+    start: unit.start + first.start,
+    end: unit.start + first.end,
+    evidence: first.evidence,
+    metric: { signal: metric.signal, value, threshold: metric.threshold },
+  };
+}
+
 export function detectText(
   input: string,
   rules: NormalizedRule[],
   options: { protectedRanges?: Array<{ start: number; end: number }> } = {},
 ): Finding[] {
   const text = preprocessCandidate(input, options.protectedRanges);
+  const metricText = protectDocumentMetricStructure(text);
   const findings: Finding[] = [];
   for (const rule of rules.filter((item) => item.projections.includes("detector") && item.matcher)) {
     const matcher = rule.matcher!;
-    for (const unit of textUnits(text, matcher.unit)) {
+    for (const unit of textUnits(matcher.kind === "metric" ? metricText : text, matcher.unit)) {
       if (matcher.kind === "literal") {
         let cursor = 0;
         while (cursor <= unit.text.length) {
@@ -562,20 +853,8 @@ export function detectText(
           findings.push({ ruleId: rule.id, severity: rule.severity, maturity: rule.maturity, start: unit.start + match.index, end: unit.start + match.index + match[0].length, evidence: match[0] });
         }
       } else {
-        const length = Math.max(1, [...unit.text].length);
-        const count = [...unit.text].filter((char) => char === "—").length;
-        const value = (count / length) * 100;
-        if (compareMetric(value, matcher.metric.operator, matcher.metric.threshold)) {
-          findings.push({
-            ruleId: rule.id,
-            severity: rule.severity,
-            maturity: rule.maturity,
-            start: unit.start,
-            end: unit.start + unit.text.length,
-            evidence: unit.text.slice(0, 160),
-            metric: { signal: matcher.metric.signal, value, threshold: matcher.metric.threshold },
-          });
-        }
+        const finding = metricFinding(unit, matcher, rule);
+        if (finding) findings.push(finding);
       }
     }
   }
@@ -590,6 +869,16 @@ export async function syncTrackedGuidance(configPath: string): Promise<void> {
   if (!guidance) return;
   await mkdir(dirname(absolute(config.tracked_guidance)), { recursive: true });
   await writeFile(absolute(config.tracked_guidance), guidance, "utf8");
+}
+
+export async function syncTrackedCalibration(configPath: string): Promise<void> {
+  const config = await loadModuleConfig(configPath);
+  if (!config.tracked_calibration) return;
+  const { source } = await loadRuleSource(config);
+  const calibration = renderGuidanceCalibration(source, config);
+  if (!calibration) return;
+  await mkdir(dirname(absolute(config.tracked_calibration)), { recursive: true });
+  await writeFile(absolute(config.tracked_calibration), calibration, "utf8");
 }
 
 export function parseArgs(args: string[]): Record<string, string | boolean> {

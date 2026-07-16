@@ -31,6 +31,10 @@
 # 校验全部注册模块、派生文档与黄金语料
 bun shared/rule-assets/scripts/check.ts
 
+# 重新生成 tracked Guidance 与 calibration pairs
+bun shared/rule-assets/scripts/sync-guidance.ts
+bun shared/rule-assets/scripts/sync-calibration.ts
+
 # 构建全部规则包
 bun shared/rule-assets/scripts/build.ts --out dev/build/rule-packs
 
@@ -48,10 +52,11 @@ Harness Builder 先验证 [`../prism-driver/`](../prism-driver/) 的 Driver Cont
 所有构建均为无时间戳的确定性输出。源文件、Driver Contract、Adapter、编译器或模板
 发生变化时，manifest 中的 hash 随之变化；相同输入重复构建必须字节一致。
 
-模块可以通过 `module.config.json` 的 `schemas` 映射发布宿主可消费的 JSON Schema；
-这些 Schema 与 calibration corpus 一并进入 Rule Pack manifest 的逐文件 hash 和
-module input hash。Anti-AI-Flavor 同时发布 host conformance JSONL，供不同语言的宿主
-实现对齐预处理、保护区和 rule ID 结果。
+模块可以通过 `module.config.json` 的 `schemas` 映射发布宿主可消费的 JSON Schema，
+通过 `data_artifacts` 发布已验证但不执行的候选或校准数据。Schema、data artifact 与
+calibration corpus 一并进入 Rule Pack manifest 的逐文件 hash 和 module input hash。
+Anti-AI-Flavor 同时发布 host conformance JSONL，供不同语言的宿主实现对齐预处理、
+保护区、有限 document metric signal 和 rule ID 结果。
 
 CI 为每次检查上传 `prism-vesicle-harness-v10` artifact；需要稳定跨仓交付时，使用
 `Release Vesicle Harness Pack` 手动工作流发布 ZIP 与 SHA-256。

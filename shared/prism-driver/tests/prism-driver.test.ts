@@ -55,6 +55,24 @@ describe("Prism Driver contract", () => {
     expect(Object.keys(contract.agents)).toEqual(["scene-writer", "continuity-editor", "chapter-reviewer"]);
   });
 
+  test("registers document metrics and Judge as separate host capabilities", async () => {
+    const registry = JSON.parse(await readFile(join(import.meta.dir, "../capability-registry.json"), "utf8"));
+    expect(registry.capabilities["quality-detector/document-metrics@1"].kind).toBe("quality");
+    expect(registry.capabilities["quality-judge/anti-ai-flavor@1"].kind).toBe("quality");
+    const adapter = await loadHostAdapter(adapterPath);
+    expect(adapter.capabilities).not.toContain("quality-detector/document-metrics@1");
+    expect(adapter.capabilities).not.toContain("quality-judge/anti-ai-flavor@1");
+  });
+
+  test("guards Harness release provenance and reproducible archives", async () => {
+    const workflow = await readFile(join(import.meta.dir, "../../../.github/workflows/release-vesicle-harness.yml"), "utf8");
+    expect(workflow).toContain("^harness-[0-9]{8}-[1-9][0-9]*$");
+    expect(workflow).toContain("git rev-list -n1 \"$RELEASE_TAG\"");
+    expect(workflow).toContain("[[ \"$tag_commit\" != \"$GITHUB_SHA\" ]]");
+    expect(workflow).toContain("touch -h -d '1980-01-01T00:00:00Z'");
+    expect(workflow).toContain("sort | zip -q -X");
+  });
+
   test("keeps host tool names out of canonical prompts", async () => {
     const contract = await loadDriverContract(contractPath);
     for (const resource of Object.values(contract.resources).filter((item) => item.kind.endsWith("prompt"))) {
@@ -225,11 +243,13 @@ describe("compiled Harness Pack", () => {
 
   test("records driver identity and binding ownership", async () => {
     const manifest = JSON.parse(await readFile(join(harnessDir, "manifest.json"), "utf8"));
-    expect(manifest.version).toBe("10.0.1-alpha.1");
+    expect(manifest.version).toBe("10.0.1-alpha.2");
     expect(manifest.driver.adapterId).toBe("vesicle-v1");
     expect(manifest.driver.contractHash).toBe(manifest.assets[manifest.driver.contract]);
     expect(manifest.driver.adapterHash).toBe(manifest.assets[manifest.driver.adapter]);
     expect(manifest.requiredCapabilities).toContain("prism-driver/v1");
+    expect(manifest.requiredCapabilities).toContain("quality-detector/document-metrics@1");
+    expect(manifest.requiredCapabilities).not.toContain("quality-judge/anti-ai-flavor@1");
     expect(manifest.profileBindings.runtime).toBe("assets/engines/runtime.profile.yaml");
     expect(manifest.agentProfileBindings["chapter-reviewer"]).toBe("assets/agents/chapter-reviewer.agent.yaml");
     expect(manifest.qualityBindings.etl["anti-ai-flavor"]).toBe("off");
@@ -245,7 +265,14 @@ describe("compiled Harness Pack", () => {
       "assets/quality/anti-ai-flavor/schemas/rule-pack.schema.json",
       "assets/quality/anti-ai-flavor/schemas/detector-rules.schema.json",
       "assets/quality/anti-ai-flavor/schemas/host-conformance-case.schema.json",
+      "assets/quality/anti-ai-flavor/schemas/calibration-case.schema.json",
+      "assets/quality/anti-ai-flavor/schemas/candidate-evaluation.schema.json",
+      "assets/quality/anti-ai-flavor/schemas/judge-rules.schema.json",
+      "assets/quality/anti-ai-flavor/schemas/judge-result.schema.json",
+      "assets/quality/anti-ai-flavor/judge-rules.zh-CN.json",
       "assets/quality/anti-ai-flavor/calibration/host-conformance.jsonl",
+      "assets/quality/anti-ai-flavor/calibration/guidance-pairs.jsonl",
+      "assets/quality/anti-ai-flavor/data/cn-antislop-candidates.json",
     ]) {
       expect(await Bun.file(join(harnessDir, path)).exists(), path).toBe(true);
     }

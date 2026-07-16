@@ -63,10 +63,68 @@
               "additionalProperties": false,
               "required": ["signal", "operator", "threshold"],
               "properties": {
-                "signal": { "type": "string", "minLength": 1 },
+                "signal": {
+                  "enum": [
+                    "em_dash_per_100_chars",
+                    "micro_action_per_1000_chars",
+                    "action_list_verbs_per_paragraph",
+                    "cliche_per_1000_chars",
+                    "metaphor_markers_per_1000_chars",
+                    "reasoning_chain_per_1000_chars",
+                    "abstract_summary_per_1000_chars"
+                  ]
+                },
                 "operator": { "enum": ["gte", "gt", "lte", "lt"] },
-                "threshold": { "type": "number" }
-              }
+                "threshold": { "type": "number" },
+                "minimumMatches": { "type": "integer", "minimum": 1 },
+                "minimumCoreMatches": { "type": "integer", "minimum": 1 },
+                "minimumBuckets": { "type": "integer", "minimum": 1 },
+                "minimumSeparators": { "type": "integer", "minimum": 1 },
+                "excludeDialogue": { "type": "boolean" },
+                "patterns": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["id", "value"],
+                    "properties": {
+                      "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+                      "value": { "type": "string", "minLength": 1 },
+                      "flags": { "type": "string", "pattern": "^[dimsuv]*$" },
+                      "core": { "type": "boolean" }
+                    }
+                  }
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "signal": { "not": { "const": "em_dash_per_100_chars" } }
+                    },
+                    "required": ["signal"]
+                  },
+                  "then": {
+                    "required": ["minimumMatches", "excludeDialogue", "patterns"],
+                    "properties": { "excludeDialogue": { "const": true } }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": { "signal": { "const": "reasoning_chain_per_1000_chars" } },
+                    "required": ["signal"]
+                  },
+                  "then": { "required": ["minimumCoreMatches", "minimumBuckets"] }
+                },
+                {
+                  "if": {
+                    "properties": { "signal": { "const": "action_list_verbs_per_paragraph" } },
+                    "required": ["signal"]
+                  },
+                  "then": { "required": ["minimumSeparators"] }
+                }
+              ]
             }
           }
         }

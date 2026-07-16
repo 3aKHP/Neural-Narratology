@@ -48,8 +48,13 @@ matcher:
   unit: paragraph
 ```
 
-当前通用编译器实现 `em_dash_per_100_chars`；新增 metric signal 必须同时增加
-编译器实现、fixture 与契约测试。
+当前有限 registry 包含 `em_dash_per_100_chars`，以及 6 个 experimental 文档信号：
+`micro_action_per_1000_chars`、`action_list_verbs_per_paragraph`、
+`cliche_per_1000_chars`、`metaphor_markers_per_1000_chars`、
+`reasoning_chain_per_1000_chars` 和 `abstract_summary_per_1000_chars`。文档信号可声明
+`minimumMatches`、pattern buckets、核心命中数、分隔符门槛和引号内对话排除。宿主只
+实现这些具名 signal 及其 schema，不执行任意表达式。新增 signal 必须同步编译器、
+JSON Schema、黄金语料与 host conformance case。
 
 匹配前统一执行：
 
@@ -83,10 +88,12 @@ replacement:
 ├── manifest.json
 ├── THIRD_PARTY_NOTICES.md           # 可选
 ├── calibration/*.jsonl              # 可选黄金语料
+├── data/*.json                       # 可选的非执行数据资产
 ├── schemas/*.schema.json            # 可选宿主合同
 ├── guidance.<lang>.md              # 可选
 ├── detector-rules.<lang>.json      # 可选
 ├── judge-rubric.<lang>.md           # 可选
+├── judge-rules.<lang>.json          # 可选
 └── replacement-rules.<lang>.json   # 可选
 ```
 
@@ -94,8 +101,9 @@ Manifest 使用 `rule-pack/v1`，记录模块版本、知识源 hash、包含 co
 的 module input hash、编译器 hash、各投影计数、required capabilities、来源登记与
 每个制品的 SHA-256。输出不含构建时间。
 
-`schemas` 配置键必须是 kebab-case，源路径必须是安全的仓库相对路径。编译器会解析并
-稳定化 JSON，输出为 `schemas/<name>.schema.json`；无效 JSON 必须使构建失败。
+`schemas` 与 `data_artifacts` 配置键必须是 kebab-case，源路径必须是安全的仓库相对
+路径。编译器会解析并稳定化 JSON，分别输出到 `schemas/` 与 `data/`；无效 JSON 必须
+使构建失败。
 
 ## 5. 兼容性
 

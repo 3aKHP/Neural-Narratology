@@ -48,10 +48,17 @@ git diff --check
 - Intensity Expansion Dossier 输出示例没有 L-System 标签。
 - L4-B 默认协议、L3-A 可选与 L5 锁定保持有效。
 - 两次 Harness 构建字节一致。
-- Harness/Driver 版本为 `10.0.1-alpha.1`，Runtime quality binding 为 `rewrite`；Dyad、
+- Harness/Driver 版本为 `10.0.1-alpha.2`，Runtime quality binding 为 `rewrite`；Dyad、
   Weaver、Weaver-Orch 和 Scene Writer 仍为 `observe`。
-- Rule Pack 包含 JSON Schema 与 host conformance corpus，且全部进入 manifest hash。
+- Anti-AI-Flavor Rule Pack `0.3.0-alpha.1` 包含 Detector/Judge/calibration JSON Schema、
+  102 条 calibration/conformance case、6 个 experimental document metrics 和
+  cn-antislop evaluating candidate 资产，且全部进入 manifest hash。
+- 根 Harness 与 Rule Pack 要求 `quality-detector/document-metrics@1`，因此旧 Vesicle
+  明确报告不兼容。`quality-judge/anti-ai-flavor@1` 已登记但未要求，本包不执行 Judge。
 
 ## 已知宿主前置条件
 
-当前生成的 Profile 和 Prompt 可以由现有 Vesicle loader 解析。完整激活仍需要 Vesicle 实现 Harness manifest/capability 安装路径与 Output Quality Guard。具体清单见 `VESICLE_ADAPTER_IMPLEMENTATION.md`。
+当前 Vesicle 已实现 Harness manifest/capability 安装路径和
+`quality-guard/anti-ai-flavor@1`。激活 `10.0.1-alpha.2` 仍需要 PR 4 实现
+`quality-detector/document-metrics@1`；当前宿主按设计拒绝未知 capability。Judge
+运行时属于后续 PR。具体清单见 `VESICLE_ADAPTER_IMPLEMENTATION.md`。

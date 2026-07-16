@@ -1,5 +1,51 @@
 {
   "schema": "prism-driver-capability-registry/v1",
+  "capabilities": {
+    "prism-harness/v1": {
+      "kind": "harness",
+      "description": "Verify and activate Prism Harness Pack v1 manifests and hashed assets."
+    },
+    "prism-driver/v1": {
+      "kind": "driver",
+      "description": "Resolve Prism Driver v1 contracts through a verified host adapter."
+    },
+    "prism-host/vesicle@1": {
+      "kind": "host",
+      "description": "Provide the Prism Vesicle v1 host contract."
+    },
+    "prism-interaction/confirmation@1": {
+      "kind": "interaction",
+      "description": "Pause and resume declared confirmation checkpoints."
+    },
+    "prism-interaction/select@1": {
+      "kind": "interaction",
+      "description": "Resolve declared single-select workflow interactions."
+    },
+    "prism-agent/delegation@1": {
+      "kind": "delegation",
+      "description": "Run contract-bound Prism Agent delegations."
+    },
+    "quality-guard/anti-ai-flavor@1": {
+      "kind": "quality",
+      "description": "Apply target-aware Anti-AI-Flavor deterministic quality policy."
+    },
+    "quality-analysis/anti-ai-flavor@1": {
+      "kind": "quality",
+      "description": "Expose Anti-AI-Flavor findings to analysis-only producers."
+    },
+    "quality-detector/document-metrics@1": {
+      "kind": "quality",
+      "description": "Evaluate the finite Rule Pack v1 document metric signal registry."
+    },
+    "quality-judge/anti-ai-flavor@1": {
+      "kind": "quality",
+      "description": "Execute the verified tool-free Anti-AI-Flavor Judge contract."
+    },
+    "rule-replacement/v1": {
+      "kind": "quality",
+      "description": "Apply a verified literal or template replacement rule projection."
+    }
+  },
   "operations": {
     "artifact.inspect": {
       "kind": "artifact",

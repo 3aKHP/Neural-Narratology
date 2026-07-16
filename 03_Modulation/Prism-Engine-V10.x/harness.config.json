@@ -1,7 +1,7 @@
 {
   "schema": "prism-harness-source/v1",
   "id": "prism-engine-v10",
-  "version": "10.0.1-alpha.1",
+  "version": "10.0.1-alpha.2",
   "driver_contract": "03_Modulation/Prism-Engine-V10.x/driver/contract.json",
   "host_adapter": "03_Modulation/Prism-Engine-V10.x/adapters/vesicle/adapter.json",
   "quality_prompt_assets": {

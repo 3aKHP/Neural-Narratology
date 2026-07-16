@@ -102,7 +102,10 @@ assets/
 - `assets/prompts/shared/vesicle-base.md`
 - `assets/prompts/agents/base.md`
 
-manifest 记录外部资产、required capabilities、Driver/Adapter hash、Profile bindings、Prompt bindings、Quality bindings 和全部资产 SHA-256。
+`10.0.1-alpha.2` manifest 记录外部资产、required capabilities、Driver/Adapter hash、
+Profile bindings、Prompt bindings、Quality bindings 和全部资产 SHA-256。Rule Pack
+`0.3.0-alpha.1` 要求 `quality-detector/document-metrics@1`；当前 Vesicle 在 PR 4 支持
+该 capability 前应明确拒绝激活此 prerelease。
 
 ## Anti-AI-Flavor
 
@@ -113,7 +116,9 @@ manifest 记录外部资产、required capabilities、Driver/Adapter hash、Prof
 - Evaluate 与 Chapter Reviewer 组合 Judge rubric。
 - 原引擎或 Scene Writer 拥有重写责任。
 - Evaluate 和 Chapter Reviewer 的报告不递归进入 Guard。
-- Rule Pack 同包交付 JSON Schema 与 host conformance corpus，供 Vesicle 独立实现和回归。
+- Rule Pack 同包交付 Detector/Judge/calibration JSON Schema、102 条 calibration/conformance
+  case 和外部候选 provenance，供 Vesicle 独立实现和回归。Judge capability 已登记但
+  本包未要求，也不会在宿主实现前执行。
 
 ## 宿主边界
 

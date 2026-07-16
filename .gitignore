@@ -6,6 +6,7 @@ Thumbs.db
 
 # VSCode
 .vscode/
+node_modules/
 
 # Local dev notes
 dev/
