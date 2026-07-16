@@ -51,7 +51,7 @@ git diff --check
 - Harness/Driver 版本为 `10.0.1-alpha.2`，Runtime quality binding 为 `rewrite`；Dyad、
   Weaver、Weaver-Orch 和 Scene Writer 仍为 `observe`。
 - Anti-AI-Flavor Rule Pack `0.3.0-alpha.1` 包含 Detector/Judge/calibration JSON Schema、
-  94 条 calibration/conformance case、6 个 experimental document metrics 和
+  102 条 calibration/conformance case、6 个 experimental document metrics 和
   cn-antislop evaluating candidate 资产，且全部进入 manifest hash。
 - 根 Harness 与 Rule Pack 要求 `quality-detector/document-metrics@1`，因此旧 Vesicle
   明确报告不兼容。`quality-judge/anti-ai-flavor@1` 已登记但未要求，本包不执行 Judge。

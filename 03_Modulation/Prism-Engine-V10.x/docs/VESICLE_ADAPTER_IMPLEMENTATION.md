@@ -29,7 +29,7 @@ V10 Harness Builder 已生成：
 
 当前 Vesicle 能安装、验证和固定旧 Rule Pack，并执行既有 deterministic Guard。
 `10.0.1-alpha.2` 新增 required capability `quality-detector/document-metrics@1`，因此该
-基线会按设计拒绝激活新包。PR 4 实现有限 metric registry 并通过本包的 20 条 host
+基线会按设计拒绝激活新包。PR 4 实现有限 metric registry 并通过本包的 24 条 host
 conformance case 后，才具备兼容性。Judge capability 留待后续 PR。
 
 ## 2. 已实现基线 — Harness 安装与验证

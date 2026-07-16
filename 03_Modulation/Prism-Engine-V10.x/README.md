@@ -116,7 +116,7 @@ Profile bindings、Prompt bindings、Quality bindings 和全部资产 SHA-256。
 - Evaluate 与 Chapter Reviewer 组合 Judge rubric。
 - 原引擎或 Scene Writer 拥有重写责任。
 - Evaluate 和 Chapter Reviewer 的报告不递归进入 Guard。
-- Rule Pack 同包交付 Detector/Judge/calibration JSON Schema、94 条 calibration/conformance
+- Rule Pack 同包交付 Detector/Judge/calibration JSON Schema、102 条 calibration/conformance
   case 和外部候选 provenance，供 Vesicle 独立实现和回归。Judge capability 已登记但
   本包未要求，也不会在宿主实现前执行。
 
