@@ -1,0 +1,13 @@
+{
+  "name": "neural-narratology-tooling",
+  "private": true,
+  "scripts": {
+    "check:rules": "bun shared/rule-assets/scripts/check.ts",
+    "check:driver": "bun shared/prism-driver/scripts/check.ts",
+    "test:contracts": "bun test shared/rule-assets/tests shared/prism-driver/tests"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1"
+  }
+}

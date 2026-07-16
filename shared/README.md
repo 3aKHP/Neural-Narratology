@@ -22,8 +22,8 @@
 
 | 模块 | 说明 |
 |:---|:---|
-| [`anti-ai-flavor/`](./anti-ai-flavor/) | 反 AI 味知识源：从同一份规则生成 Guidance、Detector 与 Judge rubric。 |
-| [`rule-assets/`](./rule-assets/) | 通用规则资产编译框架：把文风库、检测规则和替换表投射为可校验的 Rule Pack 与 Vesicle Harness Pack。 |
+| [`anti-ai-flavor/`](./anti-ai-flavor/) | 反 AI 味知识源：从同一份规则生成 Guidance、Detector、Judge contract、校准语料与候选 provenance。 |
+| [`rule-assets/`](./rule-assets/) | 通用规则资产编译框架：把文风库、检测规则、候选数据和替换表投射为可校验的 Rule Pack 与 Vesicle Harness Pack。 |
 | [`prism-driver/`](./prism-driver/) | Prism Host Abstraction Layer：定义引擎操作、资源、生命周期、Host Adapter Schema 与契约测试。 |
 
 ## 先例

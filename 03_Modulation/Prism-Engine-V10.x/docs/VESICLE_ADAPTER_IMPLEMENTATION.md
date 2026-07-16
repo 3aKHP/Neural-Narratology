@@ -4,12 +4,13 @@
 >
 > Neural-Narratology 基线：当前工作树
 >
-> Prism Vesicle 只读核对基线：`develop` / `f2ae1619aa66d093b35196610975e83b9ab52cdf`
+> Prism Vesicle 只读核对基线：`develop` / `9086abd53bcec341d88df630ab298d879161629c`
 >
 > 约束：本文只记录 Prism Vesicle 所需工作，不修改姊妹项目代码。
 
-只读加载复核时，Vesicle 工作树已有未提交的 Provider/TUI WIP。每次核对前后的
-`git status --short` 均保持一致；本工作未写入这些文件或其它 Vesicle 路径。
+该基线已经实现 managed/bundled Harness Pack、精确 capability 协商、
+`quality-guard/anti-ai-flavor@1`、artifact post-image 检查、durable quality outcome 与
+TUI resume。本工作只修改 Neural-Narratology；PR 4 才会修改 Vesicle。
 
 ## 1. 当前兼容性结论
 
@@ -22,13 +23,18 @@ V10 Harness Builder 已生成：
 - Anti-AI-Flavor Rule Pack；
 - 完整 manifest 与逐文件 hash。
 
-这些 Profile 已使用当前 Vesicle 的 `loadEngineProfile()`、`loadPromptBundle()`、`loadAgentProfile()` 和 `loadAgentSystemPrompt()` 进行只读加载验证。六引擎、三个 Agent 均可解析，基础 Prompt 可从 Vesicle bundled assets 回落加载。
+这些 Profile 已使用当前 Vesicle 的 `loadEngineProfile()`、`loadPromptBundle()`、
+`loadAgentProfile()` 和 `loadAgentSystemPrompt()` 进行只读加载验证。六引擎、三个 Agent
+均可解析，基础 Prompt 可从 Vesicle bundled assets 回落加载。
 
-当前 Vesicle 尚未实现 Harness Pack 安装与 capability 激活，也没有 Output Quality Guard。因此 manifest 声明的全部语义目前不能自动执行。
+当前 Vesicle 能安装、验证和固定旧 Rule Pack，并执行既有 deterministic Guard。
+`10.0.1-alpha.2` 新增 required capability `quality-detector/document-metrics@1`，因此该
+基线会按设计拒绝激活新包。PR 4 实现有限 metric registry 并通过本包的 20 条 host
+conformance case 后，才具备兼容性。Judge capability 留待后续 PR。
 
-## 2. P0 — Harness 安装与验证
+## 2. 已实现基线 — Harness 安装与验证
 
-建议在 Vesicle 新增专用 Harness loader，职责限定为 Prism Harness Pack：
+Vesicle 已有专用 Harness loader，职责限定为 Prism Harness Pack：
 
 ```text
 src/core/harness/
@@ -39,7 +45,7 @@ src/core/harness/
 └── types.ts
 ```
 
-最低行为：
+已实现行为：
 
 1. 读取 `prism-harness-pack/v1` manifest。
    Schema 位于 `shared/prism-driver/schemas/harness-manifest.schema.json`。
@@ -67,11 +73,11 @@ Adapter 和 hash。
 
 不建议在运行时读取 Neural-Narratology 路径、symlink 或跨仓相对文件。
 
-## 3. P0 — Profile 与 Binding 激活
+## 3. 已实现基线 — Profile 与 Binding 激活
 
 生成的 Profile 已包含完整 `systemPrompt` 数组，Vesicle 无需解析 canonical Prompt 或重新生成工具说明。
 
-建议 Harness loader 验证：
+Harness loader 验证：
 
 - `profileBindings` 中六个引擎均为 Vesicle 已知 EngineId；
 - `agentProfileBindings` 的 profile id 合法；
@@ -81,23 +87,28 @@ Adapter 和 hash。
 
 `promptBindings` 和 `agentPromptBindings` 用于审计及漂移检测；运行时仍以 Profile 的 `systemPrompt` 为直接加载入口。
 
-## 4. P0 — Output Quality Guard
+## 4. PR 4 — Document metrics
 
-manifest 的 `qualityBindings` 与 `agentQualityBindings` 是 HAL 质量策略入口。建议由 Harness Binder 翻译为宿主运行时策略，避免要求 canonical V10 Prompt 认识 Vesicle Profile Schema。
+manifest 的 `qualityBindings` 与 `agentQualityBindings` 已接入宿主质量策略。PR 4 在该
+既有 lifecycle 内增加有限 document metric signal，不改变 target、durability、rewrite
+预算或 TUI 决策状态机。
 
-最低能力：
+PR 4 验收能力：
 
-- `quality-guard/anti-ai-flavor@1`
-- candidate extractor：Runtime prose、Dyad character response、Weaver/Scene Writer scene prose
-- deterministic detector
-- observe 事件记录
-- Runtime rewrite budget 与原引擎重写路径；其它正文生成面先保持 observe
-- Rule Pack 自带 JSON Schema 与 host conformance corpus，宿主实现必须逐例通过
-- Markdown code、YAML、HUD、Hidden Neural Chain、引用和报告保护区
-- SubAgent completion 在交付父引擎前执行同一策略
-- Evaluate 与 Chapter Reviewer 报告排除递归 Guard
+- 保持 `quality-guard/anti-ai-flavor@1` 兼容
+- `quality-detector/document-metrics@1`（Harness `10.0.1-alpha.2` 起 required）
+- 只实现 Rule Pack schema 列举的 6 个 document metric signal
+- 新 signals 保持 `experimental` advisory/observe，不进入 Runtime blocking policy
+- 直接执行发布的 host conformance JSONL
+- 保持 Markdown code、YAML、HUD、Hidden Neural Chain、引用、报告和对话保护区
+- 未知 signal/capability 与篡改资产继续 fail closed
 
-建议代码责任域沿用已有架构决策中的 `src/core/quality/`，并把 Harness quality binding 作为配置来源之一。
+代码责任域继续使用既有 `src/core/quality/`，Harness quality binding 仍是配置来源。
+
+Rule Pack 同时交付 `judge-rubric.zh-CN.md`、`judge-rules.zh-CN.json` 与
+`judge-result.schema.json`。这些文件在本阶段属于已验证合同资产；Adapter 与 root
+manifest 尚未要求 `quality-judge/anti-ai-flavor@1`，宿主不得提前执行 Judge 或把其
+finding 接入 rewrite policy。
 
 ## 5. P1 — Evaluate 分析工具
 

@@ -1,0 +1,78 @@
+{
+  "schema": "quality-rule-candidate-evaluation/v1",
+  "source": {
+    "id": "cn-antislop",
+    "url": "https://github.com/Yi-111-a/cn-antislop",
+    "commit": "d8a62764a21204fd06e2801f86cc64701bbcf23b",
+    "license": "MIT"
+  },
+  "requiredModelFamilies": 3,
+  "observedModelFamilies": ["deepseek"],
+  "promotedRuleIds": [],
+  "candidates": [
+    {
+      "id": "cn-l0-mengdi",
+      "layer": "L0",
+      "pattern": "猛地",
+      "status": "evaluating",
+      "observedModelFamilies": ["deepseek"],
+      "reason": "The fixed source snapshot reports only deepseek-v4-flash output; cross-model and genre-slice false-positive evidence is missing."
+    },
+    {
+      "id": "cn-l0-zhou-ran",
+      "layer": "L0",
+      "pattern": "骤然",
+      "status": "evaluating",
+      "observedModelFamilies": ["deepseek"],
+      "reason": "The fixed source snapshot reports only deepseek-v4-flash output; cross-model and genre-slice false-positive evidence is missing."
+    },
+    {
+      "id": "cn-l0-huayin-weiluo",
+      "layer": "L0",
+      "pattern": "话音未落",
+      "status": "evaluating",
+      "observedModelFamilies": ["deepseek"],
+      "reason": "The fixed source snapshot reports only deepseek-v4-flash output; cross-model and genre-slice false-positive evidence is missing."
+    },
+    {
+      "id": "cn-l1-la-de-henchang",
+      "layer": "L1",
+      "pattern": "拉 得 很 长",
+      "status": "evaluating",
+      "observedModelFamilies": ["deepseek"],
+      "reason": "The L1 skeleton is promising but has not been reproduced across three model families with a publishable human control corpus."
+    },
+    {
+      "id": "cn-l1-ya-de-hendi",
+      "layer": "L1",
+      "pattern": "压 得 很 低",
+      "status": "evaluating",
+      "observedModelFamilies": ["deepseek"],
+      "reason": "The L1 skeleton is promising but has not been reproduced across three model families with a publishable human control corpus."
+    },
+    {
+      "id": "cn-l1-mengdi-yisuo",
+      "layer": "L1",
+      "pattern": "<N> 猛地 一 缩",
+      "status": "evaluating",
+      "observedModelFamilies": ["deepseek"],
+      "reason": "The L1 skeleton is promising but has not been reproduced across three model families with a publishable human control corpus."
+    },
+    {
+      "id": "cn-l1-xiangshi-you",
+      "layer": "L1",
+      "pattern": "像是 有 <R> <N>",
+      "status": "evaluating",
+      "observedModelFamilies": ["deepseek"],
+      "reason": "The L1 skeleton is promising but has not been reproduced across three model families with a publishable human control corpus."
+    },
+    {
+      "id": "cn-l1-fachu-chenmen",
+      "layer": "L1",
+      "pattern": "发出 一声 沉闷 的",
+      "status": "evaluating",
+      "observedModelFamilies": ["deepseek"],
+      "reason": "The L1 skeleton is promising but has not been reproduced across three model families with a publishable human control corpus."
+    }
+  ]
+}

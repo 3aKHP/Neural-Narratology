@@ -5,11 +5,27 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.1 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.2 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-16 — Anti-AI-Flavor Rule Pack 0.3 contract 与实验 signals
+
+### Added — `[Repo]`
+- 从 oh-story-claudecode 固定 MIT 快照采用 6 个中文叙事文档级 signal：微动作复读、动作清单、套词密度、比喻密度、解释链密度与抽象总结；全部以 `experimental` advisory 规则发布。
+- 新增 `judge-rules/v1` 与 `quality-judge-result/v1` JSON Schema，Judge rules 明确稳定 rule ID、target 与 exact-substring evidence 合同；Judge 资产已验证但本阶段不执行。
+- 校准语料统一增加 split、genre、source kind、model family、length bucket、POV、dialogue ratio 与 provenance。21 条 Guidance 正反例生成 42 条 tracked training case；Detector、Judge 与 host conformance 合计扩展至 94 条 JSONL case。
+- 新增已哈希的 cn-antislop L0/L1 candidate evaluation 资产。固定快照只有 `deepseek-v4-flash` 证据，8 个候选保持 `evaluating`，`promotedRuleIds` 为空。
+- 引入 Ajv 2020-12 contract tests，逐个验证编译后的 Rule Pack、Detector、Judge、candidate evaluation 和全部 JSONL corpus。
+
+### Changed — `[Modulation]`
+- Harness/Driver 升级到 **10.0.1-alpha.2**，Anti-AI-Flavor 升级到 **0.3.0-alpha.1**。
+- capability registry 分别登记 `quality-detector/document-metrics@1` 与 `quality-judge/anti-ai-flavor@1`。首个 prerelease 只要求 metrics；旧 Vesicle 会明确拒绝激活，Judge 等待后续宿主实现再启用。
+- CI 与 Harness Release workflow 使用冻结的 Bun lockfile 安装 schema-validation 依赖，继续执行 source check、contract tests 和两次 Harness 字节一致构建。
 
 ---
 
@@ -562,3 +578,4 @@
 | 2026-04-14 | **v9.0 State-Space** | — | 人格拓扑引擎，ETL 变换流水线 |
 | 2026-07-12 | **v10.0 Tempered-Voice** | **v10.0（面向 Prism Vesicle）** | 强基底下语言层重做，约束与嗓音淬炼；Phase III 收窄为 Prism Vesicle 单一目标平台 |
 | 2026-07-14 | v10.0 Tempered-Voice | **v10.0.1-alpha.1 Harness** | Delegation 合同与 Runtime Quality Guard first delivery |
+| 2026-07-16 | v10.0 Tempered-Voice | **v10.0.1-alpha.2 Harness** | Rule Pack 0.3 contract、实验 document metrics 与校准语料 |

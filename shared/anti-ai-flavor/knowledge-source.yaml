@@ -16,7 +16,7 @@ meta:
   source_schema: rule-source/v1
   schema_version: "0.2"
   module: anti-ai-flavor
-  version: "0.2.1"
+  version: "0.3.0-alpha.1"
   display_name: Anti-AI Flavor
   primary_lang: zh-CN
   default_targets:
@@ -381,6 +381,212 @@ entries:
       cn-antislop 结构指标之一,不依赖词表。阈值为占位待校准。
       face=B:作为 observe-only 检测信号,不宜写成给 LLM 的硬规则(易矫枉过正)。
 
+  - id: zh-f3-micro-action-density
+    tier: F3
+    lang: zh-CN
+    face: B
+    title: 微动作补语高密度复读
+    matcher:
+      kind: metric
+      unit: candidate
+      metric:
+        signal: micro_action_per_1000_chars
+        operator: gte
+        threshold: 6
+        minimumMatches: 5
+        excludeDialogue: true
+        patterns:
+          - id: light-action-complement
+            value: '了(?:[一两三几半])?[下阵圈道声眼口气会]'
+            flags: u
+    maturity: experimental
+    severity: tier3
+    source: oh-story-claudecode
+    notes: >
+      从固定 oh-story 快照的数据分布规则移植。单次微动作补语是正常中文,只有
+      引号外叙述同时达到次数和每千字密度门槛时才产生 advisory finding。
+
+  - id: zh-f3-action-list-density
+    tier: F3
+    lang: zh-CN
+    face: B
+    title: 同段动作清单过密
+    matcher:
+      kind: metric
+      unit: paragraph
+      metric:
+        signal: action_list_verbs_per_paragraph
+        operator: gte
+        threshold: 5
+        minimumMatches: 5
+        minimumSeparators: 4
+        excludeDialogue: true
+        patterns:
+          - id: generic-action-verb
+            value: '伸手|抬手|探手|拿起|拿过|取出|取过|掏出|摸出|抓起|攥住|握住|捏住|按住|推开|拉开|打开|关上|放下|递给|挑开|掀开|扯开|拧开|倒出|端起|转身|回头|抬头|低头|弯腰|俯身|走到|走向|坐下|站起|看向|看着|盯着|扫过'
+            flags: u
+    maturity: experimental
+    severity: tier3
+    source: oh-story-claudecode
+    notes: >
+      仅在同一叙述段同时出现至少五个通用动作动词和四个步骤分隔符时提示。
+      打斗、追逐等功能性动作编排仍需人工判断。
+
+  - id: zh-f3-cliche-density
+    tier: F3
+    lang: zh-CN
+    face: B
+    title: 高危叙事套词聚集
+    matcher:
+      kind: metric
+      unit: candidate
+      metric:
+        signal: cliche_per_1000_chars
+        operator: gte
+        threshold: 12
+        minimumMatches: 8
+        excludeDialogue: true
+        patterns:
+          - id: simile-connectors
+            value: '仿佛|犹如|宛若|如同'
+            flags: u
+          - id: vague-quantity
+            value: '一丝|一抹|些许|几分|隐约'
+            flags: u
+          - id: softened-motion
+            value: '深吸一口气|缓缓|微微|轻轻|淡淡'
+            flags: u
+          - id: stock-body-detail
+            value: '眼中闪过|嘴角勾起|眸光微微一闪|指节泛白|目光锐利|眼神锐利'
+            flags: u
+          - id: stock-inner-state
+            value: '心中涌起一股|心头一震|心中一动|心下了然|心中暗道|心中一凛'
+            flags: u
+          - id: absolute-claim
+            value: '不容置疑|不容置喙|不易察觉|显而易见|毫无疑问|不可否认'
+            flags: u
+          - id: flat-voice
+            value: '声音不大[，,]?却带着|语气平静无波|平静无波|声音平直|听不出情绪'
+            flags: u
+          - id: vague-transition
+            value: '不知何时|唾手可得|无声翻涌|沉默(?:在[^。！？!?\n]{0,16})?蔓延|难以言说'
+            flags: u
+          - id: stock-atmosphere
+            value: '散发着一股|冰冷的光|格外刺眼|深邃而冰冷'
+            flags: u
+    maturity: experimental
+    severity: tier3
+    source: oh-story-claudecode
+    notes: >
+      只把成片聚集当作 advisory,不把单个词当成作者身份或 rewrite 依据。
+
+  - id: zh-f3-metaphor-density
+    tier: F3
+    lang: zh-CN
+    face: B
+    title: 比喻标记成片复现
+    matcher:
+      kind: metric
+      unit: candidate
+      metric:
+        signal: metaphor_markers_per_1000_chars
+        operator: gte
+        threshold: 3
+        minimumMatches: 7
+        excludeDialogue: true
+        patterns:
+          - id: explicit-simile-marker
+            value: '好像|像是|仿佛|宛如|如同|犹如|(?<![不头图画影录摄肖])像(?![头像素])'
+            flags: u
+          - id: material-like-phrase
+            value: '(?<!像)(?<!像是)(?:死|水|冰|火|潮水|石头|木头|机器|纸|铁|鬼|死人|刀|针|网|墙)一样'
+            flags: u
+    maturity: experimental
+    severity: tier3
+    source: oh-story-claudecode
+    notes: >
+      单个生活化比喻不触发;次数与密度双门槛用于发现同篇文本中的修辞堆叠。
+
+  - id: zh-f3-reasoning-chain-density
+    tier: F3
+    lang: zh-CN
+    face: B
+    title: 解释与判断链过密
+    matcher:
+      kind: metric
+      unit: candidate
+      metric:
+        signal: reasoning_chain_per_1000_chars
+        operator: gte
+        threshold: 18
+        minimumMatches: 8
+        minimumCoreMatches: 4
+        minimumBuckets: 2
+        excludeDialogue: true
+        patterns:
+          - id: mental-assertion
+            value: '(?<![不没未无])(?:他|她|我)?(?:知道|明白|意识到|清楚|判断|确认|分析)'
+            flags: u
+            core: true
+          - id: explanatory-connector
+            value: '这意味着|也就是说|换句话说|真正的问题(?:在于)?|问题在于|关键在于|在这种情况下|按照这个逻辑|只有这样|想到这里'
+            flags: u
+            core: true
+          - id: modal-consequence
+            value: '(?:(?<!不)(?:必须|需要|应该|只要|就会|可能|可以|能够|无法)|不能)[^。！？!?\n]{0,16}(?:判断|确认|承担|维持|稳住|控制|扩大|失控|带来|造成|理解|默认|回家|进门|核对|筛选|减少|建立|风险|结果|秩序|责任)'
+            flags: u
+            core: true
+          - id: abstract-domain-term
+            value: '任务|条件|风险|来源|逻辑|局面|结果|责任|秩序|规则|信息不足|决策能力'
+            flags: u
+    maturity: experimental
+    severity: tier3
+    source: oh-story-claudecode
+    notes: >
+      同时要求核心判断、至少两个 pattern bucket 和总密度,避免仅因题材名词集中误报。
+
+  - id: zh-f3-abstract-summary-density
+    tier: F3
+    lang: zh-CN
+    face: B
+    title: 抽象总结模板复读
+    matcher:
+      kind: metric
+      unit: candidate
+      metric:
+        signal: abstract_summary_per_1000_chars
+        operator: gte
+        threshold: 4
+        minimumMatches: 3
+        excludeDialogue: true
+        patterns:
+          - id: realization-summary
+            value: '这一刻[，,]?[^\n。！？!?]{0,24}(?:终于|才)(?:明白|意识到)'
+            flags: u
+          - id: from-this-moment
+            value: '从这一刻开始'
+            flags: u
+          - id: destiny-summary
+            value: '(?:命运|宿命)[^\n。！？!?]{0,28}(?:齿轮|棋局|獠牙|改写|推向|安排)'
+            flags: u
+          - id: arranged-board
+            value: '早已[^\n。！？!?]{0,8}(?:布好|安排好)[^\n。！？!?]{0,8}(?:棋局|局)'
+            flags: u
+          - id: unprecedented-state
+            value: '前所未有的(?:决意|清醒|勇气|力量|恐惧|平静|信念)'
+            flags: u
+          - id: only-just-begun
+            value: '(?:反击|复仇|战争|较量|故事|命运)[^\n。！？!?]{0,12}才刚刚开始'
+            flags: u
+          - id: new-beginning
+            value: '新的开始|全新的开始'
+            flags: u
+    maturity: experimental
+    severity: tier3
+    source: oh-story-claudecode
+    notes: >
+      只对成片作者总结给 advisory finding;引号内台词和低密度题材词不计。
+
   - id: zh-f3-mechanical-plot-compliance
     tier: F3
     lang: zh-CN
@@ -434,17 +640,33 @@ sources:
     name: "中文 AI 味(slop)指纹提取工具 / Chinese AI Slop Fingerprint Toolkit"
     url: "https://github.com/Yi-111-a/cn-antislop"
     license: MIT
+    commit: d8a62764a21204fd06e2801f86cc64701bbcf23b
     lang: zh-CN
     face: both
     status: adopted
     note: >
-      四层指纹模型(F0-F3)方法论与破折号密度信号已采纳。其 L0/L1 中文词表与
-      骨架表仍列为后续评估对象,未批量导入。
+      四层指纹模型(F0-F3)方法论与破折号密度信号已采纳。固定快照只发布
+      deepseek-v4-flash 语料,尚无跨三个模型家族的复核证据;其 L0/L1 中文词表与
+      骨架表继续处于 evaluating,未导入 active detector rules。
+
+  - id: oh-story-claudecode
+    name: "oh-story-claudecode deterministic prose checks"
+    url: "https://github.com/worldwonderer/oh-story-claudecode"
+    license: MIT
+    commit: 3419e939b8455400cadcdd062fb1da2a92a6d4b9
+    lang: zh-CN
+    face: B
+    status: adopted
+    note: >
+      采用固定快照中六个文档级 advisory signal 的检测语义、阈值与公开回归样例。
+      未复制 CLI、宿主集成、blocking policy 或其它规则;Vesicle 只消费编译后的
+      Rule Pack 数据。
 
   - id: antislop-sampler
     name: "antislop-sampler (sam-paech)"
     url: "https://github.com/sam-paech/antislop-sampler"
     license: Apache-2.0
+    commit: 0ae330e98fbe6f09351f2d1063a51956378a44b2
     lang: en-US
     face: B
     status: adopted
@@ -456,6 +678,7 @@ sources:
     name: "The AntiSlop (Claude Skill)"
     url: "https://github.com/aplaceforallmystuff/the-antislop"
     license: MIT
+    commit: 5edbf8562041fc99070e1bd51e0862afbb535fff
     lang: en-US
     face: A
     status: reference

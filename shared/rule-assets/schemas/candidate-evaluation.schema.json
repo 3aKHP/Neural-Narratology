@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/candidate-evaluation.schema.json",
+  "title": "Rule Candidate Evaluation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "source", "requiredModelFamilies", "observedModelFamilies", "promotedRuleIds", "candidates"],
+  "properties": {
+    "schema": { "const": "quality-rule-candidate-evaluation/v1" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "url", "commit", "license"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "commit": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "license": { "type": "string", "minLength": 1 }
+      }
+    },
+    "requiredModelFamilies": { "type": "integer", "minimum": 3 },
+    "observedModelFamilies": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "promotedRuleIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "layer", "pattern", "status", "observedModelFamilies", "reason"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "layer": { "enum": ["L0", "L1"] },
+          "pattern": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["evaluating", "promoted", "rejected"] },
+          "observedModelFamilies": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

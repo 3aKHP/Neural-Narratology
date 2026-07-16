@@ -38,6 +38,9 @@ jobs:
         with:
           bun-version: 1.3.14
 
+      - name: Install contract test dependencies
+        run: bun install --frozen-lockfile
+
       - name: Validate rule assets and Prism Driver
         run: |
           bun shared/rule-assets/scripts/check.ts

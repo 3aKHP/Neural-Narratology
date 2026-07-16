@@ -4,10 +4,13 @@
   "title": "Rule Host Conformance Case v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["name", "candidateType", "text", "expectedRuleIds"],
+  "required": ["schema", "name", "candidateType", "language", "targetType", "text", "expectedRuleIds", "provenance"],
   "properties": {
+    "schema": { "const": "quality-host-conformance-case/v1" },
     "name": { "type": "string", "minLength": 1 },
     "candidateType": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 1 },
+    "targetType": { "type": "string", "minLength": 1 },
     "text": { "type": "string" },
     "protectedRanges": {
       "type": "array",
@@ -25,6 +28,17 @@
       "type": "array",
       "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "license"],
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "license": { "type": "string", "minLength": 1 },
+        "commit": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "notes": { "type": "string", "minLength": 1 }
+      }
     }
   }
 }

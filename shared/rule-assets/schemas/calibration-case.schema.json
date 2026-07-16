@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/calibration-case.schema.json",
+  "title": "Quality Calibration Case v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "name",
+    "language",
+    "targetType",
+    "split",
+    "genre",
+    "sourceKind",
+    "modelFamily",
+    "lengthBucket",
+    "pov",
+    "dialogueRatio",
+    "text",
+    "expectedRuleIds",
+    "provenance"
+  ],
+  "properties": {
+    "schema": { "const": "quality-calibration-case/v1" },
+    "name": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 1 },
+    "targetType": { "type": "string", "minLength": 1 },
+    "split": { "enum": ["train", "dev", "held-out"] },
+    "genre": { "type": "string", "minLength": 1 },
+    "sourceKind": {
+      "enum": [
+        "curated-rule-example",
+        "third-party-fixture",
+        "synthetic-model",
+        "synthetic-human",
+        "human-public-domain",
+        "regression"
+      ]
+    },
+    "modelFamily": { "type": "string", "minLength": 1 },
+    "lengthBucket": { "enum": ["short", "medium", "long"] },
+    "pov": { "enum": ["first", "third", "mixed", "not-applicable"] },
+    "dialogueRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+    "text": { "type": "string", "minLength": 1 },
+    "expectedVerdict": { "enum": ["pass", "rewrite"] },
+    "expectedRuleIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "notes": { "type": "string", "minLength": 1 },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "license"],
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "license": { "type": "string", "minLength": 1 },
+        "commit": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "ruleId": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "expectedVerdict": { "const": "pass" } },
+        "required": ["expectedVerdict"]
+      },
+      "then": { "properties": { "expectedRuleIds": { "maxItems": 0 } } }
+    }
+  ]
+}

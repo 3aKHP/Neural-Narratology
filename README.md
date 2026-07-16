@@ -148,6 +148,7 @@ Neural-Narratology/
 │       ├── README.md
 │       ├── SCHEMA-SPEC.md
 │       ├── knowledge-source.yaml
+│       ├── candidates/               # 未晋级外部规则候选与证据状态
 │       ├── docs/ARCHITECTURE.md
 │       └── zh-CN/prose-craft-guide.md
 │

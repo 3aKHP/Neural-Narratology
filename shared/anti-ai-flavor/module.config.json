@@ -3,13 +3,15 @@
   "id": "anti-ai-flavor",
   "source": "shared/anti-ai-flavor/knowledge-source.yaml",
   "tracked_guidance": "shared/anti-ai-flavor/zh-CN/prose-craft-guide.md",
+  "tracked_calibration": "shared/anti-ai-flavor/corpus/guidance-pairs.zh-CN.jsonl",
   "projection_map": {
     "A": ["guidance", "judge"],
     "B": ["detector"],
     "both": ["guidance", "detector", "judge"]
   },
   "required_capabilities": [
-    "quality-guard/anti-ai-flavor@1"
+    "quality-guard/anti-ai-flavor@1",
+    "quality-detector/document-metrics@1"
   ],
   "guidance": {
     "language": "zh-CN",
@@ -44,12 +46,20 @@
   },
   "corpora": {
     "detector": "shared/anti-ai-flavor/corpus/detector.zh-CN.jsonl",
+    "guidance-pairs": "shared/anti-ai-flavor/corpus/guidance-pairs.zh-CN.jsonl",
     "host-conformance": "shared/anti-ai-flavor/corpus/host-conformance.zh-CN.jsonl",
     "judge": "shared/anti-ai-flavor/corpus/judge.zh-CN.jsonl"
   },
+  "data_artifacts": {
+    "cn-antislop-candidates": "shared/anti-ai-flavor/candidates/cn-antislop.zh-CN.json"
+  },
   "schemas": {
+    "candidate-evaluation": "shared/rule-assets/schemas/candidate-evaluation.schema.json",
+    "calibration-case": "shared/rule-assets/schemas/calibration-case.schema.json",
     "detector-rules": "shared/rule-assets/schemas/detector-rules.schema.json",
     "host-conformance-case": "shared/rule-assets/schemas/host-conformance-case.schema.json",
+    "judge-result": "shared/rule-assets/schemas/judge-result.schema.json",
+    "judge-rules": "shared/rule-assets/schemas/judge-rules.schema.json",
     "rule-pack": "shared/rule-assets/schemas/rule-pack.schema.json"
   },
   "notices": "shared/anti-ai-flavor/THIRD_PARTY_NOTICES.md"

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/judge-result.schema.json",
+  "title": "Judge Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "verdict", "confidence", "findings"],
+  "properties": {
+    "schema": { "const": "quality-judge-result/v1" },
+    "verdict": { "enum": ["pass", "rewrite"] },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ruleId", "evidence", "confidence", "explanation", "rewriteInstruction"],
+        "properties": {
+          "ruleId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "evidence": { "type": "string", "minLength": 1, "maxLength": 240 },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "explanation": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "rewriteInstruction": { "type": "string", "minLength": 1, "maxLength": 500 }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "verdict": { "const": "pass" } }, "required": ["verdict"] },
+      "then": { "properties": { "findings": { "maxItems": 0 } } }
+    },
+    {
+      "if": { "properties": { "verdict": { "const": "rewrite" } }, "required": ["verdict"] },
+      "then": { "properties": { "findings": { "minItems": 1 } } }
+    }
+  ]
+}

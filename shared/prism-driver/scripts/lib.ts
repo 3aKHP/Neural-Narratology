@@ -92,6 +92,7 @@ export type HostAdapter = {
 
 type CapabilityRegistry = {
   schema: string;
+  capabilities: Record<string, { kind: string; description: string }>;
   operations: Record<string, { kind: string; description: string }>;
 };
 
@@ -119,6 +120,10 @@ export async function validateDriverPair(contract: DriverContract, adapter: Host
   if (adapter.schema !== "prism-host-adapter/v1") errors.push("adapter.schema must be prism-host-adapter/v1");
   if (!isSemver(contract.version)) errors.push("contract.version must be SemVer");
   if (!isSemver(adapter.version)) errors.push("adapter.version must be SemVer");
+  if (new Set(adapter.capabilities).size !== adapter.capabilities.length) errors.push("adapter capabilities contain duplicates");
+  for (const capability of adapter.capabilities) {
+    if (!registry.capabilities[capability]) errors.push(`adapter declares unregistered capability ${capability}`);
+  }
 
   const allInteractionIds = new Set<string>();
   const allDelegationIds = new Set<string>();
