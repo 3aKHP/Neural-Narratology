@@ -99,7 +99,7 @@ Engine/Agent Profile。
 ## 7. 版本记录
 
 - 0.3.0-alpha.1（2026-07-16）：增加 6 条 experimental 文档 metric、Judge
-  rules/result contract、完整 calibration metadata、42 条 Guidance pairs、20 条 host
+  rules/result contract、完整 calibration metadata、42 条 Guidance pairs、24 条 host
   conformance case 和 cn-antislop evaluating candidate 资产；只激活 metrics capability。
 - 0.2.1（2026-07-14）：增加 Rule Pack、Detector、host conformance JSON Schema 与
   跨宿主 conformance corpus；Runtime 首次进入 rewrite policy。

@@ -499,7 +499,7 @@ entries:
             value: '好像|像是|仿佛|宛如|如同|犹如|(?<![不头图画影录摄肖])像(?![头像素])'
             flags: u
           - id: material-like-phrase
-            value: '(?<!像)(?<!像是)(?:死|水|冰|火|潮水|石头|木头|机器|纸|铁|鬼|死人|刀|针|网|墙)一样'
+            value: '(?:死|水|冰|火|潮水|石头|木头|机器|纸|铁|鬼|死人|刀|针|网|墙)一样'
             flags: u
     maturity: experimental
     severity: tier3

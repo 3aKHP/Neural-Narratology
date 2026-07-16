@@ -64,6 +64,15 @@ describe("Prism Driver contract", () => {
     expect(adapter.capabilities).not.toContain("quality-judge/anti-ai-flavor@1");
   });
 
+  test("guards Harness release provenance and reproducible archives", async () => {
+    const workflow = await readFile(join(import.meta.dir, "../../../.github/workflows/release-vesicle-harness.yml"), "utf8");
+    expect(workflow).toContain("^harness-[0-9]{8}-[1-9][0-9]*$");
+    expect(workflow).toContain("git rev-list -n1 \"$RELEASE_TAG\"");
+    expect(workflow).toContain("[[ \"$tag_commit\" != \"$GITHUB_SHA\" ]]");
+    expect(workflow).toContain("touch -h -d '1980-01-01T00:00:00Z'");
+    expect(workflow).toContain("sort | zip -q -X");
+  });
+
   test("keeps host tool names out of canonical prompts", async () => {
     const contract = await loadDriverContract(contractPath);
     for (const resource of Object.values(contract.resources).filter((item) => item.kind.endsWith("prompt"))) {

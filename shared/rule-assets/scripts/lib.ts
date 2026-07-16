@@ -409,9 +409,12 @@ export async function renderJudgeRubric(source: RuleSource, config: ModuleConfig
 }
 
 function dialogueRatio(text: string): number {
-  const matches = text.match(/[“”「」『』][^“”「」『』]*[“”「」『』]/gu) ?? [];
-  const dialogue = matches.reduce((total, item) => total + item.length, 0);
-  return Number((dialogue / Math.max(1, text.length)).toFixed(4));
+  const quotePairs = [/“[^”]*”/gu, /「[^」]*」/gu, /『[^』]*』/gu];
+  let dialogue = 0;
+  for (const pattern of quotePairs) {
+    for (const match of text.matchAll(pattern)) dialogue += [...match[0]].length;
+  }
+  return Number((dialogue / Math.max(1, [...text].length)).toFixed(4));
 }
 
 function lengthBucket(text: string): "short" | "medium" | "long" {
@@ -489,8 +492,8 @@ function judgePayload(rule: NormalizedRule): Record<string, unknown> {
     source: rule.source,
     evidence: {
       mode: "exact-substring",
-      minCodeUnits: 1,
-      maxCodeUnits: 240,
+      minCodePoints: 1,
+      maxCodePoints: 240,
     },
   };
 }
@@ -673,6 +676,32 @@ export function preprocessCandidate(input: string, protectedRanges: Array<{ star
   return buffer.join("");
 }
 
+function protectDocumentMetricStructure(text: string): string {
+  const buffer = text.split("");
+  const lines = text.split("\n");
+  if (lines[0]?.trim() === "---") {
+    let sawYamlField = false;
+    let offset = lines[0].length + 1;
+    for (let index = 1; index < Math.min(lines.length, 40); index += 1) {
+      const line = lines[index];
+      const trimmed = line.trim();
+      if (trimmed === "---") {
+        if (sawYamlField) protectRange(buffer, 0, offset + line.length);
+        break;
+      }
+      if (/^[A-Za-z0-9_-]+:\s*/u.test(trimmed)) sawYamlField = true;
+      offset += line.length + 1;
+    }
+  }
+
+  const structural = /^[ \t]*(?:#{1,6}\s|[-*+]\s|\d+[.)]\s|\|).*$/gmu;
+  const chapter = /^[ \t]*第[零一二三四五六七八九十百千万\d]+章(?:\s|_|$).*$/gmu;
+  for (const pattern of [structural, chapter]) {
+    for (const match of text.matchAll(pattern)) protectRange(buffer, match.index, match.index + match[0].length);
+  }
+  return buffer.join("");
+}
+
 function textUnits(text: string, unit: Matcher["unit"]): Array<{ text: string; start: number }> {
   if (unit === "candidate") return [{ text, start: 0 }];
   if (unit === "sentence") {
@@ -702,40 +731,34 @@ function compareMetric(value: number, operator: string, threshold: number): bool
   return value < threshold;
 }
 
-function stripDialogue(text: string): string {
+function metricProse(text: string): string {
   // Keep one array entry per UTF-16 code unit so finding offsets stay host-compatible.
   const chars = text.split("");
-  const pairs: Record<string, string> = {
-    "「": "」",
-    "『": "』",
-    "【": "】",
-    "“": "”",
-    "‘": "’",
-    "\"": "\"",
-    "'": "'",
-  };
-  const stack: string[] = [];
-  for (let index = 0; index < chars.length; index += 1) {
-    const char = chars[index];
-    if (stack.length > 0 && stack[stack.length - 1] === char) {
-      if (char !== "\n") chars[index] = " ";
-      stack.pop();
-      continue;
-    }
-    if (pairs[char]) {
-      stack.push(pairs[char]);
-      if (char !== "\n") chars[index] = " ";
-      continue;
-    }
-    if (stack.length > 0) {
-      if (char !== "\n") chars[index] = " ";
+  const quotePairs: Array<[string, string]> = [
+    ["「", "」"],
+    ["『", "』"],
+    ["【", "】"],
+    ["“", "”"],
+    ["‘", "’"],
+    ["\"", "\""],
+    ["'", "'"],
+  ];
+  for (const [open, close] of quotePairs) {
+    let cursor = 0;
+    while (cursor < text.length) {
+      const start = text.indexOf(open, cursor);
+      if (start < 0) break;
+      const end = text.indexOf(close, start + open.length);
+      if (end < 0) break;
+      protectRange(chars, start, end + close.length);
+      cursor = end + close.length;
     }
   }
   return chars.join("");
 }
 
 function visibleLength(text: string): number {
-  return [...text].filter((char) => !/\s/u.test(char)).length;
+  return text.match(/[一-鿿Ａ-ｚA-Za-z0-9]/gu)?.length ?? 0;
 }
 
 function metricFinding(
@@ -745,7 +768,8 @@ function metricFinding(
 ): Finding | undefined {
   const metric = matcher.metric;
   if (metric.signal === "em_dash_per_100_chars") {
-    const length = Math.max(1, visibleLength(unit.text));
+    // Preserve the pre-0.3 metric denominator for the existing Rule Pack contract.
+    const length = Math.max(1, [...unit.text].length);
     const count = [...unit.text].filter((char) => char === "—").length;
     const value = (count / length) * 100;
     if (!compareMetric(value, metric.operator, metric.threshold)) return undefined;
@@ -761,7 +785,7 @@ function metricFinding(
     };
   }
 
-  const narrative = metric.excludeDialogue ? stripDialogue(unit.text) : unit.text;
+  const narrative = metric.excludeDialogue ? metricProse(unit.text) : unit.text;
   const matches: Array<{ start: number; end: number; evidence: string; pattern: MetricPattern }> = [];
   const buckets = new Set<string>();
   let coreMatches = 0;
@@ -769,6 +793,11 @@ function metricFinding(
     const flags = `${pattern.flags ?? "u"}g`;
     for (const match of narrative.matchAll(new RegExp(pattern.value, flags))) {
       if (!match[0]) continue;
+      if (
+        metric.signal === "metaphor_markers_per_1000_chars"
+        && pattern.id === "material-like-phrase"
+        && /好像|像是|像|仿佛|宛如|如同|犹如/u.test(narrative.slice(Math.max(0, match.index - 8), match.index))
+      ) continue;
       matches.push({ start: match.index, end: match.index + match[0].length, evidence: match[0], pattern });
       buckets.add(pattern.id);
       if (pattern.core) coreMatches += 1;
@@ -780,7 +809,7 @@ function metricFinding(
 
   let value: number;
   if (metric.signal === "action_list_verbs_per_paragraph") {
-    const separators = [...narrative].filter((char) => "，,、；;".includes(char)).length;
+    const separators = [...narrative].filter((char) => "，、；;".includes(char)).length;
     if (separators < (metric.minimumSeparators ?? 1)) return undefined;
     value = matches.length;
   } else {
@@ -805,10 +834,11 @@ export function detectText(
   options: { protectedRanges?: Array<{ start: number; end: number }> } = {},
 ): Finding[] {
   const text = preprocessCandidate(input, options.protectedRanges);
+  const metricText = protectDocumentMetricStructure(text);
   const findings: Finding[] = [];
   for (const rule of rules.filter((item) => item.projections.includes("detector") && item.matcher)) {
     const matcher = rule.matcher!;
-    for (const unit of textUnits(text, matcher.unit)) {
+    for (const unit of textUnits(matcher.kind === "metric" ? metricText : text, matcher.unit)) {
       if (matcher.kind === "literal") {
         let cursor = 0;
         while (cursor <= unit.text.length) {

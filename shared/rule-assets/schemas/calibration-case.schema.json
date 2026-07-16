@@ -69,6 +69,13 @@
         "required": ["expectedVerdict"]
       },
       "then": { "properties": { "expectedRuleIds": { "maxItems": 0 } } }
+    },
+    {
+      "if": {
+        "properties": { "expectedVerdict": { "const": "rewrite" } },
+        "required": ["expectedVerdict"]
+      },
+      "then": { "properties": { "expectedRuleIds": { "minItems": 1 } } }
     }
   ]
 }

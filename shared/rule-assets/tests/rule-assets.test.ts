@@ -56,9 +56,17 @@ describe("anti-ai-flavor rule pack", () => {
         text: string;
         protectedRanges?: Array<{ start: number; end: number }>;
         expectedRuleIds: string[];
+        expectedMetrics?: Array<{ ruleId: string; signal: string; value: number; threshold: number; tolerance: number }>;
       };
-      const actual = [...new Set(detectText(item.text, rules, { protectedRanges: item.protectedRanges }).map((finding) => finding.ruleId))].sort();
+      const findings = detectText(item.text, rules, { protectedRanges: item.protectedRanges });
+      const actual = [...new Set(findings.map((finding) => finding.ruleId))].sort();
       expect(actual, item.name).toEqual([...item.expectedRuleIds].sort());
+      for (const expected of item.expectedMetrics ?? []) {
+        const metric = findings.find((finding) => finding.ruleId === expected.ruleId)?.metric;
+        expect(metric?.signal, item.name).toBe(expected.signal);
+        expect(metric?.threshold, item.name).toBe(expected.threshold);
+        expect(Math.abs((metric?.value ?? Number.POSITIVE_INFINITY) - expected.value), item.name).toBeLessThanOrEqual(expected.tolerance);
+      }
     }
   });
 
@@ -119,6 +127,48 @@ describe("anti-ai-flavor rule pack", () => {
     expect(ids).not.toContain("zh-f3-cliche-density");
   });
 
+  test("uses the fixed upstream visible-character denominator for document metrics", async () => {
+    const config = await loadModuleConfig(antiConfigPath);
+    const { source } = await loadRuleSource(config);
+    const text = `${"仿佛".repeat(8)}${"，".repeat(100)}`;
+    const finding = detectText(text, normalizeRules(source, config)).find(
+      (item) => item.ruleId === "zh-f3-cliche-density",
+    );
+    expect(finding).toBeDefined();
+    expect(finding!.metric?.value).toBe(500);
+  });
+
+  test("does not let an unclosed quote suppress the remaining document metrics", async () => {
+    const config = await loadModuleConfig(antiConfigPath);
+    const { source } = await loadRuleSource(config);
+    const text = `「未闭合的台词\n${"仿佛".repeat(8)}`;
+    const ids = detectText(text, normalizeRules(source, config)).map((finding) => finding.ruleId);
+    expect(ids).toContain("zh-f3-cliche-density");
+  });
+
+  test("excludes YAML frontmatter and Markdown structural lines from document metrics", async () => {
+    const config = await loadModuleConfig(antiConfigPath);
+    const { source } = await loadRuleSource(config);
+    const text = [
+      "---",
+      "title: 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛",
+      "---",
+      "# 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛",
+      "- 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛",
+      "1. 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛",
+      "正文只有一扇被雨淋湿的门。",
+    ].join("\n");
+    const ids = detectText(text, normalizeRules(source, config)).map((finding) => finding.ruleId);
+    expect(ids).not.toContain("zh-f3-cliche-density");
+  });
+
+  test("keeps structural lines visible to literal and regex rules", async () => {
+    const config = await loadModuleConfig(antiConfigPath);
+    const { source } = await loadRuleSource(config);
+    const ids = detectText("# 空气中弥漫着雨味。", normalizeRules(source, config)).map((finding) => finding.ruleId);
+    expect(ids).toContain("zh-f0-air-thick-with");
+  });
+
   test("accepts host-provided protected ranges for inline examples", async () => {
     const config = await loadModuleConfig(antiConfigPath);
     const { source } = await loadRuleSource(config);
@@ -165,8 +215,12 @@ describe("anti-ai-flavor rule pack", () => {
     };
 
     validate("rule-pack", result.manifest, "rule pack manifest");
-    validate("detector-rules", JSON.parse(result.artifacts.get("detector-rules.zh-CN.json")!), "detector rules");
-    validate("judge-rules", JSON.parse(result.artifacts.get("judge-rules.zh-CN.json")!), "judge rules");
+    const detectorArtifacts = [...result.artifacts].filter(([path]) => /^detector-rules\..+\.json$/u.test(path));
+    const judgeArtifacts = [...result.artifacts].filter(([path]) => /^judge-rules\..+\.json$/u.test(path));
+    expect(detectorArtifacts.map(([path]) => path).sort()).toEqual(["detector-rules.en-US.json", "detector-rules.zh-CN.json"]);
+    expect(judgeArtifacts.map(([path]) => path).sort()).toEqual(["judge-rules.zh-CN.json"]);
+    for (const [path, content] of detectorArtifacts) validate("detector-rules", JSON.parse(content), path);
+    for (const [path, content] of judgeArtifacts) validate("judge-rules", JSON.parse(content), path);
     const candidates = JSON.parse(result.artifacts.get("data/cn-antislop-candidates.json")!);
     validate("candidate-evaluation", candidates, "cn-antislop candidate evaluation");
     expect(candidates.promotedRuleIds).toEqual([]);
@@ -177,6 +231,11 @@ describe("anti-ai-flavor rule pack", () => {
         validate(schemaName, JSON.parse(line), `${name}:${index + 1}`);
       }
     }
+    const invalidRewrite = JSON.parse((await readFile(absolute(config.corpora!["guidance-pairs"]), "utf8")).split("\n")[0]);
+    invalidRewrite.expectedVerdict = "rewrite";
+    invalidRewrite.expectedRuleIds = [];
+    const calibrationSchema = JSON.parse(result.artifacts.get("schemas/calibration-case.schema.json")!);
+    expect(ajv.validate(calibrationSchema.$id, invalidRewrite)).toBe(false);
     validate("judge-result", { schema: "quality-judge-result/v1", verdict: "pass", confidence: 0.91, findings: [] }, "pass result");
     validate("judge-result", {
       schema: "quality-judge-result/v1",
@@ -190,6 +249,31 @@ describe("anti-ai-flavor rule pack", () => {
         rewriteInstruction: "只保留角色可感知的现场证据。",
       }],
     }, "rewrite result");
+    validate("judge-result", {
+      schema: "quality-judge-result/v1",
+      verdict: "rewrite",
+      confidence: 0.8,
+      findings: [{
+        ruleId: "zh-f1-pov-leak",
+        evidence: "🙂".repeat(240),
+        confidence: 0.8,
+        explanation: "Code-point boundary fixture.",
+        rewriteInstruction: "Keep the bounded exact substring contract.",
+      }],
+    }, "240-code-point evidence");
+    const judgeResultSchema = JSON.parse(result.artifacts.get("schemas/judge-result.schema.json")!);
+    expect(ajv.validate(judgeResultSchema.$id, {
+      schema: "quality-judge-result/v1",
+      verdict: "rewrite",
+      confidence: 0.8,
+      findings: [{
+        ruleId: "zh-f1-pov-leak",
+        evidence: "🙂".repeat(241),
+        confidence: 0.8,
+        explanation: "Code-point overflow fixture.",
+        rewriteInstruction: "Reject the oversized evidence.",
+      }],
+    })).toBe(false);
   });
 
   test("build output is deterministic", async () => {
@@ -198,6 +282,11 @@ describe("anti-ai-flavor rule pack", () => {
     expect(stableJson(Object.fromEntries(first.artifacts))).toBe(stableJson(Object.fromEntries(second.artifacts)));
     expect(first.manifest.ruleCount).toBe(29);
     expect(first.artifacts.has("THIRD_PARTY_NOTICES.md")).toBe(true);
+    const notices = first.artifacts.get("THIRD_PARTY_NOTICES.md")!;
+    expect(notices).toContain("Copyright (c) 2025-2026 oh-story-claudecode");
+    expect(notices).toContain("Copyright (c) 2026");
+    expect(notices.match(/Permission is hereby granted, free of charge/g)).toHaveLength(2);
+    expect(notices.match(/THE SOFTWARE IS PROVIDED "AS IS"/g)).toHaveLength(2);
     expect(first.artifacts.has("calibration/detector.jsonl")).toBe(true);
     expect(first.artifacts.has("calibration/host-conformance.jsonl")).toBe(true);
     expect(first.artifacts.has("calibration/judge.jsonl")).toBe(true);

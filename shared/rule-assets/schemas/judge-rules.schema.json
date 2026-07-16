@@ -30,11 +30,11 @@
           "evidence": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["mode", "minCodeUnits", "maxCodeUnits"],
+            "required": ["mode", "minCodePoints", "maxCodePoints"],
             "properties": {
               "mode": { "const": "exact-substring" },
-              "minCodeUnits": { "type": "integer", "minimum": 1 },
-              "maxCodeUnits": { "type": "integer", "minimum": 1, "maximum": 512 }
+              "minCodePoints": { "type": "integer", "minimum": 1 },
+              "maxCodePoints": { "type": "integer", "minimum": 1, "maximum": 512 }
             }
           }
         }

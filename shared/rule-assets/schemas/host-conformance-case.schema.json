@@ -29,6 +29,21 @@
       "items": { "type": "string", "minLength": 1 },
       "uniqueItems": true
     },
+    "expectedMetrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ruleId", "signal", "value", "threshold", "tolerance"],
+        "properties": {
+          "ruleId": { "type": "string", "minLength": 1 },
+          "signal": { "type": "string", "minLength": 1 },
+          "value": { "type": "number" },
+          "threshold": { "type": "number" },
+          "tolerance": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
     "provenance": {
       "type": "object",
       "additionalProperties": false,
