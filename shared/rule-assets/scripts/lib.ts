@@ -705,19 +705,30 @@ function compareMetric(value: number, operator: string, threshold: number): bool
 function stripDialogue(text: string): string {
   // Keep one array entry per UTF-16 code unit so finding offsets stay host-compatible.
   const chars = text.split("");
-  const pairs: Record<string, string> = { "“": "”", "「": "」", "『": "』" };
+  const pairs: Record<string, string> = {
+    "「": "」",
+    "『": "』",
+    "【": "】",
+    "“": "”",
+    "‘": "’",
+    "\"": "\"",
+    "'": "'",
+  };
   const stack: string[] = [];
   for (let index = 0; index < chars.length; index += 1) {
     const char = chars[index];
+    if (stack.length > 0 && stack[stack.length - 1] === char) {
+      if (char !== "\n") chars[index] = " ";
+      stack.pop();
+      continue;
+    }
     if (pairs[char]) {
       stack.push(pairs[char]);
       if (char !== "\n") chars[index] = " ";
       continue;
     }
     if (stack.length > 0) {
-      const closes = stack[stack.length - 1] === char;
       if (char !== "\n") chars[index] = " ";
-      if (closes) stack.pop();
     }
   }
   return chars.join("");

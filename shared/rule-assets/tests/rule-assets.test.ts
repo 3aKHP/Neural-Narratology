@@ -103,6 +103,22 @@ describe("anti-ai-flavor rule pack", () => {
     expect(text.slice(finding!.start, finding!.end)).toBe(finding!.evidence);
   });
 
+  test("excludes every declared dialogue and system-broadcast quote pair from metrics", async () => {
+    const config = await loadModuleConfig(antiConfigPath);
+    const { source } = await loadRuleSource(config);
+    const quoted = [
+      "「仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛」",
+      "『仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛』",
+      "【仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛】",
+      "“仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛”",
+      "‘仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛’",
+      "\"仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛\"",
+      "'仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛 仿佛'",
+    ].join("\n");
+    const ids = detectText(quoted, normalizeRules(source, config)).map((finding) => finding.ruleId);
+    expect(ids).not.toContain("zh-f3-cliche-density");
+  });
+
   test("accepts host-provided protected ranges for inline examples", async () => {
     const config = await loadModuleConfig(antiConfigPath);
     const { source } = await loadRuleSource(config);
