@@ -293,7 +293,21 @@ describe("anti-ai-flavor rule pack", () => {
     expect(first.artifacts.has("calibration/guidance-pairs.jsonl")).toBe(true);
     expect(first.artifacts.has("judge-rules.zh-CN.json")).toBe(true);
     expect(first.artifacts.has("data/cn-antislop-candidates.json")).toBe(true);
-    for (const name of ["calibration-case", "candidate-evaluation", "detector-rules", "host-conformance-case", "judge-result", "judge-rules", "rule-pack"]) {
+    for (const name of [
+      "benchmark-report",
+      "calibration-annotation",
+      "calibration-blind-case",
+      "calibration-case",
+      "calibration-label",
+      "candidate-evaluation",
+      "detector-rules",
+      "held-out-freeze",
+      "host-conformance-case",
+      "judge-result",
+      "judge-rules",
+      "rewrite-case",
+      "rule-pack",
+    ]) {
       const path = `schemas/${name}.schema.json`;
       expect(first.artifacts.has(path), path).toBe(true);
       expect((first.manifest.artifacts as Record<string, string>)[path], path).toMatch(/^[a-f0-9]{64}$/);

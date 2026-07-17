@@ -35,6 +35,9 @@ bun shared/rule-assets/scripts/check.ts
 bun shared/rule-assets/scripts/sync-guidance.ts
 bun shared/rule-assets/scripts/sync-calibration.ts
 
+# 校验公开 corpus provenance 与跨 split 重复/泄漏
+bun shared/rule-assets/scripts/calibration.ts audit
+
 # 构建全部规则包
 bun shared/rule-assets/scripts/build.ts --out dev/build/rule-packs
 
@@ -57,6 +60,9 @@ Harness Builder 先验证 [`../prism-driver/`](../prism-driver/) 的 Driver Cont
 calibration corpus 一并进入 Rule Pack manifest 的逐文件 hash 和 module input hash。
 Anti-AI-Flavor 同时发布 host conformance JSONL，供不同语言的宿主实现对齐预处理、
 保护区、有限 document metric signal 和 rule ID 结果。
+
+进入 Rule Pack 的 corpus 必须声明可公开再分发且不含私人数据；本地 blinded held-out
+通过 `calibration.ts freeze/verify` 留在 ignored `dev/` 下，不会被编译器打包。
 
 CI 为每次检查上传 `prism-vesicle-harness-v10` artifact；需要稳定跨仓交付时，使用
 `Release Vesicle Harness Pack` 手动工作流发布 ZIP 与 SHA-256。

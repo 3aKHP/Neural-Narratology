@@ -33,6 +33,7 @@ jobs:
       - name: Validate rule sources and generated guidance
         run: |
           bun shared/rule-assets/scripts/check.ts
+          bun shared/rule-assets/scripts/calibration.ts audit
           bun shared/prism-driver/scripts/check.ts
 
       - name: Run rule asset and Prism Driver tests

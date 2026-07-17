@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/calibration-annotation.schema.json",
+  "title": "Quality Calibration Annotation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "caseId", "annotations", "adjudication"],
+  "properties": {
+    "schema": { "const": "quality-calibration-annotation/v1" },
+    "caseId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "annotations": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/judgment" }
+    },
+    "adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "verdict", "ruleIds", "evidence", "rationale", "adjudicatorId"],
+      "properties": {
+        "status": { "enum": ["agreed", "resolved"] },
+        "verdict": { "enum": ["pass", "rewrite"] },
+        "ruleIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidence" },
+          "uniqueItems": true
+        },
+        "rationale": { "type": "string", "minLength": 1 },
+        "adjudicatorId": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "judgment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["annotatorId", "verdict", "ruleIds", "evidence", "rationale"],
+      "properties": {
+        "annotatorId": { "type": "string", "minLength": 1 },
+        "verdict": { "enum": ["pass", "rewrite"] },
+        "ruleIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidence" },
+          "uniqueItems": true
+        },
+        "rationale": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "verdict": { "const": "pass" } }, "required": ["verdict"] },
+          "then": {
+            "properties": {
+              "ruleIds": { "maxItems": 0 },
+              "evidence": { "maxItems": 0 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "verdict": { "const": "rewrite" } }, "required": ["verdict"] },
+          "then": {
+            "properties": {
+              "ruleIds": { "minItems": 1 },
+              "evidence": { "minItems": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ruleId", "text"],
+      "properties": {
+        "ruleId": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 240 }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "adjudication": {
+            "properties": { "verdict": { "const": "pass" } },
+            "required": ["verdict"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "adjudication": {
+            "properties": {
+              "ruleIds": { "maxItems": 0 },
+              "evidence": { "maxItems": 0 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "adjudication": {
+            "properties": { "verdict": { "const": "rewrite" } },
+            "required": ["verdict"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "adjudication": {
+            "properties": {
+              "ruleIds": { "minItems": 1 },
+              "evidence": { "minItems": 1 }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

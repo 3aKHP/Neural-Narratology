@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/calibration-label.schema.json",
+  "title": "Restricted Quality Calibration Label v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "caseId", "expectedVerdict", "expectedRuleIds", "provenance", "annotation"],
+  "properties": {
+    "schema": { "const": "quality-calibration-label/v1" },
+    "caseId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "expectedVerdict": { "enum": ["pass", "rewrite"] },
+    "expectedRuleIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "provenance": { "$ref": "calibration-case.schema.json#/properties/provenance" },
+    "annotation": { "$ref": "calibration-annotation.schema.json" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "expectedVerdict": { "const": "pass" } }, "required": ["expectedVerdict"] },
+      "then": { "properties": { "expectedRuleIds": { "maxItems": 0 } } }
+    },
+    {
+      "if": { "properties": { "expectedVerdict": { "const": "rewrite" } }, "required": ["expectedVerdict"] },
+      "then": { "properties": { "expectedRuleIds": { "minItems": 1 } } }
+    }
+  ]
+}

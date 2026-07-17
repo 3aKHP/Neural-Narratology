@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/calibration-blind-case.schema.json",
+  "title": "Blinded Quality Calibration Case v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "caseId", "language", "targetType", "genre", "sourceKind", "modelFamily", "lengthBucket", "pov", "dialogueRatio", "text", "candidateSha256"],
+  "properties": {
+    "schema": { "const": "quality-calibration-blind-case/v1" },
+    "caseId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "language": { "type": "string", "minLength": 1 },
+    "targetType": { "type": "string", "minLength": 1 },
+    "genre": { "type": "string", "minLength": 1 },
+    "sourceKind": { "type": "string", "minLength": 1 },
+    "modelFamily": { "type": "string", "minLength": 1 },
+    "lengthBucket": { "enum": ["short", "medium", "long"] },
+    "pov": { "enum": ["first", "third", "mixed", "not-applicable"] },
+    "dialogueRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+    "text": { "type": "string", "minLength": 1 },
+    "candidateSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/held-out-freeze.schema.json",
+  "title": "Held-out Corpus Freeze v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "toolVersion", "freezeId", "frozenAt", "caseCount", "rewriteCount", "passCount", "casesSha256", "labelsSha256", "caseIdsSha256", "corpusSha256", "governance"],
+  "properties": {
+    "schema": { "const": "quality-held-out-freeze/v1" },
+    "toolVersion": { "const": "1" },
+    "freezeId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "frozenAt": { "type": "string", "format": "date-time" },
+    "caseCount": { "type": "integer", "minimum": 1 },
+    "rewriteCount": { "type": "integer", "minimum": 0 },
+    "passCount": { "type": "integer", "minimum": 0 },
+    "casesSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "labelsSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "caseIdsSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "corpusSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["visibility", "labelsAccess", "releaseAfterDecision"],
+      "properties": {
+        "visibility": { "const": "local-blind" },
+        "labelsAccess": { "const": "adjudicators-only" },
+        "releaseAfterDecision": { "type": "boolean" }
+      }
+    }
+  }
+}

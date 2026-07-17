@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-Anti-AI-Flavor 0.3.0-alpha.2 登记以下外部来源。Rule Pack manifest 同时保留来源
+Anti-AI-Flavor 0.3.0-alpha.3 登记以下外部来源。Rule Pack manifest 同时保留来源
 URL、固定 commit、许可证、采用状态和范围。
 
 ## oh-story-claudecode

@@ -5,13 +5,28 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.3 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.4 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
 ---
+
+## 2026-07-17 — Semantic Judge calibration foundation
+
+### Added — `[Repo]`
+- 新增双人独立 annotation 与 adjudication、blinded held-out case/freeze、rewrite
+  preservation 和 benchmark report JSON Schema，并发布校准与 held-out 治理指南。
+- 新增确定性 calibration audit/freeze/verify 工具；blinded bundle 使用 opaque case ID，
+  CI 检查 corpus provenance、跨 split 精确/近重复泄漏、标签隔离、freeze digest 和双构建一致性。
+- Semantic Judge dev corpus 从 8 条扩展至 30 条（16 rewrite / 14 pass），覆盖多题材、
+  POV、对话比例与边界负例；production held-out 尚未建设或运行。
+
+### Changed — `[Modulation]`
+- Harness/Driver 升级到 **10.0.1-alpha.4**，Anti-AI-Flavor 升级到
+  **0.3.0-alpha.3**；124 条 tracked calibration/conformance case 全部补齐可再分发与
+  隐私 provenance。required capabilities、Judge thresholds 和 Runtime observe 行为保持不变。
 
 ## 2026-07-16 — Semantic Judge observe capability
 
@@ -591,3 +606,4 @@
 | 2026-07-14 | v10.0 Tempered-Voice | **v10.0.1-alpha.1 Harness** | Delegation 合同与 Runtime Quality Guard first delivery |
 | 2026-07-16 | v10.0 Tempered-Voice | **v10.0.1-alpha.2 Harness** | Rule Pack 0.3 contract、实验 document metrics 与校准语料 |
 | 2026-07-16 | v10.0 Tempered-Voice | **v10.0.1-alpha.3 Harness** | Semantic Judge Runtime observe capability |
+| 2026-07-17 | v10.0 Tempered-Voice | **v10.0.1-alpha.4 Harness** | Semantic Judge calibration foundation |
