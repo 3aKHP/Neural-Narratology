@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/benchmark-report.schema.json",
+  "title": "Quality Judge Benchmark Report v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "benchmarkVersion", "runId", "createdAt", "identity", "policy", "models", "privacy"],
+  "properties": {
+    "schema": { "const": "quality-judge-benchmark-report/v1" },
+    "benchmarkVersion": { "type": "string", "minLength": 1 },
+    "runId": { "type": "string", "minLength": 1 },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vesicleCommit", "harness", "rulePack", "artifacts", "corpusSha256"],
+      "properties": {
+        "vesicleCommit": { "$ref": "#/$defs/sha1" },
+        "harness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "version", "sourceCommit", "manifestSha256"],
+          "properties": {
+            "id": { "type": "string", "minLength": 1 },
+            "version": { "type": "string", "minLength": 1 },
+            "sourceCommit": { "$ref": "#/$defs/sha1" },
+            "manifestSha256": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        "rulePack": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["version", "sourceHash"],
+          "properties": {
+            "version": { "type": "string", "minLength": 1 },
+            "sourceHash": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        "artifacts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["rubricSha256", "judgeRulesSha256", "resultSchemaSha256"],
+          "properties": {
+            "rubricSha256": { "$ref": "#/$defs/sha256" },
+            "judgeRulesSha256": { "$ref": "#/$defs/sha256" },
+            "resultSchemaSha256": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        "corpusSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repeatsPerCase", "confidenceInterval", "majorSlices", "minimumSliceN", "requestCap", "tokenCap", "goNoGo", "earlyStop"],
+      "properties": {
+        "repeatsPerCase": { "type": "integer", "minimum": 1 },
+        "confidenceInterval": { "const": "wilson-95" },
+        "majorSlices": {
+          "type": "array",
+          "items": { "enum": ["rule", "genre", "modelFamily", "lengthBucket", "pov", "targetType"] },
+          "uniqueItems": true
+        },
+        "minimumSliceN": { "type": "integer", "minimum": 1 },
+        "requestCap": { "type": "integer", "minimum": 1 },
+        "tokenCap": { "type": "integer", "minimum": 1 },
+        "costCap": { "type": "number", "exclusiveMinimum": 0 },
+        "goNoGo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minimumRecall", "maximumFalseRewriteRate", "minimumAgreement", "maximumInvalidRate", "maximumP95LatencyMs"],
+          "properties": {
+            "minimumRecall": { "$ref": "#/$defs/rate" },
+            "maximumFalseRewriteRate": { "$ref": "#/$defs/rate" },
+            "minimumAgreement": { "$ref": "#/$defs/rate" },
+            "maximumInvalidRate": { "$ref": "#/$defs/rate" },
+            "maximumP95LatencyMs": { "type": "number", "minimum": 0 }
+          }
+        },
+        "earlyStop": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["invalidRate", "timeoutRate", "falseRewriteRate"],
+          "properties": {
+            "invalidRate": { "$ref": "#/$defs/rate" },
+            "timeoutRate": { "$ref": "#/$defs/rate" },
+            "falseRewriteRate": { "$ref": "#/$defs/rate" }
+          }
+        }
+      }
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["providerAlias", "protocol", "modelId", "requestPolicy", "sampleCounts", "metrics", "usage", "latencyMs", "slices", "failureCaseIds", "decision", "decisionReasons"],
+        "properties": {
+          "providerAlias": { "type": "string", "minLength": 1 },
+          "protocol": { "enum": ["openai-chat-completions", "anthropic-messages", "gemini-generate-content"] },
+          "modelId": { "type": "string", "minLength": 1 },
+          "requestPolicy": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["temperature", "maxTokens"],
+            "properties": {
+              "temperature": { "type": "number", "minimum": 0 },
+              "reasoning": { "type": "string", "minLength": 1 },
+              "maxTokens": { "type": "integer", "minimum": 1 }
+            }
+          },
+          "sampleCounts": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["cases", "evaluations", "requests", "repairs", "pass", "rewrite"],
+            "properties": {
+              "cases": { "type": "integer", "minimum": 0 },
+              "evaluations": { "type": "integer", "minimum": 0 },
+              "requests": { "type": "integer", "minimum": 0 },
+              "repairs": { "type": "integer", "minimum": 0 },
+              "pass": { "type": "integer", "minimum": 0 },
+              "rewrite": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "metrics": { "$ref": "#/$defs/metrics" },
+          "usage": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["inputTokens", "outputTokens", "totalTokens"],
+            "properties": {
+              "inputTokens": { "type": "integer", "minimum": 0 },
+              "outputTokens": { "type": "integer", "minimum": 0 },
+              "totalTokens": { "type": "integer", "minimum": 0 }
+            }
+          },
+          "latencyMs": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["average", "p50", "p95"],
+            "properties": {
+              "average": { "type": "number", "minimum": 0 },
+              "p50": { "type": "number", "minimum": 0 },
+              "p95": { "type": "number", "minimum": 0 }
+            }
+          },
+          "slices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["dimension", "value", "sampleCount", "metrics"],
+              "properties": {
+                "dimension": { "enum": ["rule", "genre", "modelFamily", "lengthBucket", "pov", "targetType"] },
+                "value": { "type": "string", "minLength": 1 },
+                "sampleCount": { "type": "integer", "minimum": 0 },
+                "metrics": { "$ref": "#/$defs/metrics" }
+              }
+            }
+          },
+          "failureCaseIds": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          },
+          "decision": { "enum": ["pass", "fail", "inconclusive"] },
+          "decisionReasons": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["containsRawResponses", "containsCandidateText", "modelIdentityIsUserDeclared"],
+      "properties": {
+        "containsRawResponses": { "const": false },
+        "containsCandidateText": { "const": false },
+        "modelIdentityIsUserDeclared": { "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "sha1": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "rate": { "type": "number", "minimum": 0, "maximum": 1 },
+    "boundedMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "numerator", "denominator", "wilson95Low", "wilson95High"],
+      "properties": {
+        "value": { "$ref": "#/$defs/rate" },
+        "numerator": { "type": "integer", "minimum": 0 },
+        "denominator": { "type": "integer", "minimum": 0 },
+        "wilson95Low": { "$ref": "#/$defs/rate" },
+        "wilson95High": { "$ref": "#/$defs/rate" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expectedRewriteRecall", "passFalseRewriteRate", "verdictAgreement", "invalidRate", "repairExhaustedRate", "timeoutRate", "unavailableRate", "ruleContractRate", "evidenceContractRate"],
+      "properties": {
+        "expectedRewriteRecall": { "$ref": "#/$defs/boundedMetric" },
+        "passFalseRewriteRate": { "$ref": "#/$defs/boundedMetric" },
+        "verdictAgreement": { "$ref": "#/$defs/boundedMetric" },
+        "invalidRate": { "$ref": "#/$defs/boundedMetric" },
+        "repairExhaustedRate": { "$ref": "#/$defs/boundedMetric" },
+        "timeoutRate": { "$ref": "#/$defs/boundedMetric" },
+        "unavailableRate": { "$ref": "#/$defs/boundedMetric" },
+        "ruleContractRate": { "$ref": "#/$defs/boundedMetric" },
+        "evidenceContractRate": { "$ref": "#/$defs/boundedMetric" }
+      }
+    }
+  }
+}

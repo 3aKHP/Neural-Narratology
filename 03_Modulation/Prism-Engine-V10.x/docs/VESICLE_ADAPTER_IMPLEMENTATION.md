@@ -32,7 +32,8 @@ V10 Harness Builder 已生成：
 当前 Vesicle 能安装、验证和固定 Rule Pack，执行 deterministic Guard 与有限 document
 metric registry。PR 5 增加 verified Judge rubric/rules/result loader、tool-free provider
 service、严格 JSON/evidence 校验、一次 repair、timeout/cancel、bounded usage/session
-事件和 Runtime-only observe。`10.0.1-alpha.3` 同时要求 metrics 与 Judge capability。
+事件和 Runtime-only observe。`10.0.1-alpha.4` 继续要求 metrics 与 Judge capability，并
+增加 PR6A calibration/annotation/rewrite/report/freeze 合同；运行时行为保持不变。
 
 ## 2. 已实现基线 — Harness 安装与验证
 

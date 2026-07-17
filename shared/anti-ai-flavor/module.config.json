@@ -55,12 +55,18 @@
     "cn-antislop-candidates": "shared/anti-ai-flavor/candidates/cn-antislop.zh-CN.json"
   },
   "schemas": {
-    "candidate-evaluation": "shared/rule-assets/schemas/candidate-evaluation.schema.json",
+    "benchmark-report": "shared/rule-assets/schemas/benchmark-report.schema.json",
+    "calibration-annotation": "shared/rule-assets/schemas/calibration-annotation.schema.json",
+    "calibration-blind-case": "shared/rule-assets/schemas/calibration-blind-case.schema.json",
     "calibration-case": "shared/rule-assets/schemas/calibration-case.schema.json",
+    "calibration-label": "shared/rule-assets/schemas/calibration-label.schema.json",
+    "candidate-evaluation": "shared/rule-assets/schemas/candidate-evaluation.schema.json",
     "detector-rules": "shared/rule-assets/schemas/detector-rules.schema.json",
+    "held-out-freeze": "shared/rule-assets/schemas/held-out-freeze.schema.json",
     "host-conformance-case": "shared/rule-assets/schemas/host-conformance-case.schema.json",
     "judge-result": "shared/rule-assets/schemas/judge-result.schema.json",
     "judge-rules": "shared/rule-assets/schemas/judge-rules.schema.json",
+    "rewrite-case": "shared/rule-assets/schemas/rewrite-case.schema.json",
     "rule-pack": "shared/rule-assets/schemas/rule-pack.schema.json"
   },
   "notices": "shared/anti-ai-flavor/THIRD_PARTY_NOTICES.md"

@@ -145,6 +145,21 @@ export function sha256(value: string | Uint8Array): string {
   return hasher.digest("hex");
 }
 
+export function publishedCorpusProvenanceError(value: unknown): string | undefined {
+  if (!value || typeof value !== "object") return "case must be an object";
+  const provenance = (value as { provenance?: unknown }).provenance;
+  if (!provenance || typeof provenance !== "object") return "case must declare provenance";
+  const fields = provenance as { redistribution?: unknown; privacy?: unknown; deidentificationNotes?: unknown };
+  if (fields.redistribution !== "public") return "published corpus requires public redistribution";
+  if (fields.privacy !== "not-applicable" && fields.privacy !== "deidentified") {
+    return "published corpus requires a non-private privacy declaration";
+  }
+  if (fields.privacy === "deidentified" && (typeof fields.deidentificationNotes !== "string" || !fields.deidentificationNotes.trim())) {
+    return "deidentified published corpus requires deidentification notes";
+  }
+  return undefined;
+}
+
 export async function gitIdentity(): Promise<{ commit: string; state: "clean" | "dirty" }> {
   const commitResult = Bun.spawnSync(["git", "-C", repoRoot, "rev-parse", "HEAD"]);
   const worktreeResult = Bun.spawnSync(["git", "-C", repoRoot, "diff", "--quiet", "--ignore-cr-at-eol", "--"]);
@@ -455,6 +470,8 @@ export function renderGuidanceCalibration(source: RuleSource, config: ModuleConf
         provenance: {
           source: "3aKHP/Neural-Narratology knowledge-source",
           license: "MIT",
+          redistribution: "public",
+          privacy: "not-applicable",
           ruleId: rule.id,
           notes: "Generated from the tracked rule example; not a held-out measurement.",
         },
@@ -514,11 +531,14 @@ export async function compileModule(configPath: string): Promise<{ config: Modul
     if (!text.trim()) throw new Error(`${config.id}: corpus ${name} is empty`);
     const lines = text.trim().split("\n");
     for (const [index, line] of lines.entries()) {
+      let item: unknown;
       try {
-        JSON.parse(line);
+        item = JSON.parse(line);
       } catch (error) {
         throw new Error(`${config.id}: invalid JSONL in ${path}:${index + 1}: ${(error as Error).message}`);
       }
+      const provenanceError = publishedCorpusProvenanceError(item);
+      if (provenanceError) throw new Error(`${config.id}: non-publishable corpus case in ${path}:${index + 1}: ${provenanceError}`);
     }
     const normalized = `${lines.join("\n")}\n`;
     corpusArtifacts.set(`calibration/${name}.jsonl`, normalized);

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/rewrite-case.schema.json",
+  "title": "Quality Rewrite Preservation Case v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "caseId", "language", "producer", "initialCandidate", "minimumContext", "target", "preservation", "expectedRuleIds", "provenance"],
+  "properties": {
+    "schema": { "const": "quality-rewrite-case/v1" },
+    "caseId": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "language": { "type": "string", "minLength": 1 },
+    "producer": { "enum": ["runtime", "weaver", "dyad", "weaver-orch", "scene-writer"] },
+    "initialCandidate": { "type": "string", "minLength": 1 },
+    "minimumContext": { "type": "string", "minLength": 1 },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidateType", "targetType", "path", "requiredFormat"],
+      "properties": {
+        "candidateType": { "type": "string", "minLength": 1 },
+        "targetType": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "pattern": "^(?!.*\\x5c)(source_materials|workspace|test_runs|novels|reports)/(?![.][.](?:/|$))(?!.*[/][.][.](?:/|$)).+$" },
+        "requiredFormat": { "enum": ["plain-text", "markdown", "yaml", "json", "packet"] }
+      }
+    },
+    "preservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["facts", "pov", "characterLogic", "requiredBeats", "forbiddenChanges"],
+      "properties": {
+        "facts": { "$ref": "#/$defs/nonEmptyStrings" },
+        "pov": { "type": "string", "minLength": 1 },
+        "characterLogic": { "$ref": "#/$defs/nonEmptyStrings" },
+        "requiredBeats": { "$ref": "#/$defs/nonEmptyStrings" },
+        "forbiddenChanges": { "$ref": "#/$defs/nonEmptyStrings" }
+      }
+    },
+    "expectedRuleIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rounds", "terminalState", "preservationReview"],
+      "properties": {
+        "rounds": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "prefixItems": [
+            { "allOf": [{ "$ref": "#/$defs/round" }, { "properties": { "attempt": { "const": 1 } } }] },
+            { "allOf": [{ "$ref": "#/$defs/round" }, { "properties": { "attempt": { "const": 2 } } }] }
+          ],
+          "items": false
+        },
+        "terminalState": { "enum": ["clean", "advisory", "exhausted", "inconclusive", "accepted", "stopped"] },
+        "preservationReview": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reviewerId", "verdict", "severeDamageCategories", "notes"],
+          "properties": {
+            "reviewerId": { "type": "string", "minLength": 1 },
+            "verdict": { "enum": ["preserved", "minor-damage", "severe-damage"] },
+            "severeDamageCategories": {
+              "type": "array",
+              "items": {
+                "enum": ["facts", "pov", "character-logic", "required-beat", "format", "target-path", "stale-post-image"]
+              },
+              "uniqueItems": true
+            },
+            "notes": { "type": "string", "minLength": 1 }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "verdict": { "const": "severe-damage" } }, "required": ["verdict"] },
+              "then": { "properties": { "severeDamageCategories": { "minItems": 1 } } }
+            },
+            {
+              "if": { "properties": { "verdict": { "enum": ["preserved", "minor-damage"] } }, "required": ["verdict"] },
+              "then": { "properties": { "severeDamageCategories": { "maxItems": 0 } } }
+            }
+          ]
+        }
+      }
+    },
+    "provenance": { "$ref": "calibration-case.schema.json#/properties/provenance" }
+  },
+  "$defs": {
+    "round": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempt", "postImageSha256", "detectorOutcome", "judgeOutcome"],
+      "properties": {
+        "attempt": { "type": "integer", "minimum": 1, "maximum": 2 },
+        "postImageSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "detectorOutcome": { "enum": ["clean", "advisory", "blocking", "inconclusive"] },
+        "judgeOutcome": { "enum": ["pass", "findings", "inconclusive", "not-run"] }
+      }
+    },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
+  }
+}

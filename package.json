@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "check:rules": "bun shared/rule-assets/scripts/check.ts",
+    "check:calibration": "bun shared/rule-assets/scripts/calibration.ts audit",
     "check:driver": "bun shared/prism-driver/scripts/check.ts",
     "test:contracts": "bun test shared/rule-assets/tests shared/prism-driver/tests"
   },
