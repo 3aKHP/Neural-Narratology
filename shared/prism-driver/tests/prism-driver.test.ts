@@ -55,13 +55,15 @@ describe("Prism Driver contract", () => {
     expect(Object.keys(contract.agents)).toEqual(["scene-writer", "continuity-editor", "chapter-reviewer"]);
   });
 
-  test("registers document metrics and Judge as separate host capabilities", async () => {
+  test("registers document metrics, Judge, and semantic rewrite policy as separate host capabilities", async () => {
     const registry = JSON.parse(await readFile(join(import.meta.dir, "../capability-registry.json"), "utf8"));
     expect(registry.capabilities["quality-detector/document-metrics@1"].kind).toBe("quality");
     expect(registry.capabilities["quality-judge/anti-ai-flavor@1"].kind).toBe("quality");
+    expect(registry.capabilities["quality-policy/semantic-rewrite@1"].kind).toBe("quality");
     const adapter = await loadHostAdapter(adapterPath);
     expect(adapter.capabilities).not.toContain("quality-detector/document-metrics@1");
     expect(adapter.capabilities).not.toContain("quality-judge/anti-ai-flavor@1");
+    expect(adapter.capabilities).not.toContain("quality-policy/semantic-rewrite@1");
   });
 
   test("guards Harness release provenance and reproducible archives", async () => {
@@ -243,13 +245,14 @@ describe("compiled Harness Pack", () => {
 
   test("records driver identity and binding ownership", async () => {
     const manifest = JSON.parse(await readFile(join(harnessDir, "manifest.json"), "utf8"));
-    expect(manifest.version).toBe("10.0.1-alpha.4");
+    expect(manifest.version).toBe("10.0.1-alpha.5");
     expect(manifest.driver.adapterId).toBe("vesicle-v1");
     expect(manifest.driver.contractHash).toBe(manifest.assets[manifest.driver.contract]);
     expect(manifest.driver.adapterHash).toBe(manifest.assets[manifest.driver.adapter]);
     expect(manifest.requiredCapabilities).toContain("prism-driver/v1");
     expect(manifest.requiredCapabilities).toContain("quality-detector/document-metrics@1");
     expect(manifest.requiredCapabilities).toContain("quality-judge/anti-ai-flavor@1");
+    expect(manifest.requiredCapabilities).not.toContain("quality-policy/semantic-rewrite@1");
     expect(manifest.profileBindings.runtime).toBe("assets/engines/runtime.profile.yaml");
     expect(manifest.agentProfileBindings["chapter-reviewer"]).toBe("assets/agents/chapter-reviewer.agent.yaml");
     expect(manifest.qualityBindings.etl["anti-ai-flavor"]).toBe("off");

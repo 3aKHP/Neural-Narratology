@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/3aKHP/Neural-Narratology/shared/rule-assets/schemas/semantic-rewrite-policy.schema.json",
+  "title": "Semantic Rewrite Policy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "module",
+    "policyVersion",
+    "activation",
+    "targetTypes",
+    "blockingRuleIds",
+    "minimumConfidenceByRule",
+    "modelScopes",
+    "onUnknownModel",
+    "onInconclusive",
+    "multiTargetAction",
+    "calibration"
+  ],
+  "properties": {
+    "schema": { "const": "quality-semantic-rewrite-policy/v1" },
+    "module": { "const": "anti-ai-flavor" },
+    "policyVersion": { "const": "quality-policy/v2" },
+    "activation": { "enum": ["inactive", "active"] },
+    "targetTypes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "enum": ["runtime.prose"] },
+      "uniqueItems": true
+    },
+    "blockingRuleIds": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+      "uniqueItems": true
+    },
+    "minimumConfidenceByRule": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 },
+      "propertyNames": { "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }
+    },
+    "modelScopes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["protocol", "modelFamily", "modelIds"],
+        "properties": {
+          "protocol": { "enum": ["openai-chat-compatible", "anthropic-messages", "gemini-generate-content"] },
+          "modelFamily": { "type": "string", "minLength": 1 },
+          "modelIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "onUnknownModel": { "const": "observe" },
+    "onInconclusive": { "const": "observe" },
+    "multiTargetAction": { "enum": ["inconclusive", "rewrite-with-warning"] },
+    "calibration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["corpusSha256", "reportSha256", "thresholdVersion"],
+      "properties": {
+        "corpusSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "reportSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "thresholdVersion": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

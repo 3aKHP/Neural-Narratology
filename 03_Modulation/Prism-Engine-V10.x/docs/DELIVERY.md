@@ -48,18 +48,20 @@ git diff --check
 - Intensity Expansion Dossier 输出示例没有 L-System 标签。
 - L4-B 默认协议、L3-A 可选与 L5 锁定保持有效。
 - 两次 Harness 构建字节一致。
-- Harness/Driver 版本为 `10.0.1-alpha.4`，Runtime quality binding 为 `rewrite`；Dyad、
+- Harness/Driver 版本为 `10.0.1-alpha.5`，Runtime quality binding 为 `rewrite`；Dyad、
   Weaver、Weaver-Orch 和 Scene Writer 仍为 `observe`。
-- Anti-AI-Flavor Rule Pack `0.3.0-alpha.3` 包含 Detector/Judge/calibration/annotation/
+- Anti-AI-Flavor Rule Pack `0.3.0-alpha.4` 包含 Detector/Judge/calibration/annotation/
   rewrite/report/freeze JSON Schema、124 条 tracked calibration/conformance case、6 个
   experimental document metrics 和 cn-antislop evaluating candidate 资产，且全部进入
   manifest hash。
 - 根 Harness 与 Rule Pack 同时要求 `quality-detector/document-metrics@1` 和
   `quality-judge/anti-ai-flavor@1`。Judge 只在 Runtime observe，finding 不进入 rewrite。
+- 同包的 `quality-semantic-rewrite-policy/v1` fixture 处于 inactive，Harness 尚不要求
+  `quality-policy/semantic-rewrite@1`。
 
 ## 已知宿主前置条件
 
 当前 Vesicle `develop` 已实现 Harness manifest/capability 安装路径、deterministic Guard、
 PR 4 document metrics 与 PR 5 `quality-judge/anti-ai-flavor@1` observe support。
-`10.0.1-alpha.4` 只增加校准合同和语料，不改变宿主 required capability 或 Runtime
-behavior。具体清单见 `VESICLE_ADAPTER_IMPLEMENTATION.md`。
+`10.0.1-alpha.5` 增加 inactive Semantic Rewrite Policy 合同，不改变宿主 required
+capability 或 Runtime behavior。具体清单见 `VESICLE_ADAPTER_IMPLEMENTATION.md`。

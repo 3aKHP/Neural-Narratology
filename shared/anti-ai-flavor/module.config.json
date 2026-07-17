@@ -52,7 +52,8 @@
     "judge": "shared/anti-ai-flavor/corpus/judge.zh-CN.jsonl"
   },
   "data_artifacts": {
-    "cn-antislop-candidates": "shared/anti-ai-flavor/candidates/cn-antislop.zh-CN.json"
+    "cn-antislop-candidates": "shared/anti-ai-flavor/candidates/cn-antislop.zh-CN.json",
+    "semantic-rewrite-policy": "shared/anti-ai-flavor/policies/semantic-rewrite-policy.json"
   },
   "schemas": {
     "benchmark-report": "shared/rule-assets/schemas/benchmark-report.schema.json",
@@ -67,7 +68,8 @@
     "judge-result": "shared/rule-assets/schemas/judge-result.schema.json",
     "judge-rules": "shared/rule-assets/schemas/judge-rules.schema.json",
     "rewrite-case": "shared/rule-assets/schemas/rewrite-case.schema.json",
-    "rule-pack": "shared/rule-assets/schemas/rule-pack.schema.json"
+    "rule-pack": "shared/rule-assets/schemas/rule-pack.schema.json",
+    "semantic-rewrite-policy": "shared/rule-assets/schemas/semantic-rewrite-policy.schema.json"
   },
   "notices": "shared/anti-ai-flavor/THIRD_PARTY_NOTICES.md"
 }

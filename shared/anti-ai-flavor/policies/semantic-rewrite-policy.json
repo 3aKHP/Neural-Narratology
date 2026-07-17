@@ -1,0 +1,26 @@
+{
+  "schema": "quality-semantic-rewrite-policy/v1",
+  "module": "anti-ai-flavor",
+  "policyVersion": "quality-policy/v2",
+  "activation": "inactive",
+  "targetTypes": ["runtime.prose"],
+  "blockingRuleIds": ["zh-f1-pov-leak"],
+  "minimumConfidenceByRule": {
+    "zh-f1-pov-leak": 0.9
+  },
+  "modelScopes": [
+    {
+      "protocol": "openai-chat-compatible",
+      "modelFamily": "fixture-only",
+      "modelIds": ["fixture-model"]
+    }
+  ],
+  "onUnknownModel": "observe",
+  "onInconclusive": "observe",
+  "multiTargetAction": "inconclusive",
+  "calibration": {
+    "corpusSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "reportSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "thresholdVersion": "fixture-only"
+  }
+}
