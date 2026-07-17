@@ -225,6 +225,15 @@ describe("anti-ai-flavor rule pack", () => {
     validate("candidate-evaluation", candidates, "cn-antislop candidate evaluation");
     expect(candidates.promotedRuleIds).toEqual([]);
     expect(candidates.candidates.every((item: { status: string }) => item.status === "evaluating")).toBe(true);
+    const semanticRewritePolicy = JSON.parse(result.artifacts.get("data/semantic-rewrite-policy.json")!);
+    validate("semantic-rewrite-policy", semanticRewritePolicy, "inactive semantic rewrite policy");
+    expect(semanticRewritePolicy.activation).toBe("inactive");
+    expect(semanticRewritePolicy.onUnknownModel).toBe("observe");
+    expect(semanticRewritePolicy.onInconclusive).toBe("observe");
+    const invalidSemanticRewritePolicy = structuredClone(semanticRewritePolicy);
+    invalidSemanticRewritePolicy.onUnknownModel = "rewrite";
+    const semanticRewritePolicySchema = JSON.parse(result.artifacts.get("schemas/semantic-rewrite-policy.schema.json")!);
+    expect(ajv.validate(semanticRewritePolicySchema.$id, invalidSemanticRewritePolicy)).toBe(false);
     for (const [name, path] of Object.entries(config.corpora ?? {})) {
       const schemaName = name === "host-conformance" ? "host-conformance-case" : "calibration-case";
       for (const [index, line] of (await readFile(absolute(path), "utf8")).trim().split("\n").entries()) {
@@ -293,6 +302,7 @@ describe("anti-ai-flavor rule pack", () => {
     expect(first.artifacts.has("calibration/guidance-pairs.jsonl")).toBe(true);
     expect(first.artifacts.has("judge-rules.zh-CN.json")).toBe(true);
     expect(first.artifacts.has("data/cn-antislop-candidates.json")).toBe(true);
+    expect(first.artifacts.has("data/semantic-rewrite-policy.json")).toBe(true);
     for (const name of [
       "benchmark-report",
       "calibration-annotation",
@@ -307,6 +317,7 @@ describe("anti-ai-flavor rule pack", () => {
       "judge-rules",
       "rewrite-case",
       "rule-pack",
+      "semantic-rewrite-policy",
     ]) {
       const path = `schemas/${name}.schema.json`;
       expect(first.artifacts.has(path), path).toBe(true);

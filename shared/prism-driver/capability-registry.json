@@ -41,6 +41,10 @@
       "kind": "quality",
       "description": "Execute the verified tool-free Anti-AI-Flavor Judge contract."
     },
+    "quality-policy/semantic-rewrite@1": {
+      "kind": "quality",
+      "description": "Apply a calibrated, model-scoped Semantic Judge rewrite policy from a verified Policy artifact."
+    },
     "rule-replacement/v1": {
       "kind": "quality",
       "description": "Apply a verified literal or template replacement rule projection."

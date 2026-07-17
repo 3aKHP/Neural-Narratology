@@ -5,11 +5,25 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.4 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.5 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-17 — Semantic rewrite policy contract
+
+### Added — `[Modulation]`
+- 发布 `quality-semantic-rewrite-policy/v1` schema 与 inactive Policy fixture，固定
+  Semantic Judge rewrite 的 rule allowlist、逐规则置信度、精确 protocol/model scope、
+  unknown/inconclusive observe、multi-target action 与 calibration digest 合同。
+
+### Changed — `[Modulation]`
+- Harness 升级到 **10.0.1-alpha.5**，Anti-AI-Flavor 升级到 **0.3.0-alpha.4**。
+  新契约不改变 required capabilities，也不启用 Semantic Judge rewrite；现有 Runtime
+  保持 observe，直到真实 calibration、held-out 与 preservation 门槛完成。
 
 ---
 
@@ -607,3 +621,4 @@
 | 2026-07-16 | v10.0 Tempered-Voice | **v10.0.1-alpha.2 Harness** | Rule Pack 0.3 contract、实验 document metrics 与校准语料 |
 | 2026-07-16 | v10.0 Tempered-Voice | **v10.0.1-alpha.3 Harness** | Semantic Judge Runtime observe capability |
 | 2026-07-17 | v10.0 Tempered-Voice | **v10.0.1-alpha.4 Harness** | Semantic Judge calibration foundation |
+| 2026-07-17 | v10.0 Tempered-Voice | **v10.0.1-alpha.5 Harness** | Semantic rewrite policy contract (inactive) |
