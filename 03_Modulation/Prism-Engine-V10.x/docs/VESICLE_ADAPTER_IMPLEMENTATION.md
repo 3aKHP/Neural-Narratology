@@ -18,7 +18,7 @@ Neural-Narratology 的发布能力声明与精确制品。
 
 V10 Harness Builder 已生成：
 
-- `assets/engines/*.profile.yaml` 六份；
+- `assets/engines/*.profile.yaml` 七份；
 - `assets/agents/*.agent.yaml` 三份；
 - 编译后 Engine/Agent Prompt；
 - Driver Contract 与 Vesicle Adapter；
@@ -26,7 +26,7 @@ V10 Harness Builder 已生成：
 - 完整 manifest 与逐文件 hash。
 
 这些 Profile 已使用当前 Vesicle 的 `loadEngineProfile()`、`loadPromptBundle()`、
-`loadAgentProfile()` 和 `loadAgentSystemPrompt()` 进行只读加载验证。六引擎、三个 Agent
+`loadAgentProfile()` 和 `loadAgentSystemPrompt()` 进行只读加载验证。七引擎、三个 Agent
 均可解析，基础 Prompt 可从 Vesicle bundled assets 回落加载。
 
 当前 Vesicle 能安装、验证和固定 Rule Pack，执行 deterministic Guard 与有限 document
@@ -82,7 +82,7 @@ Adapter 和 hash。
 
 Harness loader 验证：
 
-- `profileBindings` 中六个引擎均为 Vesicle 已知 EngineId；
+- `profileBindings` 中七个引擎均为 Vesicle 已知 EngineId；
 - `agentProfileBindings` 的 profile id 合法；
 - Prompt 路径位于允许的资产根；
 - stop gate 与编译后 Prompt 中的绑定一致；

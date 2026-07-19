@@ -51,5 +51,5 @@ variant_config: {module_b.first_beat.variant_config}
 - `{module_a.body}`：Module A 去掉 YAML frontmatter 后的七段正文（Visual Cortex / Biography / Cognitive Stack / Instinct Protocol / Persona Topology / Narrative Engine / World Context）。
 - `{module_b.opening_paragraph}`：Module B HTML 注释之前的开场散文（80–150 字，第三人称感知滤镜）。
 - `{module_b.first_line}`：开场段后引号内的角色首句台词。
-- `{module_b.scene_premise}` / `{surface_emotion}` / `{tension_source}` / `{active_lens}` / `{identity}` / `{immediate_goal}`：Module B `<!-- -->` 内对应字段。
+- `{module_b.scene_premise}` / `{module_b.surface_emotion}` / `{module_b.tension_source}` / `{module_b.active_lens}` / `{module_b.identity}` / `{module_b.immediate_goal}`：Module B `<!-- -->` 内对应字段。
 - `{module_b.first_beat.*}`：Module B YAML frontmatter 中 `beat_map` 的首条目。
