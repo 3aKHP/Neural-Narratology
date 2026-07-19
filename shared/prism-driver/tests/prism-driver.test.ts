@@ -51,7 +51,7 @@ describe("Prism Driver contract", () => {
     const adapter = await loadHostAdapter(adapterPath);
     expect(await validateDriverPair(contract, adapter)).toEqual([]);
     expect(await validateSourceReferences(contract)).toEqual([]);
-    expect(Object.keys(contract.engines)).toEqual(["etl", "runtime", "evaluate", "weaver", "weaver-orch", "dyad"]);
+    expect(Object.keys(contract.engines)).toEqual(["etl", "runtime", "evaluate", "weaver", "weaver-orch", "dyad", "stage"]);
     expect(Object.keys(contract.agents)).toEqual(["scene-writer", "continuity-editor", "chapter-reviewer"]);
   });
 
@@ -245,7 +245,7 @@ describe("compiled Harness Pack", () => {
 
   test("records driver identity and binding ownership", async () => {
     const manifest = JSON.parse(await readFile(join(harnessDir, "manifest.json"), "utf8"));
-    expect(manifest.version).toBe("10.0.1-alpha.5");
+    expect(manifest.version).toBe("10.0.1-alpha.6");
     expect(manifest.driver.adapterId).toBe("vesicle-v1");
     expect(manifest.driver.contractHash).toBe(manifest.assets[manifest.driver.contract]);
     expect(manifest.driver.adapterHash).toBe(manifest.assets[manifest.driver.adapter]);

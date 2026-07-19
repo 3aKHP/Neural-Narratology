@@ -1,10 +1,10 @@
 # Prism-Engine-V10.x
 
-> Prism Engine v10.0 Tempered-Voice — HAL 驱动的六引擎工程源
+> Prism Engine v10.0 Tempered-Voice — HAL 驱动的七引擎工程源
 
 ## 定位
 
-`Prism-Engine-V10.x` 是 Phase III 当前工程源。Prism Vesicle 是 v10 的目标宿主，六引擎协议仍通过 Prism Driver / Host Abstraction Layer 与具体工具、Profile Schema 和资产目录隔离。
+`Prism-Engine-V10.x` 是 Phase III 当前工程源。Prism Vesicle 是 v10 的目标宿主，七引擎协议仍通过 Prism Driver / Host Abstraction Layer 与具体工具、Profile Schema 和资产目录隔离。
 
 源 Prompt 只表达：
 
@@ -19,12 +19,12 @@ Vesicle 工具名、gate 名、逻辑路径和 Profile 形状集中在 [`adapter
 
 ```text
 Prism-Engine-V10.x/
-├── prompts/                    # 六引擎 canonical Prompt
+├── prompts/                    # 七引擎 canonical Prompt
 ├── agents/                     # Scene Writer / Continuity Editor / Chapter Reviewer
 ├── specs/                      # 七个 Schema
-├── templates/                  # 六个模板
+├── templates/                  # 七个模板
 ├── driver/
-│   └── contract.json           # 六引擎资源、操作、生命周期和质量策略
+│   └── contract.json           # 七引擎资源、操作、生命周期和质量策略
 ├── adapters/
 │   └── vesicle/adapter.json    # 唯一宿主耦合点
 ├── docs/
@@ -35,7 +35,7 @@ Prism-Engine-V10.x/
 
 通用 ABI、Schema 和校验器位于 [`shared/prism-driver/`](../../shared/prism-driver/)。
 
-## 六引擎与 Agent
+## 七引擎与 Agent
 
 | 组件 | 责任 |
 |:---|:---|
@@ -45,6 +45,7 @@ Prism-Engine-V10.x/
 | Weaver | 单引擎 Scene Shards 写作与确定性章节编译 |
 | Weaver-Orch | 顺序委派、状态同步、独立审计和用户决策 |
 | Evaluate | 角色、场景、日志、扩展素材和长篇法证审计 |
+| Stage | 消费端沉浸式 RP；宿主注入 Module A/B，无门控连续叙述流 |
 | Scene Writer | 一次只写一个 Scene，不修改状态层 |
 | Continuity Editor | 快照并更新 Story Bible |
 | Chapter Reviewer | 独立写入章节审计报告 |
@@ -87,7 +88,7 @@ Harness 包含：
 ```text
 manifest.json
 assets/
-├── engines/                    # 六个生成的 Engine Profile
+├── engines/                    # 七个生成的 Engine Profile
 ├── agents/                     # 三个生成的 Agent Profile
 ├── prism-driver/               # Contract 与目标 Adapter
 ├── prompts/engines/            # 已解析路径并附宿主 Binding 的 Prompt
@@ -102,7 +103,7 @@ assets/
 - `assets/prompts/shared/vesicle-base.md`
 - `assets/prompts/agents/base.md`
 
-`10.0.1-alpha.5` manifest 记录外部资产、required capabilities、Driver/Adapter hash、
+`10.0.1-alpha.6` manifest 记录外部资产、required capabilities、Driver/Adapter hash、
 Profile bindings、Prompt bindings、Quality bindings 和全部资产 SHA-256。Rule Pack
 `0.3.0-alpha.4` 同时要求 `quality-detector/document-metrics@1` 与
 `quality-judge/anti-ai-flavor@1`；Vesicle 需要 PR 4 metrics 与 PR 5 Judge observe

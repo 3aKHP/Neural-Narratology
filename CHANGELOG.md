@@ -5,11 +5,22 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.5 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1-alpha.6 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-20 — Stage Engine：七引擎矩阵，消费端沉浸式 RP
+
+### Added — `[Modulation]`
+- 新增 **Stage Engine**（七引擎矩阵第七引擎），定位为 Vesicle 内第一方消费端沉浸式 RP 入口。Stage 与 Runtime 共享三段式输出协议（Neural Chain + HUD + Prose），区别在交互范式：宿主 bootstrap 注入 Module A/B（无文件读取）、无 checkpoint 门控、quality observe。Neural Chain 以 HTML 注释包裹，消费端默认折叠、长按可查；HUD 低调 indicator。
+- 新增 `prompts/stage.md`（~120 行，复用 Step3 - Runtime 全文 + 4 处消费端适配）、`templates/tpl_stage_context.md`（双读者注入模板：Module A → System Prompt，Module B → 首条 assistant message，表演层 + HTML 注释逻辑层）、`02_Resonance/v10_Tempered-Voice/zh-CN/Step4 - Stage.md` 协议文档。
+
+### Changed — `[Modulation]`
+- Harness 升级到 **10.0.1-alpha.6**。`driver/contract.json` 与 `adapters/vesicle/adapter.json` 注册 stage 引擎（operations: artifact.inspect + quality.guard；validators 复用 runtime-packet；quality candidate: stage.prose / observe）。README 更新为七引擎矩阵。required capabilities 与 Rule Pack（0.3.0-alpha.4）保持不变。
 
 ---
 
@@ -622,3 +633,4 @@
 | 2026-07-16 | v10.0 Tempered-Voice | **v10.0.1-alpha.3 Harness** | Semantic Judge Runtime observe capability |
 | 2026-07-17 | v10.0 Tempered-Voice | **v10.0.1-alpha.4 Harness** | Semantic Judge calibration foundation |
 | 2026-07-17 | v10.0 Tempered-Voice | **v10.0.1-alpha.5 Harness** | Semantic rewrite policy contract (inactive) |
+| 2026-07-20 | v10.0 Tempered-Voice | **v10.0.1-alpha.6 Harness** | Stage Engine：七引擎矩阵，消费端沉浸式 RP |
