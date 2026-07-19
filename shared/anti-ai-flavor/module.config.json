@@ -45,6 +45,11 @@
     "language": "zh-CN",
     "preamble": "shared/anti-ai-flavor/templates/judge-preamble.zh-CN.md"
   },
+  "compact": {
+    "language": "zh-CN",
+    "generation_preamble": "shared/anti-ai-flavor/templates/generation-brief.zh-CN.md",
+    "review_preamble": "shared/anti-ai-flavor/templates/review-brief.zh-CN.md"
+  },
   "corpora": {
     "detector": "shared/anti-ai-flavor/corpus/detector.zh-CN.jsonl",
     "guidance-pairs": "shared/anti-ai-flavor/corpus/guidance-pairs.zh-CN.jsonl",

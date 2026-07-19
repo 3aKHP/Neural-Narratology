@@ -178,7 +178,7 @@ describe("Prism Driver contract", () => {
       contract.engines.runtime,
       contract,
       adapter,
-      ["assets/quality/anti-ai-flavor/guidance.zh-CN.md", "assets/prompts/engines/runtime.md"],
+      ["assets/quality/anti-ai-flavor/generation-brief.zh-CN.md", "assets/prompts/engines/runtime.md"],
     );
     expect(profile).toContain("id: runtime");
     expect(profile).toContain("  - runtime-turn");
@@ -245,7 +245,7 @@ describe("compiled Harness Pack", () => {
 
   test("records driver identity and binding ownership", async () => {
     const manifest = JSON.parse(await readFile(join(harnessDir, "manifest.json"), "utf8"));
-    expect(manifest.version).toBe("10.0.1");
+    expect(manifest.version).toBe("10.1.0-rc.1");
     expect(manifest.driver.adapterId).toBe("vesicle-v1");
     expect(manifest.driver.contractHash).toBe(manifest.assets[manifest.driver.contract]);
     expect(manifest.driver.adapterHash).toBe(manifest.assets[manifest.driver.adapter]);
@@ -262,11 +262,31 @@ describe("compiled Harness Pack", () => {
     expect(manifest.qualityBindings["weaver-orch"]["anti-ai-flavor"]).toBe("observe");
     expect(manifest.qualityBindings.stage["anti-ai-flavor"]).toBe("observe");
     expect(manifest.agentQualityBindings["scene-writer"]["anti-ai-flavor"]).toBe("observe");
+    expect(manifest.assets["assets/prompt-context-ledger.json"]).toBeDefined();
+    const ledger = JSON.parse(await readFile(join(harnessDir, "assets/prompt-context-ledger.json"), "utf8"));
+    expect(ledger).toMatchObject({
+      schema: "prism-static-prompt-asset-ledger/v1",
+      measurement: {
+        scope: "raw-static-harness-prompt-assets",
+        excludes: ["runtime-injected system content", "conversation history"],
+        enforcement: "static-asset-limit",
+      },
+    });
+    expect(ledger.engines.stage.sections.map((section: { path: string }) => section.path)).toEqual([
+      "assets/prompts/host/consumer-stage.md",
+      "assets/quality/anti-ai-flavor/generation-brief.zh-CN.md",
+      "assets/prompts/engines/stage.md",
+    ]);
+    expect(ledger.agents["scene-writer"].remainingCharacters).toBeGreaterThan(0);
 
     const stageProfile = await readFile(join(harnessDir, "assets/engines/stage.profile.yaml"), "utf8");
     expect(stageProfile).toContain("defaultTools: []");
     expect(stageProfile).toContain("  - runtime-packet");
     expect(stageProfile).toContain("stopGates: []");
+    const stagePrompt = await readFile(join(harnessDir, "assets/prompts/engines/stage.md"), "utf8");
+    for (const forbidden of ["spawn_agent", "shell_exec", "web_search", "assets/", "Host Adapter Binding", "Quality Binding"]) {
+      expect(stagePrompt).not.toContain(forbidden);
+    }
   });
 
   test("ships Quality Guard schemas and host conformance cases", async () => {

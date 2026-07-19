@@ -21,6 +21,11 @@ export type ModuleConfig = {
     sections: Array<{ tier: string; title: string; intro?: string }>;
   };
   judge?: { language: string; preamble: string };
+  compact?: {
+    language: string;
+    generation_preamble: string;
+    review_preamble: string;
+  };
   corpora?: Record<string, string>;
   data_artifacts?: Record<string, string>;
   schemas?: Record<string, string>;
@@ -423,6 +428,31 @@ export async function renderJudgeRubric(source: RuleSource, config: ModuleConfig
   return `${blocks.join("\n")}\n`;
 }
 
+/**
+ * Compact projections are deliberately outcome-oriented. They carry the Rule
+ * Pack identity but never teach rule IDs, examples, or detector mechanics to
+ * a generation/review turn. The complete Guidance and Judge artifacts remain
+ * available to the detector, judge, inspection, and targeted rewrite paths.
+ */
+export async function renderCompactProjection(
+  source: RuleSource,
+  config: ModuleConfig,
+  audience: "generation" | "review",
+): Promise<string | undefined> {
+  if (!config.compact) return undefined;
+  const sourcePath = audience === "generation"
+    ? config.compact.generation_preamble
+    : config.compact.review_preamble;
+  const text = (await readFile(absolute(sourcePath), "utf8")).trim();
+  return [
+    "<!-- Generated from knowledge-source.yaml by shared/rule-assets. Do not edit directly. -->",
+    `<!-- Rule Pack: ${source.meta.module}@${source.meta.version}; audience: ${audience}. -->`,
+    "",
+    text,
+    "",
+  ].join("\n");
+}
+
 function dialogueRatio(text: string): number {
   const quotePairs = [/“[^”]*”/gu, /「[^」]*」/gu, /『[^』]*』/gu];
   let dialogue = 0;
@@ -570,6 +600,10 @@ export async function compileModule(configPath: string): Promise<{ config: Modul
   if (guidance && config.guidance) artifacts.set(`guidance.${config.guidance.language}.md`, guidance);
   const rubric = await renderJudgeRubric(source, config);
   if (rubric && config.judge) artifacts.set(`judge-rubric.${config.judge.language}.md`, rubric);
+  const generationBrief = await renderCompactProjection(source, config, "generation");
+  const reviewBrief = await renderCompactProjection(source, config, "review");
+  if (generationBrief && config.compact) artifacts.set(`generation-brief.${config.compact.language}.md`, generationBrief);
+  if (reviewBrief && config.compact) artifacts.set(`review-brief.${config.compact.language}.md`, reviewBrief);
 
   for (const lang of [...new Set(rules.map((rule) => rule.lang))].sort()) {
     const detectors = rules.filter((rule) => rule.lang === lang && rule.projections.includes("detector"));
@@ -603,6 +637,8 @@ export async function compileModule(configPath: string): Promise<{ config: Modul
     config.guidance?.preamble,
     config.guidance?.postamble,
     config.judge?.preamble,
+    config.compact?.generation_preamble,
+    config.compact?.review_preamble,
     ...Object.values(config.corpora ?? {}),
     ...Object.values(config.data_artifacts ?? {}),
     ...Object.values(config.schemas ?? {}),

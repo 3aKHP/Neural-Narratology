@@ -93,18 +93,17 @@ assets/
 ├── prism-driver/               # Contract 与目标 Adapter
 ├── prompts/engines/            # 已解析路径并附宿主 Binding 的 Prompt
 ├── prompts/agents/
+├── prompts/host/               # Vesicle host brief assets
 ├── quality/anti-ai-flavor/
 ├── specs/
 └── templates/
 ```
 
-宿主提供两个外部基础资产：
-
-- `assets/prompts/shared/vesicle-base.md`
-- `assets/prompts/agents/base.md`
-
-`10.0.1` manifest 记录外部资产、required capabilities、Driver/Adapter hash、
-Profile bindings、Prompt bindings、Quality bindings 和全部资产 SHA-256。Rule Pack
+`10.1.0-rc.1` manifest 记录 required capabilities、Driver/Adapter hash、Profile
+bindings、Prompt bindings、Quality bindings、静态 Prompt 资产账本和全部资产 SHA-256。
+`static_prompt_asset_budget_chars` 是原始静态 Harness Prompt 资产的验证上限；运行时注入
+内容和会话历史不在此范围内。完整请求长度由 Vesicle 与 Provider 的上下文管理流程处理。
+Stage 的冻结 Module A system context 与 Module B assistant history 由 Vesicle 会话启动流程管理。Rule Pack
 `0.3.0-alpha.4` 同时要求 `quality-detector/document-metrics@1` 与
 `quality-judge/anti-ai-flavor@1`；Vesicle 需要 PR 4 metrics 与 PR 5 Judge observe
 宿主能力才能激活此 prerelease。Policy schema 与 inactive fixture 同包交付，尚不要求

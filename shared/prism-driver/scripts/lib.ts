@@ -31,7 +31,7 @@ export type DriverQuality = {
   mode: "off" | "observe" | "rewrite" | "strict" | "analyze";
   candidate: string | null;
   rewriteOwner: string | null;
-  promptProjection: "none" | "guidance" | "judge";
+  promptProjection: "none" | "generation" | "review";
 };
 
 export type DriverEngine = {
@@ -242,11 +242,11 @@ function validateQuality(owner: string, quality: DriverQuality, operations: stri
   if (!quality.module || !quality.candidate) errors.push(`${owner}: active quality policy requires module and candidate`);
   if (quality.mode === "analyze") {
     if (!operations.includes("quality.analyze")) errors.push(`${owner}: analyze mode requires quality.analyze`);
-    if (quality.promptProjection !== "judge") errors.push(`${owner}: analyze mode requires judge prompt projection`);
+    if (quality.promptProjection !== "review") errors.push(`${owner}: analyze mode requires review prompt projection`);
   } else {
     if (!operations.includes("quality.guard")) errors.push(`${owner}: guarded mode requires quality.guard`);
     if (!quality.rewriteOwner) errors.push(`${owner}: guarded mode requires rewriteOwner`);
-    if (quality.promptProjection !== "guidance") errors.push(`${owner}: guarded mode requires guidance prompt projection`);
+    if (quality.promptProjection !== "generation") errors.push(`${owner}: guarded mode requires generation prompt projection`);
   }
 }
 

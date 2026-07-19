@@ -3,9 +3,7 @@ import { dirname, relative, resolve } from "node:path";
 import {
   loadDriverContract,
   loadHostAdapter,
-  renderAgentBinding,
   renderAgentProfile,
-  renderEngineBinding,
   renderEngineProfile,
   resolveResourceReferences,
   validateDriverPair,
@@ -33,7 +31,9 @@ type HarnessConfig = {
   version: string;
   driver_contract: string;
   host_adapter: string;
-  quality_prompt_assets: Record<string, { guidance?: string; judge?: string }>;
+  quality_prompt_assets: Record<string, { generation?: string; review?: string }>;
+  host_prompt_assets: Record<string, string>;
+  static_prompt_asset_budget_chars: number;
 };
 
 async function listFiles(root: string): Promise<string[]> {
@@ -56,7 +56,7 @@ async function writeText(outDir: string, target: string, text: string): Promise<
 }
 
 function qualityPromptPath(
-  quality: { module: string | null; promptProjection: "none" | "guidance" | "judge" },
+  quality: { module: string | null; promptProjection: "none" | "generation" | "review" },
   config: HarnessConfig,
 ): string | undefined {
   if (!quality.module || quality.promptProjection === "none") return undefined;
@@ -67,7 +67,7 @@ function qualityPromptPath(
 
 function profileSections(
   promptPath: string,
-  quality: { module: string | null; promptProjection: "none" | "guidance" | "judge" },
+  quality: { module: string | null; promptProjection: "none" | "generation" | "review" },
   config: HarnessConfig,
 ): string[] {
   const qualityPath = qualityPromptPath(quality, config);
@@ -77,12 +77,12 @@ function profileSections(
 async function agentProfileSections(
   outDir: string,
   promptPath: string,
-  quality: { module: string | null; promptProjection: "none" | "guidance" | "judge" },
+  quality: { module: string | null; promptProjection: "none" | "generation" | "review" },
   config: HarnessConfig,
 ): Promise<string[]> {
   const qualityPath = qualityPromptPath(quality, config);
   if (!qualityPath || !quality.module) return [promptPath];
-  const extension = quality.promptProjection === "guidance" ? "guidance.md" : "judge-rubric.md";
+  const extension = quality.promptProjection === "generation" ? "generation-brief.md" : "review-brief.md";
   const agentQualityPath = `assets/prompts/agents/quality/${quality.module}.${extension}`;
   if (!(await Bun.file(resolve(outDir, agentQualityPath)).exists())) {
     const source = await readFile(resolve(outDir, qualityPath), "utf8");
@@ -97,13 +97,13 @@ async function compileResources(outDir: string, contract: DriverContract, adapte
     const source = await readFile(absolute(resource.source), "utf8");
     let compiled = resolveResourceReferences(source, adapter);
     if (resource.kind === "engine-prompt") {
-      const pair = Object.entries(contract.engines).find(([, engine]) => engine.prompt === id);
-      if (!pair) throw new Error(`No engine owns prompt resource ${id}`);
-      compiled = `${compiled.trim()}\n\n${renderEngineBinding(pair[0], pair[1], contract, adapter)}`;
+      if (!Object.values(contract.engines).some((engine) => engine.prompt === id)) {
+        throw new Error(`No engine owns prompt resource ${id}`);
+      }
     } else if (resource.kind === "agent-prompt") {
-      const pair = Object.entries(contract.agents).find(([, agent]) => agent.prompt === id);
-      if (!pair) throw new Error(`No agent owns prompt resource ${id}`);
-      compiled = `${compiled.trim()}\n\n${renderAgentBinding(pair[0], pair[1], adapter)}`;
+      if (!Object.values(contract.agents).some((agent) => agent.prompt === id)) {
+        throw new Error(`No agent owns prompt resource ${id}`);
+      }
     }
     if (/prism:\/\/resource\//.test(compiled)) throw new Error(`${id}: unresolved resource URI after adapter compilation`);
     await writeText(outDir, target, compiled.endsWith("\n") ? compiled : `${compiled}\n`);
@@ -145,6 +145,16 @@ if (contract.id !== config.id || contract.version !== config.version) {
 
 await rm(outDir, { recursive: true, force: true });
 await mkdir(outDir, { recursive: true });
+
+for (const [target, source] of Object.entries(config.host_prompt_assets)) {
+  if (!target.startsWith("assets/") || target.includes("..") || target.includes("\\")) {
+    throw new Error(`Unsafe host prompt target ${target}`);
+  }
+  if (!source || source.startsWith("/") || source.includes("..") || source.includes("\\")) {
+    throw new Error(`Unsafe host prompt source ${source}`);
+  }
+  await writeText(outDir, target, await readFile(absolute(source), "utf8"));
+}
 
 const ruleModules: Array<Record<string, unknown>> = [];
 const requiredCapabilities = new Set<string>(["prism-harness/v1", "prism-driver/v1", ...adapter.capabilities]);
@@ -197,10 +207,38 @@ for (const [agentId, agent] of Object.entries(contract.agents)) {
   agentQualityBindings[agentId] = agent.quality.module ? { [agent.quality.module]: agent.quality.mode } : {};
 }
 
-const externalHostAssets = new Set([
-  ...Object.values(adapter.engineBindings).flatMap((binding) => binding.basePrompts),
-  ...Object.values(adapter.agentBindings).flatMap((binding) => binding.basePrompts),
-]);
+if (!Number.isInteger(config.static_prompt_asset_budget_chars) || config.static_prompt_asset_budget_chars < 1) {
+  throw new Error("static_prompt_asset_budget_chars must be a positive integer");
+}
+const staticPromptAssetLedger = async (bindings: Record<string, string[]>) => Object.fromEntries(await Promise.all(
+  Object.entries(bindings).sort(([left], [right]) => left.localeCompare(right)).map(async ([id, paths]) => {
+    const sections = await Promise.all(paths.map(async (path) => {
+      const text = await readFile(resolve(outDir, path), "utf8");
+      return { path, characters: [...text].length, bytes: Buffer.byteLength(text, "utf8") };
+    }));
+    const characters = sections.reduce((total, section) => total + section.characters, 0);
+    const bytes = sections.reduce((total, section) => total + section.bytes, 0);
+    return [id, {
+      budgetCharacters: config.static_prompt_asset_budget_chars,
+      usedCharacters: characters,
+      remainingCharacters: config.static_prompt_asset_budget_chars - characters,
+      usedBytes: bytes,
+      sections,
+    }];
+  }),
+));
+await writeText(outDir, "assets/prompt-context-ledger.json", stableJson({
+  schema: "prism-static-prompt-asset-ledger/v1",
+  measurement: {
+    scope: "raw-static-harness-prompt-assets",
+    excludes: ["runtime-injected system content", "conversation history"],
+    enforcement: "static-asset-limit",
+  },
+  engines: await staticPromptAssetLedger(promptBindings),
+  agents: await staticPromptAssetLedger(agentPromptBindings),
+}));
+
+const externalHostAssets = new Set<string>();
 for (const paths of [...Object.values(promptBindings), ...Object.values(agentPromptBindings)]) {
   for (const path of paths) {
     if (!externalHostAssets.has(path) && !(await Bun.file(resolve(outDir, path)).exists())) throw new Error(`Bound asset does not exist: ${path}`);
