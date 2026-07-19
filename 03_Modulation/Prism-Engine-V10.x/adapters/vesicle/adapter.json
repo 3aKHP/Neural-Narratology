@@ -70,6 +70,7 @@
     "prompt.engine.weaver": "assets/prompts/engines/weaver.md",
     "prompt.engine.weaver-orch": "assets/prompts/engines/weaver-orch.md",
     "prompt.engine.dyad": "assets/prompts/engines/dyad.md",
+    "prompt.engine.stage": "assets/prompts/engines/stage.md",
     "prompt.agent.scene-writer": "assets/prompts/agents/scene-writer.md",
     "prompt.agent.continuity-editor": "assets/prompts/agents/continuity-editor.md",
     "prompt.agent.chapter-reviewer": "assets/prompts/agents/chapter-reviewer.md",
@@ -85,7 +86,8 @@
     "template.persona.immersive": "assets/templates/tpl_persona_prompt_immersive.md",
     "template.persona.compatible": "assets/templates/tpl_persona_prompt_compatible.md",
     "template.outline": "assets/templates/tpl_outline.md",
-    "template.story-bible": "assets/templates/tpl_story_bible.md"
+    "template.story-bible": "assets/templates/tpl_story_bible.md",
+    "template.stage-context": "assets/templates/tpl_stage_context.md"
   },
   "interactionBindings": {
     "etl.blueprint": { "checkpoint": "blueprint-confirmation" },
@@ -106,7 +108,8 @@
     "evaluate": { "profileId": "evaluate", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
     "weaver": { "profileId": "weaver", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
     "weaver-orch": { "profileId": "weaver-orch", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
-    "dyad": { "profileId": "dyad", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] }
+    "dyad": { "profileId": "dyad", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
+    "stage": { "profileId": "stage", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": [] }
   },
   "agentBindings": {
     "scene-writer": { "profileId": "scene-writer", "basePrompts": ["assets/prompts/agents/base.md"] },
