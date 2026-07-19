@@ -109,7 +109,7 @@
     "weaver": { "profileId": "weaver", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
     "weaver-orch": { "profileId": "weaver-orch", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
     "dyad": { "profileId": "dyad", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
-    "stage": { "profileId": "stage", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] }
+    "stage": { "profileId": "stage", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": [] }
   },
   "agentBindings": {
     "scene-writer": { "profileId": "scene-writer", "basePrompts": ["assets/prompts/agents/base.md"] },

@@ -1,7 +1,7 @@
 {
   "schema": "prism-driver-contract/v1",
   "id": "prism-engine-v10",
-  "version": "10.0.1-alpha.6",
+  "version": "10.0.1-alpha.7",
   "protocolVersion": "v10.0-tempered-voice",
   "resources": {
     "prompt.engine.etl": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/etl.md" },
@@ -292,7 +292,7 @@
     "stage": {
       "displayName": "Prism Stage Engine",
       "prompt": "prompt.engine.stage",
-      "operations": ["artifact.inspect", "quality.guard"],
+      "operations": ["quality.guard"],
       "resources": ["schema.character", "schema.scenario", "template.stage-context"],
       "interactions": [],
       "delegations": [],

@@ -228,7 +228,7 @@ describe("V10 protocol invariants", () => {
 
 describe("compiled Harness Pack", () => {
   test("ships complete engine and agent profiles", async () => {
-    for (const engine of ["etl", "runtime", "evaluate", "weaver", "weaver-orch", "dyad"]) {
+    for (const engine of ["etl", "runtime", "evaluate", "weaver", "weaver-orch", "dyad", "stage"]) {
       expect(await Bun.file(join(harnessDir, `assets/engines/${engine}.profile.yaml`)).exists()).toBe(true);
     }
     for (const agent of ["scene-writer", "continuity-editor", "chapter-reviewer"]) {
@@ -237,7 +237,7 @@ describe("compiled Harness Pack", () => {
   });
 
   test("resolves every logical resource URI", async () => {
-    for (const engine of ["etl", "runtime", "evaluate", "weaver", "weaver-orch", "dyad"]) {
+    for (const engine of ["etl", "runtime", "evaluate", "weaver", "weaver-orch", "dyad", "stage"]) {
       const text = await readFile(join(harnessDir, `assets/prompts/engines/${engine}.md`), "utf8");
       expect(text).not.toContain("prism://resource/");
     }
@@ -245,7 +245,7 @@ describe("compiled Harness Pack", () => {
 
   test("records driver identity and binding ownership", async () => {
     const manifest = JSON.parse(await readFile(join(harnessDir, "manifest.json"), "utf8"));
-    expect(manifest.version).toBe("10.0.1-alpha.6");
+    expect(manifest.version).toBe("10.0.1-alpha.7");
     expect(manifest.driver.adapterId).toBe("vesicle-v1");
     expect(manifest.driver.contractHash).toBe(manifest.assets[manifest.driver.contract]);
     expect(manifest.driver.adapterHash).toBe(manifest.assets[manifest.driver.adapter]);
@@ -260,7 +260,13 @@ describe("compiled Harness Pack", () => {
     expect(manifest.qualityBindings.dyad["anti-ai-flavor"]).toBe("observe");
     expect(manifest.qualityBindings.weaver["anti-ai-flavor"]).toBe("observe");
     expect(manifest.qualityBindings["weaver-orch"]["anti-ai-flavor"]).toBe("observe");
+    expect(manifest.qualityBindings.stage["anti-ai-flavor"]).toBe("observe");
     expect(manifest.agentQualityBindings["scene-writer"]["anti-ai-flavor"]).toBe("observe");
+
+    const stageProfile = await readFile(join(harnessDir, "assets/engines/stage.profile.yaml"), "utf8");
+    expect(stageProfile).toContain("defaultTools: []");
+    expect(stageProfile).toContain("  - runtime-packet");
+    expect(stageProfile).toContain("stopGates: []");
   });
 
   test("ships Quality Guard schemas and host conformance cases", async () => {
