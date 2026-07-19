@@ -11,7 +11,7 @@
 
 ### 核心突破
 
-- **六引擎矩阵架构**：ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（小说）、Dyad（数据）、Weaver-Orch（编排器）形成完整生态
+- **七引擎矩阵架构**：ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（小说）、Dyad（数据）、Weaver-Orch（编排器）、Stage（消费端沉浸式 RP）形成完整生态
 - **v7.0 Neuro-Weave 实现**：将 Phase II 的理论框架转化为可执行的工程工具（Prism-Engine-V7.x）
 - **v8.0 Compact-State 实现**：从 Bio-XML 转向 YAML+Markdown 轻骨架架构，新增 Story Bible 世界状态层（Prism-Engine-V8.x）
 - **Lite Persona Prompt 输出**：ETL 现可直接锻造面向单一 System Prompt 聊天宿主的角色主提示词
@@ -47,7 +47,7 @@ graph TB
     style G fill:#fff4e1
 ```
 
-### 六大引擎职责
+### 七大引擎职责
 
 | 引擎 | 模式 | 职责 | 输入 | 输出 |
 |:---|:---|:---|:---|:---|
@@ -57,6 +57,7 @@ graph TB
 | **Weaver Engine** | `prism-weaver` | 扩写生成长篇小说 | Module A + Module B | Long-form Novel (MD) |
 | **Weaver-Orch Engine** | `prism-weaver-orch` | 长篇编排器（Orchestrator） | Module A + Module B + Story Bible | Multi-Chapter Novel (MD) |
 | **Dyad Engine** | `prism-dyad` | 双角色自动博弈生成数据 | Module A + Module B | Session Log (MD) |
+| **Stage Engine** | `prism-stage` | 消费端沉浸式 RP | 宿主注入 Module A + Module B | 连续叙事流 |
 
 ## 📦 目录结构 (Directory Structure)
 
@@ -66,9 +67,9 @@ graph TB
 
 - **[`Prism-Engine-V10.x/`](./Prism-Engine-V10.x/)**: **V10.x 工程源文件**（⭐ 最新，面向 Prism Vesicle）
   - 基于 v10.0 Tempered-Voice 协议；Prism Vesicle 是 Phase III 唯一目标宿主
-  - 六引擎 canonical Prompt 通过 [`shared/prism-driver/`](../shared/prism-driver/) HAL 与 Vesicle 工具、Profile 和资产路径隔离
+  - 七引擎 canonical Prompt 通过 [`shared/prism-driver/`](../shared/prism-driver/) HAL 与 Vesicle 工具、Profile 和资产路径隔离
   - `driver/contract.json` 声明工作流语义，`adapters/vesicle/adapter.json` 集中承载唯一宿主耦合点
-  - Harness 构建生成六个 Engine Profile、三个 Agent Profile、编译后 Prompt、Schema、模板和 Anti-AI-Flavor Rule Pack
+  - Harness 构建生成七个 Engine Profile、三个 Agent Profile、编译后 Prompt、Schema、模板和 Anti-AI-Flavor Rule Pack
   - Weaver-Orch 采用 Scene Writer → Continuity Editor → Chapter Reviewer 的顺序闭环
   - 长篇活状态移出 YAML；产出层 L-System 禁令、L4-B 当前默认协议与 L5 锁定由自动化测试保护
 - **[`Prism-Engine-V9.x/`](./Prism-Engine-V9.x/)**: **V9.x 通用版本**
@@ -125,7 +126,7 @@ graph TB
 
 | 版本目录 | 协议代际侧重 | 已提供引擎 |
 |:---|:---|:---|
-| `Prism-Engine-V10.x` | v10.0 Tempered-Voice / Prism Driver HAL / 面向 Prism Vesicle | 六引擎 + 三个长篇 Agent + 完整 Harness Pack |
+| `Prism-Engine-V10.x` | v10.0 Tempered-Voice / Prism Driver HAL / 面向 Prism Vesicle | 七引擎 + 三个长篇 Agent + 完整 Harness Pack |
 | `Prism-Engine-V8.x` | v8.0 Compact-State | `etl` + `runtime` + `evaluate` + `weaver` + `weaver-orch` + `dyad` |
 | `Prism-Engine-Codex`（历史归档） | v9.0 State-Space / Codex 宿主适配 | 六引擎目录作用域（AGENTS.md + shared/prompts） |
 | `Prism-Engine-Claude-Code`（历史归档） | v9.0 State-Space / Claude Code 宿主适配 | 六引擎目录作用域（CLAUDE.md + shared/prompts + Agent 子代理） |

@@ -36,7 +36,7 @@ beat_map:
 ### 2.2 Markdown Body (The Stage)
 
 #### A. Opening Paragraph
-*Zero indentation. Written through the character's active perceptual lens. Sets physical space, ambient pressure, and the character's immediate inner state. 80–150 words.*
+*Zero indentation. Written through the character's active perceptual lens. Sets physical space, ambient pressure, and the character's immediate inner state. 80–150 Chinese characters / 80–150 words in English.*
 
 ```text
 [Opening paragraph. Flush left. Through the character's active perceptual lens.]

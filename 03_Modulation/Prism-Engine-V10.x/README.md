@@ -103,7 +103,7 @@ assets/
 - `assets/prompts/shared/vesicle-base.md`
 - `assets/prompts/agents/base.md`
 
-`10.0.1-alpha.6` manifest 记录外部资产、required capabilities、Driver/Adapter hash、
+`10.0.1` manifest 记录外部资产、required capabilities、Driver/Adapter hash、
 Profile bindings、Prompt bindings、Quality bindings 和全部资产 SHA-256。Rule Pack
 `0.3.0-alpha.4` 同时要求 `quality-detector/document-metrics@1` 与
 `quality-judge/anti-ai-flavor@1`；Vesicle 需要 PR 4 metrics 与 PR 5 Judge observe

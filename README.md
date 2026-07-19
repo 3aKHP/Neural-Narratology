@@ -21,7 +21,7 @@
 
 ## 🧭 当前进度 (Current Focus)
 
-> 已发布下一代协议 **v10.0 Tempered-Voice**（针对新一代 LLM 的语言习惯重做协议语言层）；工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。**[`shared/prism-driver/`](./shared/prism-driver/)** 提供 Prism HAL，隔离六引擎协议与宿主工具实现；**[`shared/rule-assets/`](./shared/rule-assets/)** 编译 Vesicle Harness Pack，首个模块 **[`shared/anti-ai-flavor/`](./shared/anti-ai-flavor/)** 提供 Guidance、Detector 与 Judge rubric。v9.x 及更早协议与宿主实现作为历史演进档案保留。
+> 已发布下一代协议 **v10.0 Tempered-Voice**（针对新一代 LLM 的语言习惯重做协议语言层）；工程化载体为独立姊妹项目 **[Prism Vesicle](https://github.com/3aKHP/prism-vesicle)**。**[`shared/prism-driver/`](./shared/prism-driver/)** 提供 Prism HAL，隔离七引擎协议与宿主工具实现；**[`shared/rule-assets/`](./shared/rule-assets/)** 编译 Vesicle Harness Pack，首个模块 **[`shared/anti-ai-flavor/`](./shared/anti-ai-flavor/)** 提供 Guidance、Detector 与 Judge rubric。v9.x 及更早协议与宿主实现作为历史演进档案保留。
 
 ---
 
@@ -57,14 +57,14 @@
 
 *   **核心任务**：基于 IDE 原生环境的智能体辅助生产 (VibeCoding)。
 *   **关键成果**：
-    *   **Prism Engine 矩阵架构**：从初期的三位一体，扩展为包含 ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（衍生小说）、Dyad（衍生数据）和 **Weaver-Orch**（长篇编排器）的**六大引擎**生态。
+    *   **Prism Engine 矩阵架构**：从初期的三位一体，扩展为包含 ETL（构建）、Runtime（模拟）、Evaluate（审计）、Weaver（衍生小说）、Dyad（衍生数据）、**Weaver-Orch**（长篇编排器）和 **Stage**（消费端沉浸式 RP）的**七大引擎**生态。
     *   基于 VSCode + RooCode 的自动化角色铸造流水线。
     *   实现了 **Zero-Copy** 工作流：利用智能体操作文件系统，实现从自然语言意图到结构化 XML/Markdown 的无缝转换。
     *   突破长上下文窗口限制的 **Chunked Writing Loop**（分块写入循环）技术。
     *   完整实现 v7.0 Neuro-Weave 理论框架（Prism-Engine-V7.x）。
     *   完整实现 v8.0 Compact-State 协议（Prism-Engine-V8.x），从 Bio-XML 转向 **YAML+Markdown 轻骨架**架构，新增 **Story Bible 世界状态层**、**结构化 Outline** 与 **Lite Persona Prompt** 输出。
     *   发布 **Prism Engine v8.1**：新增 **Weaver-Orch** 第六引擎（基于 Orchestrator 的长篇编排器）。
-    *   **多宿主适配**：六引擎矩阵曾扩展至 RooCode、Codex CLI 和 Claude Code CLI 三个宿主环境；**自 v10.0 起收窄为 Prism Vesicle 单一目标平台**（见 [`Prism-Engine-V10.x`](./03_Modulation/Prism-Engine-V10.x/)），Codex/Claude-Code 适配作为历史归档冻结于 v9.0。
+    *   **多宿主适配**：早期六引擎矩阵曾扩展至 RooCode、Codex CLI 和 Claude Code CLI 三个宿主环境；**自 v10.0 起以七引擎矩阵收窄为 Prism Vesicle 单一目标平台**（见 [`Prism-Engine-V10.x`](./03_Modulation/Prism-Engine-V10.x/)），Codex/Claude-Code 适配作为历史归档冻结于 v9.0。
 *   **🛠️ [获取工具链](./03_Modulation/)**
 
 ### [🌕 Phase IV: Projection (投射)](./04_Projection/)
@@ -106,7 +106,7 @@ Neural-Narratology/
 │
 ├── 03_Modulation/                  # Phase III: 自动化工具链
 │   ├── Prism-Engine-V10.x/         # V10.x 工程源文件(⭐ 最新,唯一目标平台 Prism Vesicle)
-│   │   ├── prompts/                # 六引擎行为手册
+│   │   ├── prompts/                # 七引擎行为手册
 │   │   ├── specs/                  # schema 定义
 │   │   └── templates/              # 模板文件
 │   ├── Prism-Engine-V8.x/          # V8.x 通用版本（六引擎 Compact-State）

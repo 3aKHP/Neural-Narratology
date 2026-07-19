@@ -5,7 +5,7 @@
 本交付把 V10 从“宿主中立 Prompt 集合”推进为可构建、可验证、具有明确宿主边界的驱动型产品：
 
 1. canonical Prompt 不包含 Vesicle 工具名；
-2. Driver Contract 声明六引擎、三个 Agent、资源、操作和生命周期；
+2. Driver Contract 声明七引擎、三个 Agent、资源、操作和生命周期；
 3. Vesicle Adapter 集中承载工具、路径、gate 和 Profile 映射；
 4. Harness Builder 生成完整 Engine/Agent Profile 与编译后 Prompt；
 5. Anti-AI-Flavor 通过 quality binding 组合；
@@ -36,7 +36,7 @@ git diff --check
 
 ## 验收条件
 
-- 六个 Engine Profile 和三个 Agent Profile 全部存在。
+- 七个 Engine Profile 和三个 Agent Profile 全部存在。
 - canonical Prompt 中不存在具体宿主工具名。
 - 编译后 ETL、Runtime、Dyad、Weaver、Weaver-Orch Prompt 含正确交互绑定。
 - 编译后 Weaver-Orch 含三个 foreground delegation profile ID。
@@ -48,8 +48,9 @@ git diff --check
 - Intensity Expansion Dossier 输出示例没有 L-System 标签。
 - L4-B 默认协议、L3-A 可选与 L5 锁定保持有效。
 - 两次 Harness 构建字节一致。
-- Harness/Driver 版本为 `10.0.1-alpha.5`，Runtime quality binding 为 `rewrite`；Dyad、
-  Weaver、Weaver-Orch 和 Scene Writer 仍为 `observe`。
+- Harness/Driver 版本为 `10.0.1`，Runtime quality binding 为 `rewrite`；Dyad、
+  Weaver、Weaver-Orch、Scene Writer 和 Stage 仍为 `observe`。Stage Profile 的
+  `defaultTools` 与 `stopGates` 均为空，并复用 `runtime-packet` validator。
 - Anti-AI-Flavor Rule Pack `0.3.0-alpha.4` 包含 Detector/Judge/calibration/annotation/
   rewrite/report/freeze JSON Schema、124 条 tracked calibration/conformance case、6 个
   experimental document metrics 和 cn-antislop evaluating candidate 资产，且全部进入
