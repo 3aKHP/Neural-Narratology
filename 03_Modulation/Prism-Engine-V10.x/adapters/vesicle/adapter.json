@@ -1,7 +1,7 @@
 {
   "schema": "prism-host-adapter/v1",
   "id": "vesicle-v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "targetHost": "Prism Vesicle",
   "capabilities": [
     "prism-driver/v1",
@@ -103,17 +103,17 @@
     "dyad.turn": { "header": "下一步" }
   },
   "engineBindings": {
-    "etl": { "profileId": "etl", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
-    "runtime": { "profileId": "runtime", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
-    "evaluate": { "profileId": "evaluate", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
-    "weaver": { "profileId": "weaver", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
-    "weaver-orch": { "profileId": "weaver-orch", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
-    "dyad": { "profileId": "dyad", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": ["config.load", "prompt.load", "session.write"] },
-    "stage": { "profileId": "stage", "basePrompts": ["assets/prompts/shared/vesicle-base.md"], "hostContracts": [] }
+    "etl": { "profileId": "etl", "basePrompts": ["assets/prompts/host/authoring.md"] },
+    "runtime": { "profileId": "runtime", "basePrompts": ["assets/prompts/host/runtime.md"] },
+    "evaluate": { "profileId": "evaluate", "basePrompts": ["assets/prompts/host/review.md"] },
+    "weaver": { "profileId": "weaver", "basePrompts": ["assets/prompts/host/writing.md"] },
+    "weaver-orch": { "profileId": "weaver-orch", "basePrompts": ["assets/prompts/host/writing.md"] },
+    "dyad": { "profileId": "dyad", "basePrompts": ["assets/prompts/host/runtime.md"] },
+    "stage": { "profileId": "stage", "basePrompts": ["assets/prompts/host/consumer-stage.md"] }
   },
   "agentBindings": {
-    "scene-writer": { "profileId": "scene-writer", "basePrompts": ["assets/prompts/agents/base.md"] },
-    "continuity-editor": { "profileId": "continuity-editor", "basePrompts": ["assets/prompts/agents/base.md"] },
-    "chapter-reviewer": { "profileId": "chapter-reviewer", "basePrompts": ["assets/prompts/agents/base.md"] }
+    "scene-writer": { "profileId": "scene-writer", "basePrompts": ["assets/prompts/host/writing.md"] },
+    "continuity-editor": { "profileId": "continuity-editor", "basePrompts": ["assets/prompts/host/writing.md"] },
+    "chapter-reviewer": { "profileId": "chapter-reviewer", "basePrompts": ["assets/prompts/host/review.md"] }
   }
 }

@@ -5,11 +5,22 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.0.1 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.1.0-rc.1 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-20 — Harness 10.1.0-rc.1：静态 Prompt 资产装配
+
+### Added — `[Modulation]`
+- 发布 `prism-engine-v10@10.1.0-rc.1` 的七引擎 Prompt 装配资产：Vesicle host brief、紧凑 generation/review quality brief、Stage 原始 Module A 注入模板与静态 Prompt 资产账本。
+
+### Changed — `[Modulation]`
+- `static_prompt_asset_budget_chars` 取代含义不完整的 `prompt_budget_chars`。账本固定为 raw static Harness Prompt 资产的验证上限，明确排除运行时 system 注入和会话历史。Stage 的冻结 Module A 与 Module B 上下文继续由 Vesicle bootstrap 管理，完整请求长度由宿主与 Provider 上下文管理。
+- Harness/Driver 版本更新至 **10.1.0-rc.1**；Engine canonical Prompt 不再拼入宿主 binding 文本，Profile 的 section 顺序成为唯一系统提示词装配顺序。
 
 ---
 
@@ -634,3 +645,4 @@
 | 2026-07-17 | v10.0 Tempered-Voice | **v10.0.1-alpha.4 Harness** | Semantic Judge calibration foundation |
 | 2026-07-17 | v10.0 Tempered-Voice | **v10.0.1-alpha.5 Harness** | Semantic rewrite policy contract (inactive) |
 | 2026-07-20 | v10.0 Tempered-Voice | **v10.0.1 Harness** | Stage Engine：七引擎矩阵，消费端沉浸式 RP |
+| 2026-07-20 | v10.0 Tempered-Voice | **v10.1.0-rc.1 Harness** | 静态 Prompt 资产装配与 Stage 冻结上下文审阅语义 |

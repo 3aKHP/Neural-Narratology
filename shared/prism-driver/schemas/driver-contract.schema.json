@@ -46,7 +46,7 @@
         "mode": { "enum": ["off", "observe", "rewrite", "strict", "analyze"] },
         "candidate": { "type": ["string", "null"] },
         "rewriteOwner": { "type": ["string", "null"] },
-        "promptProjection": { "enum": ["none", "guidance", "judge"] }
+        "promptProjection": { "enum": ["none", "generation", "review"] }
       }
     },
     "interaction": {

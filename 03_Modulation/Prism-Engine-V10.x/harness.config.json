@@ -1,13 +1,21 @@
 {
   "schema": "prism-harness-source/v1",
   "id": "prism-engine-v10",
-  "version": "10.0.1",
+  "version": "10.1.0-rc.1",
   "driver_contract": "03_Modulation/Prism-Engine-V10.x/driver/contract.json",
   "host_adapter": "03_Modulation/Prism-Engine-V10.x/adapters/vesicle/adapter.json",
+  "static_prompt_asset_budget_chars": 24000,
   "quality_prompt_assets": {
     "anti-ai-flavor": {
-      "guidance": "assets/quality/anti-ai-flavor/guidance.zh-CN.md",
-      "judge": "assets/quality/anti-ai-flavor/judge-rubric.zh-CN.md"
+      "generation": "assets/quality/anti-ai-flavor/generation-brief.zh-CN.md",
+      "review": "assets/quality/anti-ai-flavor/review-brief.zh-CN.md"
     }
+  },
+  "host_prompt_assets": {
+    "assets/prompts/host/authoring.md": "03_Modulation/Prism-Engine-V10.x/adapters/vesicle/briefs/authoring.md",
+    "assets/prompts/host/consumer-stage.md": "03_Modulation/Prism-Engine-V10.x/adapters/vesicle/briefs/consumer-stage.md",
+    "assets/prompts/host/review.md": "03_Modulation/Prism-Engine-V10.x/adapters/vesicle/briefs/review.md",
+    "assets/prompts/host/runtime.md": "03_Modulation/Prism-Engine-V10.x/adapters/vesicle/briefs/runtime.md",
+    "assets/prompts/host/writing.md": "03_Modulation/Prism-Engine-V10.x/adapters/vesicle/briefs/writing.md"
   }
 }

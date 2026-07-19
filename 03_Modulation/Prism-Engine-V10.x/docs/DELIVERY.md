@@ -48,9 +48,11 @@ git diff --check
 - Intensity Expansion Dossier 输出示例没有 L-System 标签。
 - L4-B 默认协议、L3-A 可选与 L5 锁定保持有效。
 - 两次 Harness 构建字节一致。
-- Harness/Driver 版本为 `10.0.1`，Runtime quality binding 为 `rewrite`；Dyad、
+- Harness/Driver 版本为 `10.1.0-rc.1`，Runtime quality binding 为 `rewrite`；Dyad、
   Weaver、Weaver-Orch、Scene Writer 和 Stage 仍为 `observe`。Stage Profile 的
   `defaultTools` 与 `stopGates` 均为空，并复用 `runtime-packet` validator。
+- `static_prompt_asset_budget_chars` 是原始静态 Harness Prompt 资产的验证上限。运行时
+  注入内容和会话历史不纳入该账本；完整请求长度由 Vesicle 与 Provider 上下文管理。
 - Anti-AI-Flavor Rule Pack `0.3.0-alpha.4` 包含 Detector/Judge/calibration/annotation/
   rewrite/report/freeze JSON Schema、124 条 tracked calibration/conformance case、6 个
   experimental document metrics 和 cn-antislop evaluating candidate 资产，且全部进入

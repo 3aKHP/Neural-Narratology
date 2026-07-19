@@ -4,23 +4,29 @@
   "title": "Prism Harness Source v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema", "id", "version", "driver_contract", "host_adapter", "quality_prompt_assets"],
+  "required": ["schema", "id", "version", "driver_contract", "host_adapter", "static_prompt_asset_budget_chars", "quality_prompt_assets", "host_prompt_assets"],
   "properties": {
     "schema": { "const": "prism-harness-source/v1" },
     "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
     "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:[-+][0-9A-Za-z.-]+)?$" },
     "driver_contract": { "type": "string", "minLength": 1 },
     "host_adapter": { "type": "string", "minLength": 1 },
+    "static_prompt_asset_budget_chars": { "type": "integer", "minimum": 1 },
     "quality_prompt_assets": {
       "type": "object",
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "guidance": { "type": "string", "pattern": "^assets/" },
-          "judge": { "type": "string", "pattern": "^assets/" }
+          "generation": { "type": "string", "pattern": "^assets/" },
+          "review": { "type": "string", "pattern": "^assets/" }
         }
       }
+    },
+    "host_prompt_assets": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 1 }
     }
   }
 }

@@ -1,8 +1,8 @@
 {
   "schema": "prism-driver-contract/v1",
   "id": "prism-engine-v10",
-  "version": "10.0.1",
-  "protocolVersion": "v10.0-tempered-voice",
+  "version": "10.1.0-rc.1",
+  "protocolVersion": "v10.1-prompt-assembly",
   "resources": {
     "prompt.engine.etl": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/etl.md" },
     "prompt.engine.runtime": { "kind": "engine-prompt", "source": "03_Modulation/Prism-Engine-V10.x/prompts/runtime.md" },
@@ -45,7 +45,7 @@
         "mode": "observe",
         "candidate": "scene.prose",
         "rewriteOwner": "scene-writer",
-        "promptProjection": "guidance"
+"promptProjection": "generation"
       }
     },
     "continuity-editor": {
@@ -81,7 +81,7 @@
         "mode": "analyze",
         "candidate": "chapter.prose",
         "rewriteOwner": null,
-        "promptProjection": "judge"
+"promptProjection": "review"
       }
     }
   },
@@ -145,7 +145,7 @@
       "delegations": [],
       "validators": ["runtime-packet"],
       "stateRoots": ["workspace", "test_runs"],
-      "quality": { "module": "anti-ai-flavor", "mode": "rewrite", "candidate": "runtime.prose", "rewriteOwner": "runtime", "promptProjection": "guidance" }
+      "quality": { "module": "anti-ai-flavor", "mode": "rewrite", "candidate": "runtime.prose", "rewriteOwner": "runtime", "promptProjection": "generation" }
     },
     "evaluate": {
       "displayName": "Prism Evaluate Engine",
@@ -156,7 +156,7 @@
       "delegations": [],
       "validators": ["evaluate-report"],
       "stateRoots": ["source_materials", "workspace", "test_runs", "novels", "reports"],
-      "quality": { "module": "anti-ai-flavor", "mode": "analyze", "candidate": "audit.target-prose", "rewriteOwner": null, "promptProjection": "judge" }
+      "quality": { "module": "anti-ai-flavor", "mode": "analyze", "candidate": "audit.target-prose", "rewriteOwner": null, "promptProjection": "review" }
     },
     "weaver": {
       "displayName": "Prism Weaver Engine",
@@ -181,7 +181,7 @@
       "delegations": [],
       "validators": [],
       "stateRoots": ["workspace", "novels"],
-      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "scene.prose", "rewriteOwner": "weaver", "promptProjection": "guidance" }
+      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "scene.prose", "rewriteOwner": "weaver", "promptProjection": "generation" }
     },
     "weaver-orch": {
       "displayName": "Prism Weaver-Orch Engine",
@@ -249,7 +249,7 @@
       ],
       "validators": [],
       "stateRoots": ["workspace", "novels", "reports"],
-      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "orchestrator-authored-prose", "rewriteOwner": "weaver-orch", "promptProjection": "guidance" }
+      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "orchestrator-authored-prose", "rewriteOwner": "weaver-orch", "promptProjection": "generation" }
     },
     "dyad": {
       "displayName": "Prism Dyad Engine",
@@ -287,18 +287,18 @@
       "delegations": [],
       "validators": [],
       "stateRoots": ["workspace", "test_runs"],
-      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "dyad.character-response", "rewriteOwner": "dyad", "promptProjection": "guidance" }
+      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "dyad.character-response", "rewriteOwner": "dyad", "promptProjection": "generation" }
     },
     "stage": {
       "displayName": "Prism Stage Engine",
       "prompt": "prompt.engine.stage",
       "operations": ["quality.guard"],
-      "resources": ["schema.character", "schema.scenario", "template.stage-context"],
+      "resources": [],
       "interactions": [],
       "delegations": [],
       "validators": ["runtime-packet"],
       "stateRoots": ["workspace"],
-      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "stage.prose", "rewriteOwner": "stage", "promptProjection": "guidance" }
+      "quality": { "module": "anti-ai-flavor", "mode": "observe", "candidate": "stage.prose", "rewriteOwner": "stage", "promptProjection": "generation" }
     }
   }
 }
