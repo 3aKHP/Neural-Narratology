@@ -5,11 +5,24 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.1.0-rc.1 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.1.1-rc.1 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-24 — Harness 10.1.1-rc.1：Chapter Reviewer 叙事审计增强
+
+### Added — `[Modulation]`
+- Chapter Reviewer 审计维度 3（节奏与张力）与维度 4（伏笔与连续性）扩写为带判断点的子项：维度 3 增加章节级张力分布审计（节奏曲线张弛、核心推拉占比、段落三问筛查可删减的填充）；维度 4 增加伏笔设计质量审计（PLANT 埋得轻、RESOLVE 回收得响、契诃夫之枪回报追踪、Chekhov's Registry 长期 OPEN 提醒）。方法论源自内测反馈提炼的中文叙事写作纪要。
+
+### Changed — `[Repo]`
+- 移除 `prism-driver.test.ts` 中硬编码 `manifest.version` 的断言；版本号随发版演进，写进测试会导致每次发版都得同步改测试。
+
+### Changed — `[Modulation]`
+- Harness/Driver 版本更新至 **10.1.1-rc.1**。
 
 ---
 
@@ -646,3 +659,4 @@
 | 2026-07-17 | v10.0 Tempered-Voice | **v10.0.1-alpha.5 Harness** | Semantic rewrite policy contract (inactive) |
 | 2026-07-20 | v10.0 Tempered-Voice | **v10.0.1 Harness** | Stage Engine：七引擎矩阵，消费端沉浸式 RP |
 | 2026-07-20 | v10.0 Tempered-Voice | **v10.1.0-rc.1 Harness** | 静态 Prompt 资产装配与 Stage 冻结上下文审阅语义 |
+| 2026-07-24 | v10.0 Tempered-Voice | **v10.1.1-rc.1 Harness** | Chapter Reviewer 叙事审计增强；移除脆弱的版本号测试断言 |

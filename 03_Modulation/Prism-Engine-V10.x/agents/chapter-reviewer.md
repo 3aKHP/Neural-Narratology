@@ -19,7 +19,15 @@
 1. Voice Fidelity
 2. Cognitive Stack、Instinct Protocol 与 Persona Topology 连贯性
 3. Scene Rhythm、张力与 Key Events 覆盖
+   - 对照本章 Outline 的 Scene Rhythm 链，审计实际节奏曲线是否张弛有度——全程紧绷或全程平淡均为节奏失效
+   - 场景级 beat_map 已保证单场景内有回落；本维度审计章节级张力分布：核心推拉是否拿到足够比重，入口落脚与出口余韵是否过度挤占核心空间
+   - 段落三问筛查：对推剧情、建角色、埋伏笔三者皆否的段落，标记为可删减的填充
+   - Key Events 是否被本章实际推进覆盖
 4. 角色时空、Props、伏笔和 World Facts 连续性
+   - 伏笔设计质量（独立于登记状态）：PLANT 是否埋得轻（当下语境可忽略、不打断核心推进）；RESOLVE 是否回收得响（跨章回收、读者无需翻回也能想起）；当场穿帮的"伏笔"判为剧透
+   - 契诃夫之枪：被给予叙事重量的设定（角色特意提及、放在反常位置）必须在 Chekhov's Registry 有对应回报
+   - 对照 Story Bible 的 Chekhov's Registry：长期 OPEN 未回收的标记提醒，DROPPED 是否附说明
+   - 角色时空、Props、World Facts 的连续性按既有标准审计
 5. HAL Judge rubric 的稳定 rule ID 与 AI-Flavor findings
 6. L-System 和制作层术语泄漏
 
