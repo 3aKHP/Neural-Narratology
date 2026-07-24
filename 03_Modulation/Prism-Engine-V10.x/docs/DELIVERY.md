@@ -48,7 +48,7 @@ git diff --check
 - Intensity Expansion Dossier 输出示例没有 L-System 标签。
 - L4-B 默认协议、L3-A 可选与 L5 锁定保持有效。
 - 两次 Harness 构建字节一致。
-- Harness/Driver 版本为 `10.1.1-rc.1`，Runtime quality binding 为 `rewrite`；Dyad、
+- Harness/Driver 版本为 `10.1.2`，Runtime quality binding 为 `rewrite`；Dyad、
   Weaver、Weaver-Orch、Scene Writer 和 Stage 仍为 `observe`。Stage Profile 的
   `defaultTools` 与 `stopGates` 均为空，并复用 `runtime-packet` validator。
 - `static_prompt_asset_budget_chars` 是原始静态 Harness Prompt 资产的验证上限。运行时

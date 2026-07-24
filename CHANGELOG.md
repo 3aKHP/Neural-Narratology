@@ -5,11 +5,21 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.1.1-rc.1 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.1.2 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-07-24 — Harness 10.1.2：ETL 钩子生成指导
+
+### Changed — `[Modulation]`
+- ETL 工作流 B 步骤 2 补剧情钩子的正向生成指导：从角色拓扑与目标强度正推，附 4 条推导要点（角色必然性出发、配合演出警示、候选差异化、专属与通用）。原有三项验收自检（换角色/三件事/不解释）保留。补的指导面向"提出钩子"阶段的生成方法。
+
+### Changed — `[Modulation]`
+- Harness/Driver 版本更新至 **10.1.2**。
 
 ---
 
@@ -660,3 +670,4 @@
 | 2026-07-20 | v10.0 Tempered-Voice | **v10.0.1 Harness** | Stage Engine：七引擎矩阵，消费端沉浸式 RP |
 | 2026-07-20 | v10.0 Tempered-Voice | **v10.1.0-rc.1 Harness** | 静态 Prompt 资产装配与 Stage 冻结上下文审阅语义 |
 | 2026-07-24 | v10.0 Tempered-Voice | **v10.1.1-rc.1 Harness** | Chapter Reviewer 叙事审计增强；移除脆弱的版本号测试断言 |
+| 2026-07-24 | v10.0 Tempered-Voice | **v10.1.2 Harness** | ETL 钩子正向生成指导（工作流 B 步骤 2） |
