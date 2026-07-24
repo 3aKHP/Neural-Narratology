@@ -99,7 +99,7 @@ assets/
 └── templates/
 ```
 
-`10.1.0-rc.1` manifest 记录 required capabilities、Driver/Adapter hash、Profile
+`10.1.1-rc.1` manifest 记录 required capabilities、Driver/Adapter hash、Profile
 bindings、Prompt bindings、Quality bindings、静态 Prompt 资产账本和全部资产 SHA-256。
 `static_prompt_asset_budget_chars` 是原始静态 Harness Prompt 资产的验证上限；运行时注入
 内容和会话历史不在此范围内。完整请求长度由 Vesicle 与 Provider 的上下文管理流程处理。
