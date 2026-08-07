@@ -16,7 +16,7 @@ meta:
   source_schema: rule-source/v1
   schema_version: "0.2"
   module: anti-ai-flavor
-  version: "0.3.0-alpha.4"
+  version: "0.4.0"
   display_name: Anti-AI Flavor
   primary_lang: zh-CN
   default_targets:
@@ -344,6 +344,40 @@ entries:
     severity: tier2
     source: self
 
+  - id: zh-f1-negative-description
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 否定式描写(先写"不是什么"再写"是什么")
+    guidance: >
+      描写只写"是",不写"不是"。先抛一个否定再抛一个肯定——「不算用力,但持续,
+      不是要拽倒她,只是让她知道水在动」——读者本来没想过"拽倒她"这个方向,
+      你一提,反而把他们的注意力带跑了。你不需要帮读者排除错误选项;信任他们
+      能自己理解。为逻辑严谨必须排除时可以用"不是";其他时候删掉否定部分,
+      只留笃定的正面描写。
+    examples:
+      bad: 暗流不算用力,但持续——不是要拽倒她,只是让她知道水在动。
+      good: 暗流不快,但没断过——像有人在水底下用一根绳子轻轻拉了一下她的脚踝。
+    severity: tier2
+    source: self
+    notes: 与 zh-f1-not-x-but-y 同源但靶点不同:后者是对比句式骨架,本条专指描写手法中的否定前置。
+
+  - id: zh-f1-decorative-ending
+    tier: F1
+    lang: zh-CN
+    face: A
+    title: 场景或段落结尾画蛇添足
+    guidance: >
+      场景或段落的结尾不要用装饰性短句替读者划重点。角色关门就是关门,
+      不用补一句比喻来"升华";动作本身够重了,再加就是作者在抢戏。判断标准:
+      删掉最后这句话,前面的动作是否已经完成了它需要完成的叙事任务——
+      如果是,最后一句就是多余的总结。
+    examples:
+      bad: 艾莉娅关门。站在走廊里。像站在一个还没开始的答案门口。
+      good: 艾莉娅关门。站在走廊里。
+    severity: tier2
+    source: self
+
   # ================== F3 结构层:宏观/判断性信号 ==================
 
   - id: zh-f3-fragment-no-subject
@@ -380,6 +414,27 @@ entries:
     notes: >
       cn-antislop 结构指标之一,不依赖词表。阈值为占位待校准。
       face=B:作为 observe-only 检测信号,不宜写成给 LLM 的硬规则(易矫枉过正)。
+
+  - id: zh-f3-period-density
+    tier: F3
+    lang: zh-CN
+    face: B
+    title: 叙事段落句号密度过高(节奏断气)
+    matcher:
+      kind: metric
+      unit: paragraph
+      metric:
+        signal: period_per_100_chars
+        operator: gte
+        threshold: 6.0
+        minimumMatches: 5
+        excludeDialogue: true
+    maturity: experimental
+    severity: tier3
+    source: self
+    notes: >
+      叙事段落中句号过多导致节奏断气——每句都是句号结尾,逗号不呼吸,读起来像
+      在报数。阈值待校准;仅对引号外叙述段落生效,对话和独白不计。
 
   - id: zh-f3-micro-action-density
     tier: F3

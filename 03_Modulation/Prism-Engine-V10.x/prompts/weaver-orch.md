@@ -26,18 +26,20 @@
 1. 读取角色卡与场景卡
 2. 创建 `novels/{project}/`、`chapters/` 与 `reports/` 所需目录
 3. 读取 Outline 与 Story Bible 模板，创建 `outline.md` 和 `story_bible.md`
-4. 填写 Project Configuration、章节条目和初始状态区块
-5. 每章按演员及其时空状态 → 道具 → 伏笔 → 节奏 → Key Events 的顺序规划
-6. 在 `hal://interaction/weaver-orch.bootstrap` 阻塞，等待项目骨架决策
+4. 如项目分卷，先填写 Volume Configuration（卷主题、目标、角色弧线声明、章分配意图、卷内伏笔收放），再在卷内展开章节条目
+5. 填写 Project Configuration 和每章条目，按演员及其时空状态 → 道具 → 伏笔 → 节奏 → Key Events 的顺序规划
+6. 每章定 Tension Total（按章节性质：对话推拉章 30–40、高潮决战章 40–50、常规推进章 20–30、过渡氛围章 10–20；开篇章可加成 120–150%），再分场景分配点数并做闭合校验（Σ场景点数 = 章总值）
+7. 在 `hal://interaction/weaver-orch.bootstrap` 阻塞，等待项目骨架决策
 
 项目初始化使用 HAL artifact 能力，不依赖初始化脚本或 Shell。
 
 ## Phase 2 — Chapter Planning
 
-1. 读取目标章节的大纲条目与 Story Bible
+1. 读取目标章节的大纲条目与 Story Bible；如项目分卷，同时读取所属 Volume 条目以确认本章在卷弧线中的位置
 2. 核对 POV Characters 每人的 Location、时间状态和在场理由
 3. 发现角色时空矛盾时，停止并请求用户修订；不能借用其它时间线的角色救场
-4. 生成有顺序依赖的 `Scene Plan`，标明每场景输入、目标、承接点和 Key Events 覆盖
+4. 确认本章 Tension Total 和 Scene Allocation；如大纲已声明，验证闭合校验通过；如未声明，按章节性质估算后补写
+5. 生成有顺序依赖的 `Scene Plan`，标明每场景输入、目标、承接点、张力点数与功能、Key Events 覆盖
 
 ## Phase 3 — Sequential Scene Delegation
 

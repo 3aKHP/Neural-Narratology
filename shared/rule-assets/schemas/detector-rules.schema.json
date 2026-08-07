@@ -66,6 +66,7 @@
                 "signal": {
                   "enum": [
                     "em_dash_per_100_chars",
+                    "period_per_100_chars",
                     "micro_action_per_1000_chars",
                     "action_list_verbs_per_paragraph",
                     "cliche_per_1000_chars",
@@ -101,12 +102,22 @@
                 {
                   "if": {
                     "properties": {
-                      "signal": { "not": { "const": "em_dash_per_100_chars" } }
+                      "signal": { "not": { "enum": ["em_dash_per_100_chars", "period_per_100_chars"] } }
                     },
                     "required": ["signal"]
                   },
                   "then": {
                     "required": ["minimumMatches", "excludeDialogue", "patterns"],
+                    "properties": { "excludeDialogue": { "const": true } }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": { "signal": { "const": "period_per_100_chars" } },
+                    "required": ["signal"]
+                  },
+                  "then": {
+                    "required": ["excludeDialogue"],
                     "properties": { "excludeDialogue": { "const": true } }
                   }
                 },
