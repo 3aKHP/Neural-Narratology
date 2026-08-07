@@ -41,6 +41,7 @@ export type MetricPattern = {
 
 export type DocumentMetricSignal =
   | "em_dash_per_100_chars"
+  | "period_per_100_chars"
   | "micro_action_per_1000_chars"
   | "action_list_verbs_per_paragraph"
   | "cliche_per_1000_chars"
@@ -115,6 +116,7 @@ const allowedProjections = new Set<Projection>(["guidance", "detector", "judge",
 const allowedUnits = new Set(["candidate", "paragraph", "sentence"]);
 const documentMetricSignals = new Set<DocumentMetricSignal>([
   "em_dash_per_100_chars",
+  "period_per_100_chars",
   "micro_action_per_1000_chars",
   "action_list_verbs_per_paragraph",
   "cliche_per_1000_chars",
@@ -318,9 +320,12 @@ function validateMatcher(rule: NormalizedRule, errors: string[]): void {
       const value = metric?.[field];
       if (value !== undefined && (!Number.isInteger(value) || value < 1)) errors.push(`${prefix}: ${field} must be a positive integer`);
     }
-    if (metric?.signal !== "em_dash_per_100_chars") {
+    if (metric?.signal !== "em_dash_per_100_chars" && metric?.signal !== "period_per_100_chars") {
       if (!Array.isArray(metric?.patterns) || metric.patterns.length === 0) errors.push(`${prefix}: ${metric?.signal} requires patterns`);
       if (metric?.excludeDialogue !== true) errors.push(`${prefix}: ${metric?.signal} must exclude dialogue`);
+    }
+    if (metric?.signal === "period_per_100_chars" && metric?.excludeDialogue !== true) {
+      errors.push(`${prefix}: ${metric?.signal} must exclude dialogue`);
     }
     const patternIds = new Set<string>();
     for (const pattern of metric?.patterns ?? []) {
@@ -837,6 +842,25 @@ function metricFinding(
       start: unit.start + Math.max(0, local),
       end: unit.start + Math.max(0, local) + (local >= 0 ? 1 : 0),
       evidence: local >= 0 ? "—" : "",
+      metric: { signal: metric.signal, value, threshold: metric.threshold },
+    };
+  }
+
+  if (metric.signal === "period_per_100_chars") {
+    const narrative = metricProse(unit.text);
+    const length = Math.max(1, [...narrative].length);
+    const count = [...narrative].filter((char) => char === "。").length;
+    if (count < (metric.minimumMatches ?? 1)) return undefined;
+    const value = (count / length) * 100;
+    if (!compareMetric(value, metric.operator, metric.threshold)) return undefined;
+    const local = narrative.indexOf("。");
+    return {
+      ruleId: rule.id,
+      severity: rule.severity,
+      maturity: rule.maturity,
+      start: unit.start + Math.max(0, local),
+      end: unit.start + Math.max(0, local) + (local >= 0 ? 1 : 0),
+      evidence: local >= 0 ? "。" : "",
       metric: { signal: metric.signal, value, threshold: metric.threshold },
     };
   }

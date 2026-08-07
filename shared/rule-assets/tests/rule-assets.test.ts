@@ -25,10 +25,10 @@ describe("anti-ai-flavor rule pack", () => {
     const { source } = await loadRuleSource(config);
     expect(validateModule(source, config)).toEqual([]);
     const rules = normalizeRules(source, config);
-    expect(rules).toHaveLength(29);
-    expect(rules.filter((rule) => rule.projections.includes("guidance"))).toHaveLength(21);
-    expect(rules.filter((rule) => rule.projections.includes("judge"))).toHaveLength(21);
-    expect(rules.filter((rule) => rule.projections.includes("detector"))).toHaveLength(13);
+    expect(rules).toHaveLength(32);
+    expect(rules.filter((rule) => rule.projections.includes("guidance"))).toHaveLength(23);
+    expect(rules.filter((rule) => rule.projections.includes("judge"))).toHaveLength(23);
+    expect(rules.filter((rule) => rule.projections.includes("detector"))).toHaveLength(14);
     expect(config.required_capabilities).toContain("quality-detector/document-metrics@1");
     expect(config.required_capabilities).toContain("quality-judge/anti-ai-flavor@1");
   });
@@ -195,9 +195,9 @@ describe("anti-ai-flavor rule pack", () => {
     const tracked = await readFile(absolute(config.tracked_calibration!), "utf8");
     expect(rendered).toBe(tracked);
     const cases = tracked.trim().split("\n").map((line) => JSON.parse(line));
-    expect(cases).toHaveLength(42);
-    expect(cases.filter((item) => item.expectedVerdict === "rewrite")).toHaveLength(21);
-    expect(cases.filter((item) => item.expectedVerdict === "pass")).toHaveLength(21);
+    expect(cases).toHaveLength(46);
+    expect(cases.filter((item) => item.expectedVerdict === "rewrite")).toHaveLength(23);
+    expect(cases.filter((item) => item.expectedVerdict === "pass")).toHaveLength(23);
   });
 
   test("validates compiled contracts and every published corpus against JSON Schema", async () => {
@@ -289,7 +289,7 @@ describe("anti-ai-flavor rule pack", () => {
     const first = await compileModule(antiConfigPath);
     const second = await compileModule(antiConfigPath);
     expect(stableJson(Object.fromEntries(first.artifacts))).toBe(stableJson(Object.fromEntries(second.artifacts)));
-    expect(first.manifest.ruleCount).toBe(29);
+    expect(first.manifest.ruleCount).toBe(32);
     expect(first.artifacts.has("THIRD_PARTY_NOTICES.md")).toBe(true);
     const notices = first.artifacts.get("THIRD_PARTY_NOTICES.md")!;
     expect(notices).toContain("Copyright (c) 2025-2026 oh-story-claudecode");

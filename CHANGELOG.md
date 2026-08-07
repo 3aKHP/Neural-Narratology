@@ -5,11 +5,31 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.1.2 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.2.0 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-08-08 — Harness 10.2.0：张力预算系统与台词写作技法
+
+### Added — `[Modulation]`
+- **张力预算系统**：Outline Schema 新增每章 Tension Total（按章性质自定：对话推拉章 30–40、高潮决战章 40–50、常规推进章 20–30、过渡氛围章 10–20）、Scene Allocation 表与闭合校验（Σ场景点数 = 章总值）。Scene Writer 和 Weaver 在写作前核对本场景分配的张力点数与功能。Chapter Reviewer 维度 3 增加张力闭合校验子项——审计实际正文的场景间张力分布是否与声明匹配。
+- **Volume 级规划层**：Outline Schema 新增可选 Volume Configuration（卷主题、目标、角色弧线声明、章分配意图、卷内伏笔收放、章列表）。Weaver-Orch 在 Phase 1 先规划卷弧线，再在卷内展开章节。角色弧线声明是计划层，Continuity Editor 的 Character State Tracker 是执行记录层；两者偏离时以执行为准修订大纲。
+- **台词设计指导**：Scene Writer 和 Weaver 新增"台词设计"段，注入 7 条正面写作原则（先定关系再定姿态、磕绊与顺滑、双重听众、说人话、情绪长在行为上、长台词是倾诉、推拉是承接）与四问检查（平时会说吗？角色自己会想吗？除了信息还有别的吗？念得顺吗？）。方法论源自内测台词专项练习的逐句校准沉淀。
+- **大纲五要素核对**：Scene Writer 执行步骤 2 增加演员/道具/伏笔/节奏/事件/张力六项写作前核对。
+- **设定揭露平衡维度**：Evaluate 新增维度 H（设定揭露平衡），审计设定交代与读者关心程度的匹配度、是否通过行动自然流出、是否一次解决过多信息目标。
+- **Anti-AI-Flavor 三条新规则**：Rule Pack 升至 0.4.0，新增 zh-f1-negative-description（否定式描写：先写"不是什么"再写"是什么"，把读者注意力带向不存在的方向）、zh-f1-decorative-ending（结尾画蛇添足：场景末尾多余的升华句）、zh-f3-period-density（叙事段落句号密度过高的 observe-only 指标）。
+
+### Changed — `[Modulation]`
+- Weaver-Orch Phase 2 增加 Volume 条目读取与张力预算确认步骤。
+- Weaver Phase 1 增加张力预算核对。
+- Outline 模板同步更新，增加 Volume 块与张力预算字段。
+
+### Changed — `[Modulation]`
+- Harness/Driver 版本更新至 **10.2.0**。Anti-AI-Flavor Rule Pack 更新至 **0.4.0**。protocolVersion 保持 `v10.1-prompt-assembly`（装配机制未变）。Vesicle 侧零改动。
 
 ---
 
@@ -671,3 +691,4 @@
 | 2026-07-20 | v10.0 Tempered-Voice | **v10.1.0-rc.1 Harness** | 静态 Prompt 资产装配与 Stage 冻结上下文审阅语义 |
 | 2026-07-24 | v10.0 Tempered-Voice | **v10.1.1-rc.1 Harness** | Chapter Reviewer 叙事审计增强；移除脆弱的版本号测试断言 |
 | 2026-07-24 | v10.0 Tempered-Voice | **v10.1.2 Harness** | ETL 钩子正向生成指导（工作流 B 步骤 2） |
+| 2026-08-08 | v10.0 Tempered-Voice | **v10.2.0 Harness** | 张力预算系统、Volume 规划层、台词设计指导、设定揭露平衡维度、Anti-AI-Flavor 0.4.0 |
