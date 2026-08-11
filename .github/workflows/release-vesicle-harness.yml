@@ -82,7 +82,8 @@ jobs:
           find "$TOPLEVEL" -exec touch -h -d '1980-01-01T00:00:00Z' {} +
           find "$TOPLEVEL" -type f -print | sort | zip -q -X "$RUNNER_TEMP/prism-vesicle-harness-${VERSION}.zip" -@
           jq -r --arg t "$TOPLEVEL" '.assets | to_entries[] | "\(.value)  \($t)/\(.key)"' "$RUNNER_TEMP/prism-vesicle-harness/manifest.json" > "$RUNNER_TEMP/SHA256SUMS-${VERSION}"
-          sha256sum "$RUNNER_TEMP/prism-vesicle-harness/manifest.json" | awk -v t "$TOPLEVEL" '{print $1"  "t"/manifest.json"}' >> "$RUNNER_TEMP/SHA256SUMS-${VERSION}"
+          MHASH=$(sha256sum "$RUNNER_TEMP/prism-vesicle-harness/manifest.json" | cut -d ' ' -f1)
+          echo "${MHASH}  ${TOPLEVEL}/manifest.json" >> "$RUNNER_TEMP/SHA256SUMS-${VERSION}"
           echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
 
       - name: Create or update release
