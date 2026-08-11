@@ -16,7 +16,7 @@
 ## 2026-08-12 — Harness 10.2.1：改造指令、Register 调制、物理正典与场景技法
 
 ### Added — `[Modulation]`
-- **Transformation Directive（改造指令）**：Outline Schema 新增可选章级字段（重写/提升既有正文时填写，新生成留空）与 Scene Allocation Transform 列，声明本章质变目标（如"把功能性对话改成关系性对话""动机层从工具化改成角色化"）。Weaver Phase 1 读取声明改造点，Phase 2 逐场景兑现并在章末做落地自检；Chapter Reviewer 维度 3 新增改造落地审计子项。源自内测反馈：长文重写在 standalone 模式下退化为润色，根因是质变意图无可声明、可下传的通道。
+- **Transformation Directive（改造指令）**：Outline Schema 新增可选章级字段（重写/提升既有正文时填写，新生成留空）与 Scene Allocation Transform 列，声明本章质变目标（如"把功能性对话改成关系性对话""动机层从工具化改成角色化"）。standalone 模式下 Weaver Phase 1 读取、Phase 2 逐场景兑现并在章末做落地自检；orchestrated 模式下 Weaver-Orch Phase 2 把归属每场景的改造点写入 Scene Plan，Scene Writer 步骤 2 兑现。Chapter Reviewer 维度 3（标题扩为「声明内容覆盖」）新增改造落地审计子项，两种模式统一生效。源自内测反馈：长文重写在 standalone 模式下退化为润色，根因是质变意图无可声明、可下传的通道。
 - **Register 调制**：Outline Schema Scene Allocation 新增 Register 列（日常/悬疑/对峙/动作/序章/余韵，缺省日常）。Weaver 与 Scene Writer 的台词设计 7 原则按 register 标注适用范围——原则 4（说人话）、6（长台词是倾诉）标"日常系优先"，在悬疑/序章/对峙场景压低，这类场景以信息差博弈和留白为先。源自内测反馈：不同 register（日常与严肃序章）场景对写作原则的适用性差异。
 - **场景技法段**：Weaver 与 Scene Writer 新增「## 场景技法」（与台词设计并列），4 条正向写作原则——一个动作干三件事、声音/动作先于身份、间接出场也是出场、叙述者声音按张力调节。沉淀自内测群像与日常场景的逐句校准，填补台词设计未覆盖的叙述与调度维度。
 - **物理正典前移自检**：Weaver Phase 2、Scene Writer 步骤 5 与 Chapter Reviewer 维度 4 新增物理描述正典核对——已出场角色的不可变物理特征（瞳色/发色/身高/胎记等，见角色卡 `## Visual Cortex`）须在章内前后一致、与角色卡不矛盾；矛盾当场修，不留到编译后。源自内测反馈：同章内角色物理特征出现前后矛盾。

@@ -18,7 +18,7 @@
 
 1. Voice Fidelity
 2. Cognitive Stack、Instinct Protocol 与 Persona Topology 连贯性
-3. Scene Rhythm、张力与 Key Events 覆盖
+3. Scene Rhythm、张力与声明内容覆盖（Key Events / 改造指令）
    - 对照本章 Outline 的 Scene Rhythm 链，审计实际节奏曲线是否张弛有度——全程紧绷或全程平淡均为节奏失效
    - 场景级 beat_map 已保证单场景内有回落；本维度审计章节级张力分布：核心推拉是否拿到足够比重，入口落脚与出口余韵是否过度挤占核心空间
    - 张力闭合校验：如 Outline 声明了 Tension Total 与 Scene Allocation，审计实际正文的场景间张力分布是否与声明匹配——高功能场景（推拉交锋、伏笔引爆）是否拿到对应比重，过渡和余韵是否过度膨胀
