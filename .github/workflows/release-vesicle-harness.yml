@@ -74,11 +74,16 @@ jobs:
           set -euo pipefail
           export LC_ALL=C
           export TZ=UTC
-          cd "$RUNNER_TEMP/prism-vesicle-harness"
-          find . -exec touch -h -d '1980-01-01T00:00:00Z' {} +
-          find . -type f -print | sort | zip -q -X "$RUNNER_TEMP/prism-vesicle-harness-v10.zip" -@
-          cd "$RUNNER_TEMP"
-          sha256sum prism-vesicle-harness-v10.zip > prism-vesicle-harness-v10.SHA256SUMS.txt
+          VERSION=$(jq -r .version "$RUNNER_TEMP/prism-vesicle-harness/manifest.json")
+          TOPLEVEL="prism-vesicle-harness-v${VERSION}"
+          mkdir -p "$RUNNER_TEMP/pkg/${TOPLEVEL}"
+          cp -r "$RUNNER_TEMP/prism-vesicle-harness/." "$RUNNER_TEMP/pkg/${TOPLEVEL}/"
+          cd "$RUNNER_TEMP/pkg"
+          find "$TOPLEVEL" -exec touch -h -d '1980-01-01T00:00:00Z' {} +
+          find "$TOPLEVEL" -type f -print | sort | zip -q -X "$RUNNER_TEMP/prism-vesicle-harness-${VERSION}.zip" -@
+          jq -r --arg t "$TOPLEVEL" '.assets | to_entries[] | "\(.value)  \($t)/\(.key)"' "$RUNNER_TEMP/prism-vesicle-harness/manifest.json" > "$RUNNER_TEMP/SHA256SUMS-${VERSION}"
+          sha256sum "$RUNNER_TEMP/prism-vesicle-harness/manifest.json" | awk -v t "$TOPLEVEL" '{print $1"  "t"/manifest.json"}' >> "$RUNNER_TEMP/SHA256SUMS-${VERSION}"
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
 
       - name: Create or update release
         env:
@@ -96,8 +101,8 @@ jobs:
             printf '%s\n' "Prism Vesicle Harness Pack generated from $GITHUB_SHA." > "$notes_file"
           fi
           assets=(
-            "$RUNNER_TEMP/prism-vesicle-harness-v10.zip"
-            "$RUNNER_TEMP/prism-vesicle-harness-v10.SHA256SUMS.txt"
+            "$RUNNER_TEMP/prism-vesicle-harness-${VERSION}.zip"
+            "$RUNNER_TEMP/SHA256SUMS-${VERSION}"
           )
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             gh release edit "$RELEASE_TAG" --title "$RELEASE_TITLE" --notes-file "$notes_file"
