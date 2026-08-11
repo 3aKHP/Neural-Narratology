@@ -90,11 +90,12 @@ Character Arc declares the planned trajectory. The Continuity Editor records act
 - **Emotional Target:** [方向性变化]
 - **Tension Total:** [数值] ([一句话理由，如"本章是对话推拉章"])
 - **Scene Allocation:**
-  | Scene | Points | Function | Rhythm |
-  |:------|:-------|:---------|:-------|
-  | Scene_001 | [n] | [读者落脚/过渡/人物出场/伏笔/推拉交锋/情感对接/悬疑收线/余韵收束] | [紧/松/收] |
-  | Scene_002 | [n] | ... | ... |
+  | Scene | Points | Function | Transform | Register | Rhythm |
+  |:------|:-------|:---------|:---------|:---------|:-------|
+  | Scene_001 | [n] | [读者落脚/过渡/人物出场/伏笔/推拉交锋/情感对接/悬疑收线/余韵收束] | [可选：本场景改造点] | [日常/悬疑/对峙/动作/序章/余韵] | [紧/松/收] |
+  | Scene_002 | [n] | ... | ... | ... | ... |
 - **Closure Check:** Σ [n] = Tension Total ✓
+- **Transformation Directive:** [可选。仅重写/提升既有正文时填写，新生成用例留空。声明本章要执行的质变目标——如"把功能性对话改成关系性对话""补信息差博弈的留白""动机层从工具化改成角色化"。可在文本中按场景列出具体改造点，与 Scene Allocation 的 Transform 列对应。Weaver 据此对每个声明改造点做落地自检。]
 - **Notes:** [可选]
 ```
 
@@ -137,6 +138,8 @@ Foreshadowing earns points when planted lightly (~5), then multiplies surroundin
 - Scene Rhythm is one `→`-chained line.
 - Key Events are numbered contractual outcomes. The Writer derives the path from character logic.
 - Emotional Target is directional prose, not a precise runtime score.
+- Register classifies a scene's tonal mode (日常 / 悬疑 / 对峙 / 动作 / 序章 / 余韵); it is optional and defaults to 日常. It modulates which dialogue-design principles the Writer applies — scenes marked 悬疑 / 序章 / 对峙 de-emphasize daily-warmth principles (闲事闲聊、倾诉式长台词) in favor of information-asymmetry, restraint and negative space. Chapter-wide register may also be noted in Notes.
+- Transformation Directive is an optional chapter-level field used only when rewriting or elevating existing prose; it declares the intended qualitative change (e.g., functional → relational dialogue, tool-like → character-driven motivation). Fresh-generation chapters leave it blank. When present, the Weaver executes each declared transform and self-checks its landing; the Scene Allocation Transform column carries scene-level specifics.
 
 ## 4. Relationship to Story Bible
 

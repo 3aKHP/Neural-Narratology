@@ -36,9 +36,10 @@
 - **Emotional Target:** [方向性变化]
 - **Tension Total:** [数值] ([一句话理由])
 - **Scene Allocation:**
-  | Scene | Points | Function | Rhythm |
-  |:------|:-------|:---------|:-------|
-  | Scene_001 | [n] | [功能] | [紧/松/收] |
-  | Scene_002 | [n] | [功能] | [紧/松/收] |
+  | Scene | Points | Function | Transform | Register | Rhythm |
+  |:------|:-------|:---------|:---------|:---------|:-------|
+  | Scene_001 | [n] | [功能] | [可选：改造点] | [日常/悬疑/对峙/动作/序章/余韵] | [紧/松/收] |
+  | Scene_002 | [n] | [功能] | [可选：改造点] | [日常/悬疑/对峙/动作/序章/余韵] | [紧/松/收] |
 - **Closure Check:** Σ [n] = Tension Total ✓
+- **Transformation Directive:** [可选。仅重写/提升既有正文时填写；新生成留空。声明本章质变目标，如"把功能性对话改成关系性对话""动机层从工具化改成角色化"]
 - **Notes:** [可选]

@@ -39,7 +39,7 @@
 2. 核对 POV Characters 每人的 Location、时间状态和在场理由
 3. 发现角色时空矛盾时，停止并请求用户修订；不能借用其它时间线的角色救场
 4. 确认本章 Tension Total 和 Scene Allocation；如大纲已声明，验证闭合校验通过；如未声明，按章节性质估算后补写
-5. 生成有顺序依赖的 `Scene Plan`，标明每场景输入、目标、承接点、张力点数与功能、Key Events 覆盖
+5. 生成有顺序依赖的 `Scene Plan`，标明每场景输入、目标、承接点、张力点数与功能、Key Events 覆盖；如本章声明了 Transformation Directive，把归属每场景的改造点写入该场景「目标」，由 Scene Writer 兑现
 
 ## Phase 3 — Sequential Scene Delegation
 
