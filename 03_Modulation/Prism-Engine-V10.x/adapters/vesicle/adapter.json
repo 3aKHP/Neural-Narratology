@@ -13,7 +13,7 @@
   "operationBindings": {
     "artifact.inspect": {
       "kind": "tool-group",
-      "tools": ["stat_path", "list_files", "list_directory", "grep_files", "read_file", "view_image"],
+      "tools": ["stat_path", "list_directory", "grep_files", "read_file", "view_image"],
       "profileVisible": true
     },
     "artifact.compose": {

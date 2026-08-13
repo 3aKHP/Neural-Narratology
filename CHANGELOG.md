@@ -5,11 +5,21 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.2.1 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.3.0-alpha.1 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-08-13 — Harness 10.3.0-alpha.1：统一目录查询契约
+
+### Changed — `[Modulation]`
+- Vesicle Host Adapter 移除重叠的 `list_files` 绑定，统一由 `list_directory` 承担目录查询。Harness/Driver 版本更新至 **10.3.0-alpha.1**；引擎、Agent、资源与质量绑定保持不变。
+
+### Changed — `[Repo]`
+- README 与 DELIVERY.md 同步 Harness 版本和目录查询契约。
 
 ---
 
@@ -710,3 +720,4 @@
 | 2026-07-24 | v10.0 Tempered-Voice | **v10.1.2 Harness** | ETL 钩子正向生成指导（工作流 B 步骤 2） |
 | 2026-08-08 | v10.0 Tempered-Voice | **v10.2.0 Harness** | 张力预算系统、Volume 规划层、台词设计指导、设定揭露平衡维度、Anti-AI-Flavor 0.4.0 |
 | 2026-08-12 | v10.0 Tempered-Voice | **v10.2.1 Harness** | 改造指令（Transformation Directive）、Register 调制、场景技法段、物理正典前移自检 |
+| 2026-08-13 | v10.0 Tempered-Voice | **v10.3.0-alpha.1 Harness** | Vesicle Host Adapter 统一目录查询契约，移除 `list_files` 绑定 |
