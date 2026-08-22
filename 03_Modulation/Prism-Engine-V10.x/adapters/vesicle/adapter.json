@@ -18,7 +18,7 @@
     },
     "artifact.compose": {
       "kind": "tool-group",
-      "tools": ["create_file", "create_directory", "write_file", "replace_in_file", "append_file"],
+      "tools": ["create_file", "create_directory", "write_file", "replace_in_file", "append_file", "delete_file", "move_file", "move_directory", "delete_directory"],
       "profileVisible": true
     },
     "artifact.snapshot": {
