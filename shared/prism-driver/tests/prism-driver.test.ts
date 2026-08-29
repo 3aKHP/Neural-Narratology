@@ -195,11 +195,18 @@ describe("V10 protocol invariants", () => {
     expect(sceneWriter).toMatch(/\n   - \*\*改造点：\*\*/);
 
     const dyad = await readFile(join(import.meta.dir, "../../../03_Modulation/Prism-Engine-V10.x/prompts/dyad.md"), "utf8");
-    expect(dyad).toContain("### State Navigator");
+    expect(dyad).toMatch(/^## State Navigator$/m);
     expect(dyad).toContain("Module A 角色卡、Module B 场景卡和当前 Dyad 日志");
     expect(dyad).toContain("继续已有日志时先读取最后一个完整轮次的状态");
     expect(dyad).toContain("HUD 唯一允许的数值例外");
     expect(dyad).toContain("### 三段式回应 / Prose Content");
+
+    const [runtime, stage] = await Promise.all([
+      readFile(join(import.meta.dir, "../../../03_Modulation/Prism-Engine-V10.x/prompts/runtime.md"), "utf8"),
+      readFile(join(import.meta.dir, "../../../03_Modulation/Prism-Engine-V10.x/prompts/stage.md"), "utf8"),
+    ]);
+    expect(runtime).toContain("`{N}` / `{turn_number}`");
+    expect(stage).toContain("轮次计数（`[turns]`）");
   });
 
   test("preserves the effective L4-B default", async () => {
