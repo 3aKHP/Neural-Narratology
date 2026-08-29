@@ -5,11 +5,33 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.3.0-alpha.2 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.3.0 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-08-29 — Harness 10.3.0：正式版
+
+### Changed — `[Modulation]`
+- Harness/Driver 版本升至 **10.3.0**；Vesicle Host Adapter 版本升至 **1.2.0**，承接 alpha.1 目录查询统一与 alpha.2 compose 工具组扩展两次工具面变更的版本递增。引擎、Agent、资源与质量绑定保持不变。
+
+### Fixed — `[Modulation]`
+- Dyad 补输出格式定义（`## Turn {N}` 日志轮次结构、角色三段式回应与 HUD 字段），消除对未定义格式的引用；Runtime HUD 补抗机器化语域规范（不写解剖学与测量、命名状态不推演状态、标量外不用数字），对齐 Stage 已有规范。
+- Stage 叙事公理措辞修正：Narrative Granularity 的推进单位改为"每轮输出"（原文"每次会话"与张力微推协议矛盾）；User Authority 的"不拒绝"限定为不因主题拒绝，并显式声明与拓扑约束冲突时的角色内路由。
+- ETL 工作流 L 补交付收尾输出（文件路径、压缩要点摘要与双版本适用宿主形态说明）。
+- Weaver-Orch 在编排原则中补 `Mode A` / `Mode B` 检查点粒度定义（章节级 / 场景级），消除跨引擎悬空引用；Dyad 的 Mode A/B 与 Auto-Pilot / Co-Pilot 运行模式显式对应。
+- Weaver standalone 模式在分卷项目下与 Weaver-Orch 对齐，写作前读取所属 Volume 条目确认章节在卷弧线中的位置。
+- Stage 输出格式标点规则改写为单一读法（结构输出使用英文半角标点，对话引号内部按台词自然语流标点）；三个输出示例代码块补语言标注。
+- Scene Writer 步骤 2 标题补齐改造点核对项；Outline Schema 的 Transformation Directive 执笔者按 standalone / orchestrated 两模式表述。
+- Outline 模板 Volume Configuration 块补可选标注；Module A 模板 Boundary Conditions 补 `Extreme access condition` 条目。
+- Driver Contract 两处 `promptProjection` 字段缩进对齐。
+
+### Fixed — `[Repo]`
+- 发版全量审查后回刷陈旧版本引用与计数：V10.x README 与 DELIVERY 的 Rule Pack 版本（0.4.0）与 tracked case 计数（128 条）；`shared/anti-ai-flavor` 的 README / ARCHITECTURE 当前状态数字（32 规则、23 组 Guidance、46 pairs、128 case）、SCHEMA-SPEC 示例版本与 0.4.0 版本记录、THIRD_PARTY_NOTICES 措辞。
+- ABI.md §3 补 interactionBindings 呈现规则（confirm → `checkpoint`、select → `header`）与预留 operation binding 语义说明。
 
 ---
 
@@ -732,3 +754,4 @@
 | 2026-08-12 | v10.0 Tempered-Voice | **v10.2.1 Harness** | 改造指令（Transformation Directive）、Register 调制、场景技法段、物理正典前移自检 |
 | 2026-08-13 | v10.0 Tempered-Voice | **v10.3.0-alpha.1 Harness** | Vesicle Host Adapter 统一目录查询契约，移除 `list_files` 绑定 |
 | 2026-08-22 | v10.0 Tempered-Voice | **v10.3.0-alpha.2 Harness** | Vesicle Host Adapter `artifact.compose` 补齐删除与移动工具 |
+| 2026-08-29 | v10.0 Tempered-Voice | **v10.3.0 Harness** | 正式版：全量审查修复（Mode 粒度定义、文档计数回刷、Adapter 1.2.0） |

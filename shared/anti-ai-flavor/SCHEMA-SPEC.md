@@ -11,7 +11,7 @@ meta:
   source_schema: rule-source/v1
   schema_version: "0.2"
   module: anti-ai-flavor
-  version: "0.3.0-alpha.4"
+  version: "0.4.0"
   primary_lang: zh-CN
   default_targets: [narrative-prose]
   preprocessing: {}
@@ -98,6 +98,9 @@ Engine/Agent Profile。
 
 ## 7. 版本记录
 
+- 0.4.0（2026-08-08）：新增 zh-f1-negative-description、zh-f1-decorative-ending、
+  zh-f3-period-density 三条 zh-CN 规则；规则总数增至 32（Guidance/Judge 23、
+  Detector 14），tracked Guidance pairs 增至 46 组（tracked case 总数 128）。
 - 0.3.0-alpha.4（2026-07-17）：新增 `quality-semantic-rewrite-policy/v1` 的发布 schema
   与 inactive fixture，冻结 semantic rewrite 所需的精确模型 scope、规则 allowlist、每条
   规则置信度、fail-closed observe 与 calibration digest 字段；未改变 Harness required

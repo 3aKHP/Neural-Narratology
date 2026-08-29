@@ -128,13 +128,13 @@ Rule Pack 中明确的数据参数。宿主仍应优先提取纯正文，保护�
 ## 8. 当前交付
 
 - Source Schema 0.2 / Rule Pack v1。
-- 29 条规则，21 条 Guidance/Judge，13 条 Detector。
-- 42 条 tracked Guidance pairs、28 条 Detector case、24 条跨宿主 conformance case
+- 32 条规则，23 条 Guidance/Judge，14 条 Detector。
+- 46 条 tracked Guidance pairs、28 条 Detector case、24 条跨宿主 conformance case
   与 30 条 Semantic Judge dev 语料。
 - Rule Pack、Detector、Judge、calibration、annotation、rewrite preservation、benchmark
   report、held-out freeze 与 host conformance JSON Schema。
 - cn-antislop L0/L1 候选的 schema-valid evaluating 资产；单模型快照不产生晋级规则。
-- metrics 与 Judge capability 已分别登记；`0.3.0-alpha.4` 同时要求两项能力，Judge
+- metrics 与 Judge capability 已分别登记；`0.4.0` 同时要求两项能力，Judge
   只进入 Runtime observe。
 - Semantic Rewrite Policy schema 与 inactive fixture 已发布，等待 calibration evidence
   和显式 Harness capability 晋级。

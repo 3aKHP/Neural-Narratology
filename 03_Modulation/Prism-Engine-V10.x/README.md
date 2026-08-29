@@ -99,14 +99,14 @@ assets/
 └── templates/
 ```
 
-`10.3.0-alpha.2` manifest 记录 required capabilities、Driver/Adapter hash、Profile
+`10.3.0` manifest 记录 required capabilities、Driver/Adapter hash、Profile
 bindings、Prompt bindings、Quality bindings、静态 Prompt 资产账本和全部资产 SHA-256。
 `static_prompt_asset_budget_chars` 是原始静态 Harness Prompt 资产的验证上限；运行时注入
 内容和会话历史不在此范围内。完整请求长度由 Vesicle 与 Provider 的上下文管理流程处理。
 Stage 的冻结 Module A system context 与 Module B assistant history 由 Vesicle 会话启动流程管理。Rule Pack
-`0.3.0-alpha.4` 同时要求 `quality-detector/document-metrics@1` 与
+`0.4.0` 同时要求 `quality-detector/document-metrics@1` 与
 `quality-judge/anti-ai-flavor@1`；Vesicle 需要 PR 4 metrics 与 PR 5 Judge observe
-宿主能力才能激活此 prerelease。Policy schema 与 inactive fixture 同包交付，尚不要求
+宿主能力才能激活此 Rule Pack。Policy schema 与 inactive fixture 同包交付，尚不要求
 `quality-policy/semantic-rewrite@1`。
 
 ## Anti-AI-Flavor
@@ -119,7 +119,7 @@ Stage 的冻结 Module A system context 与 Module B assistant history 由 Vesic
 - 原引擎或 Scene Writer 拥有重写责任。
 - Evaluate 和 Chapter Reviewer 的报告不递归进入 Guard。
 - Rule Pack 同包交付 Detector/Judge/calibration/annotation/rewrite/report/freeze JSON
-  Schema、124 条 tracked calibration/conformance case 和外部候选 provenance，供
+  Schema、128 条 tracked calibration/conformance case 和外部候选 provenance，供
   Vesicle 独立实现和回归。Judge capability 已激活，首轮只在 Runtime observe，finding
   不进入自动重写策略。
 

@@ -16,7 +16,7 @@
 
 ### Phase 1 — Outline Sync
 
-- 读取目标章节的大纲条目和 Story Bible
+- 读取目标章节的大纲条目和 Story Bible；如项目分卷，同时读取所属 Volume 条目以确认本章在卷弧线中的位置
 - 明确 Story Time、POV Characters 及各自时空状态、Props、Scene Rhythm、Key Events、Emotional Target
 - 核对张力预算：本章 Tension Total 和 Scene Allocation；如大纲未声明，按章节性质自行估算
 - 核对改造指令：如本章声明了 Transformation Directive，逐条记下声明改造点；新生成用例（无声明）跳过此步

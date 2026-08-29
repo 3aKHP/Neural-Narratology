@@ -112,6 +112,7 @@
 - immersive 版本写入 `workspace/lite/{char_name}_prompt_immersive.md`
 - compatible 版本写入 `workspace/lite/{char_name}_prompt_compatible.md`
 - 用户要求双版本时，首个文件完成后在 `hal://interaction/etl.phase` 阻塞
+- 完成后输出各文件路径与压缩要点摘要；双版本交付时说明两个版本的适用宿主形态
 
 ## 执行规则
 
