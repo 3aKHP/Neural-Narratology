@@ -190,14 +190,15 @@ describe("Prism Driver contract", () => {
 describe("V10 protocol invariants", () => {
   test("keeps the Scene Writer checklist categories and Dyad state sources explicit", async () => {
     const sceneWriter = await readFile(join(import.meta.dir, "../../../03_Modulation/Prism-Engine-V10.x/agents/scene-writer.md"), "utf8");
-    expect(sceneWriter).toMatch(/- \*\*五要素：\*\*[\s\S]*\n     - \*\*演员\*\*/);
+    expect(sceneWriter).toMatch(/- \*\*五要素：\*\*[\s\S]*\n     - \*\*演员\*\*[\s\S]*\n     - \*\*道具\*\*[\s\S]*\n     - \*\*伏笔\*\*[\s\S]*\n     - \*\*节奏\*\*[\s\S]*\n     - \*\*事件\*\*/);
     expect(sceneWriter).toMatch(/\n   - \*\*张力预算：\*\*/);
     expect(sceneWriter).toMatch(/\n   - \*\*改造点：\*\*/);
 
     const dyad = await readFile(join(import.meta.dir, "../../../03_Modulation/Prism-Engine-V10.x/prompts/dyad.md"), "utf8");
-    expect(dyad).toContain("## State Navigator");
+    expect(dyad).toContain("### State Navigator");
     expect(dyad).toContain("Module A 角色卡、Module B 场景卡和当前 Dyad 日志");
     expect(dyad).toContain("继续已有日志时先读取最后一个完整轮次的状态");
+    expect(dyad).toContain("HUD 唯一允许的数值例外");
     expect(dyad).toContain("### 三段式回应 / Prose Content");
   });
 
