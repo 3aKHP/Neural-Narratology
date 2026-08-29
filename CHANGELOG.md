@@ -5,7 +5,7 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.3.1 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.3.2 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
@@ -22,6 +22,14 @@
 
 ### Changed — `[Modulation]`
 - Harness/Driver 版本递增至 **10.3.1**；Vesicle Host Adapter `1.2.0`、引擎/Agent/资源/质量绑定与 `protocolVersion` 保持不变。
+
+## 2026-08-30 — Harness 10.3.2：Dyad 结构澄清
+
+### Fixed — `[Modulation]`
+- Dyad State Navigator 作为执行流程下的子节，保持 Phase 1/2/3 的同级结构，并明确 `tension_level` 是 HUD 唯一允许的数值例外。
+
+### Changed — `[Modulation]`
+- Harness/Driver 版本递增至 **10.3.2**；Vesicle Host Adapter `1.2.0`、引擎/Agent/资源/质量绑定与 `protocolVersion` 保持不变。
 
 ---
 
