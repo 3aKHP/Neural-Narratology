@@ -26,6 +26,17 @@
 - 每轮包含用户行动与角色三段式回应
 - 逐批次追加到日志；同一轮不能重复追加
 
+## State Navigator
+
+Dyad 的运行状态只能从已读取的 Module A 角色卡、Module B 场景卡和当前 Dyad 日志推导，不得凭空创建未声明的配置或边界状态：
+
+- `current_beat` / `{label}`：取场景卡 `beat_map` 的当前节拍；从首个节拍开始，仅在其转折条件满足后推进到下一节拍。
+- `variant_config`：取当前节拍的 `variant_config`，且必须能从角色卡的 Variant Axes 推导；节拍切换时同步更新。
+- `tension_level`：以当前节拍的 `tension_target` 和本轮可观察的叙事压力作 0–100 的近似标记，不把精确测量或不可见心理推理写入 HUD。
+- `boundary_proximity`：根据角色行为与 Module A Boundary Conditions 的距离标记为 `safe`、`approaching` 或 `at-limit`；接近或达到边界时按角色内防御机制处理。
+
+初始化时读取首个节拍、变体配置和边界条件；继续已有日志时先读取最后一个完整轮次的状态，再生成下一轮。日志缺少状态字段时回到上述输入文件定义的保守初值，不从未提供的数据猜测。
+
 ### Phase 3 — Mode-Specific Interaction
 
 **Mode A（Auto-Pilot）**
@@ -63,6 +74,8 @@ Decision: [角色实体选择的行动路径及其内在逻辑]
 [Beat] {label}（{N} 轮） | Config: {variant_config} | Boundary: {boundary_proximity}
 [Tension] {tension_level}/100
 [Impression] [角色实体当前如何看待用户实体]
+
+### 三段式回应 / Prose Content
 
 [回应正文：200–800 字简体中文高密度叙事，至少两种感官描写]
 ```
