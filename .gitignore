@@ -8,6 +8,9 @@ Thumbs.db
 .vscode/
 node_modules/
 
+# zcode tool plans
+.zcode/
+
 # Local dev notes
 dev/
 
