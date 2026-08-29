@@ -5,11 +5,23 @@
 | 子系统 | 说明 | 当前版本 |
 |:---|:---|:---|
 | **Resonance Protocol** | Phase II 角色协议（理论框架） | v10.0 Tempered-Voice |
-| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.3.0 Harness（面向 Prism Vesicle） |
+| **Prism Engine** | Phase III 自动化工具链（工程实现） | v10.3.1 Harness（面向 Prism Vesicle） |
 
 > 两套版本号各自独立递增。下文每条记录均以 `[Resonance]` / `[Modulation]` / `[Echo]` / `[Repo]` 标签标注归属。
 
 所有日期均为 UTC+8（Asia/Shanghai）。格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
+
+---
+
+## 2026-08-30 — Harness 10.3.1：审查结构修复
+
+### Fixed — `[Modulation]`
+- Scene Writer 将五要素、张力预算和改造点拆为明确的嵌套检查项，避免执行清单的类别歧义。
+- Dyad 补充 State Navigator，定义节拍、变体配置、张力和边界接近度的输入来源与日志恢复规则，并为三段式回应补充正文小节标识。
+- Runtime HUD 抗机器化语域规范改为逐字段检查清单，保持与 Stage 的可扫描结构一致。
+
+### Changed — `[Modulation]`
+- Harness/Driver 版本递增至 **10.3.1**；Vesicle Host Adapter `1.2.0`、引擎/Agent/资源/质量绑定与 `protocolVersion` 保持不变。
 
 ---
 
@@ -755,3 +767,4 @@
 | 2026-08-13 | v10.0 Tempered-Voice | **v10.3.0-alpha.1 Harness** | Vesicle Host Adapter 统一目录查询契约，移除 `list_files` 绑定 |
 | 2026-08-22 | v10.0 Tempered-Voice | **v10.3.0-alpha.2 Harness** | Vesicle Host Adapter `artifact.compose` 补齐删除与移动工具 |
 | 2026-08-29 | v10.0 Tempered-Voice | **v10.3.0 Harness** | 正式版：全量审查修复（Mode 粒度定义、文档计数回刷、Adapter 1.2.0） |
+| 2026-08-30 | v10.0 Tempered-Voice | **v10.3.1 Harness** | 审查修复：Scene Writer 分类、Dyad State Navigator、Runtime HUD 清单 |
