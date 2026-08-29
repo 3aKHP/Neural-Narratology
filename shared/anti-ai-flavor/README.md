@@ -24,7 +24,7 @@ Detector 只返回 finding、证据与稳定 rule ID。自动重写的策略、�
 
 | 文件/目录 | 作用 |
 |:---|:---|
-| [`knowledge-source.yaml`](./knowledge-source.yaml) | 单一规则知识源，当前版本 0.3.0-alpha.4。 |
+| [`knowledge-source.yaml`](./knowledge-source.yaml) | 单一规则知识源，当前版本 0.4.0。 |
 | [`module.config.json`](./module.config.json) | 编译配置、A/B 到通用 projection 的映射、模板与语料入口。 |
 | [`SCHEMA-SPEC.md`](./SCHEMA-SPEC.md) | 本模块字段语义；通用 matcher/pack 契约见 `../rule-assets/SCHEMA-SPEC.md`。 |
 | [`zh-CN/prose-craft-guide.md`](./zh-CN/prose-craft-guide.md) | 编译器生成并由 CI 防漂移的 tracked Guidance。 |
@@ -36,18 +36,18 @@ Detector 只返回 finding、证据与稳定 rule ID。自动重写的策略、�
 | [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) | 跨仓架构与边界。 |
 | [`docs/CALIBRATION.md`](./docs/CALIBRATION.md) | 标注、裁决、split、rewrite preservation 与 held-out 冻结合同。 |
 
-## 当前状态（0.3.0-alpha.4）
+## 当前状态（0.4.0）
 
-- 29 条规则：28 条 zh-CN、1 条 en-US。
-- 21 条 Guidance / Judge 规则。
-- 13 条 Deterministic Detector 规则。
+- 32 条规则：31 条 zh-CN、1 条 en-US。
+- 23 条 Guidance / Judge 规则。
+- 14 条 Deterministic Detector 规则。
 - F0 / F1 / F3 已落地；F2 暂无条目。
 - 破折号密度与 6 条 oh-story 文档级 metric 均为 `experimental` advisory signal，
   阈值仍需 held-out 校准。
 - 发布 Rule Pack、Detector、Judge rules/result、annotation、rewrite、benchmark report、
-  held-out freeze、calibration 与 host conformance JSON Schema；124 个 tracked JSONL
+  held-out freeze、calibration 与 host conformance JSON Schema；128 个 tracked JSONL
   case 固定 metadata、provenance、保护区与跨宿主行为。
-- 21 条 Guidance 正反例生成 42 条 tracked training case，CI 逐字防漂移。
+- 23 条 Guidance 正反例生成 46 条 tracked training case，CI 逐字防漂移。
 - Semantic Judge dev corpus 扩展为 30 条，覆盖 16 条 rewrite 和 14 条 pass，供后续
   三协议 pilot 使用；尚未建设或运行 production held-out。
 - 校准工具检查跨 split 精确/近重复泄漏，并在 ignored `dev/` 下生成、验证分离标签的
@@ -73,7 +73,7 @@ Detector 只返回 finding、证据与稳定 rule ID。自动重写的策略、�
 # 修改 knowledge-source.yaml 后同步 tracked Guidance
 bun shared/rule-assets/scripts/sync-guidance.ts
 
-# 同步 21 组 tracked Guidance calibration pairs
+# 同步 23 组 tracked Guidance calibration pairs
 bun shared/rule-assets/scripts/sync-calibration.ts
 
 # 校验 schema、派生一致性与正则

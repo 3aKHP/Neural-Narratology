@@ -63,6 +63,12 @@ write current character packet
 `interaction.select` 的答案是普通工作流信息。宿主可提供自由输入兜底，但契约中的固定选项
 必须互斥、可执行，并保持声明顺序。
 
+Host Adapter 的 `interactionBindings` 为每个 interaction id 声明宿主呈现方式，字段与
+操作类型一一绑定：`interaction.confirm` 对应 `checkpoint`（阻塞式确认门呈现），
+`interaction.select` 对应 `header`（选项面板标题呈现）。Harness 编译器强制校验这一
+对应关系。绑定了操作但未被任何引擎或 Agent 引用的 operation binding（如
+`workflow.handoff`）属于合法预留，供后续引擎接入，不代表当前工作流已使用。
+
 ## 4. Delegation 生命周期
 
 Delegation 必须声明 Agent、默认执行模式和任务目的。宿主工具的自包含 task prompt 作为 v1
