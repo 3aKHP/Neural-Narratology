@@ -32,6 +32,7 @@ inventory:
 ### Boundary Conditions
 - Hard limit:
 - Deep access condition:
+- Extreme access condition:
 
 ## Narrative Engine
 

@@ -8,7 +8,7 @@
 - **Genre:** [Genre]
 - **POV Style:** [First Person / Third Person Limited / Third Person Omniscient]
 
-## Volume 1: [卷名]
+## Volume 1: [卷名] [可选，单卷/纯章项目删除此块]
 - **Theme:** [本卷主要写什么]
 - **Goal:** [主线推进到哪、收哪些伏笔、埋哪些新伏笔]
 - **Time Span:** [时间跨度]

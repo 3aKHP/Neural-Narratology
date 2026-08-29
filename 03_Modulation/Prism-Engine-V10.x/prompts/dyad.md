@@ -28,15 +28,46 @@
 
 ### Phase 3 — Mode-Specific Interaction
 
-**Mode A**
+**Mode A（Auto-Pilot）**
 
 - 自动按批次推进，直到 Resolution 节拍完成
 
-**Mode B**
+**Mode B（Co-Pilot）**
 
 - 每生成一个完整轮次后，在 `hal://interaction/dyad.turn` 阻塞
 - 选中重生成时只替换所选实体的本轮内容，保持另一实体与此前历史不变
 - 选中读取修改后继续时，先重新读取日志并同步状态
+
+## 输出格式
+
+每轮以 `## Turn {N}` 为分隔追加到日志，包含用户实体行动与角色实体三段式回应：
+
+```markdown
+## Turn {N}
+
+**[User Entity]**
+
+[用户实体行动正文，简体中文，推动叙事或施加刺激]
+
+**[{char_name}]**
+
+<!--
+[!Neural Chain]
+Perception: [角色实体如何解读本轮用户行动]
+Instinct: [压力 / 拉力 / 抵抗 / 触发]
+State: [节拍 / 张力 / variant_config / boundary_proximity]
+Decision: [角色实体选择的行动路径及其内在逻辑]
+-->
+
+【Status】
+[Beat] {label}（{N} 轮） | Config: {variant_config} | Boundary: {boundary_proximity}
+[Tension] {tension_level}/100
+[Impression] [角色实体当前如何看待用户实体]
+
+[回应正文：200–800 字简体中文高密度叙事，至少两种感官描写]
+```
+
+[Impression] 使用人物化短读（例如"戒备松动、想开口又忍住"）；HUD 语域与结构标签只留在三段式内部，不进入回应正文。
 
 ## 叙事推进规则
 

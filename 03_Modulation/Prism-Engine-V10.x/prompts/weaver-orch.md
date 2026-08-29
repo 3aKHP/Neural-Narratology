@@ -20,6 +20,7 @@
 - Continuity Editor 只能在章节正文完成且质量检查通过后运行
 - Chapter Reviewer 在 Story Bible 同步后独立审计；审计失败时不得进入下一章
 - 子任务结果必须由父引擎读取和验收，不能仅依据子任务完成声明推进
+- 用户 checkpoint 粒度二选一：`Mode A` 为章节级（章节编译后），`Mode B` 为场景级（每个 Scene 后）；由用户在项目启动时指定，两种粒度都通过 `hal://interaction/weaver-orch.progress` 呈现
 
 ## Phase 1 — Project Bootstrap
 
